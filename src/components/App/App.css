@@ -1,0 +1,105 @@
+.wrapper {
+    font-size: 20px;
+    padding: 0px;
+}
+
+.title {
+  padding: 0;
+}
+
+.wrapper button {
+  font-size: 20px;
+  border: 0;
+  padding: 1;
+  background: #bcbcbc;
+  cursor: pointer;
+  border-radius: 9px;
+  }
+
+ul {
+  display: flex;
+  padding: 0;
+}
+
+li {
+  margin: 10 20px;
+  list-style: none;
+  padding: 0;
+}
+
+
+.topBanner1 {
+  display:flex; 
+  flex-direction:row;
+  padding-bottom: 20px;
+}
+
+.topRow1 {
+  margin: 5px;
+}
+
+.topRow1:active {
+  margin: 5px;
+  background: #dfdfdf;
+  color:rgb(111, 111, 111);
+}
+
+.topRow2 {
+  margin: 27px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: inherit;
+  color: white;
+}
+
+.topRow2:active {
+  margin: 27px;
+  background: #ffffff;
+  color:black;
+}
+
+a.topRow2.active{
+  background: #0080ff;
+  color: rgb(255, 255, 255);
+}
+
+navbar.NavBar1{
+  background: #61d3c4;
+  padding: 5px;
+  border-radius: 9px;
+
+}
+
+.backHome{
+  margin: 0;
+  background: #efefef;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: inherit;
+}
+
+#transactions {
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 3px solid #ddd;
+    width: 100%;
+  }
+
+#transactions td{
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+#transactions tr:hover {background-color: #ddd;}
+
+.TableRow{
+  display:flex; 
+  flex-direction:row;
+}
