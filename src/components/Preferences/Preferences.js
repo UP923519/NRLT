@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import "../App/App.css"
 import TableData from '../table/form';
 import { Handle } from "./handlesubmit";
-
+import { RealTimeData } from '../table/realTImeData';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 const displayEmojiName = event => alert(event.target.id);
-const emojis = [{emoji: "😀",name: "grinning face"},{emoji: "Filters",name: "List of Filters"},{emoji: "Apply",name: "Filters Applied"}];
+const emojis = [{emoji: "Refresh",name: "grinning face"},{emoji: "Filters",name: "List of Filters"},{emoji: "Apply",name: "Filters Applied"}];
 const customer = require('../table/data.json');
-
-console.log(customer, "shoo");
 
 const cities = [
   {name:"Trip by Bus ", temperature: " +150kg CO2"},
@@ -25,29 +24,11 @@ const Row = (props) => {
   </tr>)
 }
 
-const Table = (props) => {
-  const {data} = props
-  //console.log(data)
-  return(<table id='transactions'>
-    <tbody>
-      {data.map(row => {
-        return (
-        <Row name = {row.name}
-        temperature = {row.temperature} /> );
-      }
-      )
-      }
-    </tbody>
-  </table>
-  )
-}
-
 function onChange(){
     let obj = Object.assign(cities, {name:"Solar Panel Return 2 ", temperature: "-25kg CO2 3 "});
     console.log("yes",obj,"yes");
 
 }
-
 
 export default function Preferences() {
   
@@ -56,35 +37,25 @@ export default function Preferences() {
   const [rows, setRows] = useState(cities)
 
   return (    
-    <div className='Wrapper2'>
-      <h2 id={greeting}>Balance Sheet</h2>
-    
+    <div>
+      <h2>Balance Sheet</h2>
       {/*<Table data = {rows} >
       </Table>*/}
-      
-      <div className="App">
       <h3>Carbon Transactions</h3>
       <div className='TableRow'>
       {
         emojis.map(emoji => (
           <li key={emoji.name}>
-            <button className = "Wrapper2" onClick={displayEmojiName}>
+            <button className = "topRow1" onClick={displayEmojiName}>
               <span role="img" aria-label={emoji.name} id={emoji.name}>{emoji.emoji} </span>
             </button>
           </li>
         ))
       }
       </div>
+      <RealTimeData/>
       <TableData/>
-      <Handle/>
-      </div>
-
-      <button className = "topRow1" onClick={onChange}>
-            Log Out
-      </button>
-
-
-         
+      {/*<Handle/>*/}
       
     </div>
     

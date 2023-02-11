@@ -27,7 +27,7 @@ const Row = (props) => {
 const Table = (props) => {
   const {data} = props
   //console.log(data)
-  return(<table id='transactions'>
+  return(<table className='transactions'>
     <tbody>
       {data.map(row => {
         return (
@@ -49,19 +49,19 @@ function onChange(){
 
 
 export default function Dashboard() {
-  const greeting = "greeting";
+  //const greeting = "greeting";
   const displayAction = false;
   const [rows, setRows] = useState(cities)
 
   return (
     <div className='Wrapper2'>
-      <h2 id={greeting}>Dashboard</h2>
-      <h3 id={greeting}>Your information overview </h3>
+      <h2>Dashboard</h2>
+      <h3>Your information overview </h3>
       <Table data = {rows}></Table>
-      <h3 id={greeting}>Your highlights </h3>
+      <h3>Your highlights </h3>
       <ul>
-        <li>Train travel is your preferred method to get around</li>
-        <li>Your carbon usage has reduced 12% since the previous month</li>
+        <li className = "highlights">Train travel is your preferred method to get around</li>
+        <li className = "highlights">Your carbon usage has reduced 12% since the previous month</li>
       </ul>
       <button className = "topRow1" onClick={onChange}>
             Refresh

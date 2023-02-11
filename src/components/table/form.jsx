@@ -28,7 +28,7 @@ function TableData() {
   };
   
   return (
-    <div>
+    <div>{/*
       <table id = "transactions">
         <thead>
           <tr>
@@ -38,7 +38,7 @@ function TableData() {
           </tr>
         </thead>
         <tbody>{tableRows}</tbody>
-      </table>
+      </table>*/}
       <TransactionForm func={addRows} />
     </div>
   );

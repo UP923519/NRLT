@@ -1,6 +1,7 @@
 .wrapper {
     font-size: 20px;
     padding: 0px;
+    width: 673px;
 }
 
 .title {
@@ -24,7 +25,7 @@ ul {
 li {
   margin: 10 20px;
   list-style: none;
-  padding: 0;
+  padding: 0px;
 }
 
 
@@ -35,7 +36,8 @@ li {
 }
 
 .topRow1 {
-  margin: 5px;
+  margin: 1px;
+  padding-right: 5px;
 }
 
 .topRow1:active {
@@ -45,7 +47,7 @@ li {
 }
 
 .topRow2 {
-  margin: 27px;
+  margin: 15px;
   background: #7f7f7f;
   cursor: pointer;
   border-radius: 9px;
@@ -57,7 +59,6 @@ li {
 }
 
 .topRow2:active {
-  margin: 27px;
   background: #ffffff;
   color:black;
 }
@@ -84,22 +85,38 @@ navbar.NavBar1{
   text-decoration: inherit;
 }
 
-#transactions {
+.transactions {
     text-align: center;
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     border: 3px solid #ddd;
-    width: 100%;
+    width: 673px;
   }
 
-#transactions td{
+.transactions td{
     border: 1px solid #ddd;
     padding: 8px;
   }
 
-#transactions tr:hover {background-color: #ddd;}
+.transactions tr:hover {background-color: #ddd;}
+
+.inputData {
+  margin-left: 10px;
+}
 
 .TableRow{
   display:flex; 
   flex-direction:row;
+  padding-bottom:5px;
+}
+
+.tables-75{
+  margin: 0spx
+}
+
+.highlights{
+  background: #ccd6ec;
+  margin: 2px;
+  padding: 15px;
+  border-radius: 9px;
 }
