@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Product.css';
+import {MapUpdate} from './Location.js';
 
 const products = [
     {
@@ -75,6 +76,11 @@ export default class Product extends Component {
             </div>
           ))}
         </div>
+
+        <div style={{ width: "100%", height: "500px" }}>
+          <MapUpdate />
+        </div>
+
       </div>
     )
   }
