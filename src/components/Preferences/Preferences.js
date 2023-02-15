@@ -37,7 +37,7 @@ export default function Preferences() {
   const [rows, setRows] = useState(cities)
 
   return (    
-    <div>
+    <div className="wrapper">
       <h2>Balance Sheet</h2>
       {/*<Table data = {rows} >
       </Table>*/}

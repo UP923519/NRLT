@@ -30,7 +30,7 @@ export class RealTimeData extends React.Component{
 
     render(){
         return(
-            <div>
+            <div className="wrapper">
                 <Table className= "transactions">
                     <thead>
                     <tr>

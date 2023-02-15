@@ -1,7 +1,6 @@
 .wrapper {
     font-size: 20px;
     padding: 0px;
-    width: 673px;
 }
 
 .title {
@@ -19,13 +18,13 @@
 
 ul {
   display: flex;
-  padding: 0;
+  padding: 0px;
 }
 
 li {
   margin: 10 20px;
   list-style: none;
-  padding: 0px;
+  padding: 0;
 }
 
 
@@ -36,8 +35,7 @@ li {
 }
 
 .topRow1 {
-  margin: 1px;
-  padding-right: 5px;
+  margin: 5px;
 }
 
 .topRow1:active {
@@ -59,6 +57,7 @@ li {
 }
 
 .topRow2:active {
+  margin: 15px;
   background: #ffffff;
   color:black;
 }
@@ -90,7 +89,7 @@ navbar.NavBar1{
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     border: 3px solid #ddd;
-    width: 673px;
+    width: 100%;
   }
 
 .transactions td{
@@ -100,23 +99,22 @@ navbar.NavBar1{
 
 .transactions tr:hover {background-color: #ddd;}
 
-.inputData {
-  margin-left: 10px;
-}
-
 .TableRow{
   display:flex; 
   flex-direction:row;
-  padding-bottom:5px;
 }
 
-.tables-75{
-  margin: 0spx
+.size{
+  max-width: 673px;
+  height: auto;
+  margin-left: 6vw;
 }
 
 .highlights{
-  background: #ccd6ec;
-  margin: 2px;
-  padding: 15px;
+  background: #abccf0;
   border-radius: 9px;
+  padding: 10px;
+  margin-right: 8px;
+  margin-left: 8px;
+  width: 300px;
 }

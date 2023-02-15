@@ -27,7 +27,9 @@ const Row = (props) => {
 const Table = (props) => {
   const {data} = props
   //console.log(data)
-  return(<table className='transactions'>
+  return(
+  <div className="wrapper">
+  <table className='transactions'>
     <tbody>
       {data.map(row => {
         return (
@@ -38,6 +40,7 @@ const Table = (props) => {
       }
     </tbody>
   </table>
+  </div>
   )
 }
 
@@ -59,7 +62,7 @@ export default function Dashboard() {
       <h3>Your information overview </h3>
       <Table data = {rows}></Table>
       <h3>Your highlights </h3>
-      <ul>
+      <ul className = "highlights2">
         <li className = "highlights">Train travel is your preferred method to get around</li>
         <li className = "highlights">Your carbon usage has reduced 12% since the previous month</li>
       </ul>
