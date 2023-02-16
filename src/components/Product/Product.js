@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './Product.css';
-import {MapUpdate} from './Location.js';
+import { MapUpdate } from './Location.js';
+import './locationCalculator.js'
+import { address } from './locationCalculator.js';
+
 
 const products = [
     {
@@ -60,7 +63,14 @@ export default class Product extends Component {
   render() {
     return(
       <div>
+        
         <h2>Journey Planner</h2>
+
+        <div style={{ width: "100%", height: "500px" }}>
+          <MapUpdate />
+        </div>
+
+        <h3>Location: {address}</h3>
         <div>
           Select Journey: {this.state.cart.length} selected.
         </div>
@@ -76,11 +86,6 @@ export default class Product extends Component {
             </div>
           ))}
         </div>
-
-        <div style={{ width: "100%", height: "500px" }}>
-          <MapUpdate />
-        </div>
-
       </div>
     )
   }

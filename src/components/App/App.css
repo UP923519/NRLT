@@ -118,3 +118,11 @@ navbar.NavBar1{
   margin-left: 8px;
   width: 300px;
 }
+
+div.gm-style {
+  overflow: hidden;
+  white-space: nowrap;
+  font: 400 15px Roboto, Arial, sans-serif;
+  font-weight: bold;
+  color:#336bbf;
+}
