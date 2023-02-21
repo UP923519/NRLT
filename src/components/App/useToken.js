@@ -17,6 +17,7 @@ export default function useToken() {
   const removeToken = userToken => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    sessionStorage.clear();
     setToken(null);
   };
 

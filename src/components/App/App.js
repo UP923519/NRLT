@@ -1,10 +1,9 @@
 import Navbar from '../Navbar/Navbar.js';
 import Login, {} from '../Login/Login';
 import useToken from './useToken';
-
+import cors from 'cors';
 
 export const theUser = localStorage.getItem('username');
-
 
 function App() {
   const { token, setToken, removeToken, getToken} = useToken();

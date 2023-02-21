@@ -1,45 +1,39 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import GoogleMapReact from 'google-map-react';
+import React, { useState } from 'react';
+import "../App/App.css"
+import TableData from '../table/form';
+import 'realtime-trains-scraper';
+import { originStation } from './InputLocation';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+export let trO;
+export let trD;
 
-export function SimpleMap(){
 
-  var defaultProps = {
-    center: {
-      lat: 0,
-      lng: 0
-    },
-    zoom: 11
+const realtimeTrains = require('realtime-trains-scraper');
+
+export var first_function = function() {
+  console.log("Entered first function");
+  let t = realtimeTrains.getTrains(originStation);
+  return new Promise(resolve => {
+      setTimeout(function() {
+      resolve(t);
+      console.log("Returned first promise");
+      }, 2000);
+  });
   };
 
-  if (navigator.geolocation) {
-    navigator.geolocation.watchPosition(function(position) {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude); 
-      defaultProps = {center: {lat: position.coords.latitude, lng: position.coords.longitude }, zoom: 11};
-      });
-  }
+export var async_function = async function() {
+  console.log('async function called');
 
-  return (
-    // Important! Always set the container height explicitly
-    <div style={{ height: '100vh', width: '100%' }}>
-      <h4>Current Location detected</h4>
-
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
-      >
-        <AnyReactComponent
-          lat={defaultProps.center.lat}
-          lng={defaultProps.center.lng}
-          text="My Marker"
-        />
-      </GoogleMapReact>
-    </div>
-  );
+  const first_promise= await first_function();
+  console.log("After awaiting for 2 seconds," +
+  "the promise returned from first function is:");
+  //console.log(JSON.stringify(first_promise));
+  console.log(first_promise);
+  trO = first_promise[0].origin["name"];
+  trD = first_promise[0].destination["name"];
+  console.log(trO);
+  console.log(trD);
 }
 
+async_function();
 

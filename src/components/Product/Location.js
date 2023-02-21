@@ -2,63 +2,54 @@ import React, { Component } from "react";
 import GoogleMap from "google-map-react";
 import {Marker} from "google-map-react";
 
-
 import "../App/App.css"
+
+var lng = -0.118092;
+var lat = 51.509865;
+var zoom = 15;
 
 const PositionMarker = ({ text }) => <div>{text}</div>;
 const GOOGLE_API_KEY = "AIzaSyCtaTMVWfuUgPQSa2qsFmJyC8F__eKcqKA";
 
-class GMapReact extends React.Component {
-  
-  render() {
-    const { center, zoom } = this.props;
-    return (
-      <div style={{ width: "100%", height: "100%" }}>
-        <GoogleMap
-          bootstrapURLKeys={{ key: [GOOGLE_API_KEY] }}
-          center={center}
-          zoom={zoom}
-        />
-      </div>
-    );
-  }
-}
 
 export class MapUpdate extends React.Component {
   constructor(props) {
     super(props);
 
-    navigator.geolocation.watchPosition(function(position) {
-    console.log("Latitude is :", position.coords.latitude);
-    console.log("Longitude is :", position.coords.longitude);
-    sessionStorage.setItem("Lat", parseFloat(position.coords.latitude));
-    sessionStorage.setItem("Lng", parseFloat(position.coords.longitude));
-    })
+    navigator.geolocation.getCurrentPosition(function(position) {
+    //console.log("Latitude is :", position.coords.latitude);
+    //console.log("Longitude is :", position.coords.longitude);
 
+    lng = position.coords.longitude;
+    lat = position.coords.latitude;
+    })
 
     this.state = {
       center: {
-        lat: 51.509865,
-        lng: -0.118092
+        lat: lat,
+        lng: lng
       },
       form: {
-        lat: sessionStorage.getItem("Lat"),
-        lng: sessionStorage.getItem("Lng")
-      }
+        lat: lat,
+        lng: lng
+      },
+      zoom: 1
     };
+    
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.getCurrentLocation = this.getCurrentLocation.bind(this);
+    
   
   }
 
   handleChange() {
     this.setState({
       form: {
-        lat: Number(sessionStorage.getItem("Lat")),
-        lng: Number(sessionStorage.getItem("Lng"))
-      }
+        lat: Number(lat),
+        lng: Number(lng)
+      },
     });
   }
 
@@ -69,42 +60,27 @@ export class MapUpdate extends React.Component {
   }
 
   getCurrentLocation() {
-    //console.log(this.state.form.lat);
-    console.log(this.state.center);
     this.setState({
       center: this.state.form,
       form: {
-        lat: Number(sessionStorage.getItem("Lat")),
-        lng: Number(sessionStorage.getItem("Lng"))
-      }
+        lat: Number(lat),
+        lng: Number(lng)
+      },
+      zoom: 15
     });
   }
   
 
   render() {
-    const center = this.state.center;
-
-
+    var center = this.state.center;
+    var zoom = this.state.zoom;
     return (
       <div style = {{ width: "100%", height: "100%" }}>
-
         <div>
-          <input
-            ref="lat"
-            type="text"
-            value="Start location"
-            onChange={this.handleChange}
-          />
-          <input
-            ref="lng"
-            type="text"
-            value="Final location"
-            onChange={this.handleClick}
-          />
-          <input onMouseDown={this.getCurrentLocation} onClick={this.getCurrentLocation} type="button" value="Show Location" />
+        <input onMouseDown={this.getCurrentLocation} onClick={this.getCurrentLocation} type="button" value="Show Location" />
         </div>
         <div style={{ width: "100%", height: "100%" }}>
-          <GoogleMap center={center} zoom={15} bootstrapURLKeys={{ key: [GOOGLE_API_KEY] }}>
+          <GoogleMap center={center} zoom={zoom} bootstrapURLKeys={{ key: [GOOGLE_API_KEY] }}>
           <PositionMarker
           lat={this.state.form.lat}
           lng={this.state.form.lng}
@@ -112,6 +88,7 @@ export class MapUpdate extends React.Component {
           />
           </GoogleMap>
         </div>
+        
       </div>
     );
   }

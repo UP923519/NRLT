@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import './Product.css';
-import { MapUpdate } from './Location.js';
+import { MapUpdate, getCurrentLocation } from './Location.js';
 import './locationCalculator.js'
-import { address } from './locationCalculator.js';
+import { convertLocation } from './locationCalculator.js';
+import { trO, trD } from './Location 2.js';
+import 'realtime-trains-scraper';
+import { InputLocation } from './InputLocation';
+
+const realtimeTrains = require('realtime-trains-scraper');
 
 
 const products = [
@@ -22,13 +27,22 @@ const products = [
       price: 630
     }
   ];
+  
 
 export default class Product extends Component {
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+  }
 
   state = {
     cart: []
   }
-
 
   add = (product) => {
     this.setState(state => ({
@@ -54,23 +68,48 @@ export default class Product extends Component {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }
+  
 
   getTotal = () => {
     const total = this.state.cart.reduce((totalCost, item) => totalCost + item.price, 0);
     return total.toLocaleString(undefined, this.currencyOptions)
   }
 
+  originStation(){
+
+
+  }
+
+
   render() {
     return(
       <div>
         
         <h2>Journey Planner</h2>
-
         <div style={{ width: "100%", height: "500px" }}>
           <MapUpdate />
         </div>
 
-        <h3>Location: {address}</h3>
+        <h3>{convertLocation()}</h3>
+        <div>
+          <input
+            ref="lat"
+            type="text"
+            value={this.state.value}
+            onChange={this.OriginStation}
+          />
+          <input
+            ref="lng"
+            type="text"
+            value="Final location"
+            onChange={this.handleClick}
+          />
+        </div>
+
+        <p>
+        <InputLocation/>
+        </p>
+
         <div>
           Select Journey: {this.state.cart.length} selected.
         </div>
