@@ -12,7 +12,7 @@ const realtimeTrains = require('realtime-trains-scraper');
 
 export var first_function = function() {
   console.log("Entered first function");
-  let t = realtimeTrains.getTrains(originStation);
+  let t = realtimeTrains.getTrains(originStation,15);
   return new Promise(resolve => {
       setTimeout(function() {
       resolve(t);
@@ -39,8 +39,12 @@ export var async_function = async function() {
   
   for (let i = 0; i < 15; i++){
     if (first_promise[i] != " " && first_promise[i] != undefined){
-      trO += first_promise[i].origin["name"] + ", "
-      trD += first_promise[i].destination["name"] + ", "
+      if (trO.includes(first_promise[i].origin["name"] + ",   ") != true){
+        trO += first_promise[i].origin["name"] + ",   "
+      } 
+      if (trD.includes(first_promise[i].destination["name"] + ",   ") != true){
+        trD += first_promise[i].destination["name"] + ",   "
+      }
     }
 
   }
@@ -52,8 +56,8 @@ export var async_function = async function() {
   console.log(trO);
   console.log(trD);
 
-  trO = trO.split(',');
-  trD = trD.split(',');
+  trO = trO.split('  ');
+  trD = trD.split('  ');
   //alert(trO[4]);
 
   //alert('Results Loaded');
