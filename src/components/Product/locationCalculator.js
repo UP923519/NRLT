@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Geocode from "react-geocode";
+import "../App/App.css"
 
 export let address;
 
@@ -75,8 +76,8 @@ export function convertLocation(){
     );
   })
   return(
-    <div>
-      <h3>Location: {address}</h3>
+    <div className="locationAddress">
+      <h3  >Location: {address}</h3>
     </div>
   )
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Product.css';
 import { MapUpdate, getCurrentLocation } from './Location.js';
-import './locationCalculator.js'
-import { convertLocation } from './locationCalculator.js';
+import { LocationCalc } from './locationCalculator2.js';
+import { address, convertLocation } from './locationCalculator.js';
 import { trO, trD } from './Location 2.js';
 import 'realtime-trains-scraper';
 import { InputLocation } from './InputLocation';
@@ -84,29 +84,17 @@ export default class Product extends Component {
   render() {
     return(
       <div>
-        
         <h2>Journey Planner</h2>
+        
         <div style={{ width: "100%", height: "500px" }}>
           <MapUpdate />
         </div>
+        <p> <br></br></p>
+        <LocationCalc/>
 
-        <h3>{convertLocation()}</h3>
-        <div>
-          <input
-            ref="lat"
-            type="text"
-            value={this.state.value}
-            onChange={this.OriginStation}
-          />
-          <input
-            ref="lng"
-            type="text"
-            value="Final location"
-            onChange={this.handleClick}
-          />
-        </div>
 
         <p>
+          
         <InputLocation/>
         </p>
 

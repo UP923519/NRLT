@@ -17,7 +17,7 @@ export var first_function = function() {
       setTimeout(function() {
       resolve(t);
       console.log("Returned first promise");
-      }, 2000);
+      }, 1);
   });
   };
 
@@ -29,10 +29,36 @@ export var async_function = async function() {
   "the promise returned from first function is:");
   //console.log(JSON.stringify(first_promise));
   console.log(first_promise);
-  trO = first_promise[0].origin["name"];
-  trD = first_promise[0].destination["name"];
+  if (first_promise == ""){
+    alert('Results not found, please try another station.');
+  }
+
+  trO = "";
+  trD = "";
+
+  
+  for (let i = 0; i < 15; i++){
+    if (first_promise[i] != " " && first_promise[i] != undefined){
+      trO += first_promise[i].origin["name"] + ", "
+      trD += first_promise[i].destination["name"] + ", "
+    }
+
+  }
+  
+
+  //trO = first_promise[0].origin["name"] +", "+ first_promise[1].origin["name"] +", "+ first_promise[2].origin["name"]+", "+ first_promise[3].origin["name"]+", "+ first_promise[4].origin["name"]+", "+ first_promise[5].origin["name"];
+  //trD = first_promise[0].destination["name"]+", "+ first_promise[1].destination["name"] +", "+ first_promise[2].destination["name"]+", "+ first_promise[3].destination["name"]+", "+ first_promise[4].destination["name"]+", "+ first_promise[5].destination["name"];
+
   console.log(trO);
   console.log(trD);
+
+  trO = trO.split(',');
+  trD = trD.split(',');
+  //alert(trO[4]);
+
+  //alert('Results Loaded');
+
+
 }
 
 async_function();

@@ -126,3 +126,7 @@ div.gm-style {
   font-weight: bold;
   color:#336bbf;
 }
+
+#locationAddress{
+  min-height: 1000%;
+}

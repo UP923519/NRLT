@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { first_function, async_function, trD, trO } from "./Location 2";
+
 export let originStation;
+
 
 export class InputLocation extends React.Component {
   constructor(props) {
@@ -9,19 +11,38 @@ export class InputLocation extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
   }
+
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    setTimeout(
+      function() {
+        this.setState({value: event.target.value});
+        
+      }
+      .bind(this),
+      6000
+  );
+    setTimeout(
+      function() {
+        this.setState({value: event.target.value});
+        
+      }
+      .bind(this),
+      10000
+  );
   }
 
   handleSubmit(event) {
     originStation = this.state.value;
-    alert('origin: ' + originStation);
+    //alert('origin: ' + originStation);
     first_function(originStation);
     async_function();
     event.preventDefault();
-    console.log("pooooo");
+
+    //autoFocus="autofocus"
 
   }
 
@@ -29,14 +50,16 @@ export class InputLocation extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Origin Location:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <p>
-        Origin Station: {trO} <br />
-        Destination Station: {trD}
-        </p>
-        <input type="submit" value="Submit" />
+          Where do you want to travel from?{" "}  
+          <input type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
+        </label><br/>
+        <input className = "topRow2" type="submit" value="☑ Submit" />
+        <p style={{fontWeight: "bold"}}>
+        Original Starting Stations:</p><br /> {trO} <br /><br />
+        <p style={{fontWeight: "bold"}}>
+        Final Destination Stations:</p><br /> {trD} <br /><br />
+        
+        
       </form>
     );
   }

@@ -6,7 +6,8 @@ import "../App/App.css"
 
 var lng = -0.118092;
 var lat = 51.509865;
-var zoom = 15;
+var lngM;
+var latM;
 
 const PositionMarker = ({ text }) => <div>{text}</div>;
 const GOOGLE_API_KEY = "AIzaSyCtaTMVWfuUgPQSa2qsFmJyC8F__eKcqKA";
@@ -22,6 +23,8 @@ export class MapUpdate extends React.Component {
 
     lng = position.coords.longitude;
     lat = position.coords.latitude;
+    lngM = position.coords.longitude;
+    latM = position.coords.latitude;
     })
 
     this.state = {
@@ -68,6 +71,8 @@ export class MapUpdate extends React.Component {
       },
       zoom: 15
     });
+    resetVals();
+    
   }
   
 
@@ -77,13 +82,13 @@ export class MapUpdate extends React.Component {
     return (
       <div style = {{ width: "100%", height: "100%" }}>
         <div>
-        <input onMouseDown={this.getCurrentLocation} onClick={this.getCurrentLocation} type="button" value="Show Location" />
+        <input className = "topRow2" readOnly={true} onMouseDown={this.getCurrentLocation} onClick={this.getCurrentLocation} type="button" value="𖡡 Show Location" id="locationAddress"/>
         </div>
         <div style={{ width: "100%", height: "100%" }}>
           <GoogleMap center={center} zoom={zoom} bootstrapURLKeys={{ key: [GOOGLE_API_KEY] }}>
-          <PositionMarker
-          lat={this.state.form.lat}
-          lng={this.state.form.lng}
+          <PositionMarker 
+          lat={latM}
+          lng={lngM}
           text="𖡡 Current Location"
           />
           </GoogleMap>
@@ -100,3 +105,16 @@ export class MapUpdate extends React.Component {
     <MapUpdate />
   </div>
   
+
+function resetVals() {
+  lat = 0;
+  lng = 0;
+
+  navigator.geolocation.getCurrentPosition(function(position) {
+    //console.log("Latitude is :", position.coords.latitude);
+    //console.log("Longitude is :", position.coords.longitude);
+
+    lng = position.coords.longitude;
+    lat = position.coords.latitude;
+    })
+  }
