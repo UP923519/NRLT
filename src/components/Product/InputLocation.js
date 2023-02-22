@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { first_function, async_function, trD, trO } from "./Location 2";
+import { first_function, async_function, trD, trO, trC } from "./Location 2";
+import CallingPoints from "./callingPoints";
 
 export let originStation;
 
@@ -40,6 +41,7 @@ export class InputLocation extends React.Component {
     //alert('origin: ' + originStation);
     first_function(originStation);
     async_function();
+    //CallingPoints();
     event.preventDefault();
 
     //autoFocus="autofocus"
@@ -55,12 +57,28 @@ export class InputLocation extends React.Component {
         </label><br/>
         <input className = "topRow2" type="submit" value="☑ Submit" />
         <p style={{fontWeight: "bold"}}>
-        Original Starting Stations:</p><br /> {trO} <br /><br />
+        {/*Original Starting Stations:</p><br /> {trO} <br /><br />
+        <p style={{fontWeight: "bold"}}>*/}
+        Final destinations from here:</p><br /> {trD} <br /><br />
         <p style={{fontWeight: "bold"}}>
-        Final Destination Stations:</p><br /> {trD} <br /><br />
+        All stations from here:</p><br /> {trC} <br /><br />
+
+        {}
+
+        
+        
         
         
       </form>
     );
   }
 }
+
+
+
+
+
+
+
+
+
