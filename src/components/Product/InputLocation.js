@@ -59,7 +59,7 @@ export class InputLocation extends React.Component {
         <p style={{fontWeight: "bold"}}>
         {/*Original Starting Stations:</p><br /> {trO} <br /><br />
         <p style={{fontWeight: "bold"}}>*/}
-        Final destinations from here:</p><br /> {trD} <br /><br />
+        Destinations to/from here:</p><br /> {trD} <br /><br />
         <p style={{fontWeight: "bold"}}>
         All stations from here:</p><br /> {trC} <br /><br />
 

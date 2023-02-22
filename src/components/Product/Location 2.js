@@ -30,7 +30,7 @@ export var async_function = async function() {
   console.log("After awaiting for 2 seconds," +
   "the promise returned from first function is:");
   //console.log(JSON.stringify(first_promise));
-  console.log(first_promise);
+  console.log(first_promise.length);
   //console.log(" ----- ");
   //console.log(first_promise[0].callingPoints)
   //console.log(first_promise[0].callingPoints.length)
@@ -46,8 +46,8 @@ export var async_function = async function() {
   
   for (let i = 0; i < 15; i++){
     if (first_promise[i] != " " && first_promise[i] != undefined){
-      if (trO.includes(first_promise[i].origin["name"] + ",   ") != true){
-        trO += first_promise[i].origin["name"] + ",   "
+      if (trD.includes(first_promise[i].origin["name"] + ",   ") != true){
+        trD += first_promise[i].origin["name"] + ",   "
       } 
       if (trD.includes(first_promise[i].destination["name"] + ",   ") != true){
         trD += first_promise[i].destination["name"] + ",   "
@@ -62,6 +62,9 @@ export var async_function = async function() {
         if (trC.includes(first_promise[i].callingPoints[j].name + ",   ") != true){
             trC += first_promise[i].callingPoints[j].name + ",   "
         }
+        if (trC.includes(first_promise[i].origin["name"] + ",   ") != true){
+          trC += first_promise[i].origin["name"] + ",   "
+        } 
       }    
     }
   }
