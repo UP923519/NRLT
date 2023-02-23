@@ -4,13 +4,35 @@ import TableData from '../table/form';
 import 'realtime-trains-scraper';
 import { originStation } from './InputLocation';
 import { fitBounds } from 'google-map-react';
+import Select from 'react-select';
+import Geocode from "react-geocode";
+import { stCoord, second_async_function, testf, testf2 } from './LocationCalcDIstance';
+import {getDatabase, ref, set, get, update, remove, child, onValue } from "firebase/database";
+import StartFirebase from "../Preferences/firebase";
+import { GetMiles } from './GetMiles';
+
+
+Geocode.setApiKey("AIzaSyCtaTMVWfuUgPQSa2qsFmJyC8F__eKcqKA");
+Geocode.setLanguage("en");
+Geocode.setRegion("es");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
 
 export let trO;
 export let trD;
 export let trC;
+export let trcDropDown;
+export let trSCoord;
+export let distanceMiles;
+
+let destStation;
+
+const db = StartFirebase();
+
 
 
 const realtimeTrains = require('realtime-trains-scraper');
+
 
 export var first_function = function() {
   console.log("Entered first function");
@@ -45,7 +67,7 @@ export var async_function = async function() {
 
   
   for (let i = 0; i < 15; i++){
-    if (first_promise[i] != " " && first_promise[i] != undefined){
+    if (first_promise[i] != "" && first_promise[i] != undefined){
       if (trD.includes(first_promise[i].origin["name"] + ",   ") != true){
         trD += first_promise[i].origin["name"] + ",   "
       } 
@@ -98,9 +120,102 @@ export var async_function = async function() {
   console.log("TRC is ", trC);
 
   //alert('Results Loaded');
-
-
+  const aquaticCreatures = trC.map(opt => ({ label: opt, value: opt }));
+  trcDropDown = <Select 
+  options={aquaticCreatures}
+  onChange={opt => console.log("Selected",opt.value)+getLatBetween(opt.value)}
+  />;
+  
 }
 
 //async_function();
 
+function getLatBetween(station){
+  //testf2 (station);
+  //second_function (station);
+  destStation = station;
+  second_async_function(originStation);
+  second_async_function(station);
+
+  DistanceBetweenPoints();
+
+  //second_function = findCoord (originStation);
+
+  
+}
+
+export function findCoord (station){
+  let stationLat = Geocode.fromAddress(station).then(
+    (response) => {
+      const { lat, lng } = response.results[0].geometry.location;
+      //console.log(lat, lng);
+      let stationLat = [lat,lng];
+      return stationLat;
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+  return stationLat;
+  
+}
+
+
+
+export function DistanceBetweenPoints (points){
+
+  setTimeout(
+    function() {
+      trSCoord = [stCoord];
+      console.log(trSCoord[0]);
+      let trSCoordArray = trSCoord[0].split(",");
+      console.log(trSCoordArray);
+
+      let coord1 = trSCoordArray[trSCoordArray.length-5];
+      console.log(coord1);
+      let coord2 = trSCoordArray[trSCoordArray.length-4];
+      console.log(coord2);
+      let coord3 = trSCoordArray[trSCoordArray.length-3];
+      console.log(coord3);
+      let coord4 = trSCoordArray[trSCoordArray.length-2];
+      console.log(coord4);
+
+      var getDistanceBetweenPoints = require('get-distance-between-points');
+      var distanceInMeters = getDistanceBetweenPoints.getDistanceBetweenPoints(
+        coord1, coord2, // Lat, Long of point A
+        coord3, coord4// Lat, Long of point B
+      );
+      // Outputs: Distance in Meters:  1813.5586276614192
+      console.log("Distance in Miles: ", distanceInMeters / 1609 );
+      distanceMiles = distanceInMeters / 1609;
+
+
+    
+      const db = getDatabase();
+      const currDate = new Date().toLocaleDateString();
+      const currTime = new Date().toLocaleTimeString();
+      var timee = (currDate+currTime).replaceAll('/','');
+      const user2 = localStorage.getItem('username');
+      let railConversion = (0.0715*distanceMiles).toFixed(2);
+      /*set(ref(db, user2+"/"+timee+"/"),
+          {
+              Transaction: ("🚂"+originStation+" ->"+destStation.slice(0,-1)),
+              Amount: (railConversion + " CO2e"),
+              date: currDate+ " "+ currTime
+          });  */
+    }
+    .bind(this),
+    1000
+  );
+
+}
+
+export function getShowDistance(){
+  setTimeout(
+    function(){
+      console.log("no")
+    }
+    .bind(this),
+    1000
+  );
+}

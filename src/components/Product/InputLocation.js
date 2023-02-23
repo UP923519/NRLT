@@ -1,9 +1,12 @@
-import React, { Component } from "react";
-import { first_function, async_function, trD, trO, trC } from "./Location 2";
-import CallingPoints from "./callingPoints";
+import React, { Component,useEffect, useRef, useState } from "react";
+import { first_function, async_function, trD, trO, trC, trcDropDown, distanceMiles, stationB, DistanceBetweenPoints } from "./Location 2";
+import { getShowDistance } from "./Location 2";
+//import CallingPoints from "./callingPoints";
+import Select from 'react-select';
+import { stCoord } from "./LocationCalcDIstance";
+
 
 export let originStation;
-
 
 export class InputLocation extends React.Component {
   constructor(props) {
@@ -41,44 +44,40 @@ export class InputLocation extends React.Component {
     //alert('origin: ' + originStation);
     first_function(originStation);
     async_function();
-    //CallingPoints();
     event.preventDefault();
 
     //autoFocus="autofocus"
 
   }
+  
+
+  
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Where do you want to travel from?{" "}  
-          <input type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
-        </label><br/>
-        <input className = "topRow2" type="submit" value="☑ Submit" />
-        <p style={{fontWeight: "bold"}}>
-        {/*Original Starting Stations:</p><br /> {trO} <br /><br />
-        <p style={{fontWeight: "bold"}}>*/}
-        Destinations to/from here:</p><br /> {trD} <br /><br />
-        <p style={{fontWeight: "bold"}}>
-        All stations from here:</p><br /> {trC} <br /><br />
+        <div>
+          <h3>National Rail Carbon Input</h3>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Where do you want to travel from?{" "}  
+            <input type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
+          </label><br/>
+          <input className = "topRow2" type="submit" value="☑ Submit" />
+          <p style={{fontWeight: "bold"}}>
+          {/*Original Starting Stations:</p><br /> {trO} <br /><br />
+          <p style={{fontWeight: "bold"}}>*/}
+          Destinations to/from here:</p><br /> {trD} <br /><br />
+          <p style={{fontWeight: "bold"}}>
+          All stations from here:</p><br /> {/*{trC}*/} 
+        </form>
+        {trcDropDown}
+        <br /><br />
 
-        {}
+      </div>
+      
 
-        
-        
-        
-        
-      </form>
+
+
     );
   }
 }
-
-
-
-
-
-
-
-
-

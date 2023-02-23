@@ -3,9 +3,11 @@ import './Product.css';
 import { MapUpdate, getCurrentLocation } from './Location.js';
 import { LocationCalc } from './locationCalculator2.js';
 import { address, convertLocation } from './locationCalculator.js';
-import { trO, trD } from './Location 2.js';
+import { trO, trD, DistanceBetweenPoints } from './Location 2.js';
+
 import 'realtime-trains-scraper';
 import { InputLocation } from './InputLocation';
+import { GetMiles } from './GetMiles';
 
 const realtimeTrains = require('realtime-trains-scraper');
 
@@ -75,10 +77,6 @@ export default class Product extends Component {
     return total.toLocaleString(undefined, this.currencyOptions)
   }
 
-  originStation(){
-
-
-  }
 
 
   render() {
@@ -91,15 +89,15 @@ export default class Product extends Component {
         </div>
         <p> <br></br></p>
         <LocationCalc/>
-
-
         <p>
-          
-        <InputLocation/>
+          <InputLocation/>
+          <GetMiles/>
         </p>
 
         <div>
-          Select Journey: {this.state.cart.length} selected.
+        <br/><br/>
+        {/*
+        Select Journey: {this.state.cart.length} selected.
         </div>
         <div>Total emissions {this.getTotal()}</div>
         <div>
@@ -112,8 +110,10 @@ export default class Product extends Component {
               <button onClick={() => this.remove(product)}>Remove</button>
             </div>
           ))}
+          */}
         </div>
       </div>
     )
   }
 }
+

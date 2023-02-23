@@ -58,15 +58,18 @@ function TransactionForm(props) {
   };
   
   return (
-    <div><li>
-      <ul><label>Transaction Type:</label>
-      <input type="text" id="inputData" value={type} onChange={changeType} /></ul>
-      <ul><label>Amount of Carbon:</label>
-      <input type="text" id="inputData" value={amount} onChange={changeAmount} /></ul>
-      <ul><label>Date of Activity:</label>
-      <input type="datetime-local" id="inputData" value={date} max={currDateTime} onChange={changeDate} /></ul>
-      <button onClick={transferValue}> Confirm</button>
-      </li></div>
+    <div>
+      <h3> Manual Activity Input</h3>
+      <li>
+        <ul><label>Transaction Type:</label>
+        <input type="text" id="inputData" value={type} onChange={changeType} /></ul>
+        <ul><label>Amount of Carbon:</label>
+        <input type="text" id="inputData" value={amount} onChange={changeAmount} /></ul>
+        <ul><label>Date of Activity:</label>
+        <input type="datetime-local" id="inputData" value={date} max={currDateTime} onChange={changeDate} /></ul>
+        <button onClick={transferValue}> Confirm</button>
+      </li>
+    </div>
   );
 }
 
