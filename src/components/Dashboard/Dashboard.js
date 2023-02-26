@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../App/App.css"
 import TableData from '../table/form';
+import { RealTimeDataOverview } from './realTImeDataOverview';
 //import './bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -60,6 +61,9 @@ export default function Dashboard() {
     <div className='Wrapper2'>
       <h2>Dashboard</h2>
       <h3>Your information overview </h3>
+      <RealTimeDataOverview/>
+      <br/>
+
       <Table data = {rows}></Table>
       <h3>Your highlights </h3>
       <ul className = "highlights2">

@@ -55,7 +55,6 @@ export default function Preferences() {
       </div>
       <RealTimeData/>
       <TableData/>
-      {/*<Handle/>*/}
       
     </div>
     
