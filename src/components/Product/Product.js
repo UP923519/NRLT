@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import './Product.css';
 import { MapUpdate, getCurrentLocation } from './Location.js';
 import { LocationCalc } from './locationCalculator2.js';
-import { address, convertLocation } from './locationCalculator.js';
+import { address } from './locationCalculator.js';
 import { trO, trD, DistanceBetweenPoints } from './Location 2.js';
 
 import 'realtime-trains-scraper';
 import { InputLocation } from './InputLocation';
+import { InputLocationCar } from './InputLocationCar';
 import { GetMiles } from './GetMiles';
 
 const realtimeTrains = require('realtime-trains-scraper');
@@ -92,6 +93,10 @@ export default class Product extends Component {
         <p>
           <InputLocation/>
           <GetMiles/>
+        </p>
+        <p>
+        <br/>
+        <InputLocationCar/>
         </p>
 
         <div>

@@ -56,7 +56,7 @@ export class InputLocation extends React.Component {
   render() {
     return (
         <div>
-          <h3>National Rail Carbon Input</h3>
+          <h3>National Rail Input</h3>
         <form onSubmit={this.handleSubmit}>
           <label>
             Where do you want to travel from?{" "}  

@@ -18,6 +18,9 @@ Geocode.setRegion("es");
 Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 
+let distanceConversion;
+
+
 export let trO;
 export let trD;
 export let trC;
@@ -123,21 +126,21 @@ export var async_function = async function() {
   const aquaticCreatures = trC.map(opt => ({ label: opt, value: opt }));
   trcDropDown = <Select 
   options={aquaticCreatures}
-  onChange={opt => console.log("Selected",opt.value)+getLatBetween(opt.value)}
+  onChange={opt => console.log("Selected",opt.value)+getLatBetween(originStation + " station", opt.value + " station", "train")}
   />;
   
 }
 
 //async_function();
 
-function getLatBetween(station){
+export function getLatBetween(pointA, pointB, mode){
   //testf2 (station);
   //second_function (station);
-  destStation = station;
-  second_async_function(originStation);
-  second_async_function(station);
+  destStation = pointB;
+  second_async_function(pointA);
+  second_async_function(pointB);
 
-  DistanceBetweenPoints();
+  DistanceBetweenPoints(mode, pointA);
 
   //second_function = findCoord (originStation);
 
@@ -162,7 +165,7 @@ export function findCoord (station){
 
 
 
-export function DistanceBetweenPoints (points){
+export function DistanceBetweenPoints (mode, pointA){
 
   setTimeout(
     function() {
@@ -196,13 +199,30 @@ export function DistanceBetweenPoints (points){
       const currTime = new Date().toLocaleTimeString();
       var timee = (currDate+currTime).replaceAll('/','');
       const user2 = localStorage.getItem('username');
-      let railConversion = (0.0715*distanceMiles).toFixed(2);
-      /*set(ref(db, user2+"/"+timee+"/"),
-          {
-              Transaction: ("🚂"+originStation+" ->"+destStation.slice(0,-1)),
-              Amount: (railConversion + " CO2e"),
-              date: currDate+ " "+ currTime
-          });  */
+
+      
+      if (mode == "train"){
+        distanceConversion = (0.0715*distanceMiles).toFixed(2);
+        set(ref(db, user2+"/"+timee+"/"),
+        {
+            Transaction: ("🚂"+originStation+" ->"+destStation),
+            Amount: (distanceConversion + " CO2e"),
+            date: currDate+ " "+ currTime
+        });
+      }
+
+      if (mode == "car"){
+        distanceConversion = (0.359*distanceMiles).toFixed(2);
+        set(ref(db, user2+"/"+timee+"/"),
+        {
+            Transaction: ("🚗"+pointA+" -> "+destStation),
+            Amount: (distanceConversion + " CO2e"),
+            date: currDate+ " "+ currTime
+        });
+      }
+
+
+      alert("Trip added successfully");
     }
     .bind(this),
     1000

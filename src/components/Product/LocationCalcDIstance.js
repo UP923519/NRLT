@@ -16,7 +16,7 @@ Geocode.enableDebug();
 export function testf2 (station) {
   console.log("test station is ", station);  
   console.log("station is ", station);
-  let t = findCoord (station + " station");
+  let t = findCoord (station);
   return new Promise(resolve => {
       setTimeout(function() {
       resolve(t);

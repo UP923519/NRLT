@@ -16,7 +16,7 @@ function App() {
 
   return (   
     <div className="wrapper">
-      <h1 className = "title">Carbon Tracker Web Application</h1>
+      <h1 className = "title">Carbon Tracker</h1>
       <div className = "topBanner1">
         <h4 className = "topRow1"> Welcome, {localStorage.getItem('username')} </h4>
         {displayAction && <p>I am writing JSX</p>}
