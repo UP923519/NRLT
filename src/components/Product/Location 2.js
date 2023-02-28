@@ -206,7 +206,7 @@ export function DistanceBetweenPoints (mode, pointA){
         set(ref(db, user2+"/"+timee+"/"),
         {
             Transaction: ("🚂"+originStation+" ->"+destStation),
-            Amount: (distanceConversion),
+            Amount: Number(distanceConversion),
             date: currDate+ " "+ currTime
         });
       }
@@ -216,7 +216,7 @@ export function DistanceBetweenPoints (mode, pointA){
         set(ref(db, user2+"/"+timee+"/"),
         {
             Transaction: ("🚗"+pointA+" -> "+destStation),
-            Amount: (distanceConversion),
+            Amount: Number(distanceConversion),
             date: currDate+ " "+ currTime
         });
       }

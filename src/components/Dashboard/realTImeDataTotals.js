@@ -5,10 +5,15 @@ import { where, orderBy } from "firebase/firestore";
 
 import { Table } from "react-bootstrap";
 import { typeOf } from "tls";
+import TableData from "../table/form";
 
 const db = StartFirebase();
 
-export class RealTimeDataOverview extends React.Component{
+let recordsTotal = 0;
+let recordsTotalMonth = 0;
+let recordsL = [];
+
+export class RealTimeDataTotals extends React.Component{
     constructor(){
         super();
         this.state = {
@@ -20,12 +25,17 @@ export class RealTimeDataOverview extends React.Component{
     componentDidMount(){
         const user2 = localStorage.getItem('username');
         //const dbref = ref(db, user2);
-        const dbref = query(ref(db, user2), orderByChild("Amount"), limitToLast(3));
+        const dbref = query(ref(db, user2), orderByChild("Amount"));
 
         onValue(dbref, (snapshot)=>{
             let records = [];
-            let recordsSort = [];
-            let recordsTotal = 0;
+            recordsTotal = 0;
+            recordsTotalMonth = 0;
+            let recordsTotalWeek = 0;
+            var date = new Date();
+            date.setDate(date.getDate() - 30); 
+            var dateString = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2)  ;
+
 
             snapshot.forEach(childSnapshot => {
                 let keyName = childSnapshot.key;
@@ -33,15 +43,44 @@ export class RealTimeDataOverview extends React.Component{
                 records.push({"date": keyName, "data":data})             
             });
 
+            
             for (let i=0; i<records.length; i++){
-                recordsSort.push(records[i].data.Amount);
                 recordsTotal = recordsTotal + Number(records[i].data.Amount);
-            }
+                let date1 = records[i].data.date.slice(0,-8).slice(0,-1);
+                let date2 = dateString;
+                let date1Day = date1.slice(0,2);
+                let date1Month = date1.slice(3,5);
+                let date1Year = date1.slice(6,10);
+                date1 = date1Year + "-" + date1Month + "-" + date1Day;
+                console.log(date1, date2);
 
-            records = records.reverse();
+                //console.log(date1Day, date2);
+                
+
+                if (date1 > date2){
+                    recordsTotalMonth = recordsTotalMonth + Number(records[i].data.Amount);
+                    console.log("greater");
+                }
+                //console.log (records[i].data.date.slice(0,-8));
+                //console.log(dateString);
+            }
+            
+            let dataArr = ["Amount: ", [recordsTotal, recordsTotalMonth]];
+            records = [];
+
+            records.push({date: 'n/a', data: {Amount: recordsTotal, Transaction: 'All time', date: 'N/A'}});
+            records.push({date: 'n/a', data: {Amount: recordsTotalMonth, Transaction: 'This Month', date: 'N/A'}});
+
+
+            //recordsL = ["All time", "This month"];
+            //records = records.reverse();
+
             this.setState({tableData: records});
-            //console.log("recordsSort is", (recordsSort));
-            //console.log("recordsTotal iss", (recordsTotal));
+            
+            console.log("records iss", ((records)));
+            console.log("recordsTotal iss", (recordsTotal));
+            console.log("recordsTotalMonth iss", (recordsTotalMonth));
+
 
 
         });
@@ -50,7 +89,7 @@ export class RealTimeDataOverview extends React.Component{
     render(){
         return(
             <div className="wrapper">
-                <h4>Your largest transactions so far</h4>
+                <h4>Your recent carbon balance</h4>
                 <Table className= "transactions">
                     <thead>
                     <tr>

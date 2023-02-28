@@ -7,9 +7,10 @@ import {theUser} from "../App/App.js"
 //const currentUser = theUser;
 
 function TransactionForm(props) {
+
   const [type, setType] = useState('');
   const [amount, setAmount] = useState('');
-  const [date, setDate] = useState('');
+  let [date, setDate] = useState('');
 
   const name = "Flash";
   const currDate = new Date().toLocaleDateString();
@@ -32,21 +33,31 @@ function TransactionForm(props) {
   
   const transferValue = (event) => {
     event.preventDefault();
+
+    
+    let date1Year = date.slice(0,4);
+    let date1Month = date.slice(5,7);
+    let date1Day = date.slice(8,10);
+    let date1Time = date.slice(11,date.length);
+    date = date1Day + "/" + date1Month + "/" + date1Year + " " + date1Time + ":00";
+
     const val = {
       type,
       amount,
       date,
     };
+
     props.func(val);
     clearState();
     const db = getDatabase();
     var timee = (currDate+currTime).replaceAll('/','');
     console.log("current user is:", theUser);
     const user2 = localStorage.getItem('username');
+
     set(ref(db, user2+"/"+timee+"/"),
         {
             Transaction: type,
-            Amount: amount,
+            Amount: Number(amount),
             date: date
         });  
   };
