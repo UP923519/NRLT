@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import './Login.css';
 
-
-
 async function loginUser(credentials) {
   console.log(credentials, "test2");
     return fetch('http://localhost:8080/login', {
@@ -23,12 +21,15 @@ export default function Login({setToken}) {
   localStorage.setItem('username',username);
  
   const handleSubmit = async e => {
-    e.preventDefault();
+    /*e.preventDefault();
     const token = await loginUser({
       username,
       password
     });
     setToken(token);
+    console.log(token, "is token");*/
+
+    setToken({token: 'User'});
     console.log(username, "test");
   }
   
