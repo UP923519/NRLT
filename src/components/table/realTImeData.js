@@ -36,8 +36,8 @@ export class RealTimeData extends React.Component{
                     <tr>
                         <th>#</th>
                         <th>Transaction Type</th>
-                        <th>Quantity</th>
-                        <th>Date Time</th>
+                        <th>Carbon (CO2e)</th>
+                        <th>Date & Time</th>
                     </tr>
                     </thead>
                     <tbody>

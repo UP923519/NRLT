@@ -56,7 +56,7 @@ export class RealTimeDataOverview extends React.Component{
                     <tr>
                         {/*<th>#</th>*/}
                         <th>Transaction</th>
-                        <th>Quantity</th>
+                        <th>Carbon (CO2e)</th>
                         {/*<th>Date Time</th>*/}
                     </tr>
                     </thead>

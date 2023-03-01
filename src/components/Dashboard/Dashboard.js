@@ -4,6 +4,7 @@ import TableData from '../table/form';
 import { RealTimeDataOverview } from './realTImeDataOverview';
 import { RealTimeDataTotals } from './realTImeDataTotals';
 //import './bootstrap/dist/css/bootstrap.min.css';
+import { tmode, tmodeTip } from './realTImeDataTotals';
 
 
 const displayEmojiName = event => alert(event.target.id);
@@ -65,16 +66,6 @@ export default function Dashboard() {
       <RealTimeDataOverview/>
       <RealTimeDataTotals/>
       <br/>
-
-      <Table data = {rows}></Table>
-      <h3>Your highlights </h3>
-      <ul className = "highlights2">
-        <li className = "highlights">Train travel is your preferred method to get around</li>
-        <li className = "highlights">Your carbon usage has reduced 12% since the previous month</li>
-      </ul>
-      <button className = "topRow1" onClick={onChange}>
-            Refresh
-      </button>
     </div>
   );
 }

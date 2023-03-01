@@ -28,7 +28,7 @@ function TableData() {
   };
   
   return (
-    <div>{/*
+    <div> {/*
       <table id = "transactions">
         <thead>
           <tr>
