@@ -5594,6 +5594,11 @@
   dependencies:
     "bser" "2.1.1"
 
+"fetch-no-cors@^1.0.13":
+  "integrity" "sha512-Fbksv4IymuO99Zf+umHJohoTP9naAWKWVC0VdGIPZ1J28GUZ2pwparpB+Wm9uamu0zJKW8LOOqk8UGwvcn3zHA=="
+  "resolved" "https://registry.npmjs.org/fetch-no-cors/-/fetch-no-cors-1.0.13.tgz"
+  "version" "1.0.13"
+
 "file-entry-cache@^6.0.1":
   "integrity" "sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg=="
   "resolved" "https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-6.0.1.tgz"
