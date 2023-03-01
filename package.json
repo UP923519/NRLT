@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": "https://up923519.github.io/FYP",
   "private": true,
+  "proxy": "https://proxy.cors.sh/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@table-library/react-table-library": "^4.0.23",
