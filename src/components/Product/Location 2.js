@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../App/App.css"
 import TableData from '../table/form';
-import 'realtime-trains-scraper';
+import { getTrains } from "../realtime-trains-scraper/src/index.js";
 import { originStation } from './InputLocation';
 import { fitBounds } from 'google-map-react';
 import Select from 'react-select';
@@ -39,7 +39,7 @@ const realtimeTrains = require('realtime-trains-scraper');
 
 export var first_function = function() {
   console.log("Entered first function");
-  let t = realtimeTrains.getTrains(originStation,15);
+  let t = getTrains(originStation,15);
   return new Promise(resolve => {
       setTimeout(function() {
       resolve(t);

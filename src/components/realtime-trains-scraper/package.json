@@ -1,0 +1,27 @@
+{
+  "name": "realtime-trains-scraper",
+  "version": "1.0.0",
+  "description": "Get Unlimited and Fully Detailed UK Train Data from Realtime Trains without an API Key.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node src/test.js"
+  },
+  "author": "WillTDA",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "node-fetch": "^2.6.1"
+  },
+  "keywords": [
+    "realtime",
+    "trains",
+    "realtimetrains",
+    "real",
+    "time",
+    "train",
+    "trains",
+    "api",
+    "web",
+    "scraper"
+  ]
+}

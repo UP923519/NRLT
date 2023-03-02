@@ -37,6 +37,14 @@ export class InputLocation extends React.Component {
       .bind(this),
       10000
   );
+  setTimeout(
+    function() {
+      this.setState({value: event.target.value});
+      
+    }
+    .bind(this),
+    20000
+  );
   }
 
   handleSubmit(event) {

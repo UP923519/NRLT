@@ -45,7 +45,7 @@ li {
 }
 
 .topRow2 {
-  margin: 15px;
+  margin: 2px;
   background: #7f7f7f;
   cursor: pointer;
   border-radius: 9px;
@@ -57,7 +57,6 @@ li {
 }
 
 .topRow2:active {
-  margin: 15px;
   background: #ffffff;
   color:black;
 }
@@ -105,8 +104,8 @@ navbar.NavBar1{
 }
 
 .size{
-  max-width: 673px;
   height: auto;
+  width: 0px;
   margin-left: 6vw;
 }
 
@@ -116,7 +115,6 @@ navbar.NavBar1{
   padding: 10px;
   margin-right: 8px;
   margin-left: 8px;
-  width: 300px;
 }
 
 div.gm-style {
