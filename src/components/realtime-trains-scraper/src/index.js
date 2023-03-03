@@ -50,7 +50,7 @@ async function getCallingPoints(url) {
     return callingPoints;
 }
 
-module.exports = {
+//module.exports = {
 
     /**
     * Get the list of services for a given station. The name of the station can be provided but using it's code is recommended.
@@ -59,7 +59,7 @@ module.exports = {
     * @returns {Promise<Service[]>} A Promise that Resolves to an Array of Objects containing Services.
     */
 
-    async getTrains(station, resultCount) {
+    export async function getTrains(station, resultCount) {
         console.log("indexJS getTrains running");
 
         if (!station) return console.log("Realtime Trains Scraper Error: Station is Required.\nNeed Help? Join our Discord Server: https://discord.gg/P2g24jp");
@@ -180,5 +180,5 @@ module.exports = {
 
         if (data.every(item => item === null)) data = [];
         return data.filter(item => item !== null);
-    },
-};
+    }
+//};
