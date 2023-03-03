@@ -73,11 +73,11 @@ function TransactionForm(props) {
       <h3> Manual Activity Input</h3>
       <li>
         <ul><label>Transaction Type:</label>
-        <input type="text" id="inputData" value={type} onChange={changeType} /></ul>
+        <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="text" id="inputData" value={type} onChange={changeType} /></ul>
         <ul><label>Amount of Carbon:</label>
-        <input type="text" id="inputData" value={amount} onChange={changeAmount} /></ul>
+        <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="text" id="inputData" value={amount} onChange={changeAmount} /></ul>
         <ul><label>Date of Activity:</label>
-        <input type="datetime-local" id="inputData" value={date} max={currDateTime} onChange={changeDate} /></ul>
+        <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="datetime-local" id="inputData" value={date} max={currDateTime} onChange={changeDate} /></ul>
         <button id = "journeySubmitButton" onClick={transferValue}> Confirm</button>
       </li>
     </div>

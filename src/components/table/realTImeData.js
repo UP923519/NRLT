@@ -31,7 +31,7 @@ export class RealTimeData extends React.Component{
     render(){
         return(
             <div className="wrapper">
-                <Table className= "transactions" style = {{borderRadius: "9px", backgroundColor: "#caddeb"}}>
+                <Table className= "transactions" style = {{backgroundColor: "#caddeb"}}>
                     <thead>
                     <tr>
                         <th>#</th>

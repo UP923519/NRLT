@@ -57,10 +57,10 @@ li {
   border-radius: 9px;
   padding-bottom: 11px;
   padding-top: 12px;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: 4px;
+  padding-right: 4px;
   text-decoration: inherit;
-  color: white;
+  color: rgb(255, 255, 255);
 
 }
 
@@ -72,11 +72,11 @@ li {
   border-radius: 9px;
   padding-bottom: 7px;
   padding-top: 7px;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: 7px;
+  padding-right: 7px;
   text-decoration: inherit;
   color: white;
-  font-size: 10px;
+  font-size: 15px;
   display: flex;
   text-align: left;
 }
@@ -89,11 +89,11 @@ li {
   border-radius: 9px;
   padding-bottom: 5px;
   padding-top: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
   text-decoration: inherit;
   color: white;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .topRow2:active {
@@ -129,19 +129,19 @@ navbar.NavBar1{
   border-collapse: collapse;
   font-size: 13px;
   width: 98vw;
-  border-radius: 9px;
+  border-radius: 20px;
   
   }
 
 .transactions td{
   border: 0px solid #ddd;
-  border-radius: 9px;
+  border-radius: 0px;
   padding: 6px;  
 }
 
 .transactions tr:hover {
   background-color: #ddd;
-  border-radius: 9px;
+  border-radius: 20px;
 
 }
 
@@ -152,7 +152,7 @@ navbar.NavBar1{
 
 .highlights{
   background: #abccf0;
-  border-radius: 9px;
+  border-radius: 20px;
   padding: 10px;
   margin-right: 8px;
   margin-left: 8px;

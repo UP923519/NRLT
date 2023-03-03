@@ -70,6 +70,7 @@ export class InputLocationCar extends React.Component{
         <label htmlFor='email'>Origin</label>
         <form onSubmit={this.handleSubmit}>
             <input
+              style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}}
               type="text" 
               name='email'
               placeholder='Origin Location' 
@@ -80,12 +81,13 @@ export class InputLocationCar extends React.Component{
             <label htmlFor='name'>Destination</label>
             <br/>
             <input
+              style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}}
               name='name' 
               placeholder='Destination Location'
               value={this.state.name}
               onChange={this.handleChange}
             />
-            <br/><button id = "journeySubmitButton" type="submit">Submit</button>
+            <br/><button id = "journeySubmitButton" type="submit">☑ Submit</button>
         </form>
 
       </div>

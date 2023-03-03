@@ -61,9 +61,9 @@ export class InputLocation extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Where do you want to travel from?{" "}  
-            <input type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
+            <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
           </label><br/>
-          <input id = "journeySubmitButton" type="submit" value="☑ Submit" />
+          <input style = {{border: "0"}} id = "journeySubmitButton" type="submit" value="☑ Submit" />
           <p style={{fontWeight: "bold"}}>
           {/*Original Starting Stations:</p><br /> {trO} <br /><br />
           <p style={{fontWeight: "bold"}}>*/}
