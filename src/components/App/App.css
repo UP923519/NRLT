@@ -55,8 +55,8 @@ li {
   background: #7f7f7f;
   cursor: pointer;
   border-radius: 9px;
-  padding-bottom: 7px;
-  padding-top: 8px;
+  padding-bottom: 11px;
+  padding-top: 12px;
   padding-left: 3px;
   padding-right: 3px;
   text-decoration: inherit;
@@ -108,8 +108,8 @@ a.topRow2.active{
 
 navbar.NavBar1{
   background: #61d3c4;
-  padding-bottom: 0.5pc;
-  padding-top: 0.5pc;
+  padding-bottom: 0.8pc;
+  padding-top: 0.9pc;
   border-radius: 9px;
 }
 
@@ -135,7 +135,7 @@ navbar.NavBar1{
 
 .transactions td{
   border: 1px solid #ddd;
-  padding: 0px;
+  padding: 6px;
 }
 
 .transactions tr:hover {background-color: #ddd;}

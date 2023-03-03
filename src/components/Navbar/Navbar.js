@@ -16,11 +16,11 @@ const Navbar = () => {
   return (
     <BrowserRouter>
       <navbar className = "NavBar1" >
-        <NavLink exact className = "topRow2" activeClassName = "topRow2Active" to="/dashboard">Dashboard</NavLink>
-        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/preferences">Transactions</NavLink>
+        <NavLink exact className = "topRow2" activeClassName = "topRow2Active" to="/dashboard">Home</NavLink>
+        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/preferences">Balance</NavLink>
         <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/linkPage">Energy</NavLink>
         <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/product">Journeys</NavLink>
-        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/settings">Settings</NavLink>
+        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/settings">Options</NavLink>
       </navbar>
 
         <Routes>
