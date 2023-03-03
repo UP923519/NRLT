@@ -11,7 +11,7 @@ export let originStation;
 export class InputLocation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {value: '', trD: trD};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,21 +23,21 @@ export class InputLocation extends React.Component {
     this.setState({value: event.target.value});
     setTimeout(
       function() {
-        this.setState({value: event.target.value});
+        this.setState({value: event.target.value, trD: trD});
       }
       .bind(this),
       6000
   );
     setTimeout(
       function() {
-        this.setState({value: event.target.value});
+        this.setState({value: event.target.value, trD: trD});
       }
       .bind(this),
       10000
   );
   setTimeout(
     function() {
-      this.setState({value: event.target.value});
+      this.setState({value: event.target.value, trD: trD});
     }
     .bind(this),
     20000
@@ -67,7 +67,7 @@ export class InputLocation extends React.Component {
           <p style={{fontWeight: "bold"}}>
           {/*Original Starting Stations:</p><br /> {trO} <br /><br />
           <p style={{fontWeight: "bold"}}>*/}
-          Destinations to/from here:</p>{trD}
+          Destinations to/from here:</p> <p style={{maxWidth: "400px"}}>{/*trD*/}{this.state.trD}</p>
           <p style={{fontWeight: "bold"}}>
           All stations from here:</p>{/*{trC}*/} 
         </form>

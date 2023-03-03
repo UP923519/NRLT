@@ -22,7 +22,7 @@ let distanceConversion;
 
 
 export let trO;
-export let trD;
+export let trD = "Enter a station above to view destinations";
 export let trC;
 export let trcDropDown;
 export let trSCoord;
