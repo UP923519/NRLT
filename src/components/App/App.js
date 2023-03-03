@@ -21,7 +21,7 @@ function App() {
 
   return (   
     <div className="wrapper">
-      <h2>Carbon Tracker</h2>
+      <h1 style = {{color: "#2d9ba1"}} >Carbon Tracker</h1>
       <div className = "topBanner1">
         <h4> Welcome, {localStorage.getItem('username')}
         {displayAction && <p>I am writing JSX</p>}

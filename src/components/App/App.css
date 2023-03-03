@@ -127,18 +127,23 @@ navbar.NavBar1{
   text-align: center;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  border: 3px solid #ddd;
   font-size: 13px;
   width: 98vw;
+  border-radius: 9px;
   
   }
 
 .transactions td{
-  border: 1px solid #ddd;
-  padding: 6px;
+  border: 0px solid #ddd;
+  border-radius: 9px;
+  padding: 6px;  
 }
 
-.transactions tr:hover {background-color: #ddd;}
+.transactions tr:hover {
+  background-color: #ddd;
+  border-radius: 9px;
+
+}
 
 .TableRow{
   display:flex; 
@@ -184,4 +189,21 @@ div.gm-style {
 
 #inputData{
   margin-left: 10px;
+}
+
+#loginButton{
+  margin-bottom: 10px;
+  margin-top: 15px;
+  background: #ececec;
+  border: none;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: inherit;
+  color: rgb(40, 40, 40);
+  font-size: 20px;
+
 }

@@ -51,7 +51,7 @@ export class RealTimeDataOverview extends React.Component{
         return(
             <div className="wrapper">
                 <h4>Your largest transactions so far</h4>
-                <Table className= "transactions">
+                <Table className= "transactions" style = {{backgroundColor: "#b4d3ed"}}>
                     <thead>
                     <tr>
                         {/*<th>#</th>*/}

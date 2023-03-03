@@ -35,21 +35,22 @@ export default function Login({setToken}) {
   
   return (
     <div className="login-wrapper">
-      <h1>Please Log In</h1>
+      <h1 style = {{color: "#2d9ba1"}} >Carbon Tracker</h1>
+
+      <h2>Please Log In</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)}/>
+          <h4 style = {{backgroundColor: "#caddeb", borderRadius: "9px"}}>Username</h4>
+          <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="text" onChange={e => setUserName(e.target.value)}/>
         </label>
         <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)}/>
-          
+          <h4 style = {{backgroundColor: "#caddeb", borderRadius: "9px"}}>Password</h4>
+          <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}}type="password" onChange={e => setPassword(e.target.value)}/>  
         </label>
-        <div>
-          <button type="submit">Login {username} </button>
-        </div>
       </form>
+        <div>
+          <button id = "loginButton" type="submit" onClick = {handleSubmit}>Login {username} </button>
+        </div>
     </div>
   )
 }

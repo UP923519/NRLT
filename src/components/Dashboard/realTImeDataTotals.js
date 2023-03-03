@@ -142,7 +142,7 @@ export class RealTimeDataTotals extends React.Component{
         return(
             <div className="wrapper">
                 <h4>Your recent carbon balance</h4>
-                <Table className= "transactions">
+                <Table className= "transactions" style = {{backgroundColor: "#b4eced"}}>
                     <thead>
                     <tr>
                         {/*<th>#</th>*/}
