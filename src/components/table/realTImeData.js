@@ -4,21 +4,26 @@ import {getDatabase, ref, set, get, update, remove, child, onValue } from "fireb
 import { Table } from "react-bootstrap";
 
 const db = StartFirebase();
+let records;
 
 export class RealTimeData extends React.Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            tableData: []
+            tableData: [],
+            value: ''
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
-        }
+        
     }
 
     componentDidMount(){
         const user2 = localStorage.getItem('username');
         const dbref = ref(db, user2);
         onValue(dbref, (snapshot)=>{
-            let records = [];
+            records = [];
             snapshot.forEach(childSnapshot => {
                 let keyName = childSnapshot.key;
                 let data = childSnapshot.val();
@@ -26,8 +31,33 @@ export class RealTimeData extends React.Component{
             });
             this.setState({tableData: records});
         });
+
     }
 
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+    
+    handleSubmit(event) {
+        event.preventDefault();
+        const db = StartFirebase();
+        const user2 = localStorage.getItem('username');
+        let deletionCounter = false;
+        //console.log(records.length, Number(this.state.value));
+        for (let i=0; i<records.length; i++){
+            if (i == Number(this.state.value)) {
+                const tasksRef = ref(db, user2+"/"+records[i].date);
+                remove(tasksRef).then(() => {
+                  console.log("location removed");
+                });
+                alert("Row " + this.state.value + " has been deleted");
+                deletionCounter = true;
+            }
+        }
+        if (deletionCounter == false){
+            alert("This row does not exist");
+        }
+    }
     render(){
         return(
             <div className="wrapper">
@@ -54,6 +84,17 @@ export class RealTimeData extends React.Component{
                         })}
                     </tbody>
                 </Table>
+                <form onSubmit={this.handleSubmit}>
+                <label>Which row would you like to delete?
+                <input 
+                type="text" 
+                value={this.state.value}
+                onChange={this.handleChange}
+                />
+                </label>
+                <input type="submit" value="Delete" />
+                </form>
+                
             </div>
 
         )

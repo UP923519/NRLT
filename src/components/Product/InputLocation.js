@@ -4,6 +4,7 @@ import { getShowDistance } from "./Location 2";
 //import CallingPoints from "./callingPoints";
 import Select from 'react-select';
 import { stCoord } from "./LocationCalcDIstance";
+import { GetMiles } from "./GetMiles";
 
 
 export let originStation;

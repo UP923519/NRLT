@@ -6,7 +6,7 @@ import { RealTimeData } from '../table/realTImeData';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
 const displayEmojiName = event => alert(event.target.id);
-const emojis = [{emoji: "Refresh",name: "grinning face"},{emoji: "Filters",name: "List of Filters"},{emoji: "Apply",name: "Filters Applied"}];
+const emojis = [{emoji: "Refresh",name: "Refreshed"}];
 const customer = require('../table/data.json');
 
 const cities = [
@@ -45,9 +45,11 @@ export default function Preferences() {
       {
         emojis.map(emoji => (
           <li key={emoji.name}>
-            <button className = "topRow1" onClick={displayEmojiName}>
-              <span role="img" aria-label={emoji.name} id={emoji.name}>{emoji.emoji} </span>
-            </button>
+            <a href="/preferences">
+              <button id = "useCurrentLocation" onClick={displayEmojiName}>
+                <span role="img" aria-label={emoji.name} id={emoji.name}>{emoji.emoji} </span>
+              </button>
+              </a>
           </li>
         ))
       }
