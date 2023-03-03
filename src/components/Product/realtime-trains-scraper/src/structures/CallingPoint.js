@@ -1,4 +1,4 @@
-class CallingPoint {
+export class CallingPoint {
 
     /**
      * The Name of the Station
@@ -56,5 +56,3 @@ class CallingPoint {
 
     delay = this.delay
 }
-
-module.exports = CallingPoint;

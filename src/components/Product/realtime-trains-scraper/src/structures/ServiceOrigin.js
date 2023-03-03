@@ -1,4 +1,4 @@
-class ServiceOrigin {
+export class ServiceOrigin {
     /**
      * The Name of the Origin Station
      * @type {String}
@@ -12,5 +12,3 @@ class ServiceOrigin {
     
     code = this.code
 }
-
-module.exports = ServiceOrigin;
