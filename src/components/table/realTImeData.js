@@ -85,14 +85,13 @@ export class RealTimeData extends React.Component{
                     </tbody>
                 </Table>
                 <form onSubmit={this.handleSubmit}>
-                <label>Which row would you like to delete?
-                <input 
+                <label style = {{paddingRight: "7px"}} >Which row would you like to delete?</label> 
+                <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}}
                 type="text" 
                 value={this.state.value}
                 onChange={this.handleChange}
                 />
-                </label>
-                <input type="submit" value="Delete" />
+                <input style = {{marginLeft: "7px", border: "0"}} id = "useCurrentLocation" type="submit" value="Delete" />
                 </form>
                 
             </div>
