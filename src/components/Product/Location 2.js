@@ -55,7 +55,7 @@ export var async_function = async function() {
   console.log("After awaiting for 2 seconds," +
   "the promise returned from first function is:");
   //console.log(JSON.stringify(first_promise));
-  console.log(first_promise.length);
+  //console.log("FLP is", first_promise.length);
   //console.log(" ----- ");
   //console.log(first_promise[0].callingPoints)
   //console.log(first_promise[0].callingPoints.length)

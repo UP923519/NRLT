@@ -95,7 +95,6 @@ export default class Product extends Component {
           <GetMiles/>
         </p>
         <p>
-        <br/>
         <InputLocationCar/>
         </p>
 

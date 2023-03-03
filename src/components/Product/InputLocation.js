@@ -24,7 +24,6 @@ export class InputLocation extends React.Component {
     setTimeout(
       function() {
         this.setState({value: event.target.value});
-        
       }
       .bind(this),
       6000
@@ -32,7 +31,6 @@ export class InputLocation extends React.Component {
     setTimeout(
       function() {
         this.setState({value: event.target.value});
-        
       }
       .bind(this),
       10000
@@ -40,7 +38,6 @@ export class InputLocation extends React.Component {
   setTimeout(
     function() {
       this.setState({value: event.target.value});
-      
     }
     .bind(this),
     20000
@@ -49,8 +46,7 @@ export class InputLocation extends React.Component {
 
   handleSubmit(event) {
     originStation = this.state.value;
-    //alert('origin: ' + originStation);
-    first_function(originStation);
+
     async_function();
     event.preventDefault();
 
@@ -58,9 +54,6 @@ export class InputLocation extends React.Component {
 
   }
   
-
-  
-
   render() {
     return (
         <div>
@@ -74,12 +67,11 @@ export class InputLocation extends React.Component {
           <p style={{fontWeight: "bold"}}>
           {/*Original Starting Stations:</p><br /> {trO} <br /><br />
           <p style={{fontWeight: "bold"}}>*/}
-          Destinations to/from here:</p><br /> {trD} <br /><br />
+          Destinations to/from here:</p>{trD}
           <p style={{fontWeight: "bold"}}>
-          All stations from here:</p><br /> {/*{trC}*/} 
+          All stations from here:</p>{/*{trC}*/} 
         </form>
         {trcDropDown}
-        <br /><br />
 
       </div>
       

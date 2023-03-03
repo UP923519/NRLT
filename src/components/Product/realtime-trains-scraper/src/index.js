@@ -8,10 +8,14 @@ const CORS_ANYWHERE = "https://proxy.cors.sh/"
 
 async function getCallingPoints(url) {
     if (!url) throw new Error("URL is Required.");
-
     let callingPoints = [];
-
-    const html = await fetch(CORS_ANYWHERE+url, {
+    let html = await fetch(CORS_ANYWHERE+url, {
+        headers: {
+        'x-cors-api-key': 'temp_f2b1d57dc4263bbdb583e9b8c8a4fe18',
+        'access-control-allow-origin': '*'
+        }
+      })
+    html = await fetch(CORS_ANYWHERE+url, {
         headers: {
         'x-cors-api-key': 'temp_f2b1d57dc4263bbdb583e9b8c8a4fe18',
         'access-control-allow-origin': '*'
