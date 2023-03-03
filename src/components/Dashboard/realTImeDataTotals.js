@@ -169,7 +169,7 @@ export class RealTimeDataTotals extends React.Component{
                     
 
                     {/*<Table data = {rows}></Table>*/}
-                    <h3>Your highlights </h3>
+                    <h4>Your highlights </h4>
                     <ul className = "highlights2">
                         <li className = "highlights">{tmode}</li>
                         <li className = "highlights">{tmodeTip}</li>

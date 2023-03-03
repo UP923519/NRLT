@@ -1,8 +1,8 @@
 .size{
   height: auto;
-  width: 0px;
-  margin-left: 6vw;
-  font-size: 12px;
+  font-size: 17px;
+  display: flex;
+  text-align: center;
 
 }
 
@@ -13,7 +13,6 @@
 
 .wrapper button {
   border: 0;
-  padding: 1;
   background: #bcbcbc;
   cursor: pointer;
   border-radius: 9px;
@@ -50,16 +49,47 @@ li {
 }
 
 .topRow2 {
-  margin: 0.5px;
+  margin: 2px;
   background: #7f7f7f;
   cursor: pointer;
   border-radius: 9px;
-  padding: 5px;
+  padding-bottom: 7px;
+  padding-top: 8px;
   padding-left: 3px;
   padding-right: 3px;
   text-decoration: inherit;
   color: white;
-  font-size: 12px;
+
+}
+
+#journeySubmitButton {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  padding-left: 3px;
+  padding-right: 3px;
+  text-decoration: inherit;
+  color: white;
+  font-size: 10px;
+}
+
+#useCurrentLocation{
+  margin-left: 2px;
+  margin-bottom: 10px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: inherit;
+  color: white;
+  font-size: 10px;
 }
 
 .topRow2:active {
@@ -74,9 +104,9 @@ a.topRow2.active{
 
 navbar.NavBar1{
   background: #61d3c4;
-  padding: 8px;
+  padding-bottom: 0.5pc;
+  padding-top: 0.5pc;
   border-radius: 9px;
-
 }
 
 .backHome{
@@ -94,12 +124,15 @@ navbar.NavBar1{
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     border: 3px solid #ddd;
-    width: 100%;
-  }
+    font-size: 13px;
+    margin-right: 8px;
+    margin-left: 8px;
+    width: 92vw;
+    }
 
 .transactions td{
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 0px;
   }
 
 .transactions tr:hover {background-color: #ddd;}
@@ -128,3 +161,4 @@ div.gm-style {
 #locationAddress{
   min-height: 1000%;
 }
+

@@ -5,7 +5,7 @@ class List extends React.Component {
     render() {
         return (
             <div>
-                <h2>Energy Monitor</h2>
+                <h3>Energy Monitor</h3>
                 <p>Please choose an energy plan from the list below</p>
                 <ul>
                     <li><Link to="/react">Renewable Unlimited</Link></li>

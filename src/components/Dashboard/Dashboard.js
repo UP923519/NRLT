@@ -61,7 +61,6 @@ export default function Dashboard() {
 
   return (
     <div className='Wrapper2'>
-      <h2>Dashboard</h2>
       <h3>Your information overview </h3>
       <RealTimeDataOverview/>
       <RealTimeDataTotals/>

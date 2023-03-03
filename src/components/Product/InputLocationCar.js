@@ -67,29 +67,25 @@ export class InputLocationCar extends React.Component{
     return(
       <div>
         <h3>Car Journey Input</h3>
+        <label htmlFor='email'>Origin</label>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor='email'>Origin</label>
-            <input 
+            <input
+              type="text" 
+              id="inputData"
               name='email'
-              placeholder='Email' 
+              placeholder='Origin Location' 
               value = {this.state.email}
               onChange={this.handleChange}
-            />
-            <button type="button" onClick={this.showCurrent}>Use Current Location</button>
-          </div>
-          <div>
+            /><button id = "useCurrentLocation" type="button" onClick={this.showCurrent}>𖡡</button>
+
             <label htmlFor='name'>Destination</label>
             <input
               name='name' 
-              placeholder='Name'
+              placeholder='Destination Location'
               value={this.state.name}
               onChange={this.handleChange}
             />
-          </div>
-          <div>
-            <button type="submit">Submit</button>
-          </div>
+            <br/><button id = "journeySubmitButton" type="submit">Submit</button>
         </form>
 
       </div>

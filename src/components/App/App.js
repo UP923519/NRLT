@@ -5,6 +5,11 @@ import cors from 'cors';
 
 export const theUser = localStorage.getItem('username');
 
+<style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowLightStatusBar">true</item>
+    <item name="android:statusBarColor">@android:color/white</item>
+</style>
+
 function App() {
   const { token, setToken, removeToken, getToken} = useToken();
   const greeting = "greeting";
@@ -16,7 +21,7 @@ function App() {
 
   return (   
     <div className="wrapper">
-      <h1>Carbon Tracker</h1>
+      <h2>Carbon Tracker</h2>
       <div className = "topBanner1">
         <h4> Welcome, {localStorage.getItem('username')}
         {displayAction && <p>I am writing JSX</p>}

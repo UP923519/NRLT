@@ -83,7 +83,7 @@ export default class Product extends Component {
   render() {
     return(
       <div>
-        <h2>Journey Planner</h2>
+        <h3>Journey Planner</h3>
         
         <div style={{ width: "100%", height: "500px" }}>
           <MapUpdate />

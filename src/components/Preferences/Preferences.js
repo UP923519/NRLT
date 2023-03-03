@@ -38,7 +38,6 @@ export default function Preferences() {
 
   return (    
     <div className="wrapper">
-      <h2>Balance Sheet</h2>
       {/*<Table data = {rows} >
       </Table>*/}
       <h3>Carbon Transactions</h3>
