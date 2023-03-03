@@ -174,8 +174,22 @@ div.gm-style {
   min-height: 1000%;
 }
 
-.divLeft{
+.divCarInput{
   text-align: left;
+  background-color: #ffe9e9;
+  border-radius: 20px;
+}
+
+.divRailInput{
+  text-align: left;
+  background-color: #c1ecf0;
+  border-radius: 20px;
+}
+
+.divRailInputInner{
+  text-align: left;
+  background-color: #c1ecf0;
+  border-radius: 20px;
 }
 
 #textLocation{

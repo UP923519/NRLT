@@ -57,22 +57,26 @@ export class InputLocation extends React.Component {
   
   render() {
     return (
-        <div className = "divLeft">
-          <h3>National Rail Input</h3>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Where do you want to travel from?{" "}  
+        <div className = "divRailInput">
+            <div className = "divRailInputInner">
+            <h3>&nbsp;National Rail Input</h3>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+            &nbsp;Where do you want to travel from?{" "}  
             <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
-          </label><br/>
-          <input style = {{border: "0"}} id = "journeySubmitButton" type="submit" value="☑ Submit" />
-          <p style={{fontWeight: "bold"}}>
-          {/*Original Starting Stations:</p><br /> {trO} <br /><br />
-          <p style={{fontWeight: "bold"}}>*/}
-          Destinations to/from here:</p> <p style={{maxWidth: "400px"}}>{/*trD*/}{this.state.trD}</p>
-          <p style={{fontWeight: "bold"}}>
-          All stations from here:</p>{/*{trC}*/} 
-        </form>
-        {trcDropDown}
+            </label><br/>
+            <input style = {{border: "0"}} id = "journeySubmitButton" type="submit" value="☑ Submit" />
+            <p style={{fontWeight: "bold"}}>
+            {/*Original Starting Stations:</p><br /> {trO} <br /><br />
+            <p style={{fontWeight: "bold"}}>*/}
+            &nbsp;Destinations to/from here:</p> <p style={{maxWidth: "400px"}}>{/*trD*/}{'\xa0'+this.state.trD}</p>
+            <p style={{fontWeight: "bold"}}>
+            &nbsp;All stations from here:</p>{/*{trC}*/} 
+            {trcDropDown}
+            <br/>
+          </form>
+          
+        </div>
 
       </div>
       

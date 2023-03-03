@@ -65,11 +65,11 @@ export class InputLocationCar extends React.Component{
   // in react component itself as state
   render(){
     return(
-      <div className = "divLeft">
-        <h3>Car Journey Input</h3>
-        <label htmlFor='email'>Origin</label>
+      <div className = "divCarInput">
+        <h3>&nbsp;Car Journey Input</h3>
+        <label htmlFor='email'>&nbsp;Origin</label>
         <form onSubmit={this.handleSubmit}>
-            <input
+        &nbsp;<input
               style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}}
               type="text" 
               name='email'
@@ -78,16 +78,16 @@ export class InputLocationCar extends React.Component{
               onChange={this.handleChange}
             /><button id = "useCurrentLocation" type="button" onClick={this.showCurrent}>𖡡</button>
             <br/>
-            <label htmlFor='name'>Destination</label>
+            <label htmlFor='name'>&nbsp;Destination</label>
             <br/>
-            <input
+            &nbsp;<input
               style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}}
               name='name' 
               placeholder='Destination Location'
               value={this.state.name}
               onChange={this.handleChange}
             />
-            <br/><button id = "journeySubmitButton" type="submit">☑ Submit</button>
+            <button id = "journeySubmitButton" type="submit">☑ Submit</button>
         </form>
 
       </div>

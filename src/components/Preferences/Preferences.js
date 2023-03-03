@@ -6,7 +6,7 @@ import { RealTimeData } from '../table/realTImeData';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
 const displayEmojiName = event => alert(event.target.id);
-const emojis = [{emoji: "Refresh",name: "Refreshed"}];
+const emojis = [{emoji: "Refresh",name: "Refreshing data..."}];
 const customer = require('../table/data.json');
 
 const cities = [
