@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../App/App.css"
 import TableData from '../table/form';
-import { getTrains } from "../realtime-trains-scraper/src/index.js";
+import { getTrains } from "./realtime-trains-scraper/src/index.js";
 import { originStation } from './InputLocation';
 import { fitBounds } from 'google-map-react';
 import Select from 'react-select';
