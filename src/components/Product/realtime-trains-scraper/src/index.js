@@ -3,25 +3,18 @@ const cheerio = require("cheerio");
 const tocs = require("./mappings/operators.json");
 const stations = require("./mappings/stations.json");
 const Service = require("./structures/Service");
-const CORS_ANYWHERE = ""//"https://proxy.cors.sh/"
+const CORS_ANYWHERE = "https://proxy.cors.sh/"
 
 
 async function getCallingPoints(url) {
     if (!url) throw new Error("URL is Required.");
     let callingPoints = [];
-    let html = await fetch(CORS_ANYWHERE+url /*, {
+    let html = await fetch(CORS_ANYWHERE+url, {
         headers: {
         'x-cors-api-key': 'temp_f2b1d57dc4263bbdb583e9b8c8a4fe18',
-        'access-control-allow-origin': '*'
+        'mode': 'no-cors'
         }
-      }*/
-      )
-    html = await fetch(CORS_ANYWHERE+url, /*{
-        headers: {
-        'x-cors-api-key': 'temp_f2b1d57dc4263bbdb583e9b8c8a4fe18',
-        'access-control-allow-origin': '*'
-        }
-      }*/
+      }
       )
         .then(response => response.text());
 
@@ -85,12 +78,12 @@ export async function getTrains(station, resultCount) {
     let data = []; //array of data to return
 
     //getting the html from Realtime Trains
-    const html = await fetch(CORS_ANYWHERE+`https://www.realtimetrains.co.uk/search/detailed/gb-nr:${stationCode}`/*, {
+    const html = await fetch(CORS_ANYWHERE+`https://www.realtimetrains.co.uk/search/detailed/gb-nr:${stationCode}`, {
         headers: {
         'x-cors-api-key': 'temp_d773b942f45ded620045518a7f461f6a',
-        'access-control-allow-origin': '*'
+        'mode': 'no-cors'
         }
-        }*/
+        }
         )
         .then(response => response.text());
 
