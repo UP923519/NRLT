@@ -3,7 +3,7 @@ const ServiceOrigin = require('./ServiceOrigin');
 const ServiceDestination = require('./ServiceDestination');
 const CallingPoint = require('./CallingPoint');
 
-class Service {
+export class Service {
 
     /**
      * The Service Operator
@@ -133,5 +133,3 @@ class Service {
 
     runsAsRequired = this.runsAsRequired
 }
-
-module.exports = Service;

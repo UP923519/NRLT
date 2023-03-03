@@ -1,4 +1,4 @@
-class ServiceOperator {
+export class ServiceOperator {
     /**
      * The Name of the Service Operator
      * @type {String}
@@ -12,5 +12,3 @@ class ServiceOperator {
     
     code = this.code
 }
-
-module.exports = ServiceOperator;
