@@ -117,12 +117,13 @@ export class RealTimeDataTotals extends React.Component{
 
             console.log("tmode iss", tmodeT, tmodeC);
 
-            if (tmodeT>tmodeC){
+            if (tmodeT > tmodeC){
                 tmode = "Train travel is your preferred method to get around"
-            } else if (tmodeT>tmodeC){
+                tmodeTip = "Try switching to cycling or walking where possible"
+            } else if (tmodeT < tmodeC){
                 tmode = "Car travel is your preferred method to get around"
                 tmodeTip = "Try taking the train more often to reduce your carbon emissions"
-            } else if (tmodeT==tmodeC){
+            } else if (tmodeT == tmodeC){
                 tmode = "You take the same amount of car journeys as train journeys"
                 tmodeTip = "Try to reduce your car journeys and take the train more often instead"
 

@@ -16,13 +16,13 @@ function App() {
 
   return (   
     <div className="wrapper">
-      <h1 className = "title">Carbon Tracker</h1>
+      <h1>Carbon Tracker</h1>
       <div className = "topBanner1">
-        <h4 className = "topRow1"> Welcome, {localStorage.getItem('username')} </h4>
+        <h4> Welcome, {localStorage.getItem('username')}
         {displayAction && <p>I am writing JSX</p>}
-        <button className = "topRow1" onClick={removeToken}>
+        <button className = "logOut" onClick={removeToken}>
             Log Out
-        </button>
+        </button> </h4>
       </div>
       <div>
         <Navbar />

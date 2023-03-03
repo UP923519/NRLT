@@ -1,14 +1,17 @@
+.size{
+  height: auto;
+  width: 0px;
+  margin-left: 6vw;
+  font-size: 12px;
+
+}
+
 .wrapper {
-    font-size: 10px;
     padding: 0px;
 }
 
-.title {
-  padding: 0;
-}
 
 .wrapper button {
-  font-size: 10px;
   border: 0;
   padding: 1;
   background: #bcbcbc;
@@ -29,9 +32,11 @@ li {
 
 
 .topBanner1 {
-  display:flex; 
-  flex-direction:row;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.logOut {
+  margin-left: 10px;
 }
 
 .topRow1 {
@@ -45,16 +50,16 @@ li {
 }
 
 .topRow2 {
-  font-size: 10px;
-  margin: 2px;
+  margin: 0.5px;
   background: #7f7f7f;
   cursor: pointer;
   border-radius: 9px;
   padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 3px;
+  padding-right: 3px;
   text-decoration: inherit;
   color: white;
+  font-size: 12px;
 }
 
 .topRow2:active {
@@ -69,7 +74,7 @@ a.topRow2.active{
 
 navbar.NavBar1{
   background: #61d3c4;
-  padding: 5px;
+  padding: 8px;
   border-radius: 9px;
 
 }
@@ -102,12 +107,6 @@ navbar.NavBar1{
 .TableRow{
   display:flex; 
   flex-direction:row;
-}
-
-.size{
-  height: auto;
-  width: 0px;
-  margin-left: 6vw;
 }
 
 .highlights{
