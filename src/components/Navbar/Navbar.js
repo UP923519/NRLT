@@ -29,7 +29,9 @@ const Navbar = () => {
           <Route path="/linkPage" element={<LinkPage/>} />
           <Route path="/product" element={<Product/>} />
           <Route path="/settings" element={<Settings/>} />
+          <Route path="/FYP" element={<Navigate to="/dashboard" />} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
+
           <Route
             path="*"
             element={

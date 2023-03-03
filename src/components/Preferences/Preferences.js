@@ -5,7 +5,7 @@ import { Handle } from "./handlesubmit";
 import { RealTimeData } from '../table/realTImeData';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
-const displayEmojiName = event => alert(event.target.id);
+const displayEmojiName = event => alert("Refreshing data...");
 const emojis = [{emoji: "Refresh",name: "Refreshing data..."}];
 const customer = require('../table/data.json');
 
@@ -45,7 +45,7 @@ export default function Preferences() {
       {
         emojis.map(emoji => (
           <li key={emoji.name}>
-            <a href="/preferences">
+            <a href="/FYP">
               <button id = "useCurrentLocation" onClick={displayEmojiName}>
                 <span role="img" aria-label={emoji.name} id={emoji.name}>{emoji.emoji} </span>
               </button>

@@ -57,8 +57,8 @@ li {
   border-radius: 9px;
   padding-bottom: 11px;
   padding-top: 12px;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
   text-decoration: inherit;
   color: rgb(255, 255, 255);
 
@@ -108,7 +108,7 @@ a.topRow2.active{
 
 navbar.NavBar1{
   background: #61d3c4;
-  padding-bottom: 0.8pc;
+  padding-bottom: 0.85pc;
   padding-top: 0.9pc;
   border-radius: 9px;
 }
