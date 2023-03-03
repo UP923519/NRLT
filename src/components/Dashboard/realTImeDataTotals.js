@@ -126,7 +126,9 @@ export class RealTimeDataTotals extends React.Component{
             } else if (tmodeT == tmodeC){
                 tmode = "You take the same amount of car journeys as train journeys"
                 tmodeTip = "Try to reduce your car journeys and take the train more often instead"
-
+            } if (tmodeT == 0 && tmodeC == 0){
+                tmode = "Start adding journeys to recieve highlights"
+                tmodeTip = "Recommendations will appear once you have added a journey"
             }
 
 
