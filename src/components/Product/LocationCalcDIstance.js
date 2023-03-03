@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "../App/App.css"
-import 'realtime-trains-scraper';
+//import 'realtime-trains-scraper';
 import Geocode from "react-geocode";
 import { findCoord } from './Location 2';
 
@@ -20,7 +20,7 @@ export function testf2 (station) {
   return new Promise(resolve => {
       setTimeout(function() {
       resolve(t);
-      }, 1);
+      }, 1000);
   });
 };
 

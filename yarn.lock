@@ -3969,7 +3969,7 @@
     "domhandler" "^5.0.3"
     "domutils" "^3.0.1"
 
-"cheerio@^1.0.0-rc.10":
+"cheerio@^1.0.0-rc.12":
   "integrity" "sha512-VqR8m68vM46BNnuZ5NtnGBKIE/DfN0cRIzg9n40EIq9NOv90ayxLBXA8fXC5gquFRGJSTRqBq25Jt2ECLR431Q=="
   "resolved" "https://registry.npmjs.org/cheerio/-/cheerio-1.0.0-rc.12.tgz"
   "version" "1.0.0-rc.12"
@@ -7967,7 +7967,7 @@
     "lower-case" "^2.0.2"
     "tslib" "^2.0.3"
 
-"node-fetch@^2.6.0", "node-fetch@^2.6.1", "node-fetch@2.6.7":
+"node-fetch@^2.6.0", "node-fetch@2.6.7":
   "integrity" "sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ=="
   "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
   "version" "2.6.7"
@@ -9509,14 +9509,6 @@
   "version" "3.6.0"
   dependencies:
     "picomatch" "^2.2.1"
-
-"realtime-trains-scraper@^1.0.0":
-  "integrity" "sha512-FOlEkWP55RwdnltjoeAzDboICvGwFzM6RLj0XuqueorqcG049UwiUx4NQBXGMxPeqEMnH/+PHCjys0are7EGCA=="
-  "resolved" "https://registry.npmjs.org/realtime-trains-scraper/-/realtime-trains-scraper-1.0.0.tgz"
-  "version" "1.0.0"
-  dependencies:
-    "cheerio" "^1.0.0-rc.10"
-    "node-fetch" "^2.6.1"
 
 "recursive-readdir@^2.2.2":
   "integrity" "sha512-8HrF5ZsXk5FAH9dgsx3BlUer73nIhuj+9OrQwEbLTPOBzGkL1lsFCR01am+v+0m2Cmbs1nP12hLDl5FA7EszKA=="

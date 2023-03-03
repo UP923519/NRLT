@@ -59,126 +59,126 @@ async function getCallingPoints(url) {
     * @returns {Promise<Service[]>} A Promise that Resolves to an Array of Objects containing Services.
     */
 
-    export async function getTrains(station, resultCount) {
-        console.log("indexJS getTrains running");
+export async function getTrains(station, resultCount) {
+    console.log("indexJS getTrains running");
 
-        if (!station) return console.log("Realtime Trains Scraper Error: Station is Required.\nNeed Help? Join our Discord Server: https://discord.gg/P2g24jp");
-        station = station.toLowerCase();
+    if (!station) return console.log("Realtime Trains Scraper Error: Station is Required.\nNeed Help? Join our Discord Server: https://discord.gg/P2g24jp");
+    station = station.toLowerCase();
 
-        if (!resultCount) resultCount = 10;
-        if (resultCount > 15) return console.log("Realtime Trains Scraper Error: You cannot Fetch more than 15 Results.\nNeed Help? Join our Discord Server: https://discord.gg/P2g24jp");
-        if (resultCount < 1) return console.log("Realtime Trains Scraper Error: You must Fetch at least 1 Result.\nNeed Help? Join our Discord Server: https://discord.gg/P2g24jp");
+    if (!resultCount) resultCount = 10;
+    if (resultCount > 15) return console.log("Realtime Trains Scraper Error: You cannot Fetch more than 15 Results.\nNeed Help? Join our Discord Server: https://discord.gg/P2g24jp");
+    if (resultCount < 1) return console.log("Realtime Trains Scraper Error: You must Fetch at least 1 Result.\nNeed Help? Join our Discord Server: https://discord.gg/P2g24jp");
 
-        //retrieving the code for the station
-        station = station.replace(/[^a-z0-9]/gi, "");
-        const stationCode = stations.find(s =>
-            s.stationName.replace(/[^a-z0-9]/gi, "").toLowerCase().includes(station) ||
-            s.crsCode.toLowerCase() === station
-        )?.crsCode || null;
+    //retrieving the code for the station
+    station = station.replace(/[^a-z0-9]/gi, "");
+    const stationCode = stations.find(s =>
+        s.stationName.replace(/[^a-z0-9]/gi, "").toLowerCase().includes(station) ||
+        s.crsCode.toLowerCase() === station
+    )?.crsCode || null;
 
-        let data = []; //array of data to return
+    let data = []; //array of data to return
 
-        //getting the html from Realtime Trains
-        const html = await fetch(CORS_ANYWHERE+`https://www.realtimetrains.co.uk/search/detailed/gb-nr:${stationCode}`, {
-            headers: {
-            'x-cors-api-key': 'temp_d773b942f45ded620045518a7f461f6a',
-            'access-control-allow-origin': '*'
-            }
-          })
-            .then(response => response.text());
+    //getting the html from Realtime Trains
+    const html = await fetch(CORS_ANYWHERE+`https://www.realtimetrains.co.uk/search/detailed/gb-nr:${stationCode}`, {
+        headers: {
+        'x-cors-api-key': 'temp_d773b942f45ded620045518a7f461f6a',
+        'access-control-allow-origin': '*'
+        }
+        })
+        .then(response => response.text());
 
-        const $ = cheerio.load(html);
+    const $ = cheerio.load(html);
 
-        //getting the detailed timetable
-        let serviceList = $(".servicelist");
-        serviceList = serviceList.find("a");
-        let hrefs = [];
-        let callingPointsList = [];
+    //getting the detailed timetable
+    let serviceList = $(".servicelist");
+    serviceList = serviceList.find("a");
+    let hrefs = [];
+    let callingPointsList = [];
 
-        serviceList.each((i, el) => {
-            //formatting the href we'll use to get the list of calling points from
-            let callingPointHref = $(el).attr("href").split("/");
-            callingPointHref.pop();
-            callingPointHref = callingPointHref.join("/");
-            hrefs.push(callingPointHref);
+    serviceList.each((i, el) => {
+        //formatting the href we'll use to get the list of calling points from
+        let callingPointHref = $(el).attr("href").split("/");
+        callingPointHref.pop();
+        callingPointHref = callingPointHref.join("/");
+        hrefs.push(callingPointHref);
+    });
+
+    //getting the calling points
+    callingPointsList = await Promise.all(hrefs.map(href => getCallingPoints(`https://www.realtimetrains.co.uk${href}`)));
+
+    serviceList.each(async (i, el) => {
+        let currentElement = $(el).children();
+
+        let callingPoints = callingPointsList[i] || [];
+
+        let serviceUID = hrefs[i].split("/")[2].replace("gb-nr:", "");
+        let sourceURL = `https://www.realtimetrains.co.uk${hrefs[i]}`;
+
+        let values = currentElement.map((i, el) => {
+            return $(el).text();
         });
 
-        //getting the calling points
-        callingPointsList = await Promise.all(hrefs.map(href => getCallingPoints(`https://www.realtimetrains.co.uk${href}`)));
+        //parsing the values in each row of the table into an object, then pushing it to the array of data
+        let service = {};
+        service.operator = {}
+        service.stp = values[0] || null;
+        service.plannedArrival = values[1] || null;
+        if (!service.plannedArrival) service.plannedArrival = null
+        service.actualArrival = !values[2] ? null : values[2];
+        service.plannedDeparture = values[8] || null;
 
-        serviceList.each(async (i, el) => {
-            let currentElement = $(el).children();
+        if (values[9].toLowerCase() === "(q)") service.actualDeparture = "Runs as Required"
+        else if (values[9].toLowerCase() === "cancel") service.actualDeparture = "Cancelled"
+        else if (values[9].toLowerCase() === "n/r") service.actualDeparture = "No Report"
+        else service.actualDeparture = values[9] || null;
 
-            let callingPoints = callingPointsList[i] || [];
+        service.origin = { name: null, code: null };
+        service.origin.name = values[3] || null;
+        service.origin.code = stations.find(s => s.stationName === service.origin.name)?.crsCode || null;
+        
+        if (service.origin.name.toLowerCase() === "starts here") {
+            service.origin.name = stations.find(s => s.crsCode.toLowerCase() === stationCode.toLowerCase())?.stationName || null;
+            service.origin.code = stationCode || null;
+        }
 
-            let serviceUID = hrefs[i].split("/")[2].replace("gb-nr:", "");
-            let sourceURL = `https://www.realtimetrains.co.uk${hrefs[i]}`;
+        service.destination = { name: null, code: null };
+        service.destination.name = values[7].replace("Approaching", "").replace("At platform", "") || null;
+        service.destination.code = stations.find(s => s.stationName === service.destination.name)?.crsCode || null;
 
-            let values = currentElement.map((i, el) => {
-                return $(el).text();
-            });
+        if (service.destination.name.toLowerCase() === "terminates here") {
+            service.destination.name = stations.find(s => s.crsCode.toLowerCase() === stationCode.toLowerCase())?.stationName || null;
+            service.destination.code = stationCode || null;
+        }
 
-            //parsing the values in each row of the table into an object, then pushing it to the array of data
-            let service = {};
-            service.operator = {}
-            service.stp = values[0] || null;
-            service.plannedArrival = values[1] || null;
-            if (!service.plannedArrival) service.plannedArrival = null
-            service.actualArrival = !values[2] ? null : values[2];
-            service.plannedDeparture = values[8] || null;
+        service.callingPoints = callingPoints;
+        service.platform = !values[4] ? null : values[4];
 
-            if (values[9].toLowerCase() === "(q)") service.actualDeparture = "Runs as Required"
-            else if (values[9].toLowerCase() === "cancel") service.actualDeparture = "Cancelled"
-            else if (values[9].toLowerCase() === "n/r") service.actualDeparture = "No Report"
-            else service.actualDeparture = values[9] || null;
+        if (service.platform === "-") service.platform = null;
 
-            service.origin = { name: null, code: null };
-            service.origin.name = values[3] || null;
-            service.origin.code = stations.find(s => s.stationName === service.origin.name)?.crsCode || null;
-            
-            if (service.origin.name.toLowerCase() === "starts here") {
-                service.origin.name = stations.find(s => s.crsCode.toLowerCase() === stationCode.toLowerCase())?.stationName || null;
-                service.origin.code = stationCode || null;
-            }
+        service.uid = serviceUID || null;
+        service.trainid = values[5] || null;
+        service.operator.name = tocs[values[6]] || null;
+        service.operator.code = values[6] || null;
+        service.sourceURL = sourceURL+"/detailed" || null;
 
-            service.destination = { name: null, code: null };
-            service.destination.name = values[7].replace("Approaching", "").replace("At platform", "") || null;
-            service.destination.code = stations.find(s => s.stationName === service.destination.name)?.crsCode || null;
+        if (service.operator.code.toLowerCase() === "zz") service.isPassengerTrain = false;
+        else service.isPassengerTrain = true;
 
-            if (service.destination.name.toLowerCase() === "terminates here") {
-                service.destination.name = stations.find(s => s.crsCode.toLowerCase() === stationCode.toLowerCase())?.stationName || null;
-                service.destination.code = stationCode || null;
-            }
+        if (values[1] === "pass") service.isCalling = false;
+        else service.isCalling = true;
 
-            service.callingPoints = callingPoints;
-            service.platform = !values[4] ? null : values[4];
+        if (values[9].toLowerCase() === "cancel" || values[2].toLowerCase() === "cancel") service.isCancelled = true;
+        else service.isCancelled = false;
 
-            if (service.platform === "-") service.platform = null;
+        if (values[9].toLowerCase() === "(q)") service.runsAsRequired = true;
+        else service.runsAsRequired = false;
 
-            service.uid = serviceUID || null;
-            service.trainid = values[5] || null;
-            service.operator.name = tocs[values[6]] || null;
-            service.operator.code = values[6] || null;
-            service.sourceURL = sourceURL+"/detailed" || null;
+        data.push(service);
+    });
 
-            if (service.operator.code.toLowerCase() === "zz") service.isPassengerTrain = false;
-            else service.isPassengerTrain = true;
+    data.length = resultCount;
 
-            if (values[1] === "pass") service.isCalling = false;
-            else service.isCalling = true;
-
-            if (values[9].toLowerCase() === "cancel" || values[2].toLowerCase() === "cancel") service.isCancelled = true;
-            else service.isCancelled = false;
-
-            if (values[9].toLowerCase() === "(q)") service.runsAsRequired = true;
-            else service.runsAsRequired = false;
-
-            data.push(service);
-        });
-
-        data.length = resultCount;
-
-        if (data.every(item => item === null)) data = [];
-        return data.filter(item => item !== null);
-    }
+    if (data.every(item => item === null)) data = [];
+    return data.filter(item => item !== null);
+}
 //};
