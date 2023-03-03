@@ -56,7 +56,7 @@ export class InputLocation extends React.Component {
   
   render() {
     return (
-        <div>
+        <div className = "divLeft">
           <h3>National Rail Input</h3>
         <form onSubmit={this.handleSubmit}>
           <label>

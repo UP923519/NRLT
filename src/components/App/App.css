@@ -3,6 +3,8 @@
   font-size: 17px;
   display: flex;
   text-align: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 
 }
 
@@ -49,7 +51,7 @@ li {
 }
 
 .topRow2 {
-  margin: 2px;
+  margin: 1px;
   background: #7f7f7f;
   cursor: pointer;
   border-radius: 9px;
@@ -75,6 +77,8 @@ li {
   text-decoration: inherit;
   color: white;
   font-size: 10px;
+  display: flex;
+  text-align: left;
 }
 
 #useCurrentLocation{
@@ -120,20 +124,19 @@ navbar.NavBar1{
 }
 
 .transactions {
-    text-align: center;
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    border: 3px solid #ddd;
-    font-size: 13px;
-    margin-right: 8px;
-    margin-left: 8px;
-    width: 92vw;
-    }
+  text-align: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  border: 3px solid #ddd;
+  font-size: 13px;
+  width: 98vw;
+  
+  }
 
 .transactions td{
-    border: 1px solid #ddd;
-    padding: 0px;
-  }
+  border: 1px solid #ddd;
+  padding: 0px;
+}
 
 .transactions tr:hover {background-color: #ddd;}
 
@@ -148,6 +151,10 @@ navbar.NavBar1{
   padding: 10px;
   margin-right: 8px;
   margin-left: 8px;
+  width: 50%;
+  display: flex;
+  text-align: center;
+  
 }
 
 div.gm-style {
@@ -160,5 +167,14 @@ div.gm-style {
 
 #locationAddress{
   min-height: 1000%;
+}
+
+.divLeft{
+  text-align: left;
+}
+
+#textLocation{
+  max-width: 300px;
+  text-align: left;
 }
 

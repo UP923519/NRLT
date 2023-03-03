@@ -78,7 +78,7 @@ function TransactionForm(props) {
         <input type="text" id="inputData" value={amount} onChange={changeAmount} /></ul>
         <ul><label>Date of Activity:</label>
         <input type="datetime-local" id="inputData" value={date} max={currDateTime} onChange={changeDate} /></ul>
-        <button onClick={transferValue}> Confirm</button>
+        <button id = "journeySubmitButton" onClick={transferValue}> Confirm</button>
       </li>
     </div>
   );
