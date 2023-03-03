@@ -71,7 +71,6 @@ export class InputLocationCar extends React.Component{
         <form onSubmit={this.handleSubmit}>
             <input
               type="text" 
-              id="inputData"
               name='email'
               placeholder='Origin Location' 
               value = {this.state.email}

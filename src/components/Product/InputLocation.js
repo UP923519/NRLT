@@ -63,7 +63,7 @@ export class InputLocation extends React.Component {
             Where do you want to travel from?{" "}  
             <input type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
           </label><br/>
-          <input className = "topRow2" type="submit" value="☑ Submit" />
+          <input id = "journeySubmitButton" type="submit" value="☑ Submit" />
           <p style={{fontWeight: "bold"}}>
           {/*Original Starting Stations:</p><br /> {trO} <br /><br />
           <p style={{fontWeight: "bold"}}>*/}

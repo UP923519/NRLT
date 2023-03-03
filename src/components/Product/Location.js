@@ -74,15 +74,14 @@ export class MapUpdate extends React.Component {
     resetVals();
     
   }
-  
 
   render() {
     var center = this.state.center;
     var zoom = this.state.zoom;
     return (
       <div style = {{ width: "100%", height: "100%" }}>
-        <div>
-        <input className = "topRow2" readOnly={true} onMouseDown={this.getCurrentLocation} onClick={this.getCurrentLocation} type="button" value="𖡡 Show Location" id="locationAddress"/>
+        <div id = "showLocation" >
+        <input readOnly={true} onMouseDown={this.getCurrentLocation} onClick={this.getCurrentLocation} type="button" value="𖡡 Centre Location" id="locationAddress"/>
         </div>
         <div style={{ width: "100%", height: "100%" }}>
           <GoogleMap center={center} zoom={zoom} bootstrapURLKeys={{ key: [GOOGLE_API_KEY] }}>

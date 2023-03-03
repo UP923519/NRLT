@@ -178,3 +178,10 @@ div.gm-style {
   text-align: left;
 }
 
+#showLocation{
+  text-align: right;
+}
+
+#inputData{
+  margin-left: 10px;
+}

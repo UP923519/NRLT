@@ -90,7 +90,7 @@ export class LocationCalc extends React.Component {
 
     return(
       <div>
-        <input className = "topRow2" readOnly={true} onMouseDown={this.convertLocation2} onClick={this.convertLocation2} type="button" value="✉ Show Address" />
+        <input readOnly={true} onMouseDown={this.convertLocation2} onClick={this.convertLocation2} type="button" value="✉ Show Address" />
         <h3 id = "textLocation">{Location}</h3>
       </div>
     )
