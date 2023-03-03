@@ -69,7 +69,7 @@ export class InputLocation extends React.Component {
             <p style={{fontWeight: "bold"}}>
             {/*Original Starting Stations:</p><br /> {trO} <br /><br />
             <p style={{fontWeight: "bold"}}>*/}
-            &nbsp;Destinations to/from here:</p> <p style={{maxWidth: "400px"}}>{/*trD*/}{'\xa0'+this.state.trD}</p>
+            &nbsp;Destinations to/from here:</p> <p style={{maxWidth: "400px", paddingLeft: "4px"}}>{/*trD*/}{this.state.trD}</p>
             <p style={{fontWeight: "bold"}}>
             &nbsp;All stations from here:</p>{/*{trC}*/} 
             {trcDropDown}
