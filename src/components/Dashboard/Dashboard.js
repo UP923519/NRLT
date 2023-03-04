@@ -3,6 +3,7 @@ import "../App/App.css"
 import TableData from '../table/form';
 import { RealTimeDataOverview } from './realTImeDataOverview';
 import { RealTimeDataTotals } from './realTImeDataTotals';
+import { MyFirstLineChart } from './realTImeDataGraphs';
 //import './bootstrap/dist/css/bootstrap.min.css';
 import { tmode, tmodeTip } from './realTImeDataTotals';
 
@@ -61,9 +62,10 @@ export default function Dashboard() {
 
   return (
     <div className='Wrapper2'>
-      <h3>Your information overview </h3>
+      <h3>Information overview </h3>
       <RealTimeDataOverview/>
       <RealTimeDataTotals/>
+      <MyFirstLineChart/>
       <br/>
     </div>
   );

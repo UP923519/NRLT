@@ -12,6 +12,7 @@ const db = StartFirebase();
 let recordsTotal = 0;
 let recordsTotalMonth = 0;
 let recordsL = [];
+export let graphArray = [];
 
 export let tmode = "";
 export let tmodeTip = "";
@@ -33,10 +34,14 @@ export class RealTimeDataTotals extends React.Component{
 
         onValue(dbref, (snapshot)=>{
             let records = [];
+            graphArray = [];
             recordsTotal = 0;
             recordsTotalMonth = 0;
             let recordsTotalWeek = 0;
             let recordsTotalYear = 0;
+            let recordsTotalL2W = 0;
+            let recordsTotalL3W = 0;
+            let recordsTotalL4W = 0;
 
 
             //DatePreviousMonth
@@ -51,7 +56,15 @@ export class RealTimeDataTotals extends React.Component{
             var dateY = new Date();
             dateY.setDate(dateY.getDate() - 365); 
             var dateStringY = dateY.getFullYear() + '-' + ("0" + (dateY.getMonth() + 1)).slice(-2) + '-' + ("0" + dateY.getDate()).slice(-2);
-
+            //DateWeeBeforeLast
+            var dateL2W = new Date();
+            dateL2W.setDate(dateL2W.getDate() - 14); 
+            var dateStringL2W = dateL2W.getFullYear() + '-' + ("0" + (dateL2W.getMonth() + 1)).slice(-2) + '-' + ("0" + dateL2W.getDate()).slice(-2);
+            //Date3WeeksAgo
+            var dateL3W = new Date();
+            dateL3W.setDate(dateL3W.getDate() - 21); 
+            var dateStringL3W = dateL3W.getFullYear() + '-' + ("0" + (dateL3W.getMonth() + 1)).slice(-2) + '-' + ("0" + dateL3W.getDate()).slice(-2);
+            
 
             snapshot.forEach(childSnapshot => {
                 let keyName = childSnapshot.key;
@@ -72,7 +85,7 @@ export class RealTimeDataTotals extends React.Component{
                 let date1Year = date1.slice(6,10);
                 date1 = date1Year + "-" + date1Month + "-" + date1Day;
                 //console.log(date1, date2);
-                console.log(records[i].data.Transaction.slice(0,2));
+                //console.log(records[i].data.Transaction.slice(0,2));
                 let transportMode = records[i].data.Transaction.slice(0,2);
                 
                 if (transportMode == "🚂"){
@@ -81,15 +94,14 @@ export class RealTimeDataTotals extends React.Component{
                 if (transportMode == "🚗"){
                     tmodeC += 1; 
                 }
-               
-                //console.log(date1Day, date2);
-                
+                               
                 if (date1 > date2){
                     recordsTotalMonth = recordsTotalMonth + Number(records[i].data.Amount);
                     //console.log("newer than last month");
                 }
 
                 if (date1 > dateStringW){
+                    console.log("The following date", date1, "should be bigger than", dateStringW, "Last week");
                     recordsTotalWeek = recordsTotalWeek + Number(records[i].data.Amount);
                     //console.log("newer than last week");
                 }
@@ -97,6 +109,21 @@ export class RealTimeDataTotals extends React.Component{
                 if (date1 > dateStringY){
                     recordsTotalYear = recordsTotalYear + Number(records[i].data.Amount);
                     //console.log("newer than last year");
+                }
+
+                if (date1 > dateStringL2W && date1 < dateStringW){
+                    console.log("The following date", date1, "should be less than", dateStringW, "and bigger than", dateStringL2W, "last 2 week");
+                    recordsTotalL2W = recordsTotalL2W + Number(records[i].data.Amount);
+                }
+
+                if (date1 > dateStringL3W && date1 < dateStringL2W){
+                    console.log("The following date", date1, "should be less than", dateStringL2W, "and bigger than", dateStringL3W, "last 3 week");
+                    recordsTotalL3W = recordsTotalL3W + Number(records[i].data.Amount);
+                }
+
+                if (date1 > date2 && date1 < dateStringL3W){
+                    console.log("The following date", date1, "should be less than", dateStringL3W, "and bigger than", date2, "last 4 week");
+                    recordsTotalL4W = recordsTotalL4W + Number(records[i].data.Amount);
                 }
                 //console.log (records[i].data.date.slice(0,-8));
                 //console.log(dateString);
@@ -106,16 +133,21 @@ export class RealTimeDataTotals extends React.Component{
             records = [];
 
             records.push({date: 'n/a', data: {Amount: recordsTotalWeek, Transaction: 'This Week', date: 'N/A'}});
+            graphArray.push({Amount: recordsTotalWeek, Transaction: 'Last week'});
+            graphArray.push({Amount: recordsTotalL2W, Transaction: '2 weeks ago'});
+            graphArray.push({Amount: recordsTotalL3W, Transaction: '3 Weeks ago'});
+            graphArray.push({Amount: recordsTotalL4W, Transaction: 'A month ago'});
+
             records.push({date: 'n/a', data: {Amount: recordsTotalMonth, Transaction: 'This Month', date: 'N/A'}});
-            records.push({date: 'n/a', data: {Amount: recordsTotalYear, Transaction: 'This Year', date: 'N/A'}});
+            records.push({date: 'n/a', data: {Amount: recordsTotalYear, Transaction: 'Past Year', date: 'N/A'}});
             records.push({date: 'n/a', data: {Amount: recordsTotal, Transaction: 'All time', date: 'N/A'}});
 
             //recordsL = ["All time", "This month"];
-            //records = records.reverse();
+            graphArray = graphArray.reverse();
 
             this.setState({tableData: records});
 
-            console.log("tmode iss", tmodeT, tmodeC);
+            //console.log("records iss", records);
 
             if (tmodeT > tmodeC){
                 tmode = "Train travel is your preferred method to get around"
@@ -134,8 +166,10 @@ export class RealTimeDataTotals extends React.Component{
 
 
             console.log("records iss", ((records)));
-            console.log("recordsTotal iss", (recordsTotal));
-            console.log("recordsTotalMonth iss", (recordsTotalMonth));
+            console.log("graphArray iss", ((graphArray)));
+
+            //console.log("recordsTotal iss", (recordsTotal));
+            //console.log("recordsTotalMonth iss", (recordsTotalMonth));
 
         });
     }
@@ -180,9 +214,7 @@ export class RealTimeDataTotals extends React.Component{
                     </ul>
 
                 </div>
-                <button className = "topRow1">
-                Refresh
-                </button>
+
             </div>
 
         )
