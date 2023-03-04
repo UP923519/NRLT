@@ -48,7 +48,7 @@ export var first_function = function() {
   });
   };
 
-export var async_function = async function() {
+export var async_function = async function(date) {
   console.log('async function called');
 
   const first_promise= await first_function();
@@ -126,21 +126,21 @@ export var async_function = async function() {
   const aquaticCreatures = trC.map(opt => ({ label: opt, value: opt }));
   trcDropDown = <Select 
   options={aquaticCreatures}
-  onChange={opt => console.log("Selected",opt.value)+getLatBetween(originStation + " station", opt.value + " station", "train")}
+  onChange={opt => console.log("Selected",opt.value)+getLatBetween(originStation + " station", opt.value + " station", "train", date)}
   />;
   
 }
 
 //async_function();
 
-export function getLatBetween(pointA, pointB, mode){
+export function getLatBetween(pointA, pointB, mode, date){
   //testf2 (station);
   //second_function (station);
   destStation = pointB;
   second_async_function(pointA);
   second_async_function(pointB);
 
-  DistanceBetweenPoints(mode, pointA);
+  DistanceBetweenPoints(mode, pointA, date);
 
   //second_function = findCoord (originStation);
 
@@ -165,7 +165,7 @@ export function findCoord (station){
 
 
 
-export function DistanceBetweenPoints (mode, pointA){
+export function DistanceBetweenPoints (mode, pointA, date){
 
   setTimeout(
     function() {
@@ -197,8 +197,14 @@ export function DistanceBetweenPoints (mode, pointA){
       const db = getDatabase();
       const currDate = new Date().toLocaleDateString();
       const currTime = new Date().toLocaleTimeString();
+      let insertDate = currDate+ " "+ currTime;
       var timee = (currDate+currTime).replaceAll('/','');
       const user2 = localStorage.getItem('username');
+
+      if (date != undefined && date != "" && date != "// :00"){
+        insertDate = date;
+
+      } 
 
       
       if (mode == "train"){
@@ -207,7 +213,7 @@ export function DistanceBetweenPoints (mode, pointA){
         {
             Transaction: ("🚂"+originStation+" ->"+destStation),
             Amount: Number(distanceConversion),
-            date: currDate+ " "+ currTime
+            date: insertDate
         });
       }
 
@@ -217,7 +223,7 @@ export function DistanceBetweenPoints (mode, pointA){
         {
             Transaction: ("🚗"+pointA+" -> "+destStation),
             Amount: Number(distanceConversion),
-            date: currDate+ " "+ currTime
+            date: insertDate
         });
       }
 

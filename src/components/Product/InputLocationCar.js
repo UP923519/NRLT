@@ -6,15 +6,19 @@ import { address,LocationCalc } from "./locationCalculator2";
 
 export let pointA;
 export let pointB;
+const currDateTime =  new Date().toLocaleDateString('en-ca')+'T'+new Date().toLocaleTimeString();
 
 
 export class InputLocationCar extends React.Component{
   constructor(props){
     super(props)
-    this.state = { email:'',name:'', age:null, address:'',phoneNo:''}
+    this.state = { email:'',name:'', age:null, address:'',phoneNo:'', date: ''}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.showCurrent = this.showCurrent.bind(this)
+
+    this.handleChangeDate = this.handleChangeDate.bind(this);
+
 
   }
 
@@ -26,15 +30,23 @@ export class InputLocationCar extends React.Component{
   handleSubmit(event){
     const { email, name, age, address, phoneNo } = this.state
     event.preventDefault()
-    alert(`
+    /*alert(`
       ____Your Details____\n
       Email : ${email}
       Name : ${name}
       Age : ${age}
       Address : ${address}
       Phone No : ${phoneNo}
-    `)
-    getLatBetween(email, name, "car");
+    `)*/
+
+    let date = this.state.date;
+    let date1Year = date.slice(0,4);
+    let date1Month = date.slice(5,7);
+    let date1Day = date.slice(8,10);
+    let date1Time = date.slice(11,date.length);
+    date = date1Day + "/" + date1Month + "/" + date1Year + " " + date1Time + ":00";
+
+    getLatBetween(email, name, "car", date);
 
   }
 
@@ -59,6 +71,11 @@ export class InputLocationCar extends React.Component{
       [event.target.name] : event.target.value
     })
   }
+
+  handleChangeDate(event) {
+    this.setState({date: event.target.value});
+
+  }
   
   // Return a controlled form i.e. values of the 
   // input field not stored in DOM values are exist 
@@ -66,7 +83,10 @@ export class InputLocationCar extends React.Component{
   render(){
     return(
       <div className = "divCarInput">
-        <h3>&nbsp;Car Journey Input</h3>
+        <h3 style={{textAlign: "center"}}>Car Journey Input</h3>
+        &nbsp;Date of travel {" "}<br/>
+        &nbsp;<input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="datetime-local" value={this.state.date} max={currDateTime} onChange={this.handleChangeDate} />
+        <br/><br/>
         <label htmlFor='email'>&nbsp;Origin</label>
         <form onSubmit={this.handleSubmit}>
         &nbsp;<input
@@ -87,7 +107,9 @@ export class InputLocationCar extends React.Component{
               value={this.state.name}
               onChange={this.handleChange}
             />
-            <button id = "journeySubmitButton" type="submit">☑ Submit</button>
+            <button style = {{border: "0", marginLeft: "4px"}} id = "journeySubmitButton" type="submit">☑ Submit</button>
+            <br/>
+            
         </form>
 
       </div>
