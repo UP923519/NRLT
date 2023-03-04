@@ -1,11 +1,9 @@
 import React from "react";
 import StartFirebase from "../Preferences/firebase";
 import {ref, onValue, query, limitToLast, orderByChild, orderByPriority, orderByValue } from "firebase/database";
-import { where, orderBy } from "firebase/firestore";
 
 import { Table } from "react-bootstrap";
-import { typeOf } from "tls";
-import TableData from "../table/form";
+import { TrendBarChart } from "./realTImeDataGraphs";
 
 const db = StartFirebase();
 
@@ -210,11 +208,9 @@ export class RealTimeDataTotals extends React.Component{
                         <li className = "highlights">{tmode}</li>
                         <li className = "highlights">{tmodeTip}</li>
                         {/*<li className = "highlights">Your carbon usage has reduced 12% since the previous month</li>*/}
-
                     </ul>
-
                 </div>
-
+                <TrendBarChart/>
             </div>
 
         )

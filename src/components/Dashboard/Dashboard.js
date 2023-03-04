@@ -65,7 +65,6 @@ export default function Dashboard() {
       <h3>Information overview </h3>
       <RealTimeDataOverview/>
       <RealTimeDataTotals/>
-      <MyFirstLineChart/>
       <br/>
     </div>
   );

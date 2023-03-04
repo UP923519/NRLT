@@ -14,11 +14,11 @@ const funnelData = [
   {time: 5, value: 12}
 ];
 
-export const MyFirstLineChart = props => (
+export const TrendBarChart = props => (
   <div>
     <h4>Trend over time </h4>
 
-    <XYPlot width={375} height={250}>
+    <XYPlot width={375} height={250} responsive={true}>
       <XAxis title="Time period" />
       <YAxis title="Carbon (CO2e)" />
       <BarChart
