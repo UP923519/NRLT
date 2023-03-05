@@ -1,0 +1,207 @@
+.size{
+  height: auto;
+  font-size: 17px;
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+}
+
+.wrapper {
+    padding: 0px;
+}
+
+
+.wrapper button {
+  border: 0;
+  background: #bcbcbc;
+  cursor: pointer;
+  border-radius: 9px;
+  }
+
+ul {
+  display: flex;
+  padding: 0px;
+}
+
+li {
+  margin: 10 20px;
+  list-style: none;
+  padding: 0;
+}
+
+
+.topBanner1 {
+  padding-bottom: 10px;
+}
+
+.logOut {
+  margin-left: 10px;
+}
+
+.topRow1 {
+  margin: 5px;
+}
+
+.topRow1:active {
+  margin: 5px;
+  background: #dfdfdf;
+  color:rgb(111, 111, 111);
+}
+
+.topRow2 {
+  margin: 2px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 11px;
+  padding-top: 12px;
+  padding-left: 6.5px;
+  padding-right: 6.5px;
+  text-decoration: inherit;
+  color: rgb(255, 255, 255);
+}
+
+#journeySubmitButton {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  text-decoration: inherit;
+  color: white;
+  font-size: 15px;
+  display: flex;
+  text-align: left;
+}
+
+#useCurrentLocation{
+  margin-left: 2px;
+  margin-bottom: 10px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-decoration: inherit;
+  color: white;
+  font-size: 12px;
+}
+
+.topRow2:active {
+  background: #ffffff;
+  color:black;
+}
+
+a.topRow2.active{
+  background: #0080ff;
+  color: rgb(255, 255, 255);
+}
+
+navbar.NavBar1{
+  background: #61d3c4;
+  padding-bottom: 0.85pc;
+  padding-top: 0.9pc;
+  border-radius: 9px;
+}
+
+.backHome{
+  margin: 0;
+  background: #efefef;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: inherit;
+}
+
+.transactions {
+  text-align: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  font-size: 13px;
+  width: 98vw;
+  border-radius: 20px;
+  
+  }
+
+.transactions td{
+  border: 0px solid #ddd;
+  border-radius: 0px;
+  padding: 6px;  
+}
+
+.transactions tr:hover {
+  background-color: #ddd;
+  border-radius: 20px;
+
+}
+
+.TableRow{
+  display:flex; 
+  flex-direction:row;
+}
+
+.highlights{
+  background: #abccf0;
+  border-radius: 20px;
+  padding: 10px;
+  margin-right: 8px;
+  margin-left: 8px;
+  width: 50%;
+  display: flex;
+  text-align: center;
+  
+}
+
+div.gm-style {
+  overflow: hidden;
+  white-space: nowrap;
+  font: 400 15px Roboto, Arial, sans-serif;
+  font-weight: bold;
+  color:#336bbf;
+}
+
+#locationAddress{
+  min-height: 1000%;
+}
+
+.divCarInput{
+  text-align: left;
+  background-color: #ffe9e9;
+  border-radius: 20px;
+}
+
+.divRailInput{
+  text-align: left;
+  background-color: #c1ecf0;
+  border-radius: 20px;
+}
+
+.divRailInputInner{
+  text-align: left;
+  background-color: #c1ecf0;
+  border-radius: 20px;
+}
+
+#textLocation{
+  max-width: 300px;
+  text-align: left;
+}
+
+#showLocation{
+  text-align: right;
+}
+
+#inputData{
+  margin-left: 10px;
+}
+
+
