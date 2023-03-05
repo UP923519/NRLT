@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/FYP/static/css/main.67bb4c04.css",
+    "main.js": "/FYP/static/js/main.0d40dab2.js",
+    "static/js/988.d8553045.chunk.js": "/FYP/static/js/988.d8553045.chunk.js",
+    "index.html": "/FYP/index.html",
+    "static/media/videoBg.mp4": "/FYP/static/media/videoBg.31d6cfe0d16ae931b73c.mp4",
+    "main.67bb4c04.css.map": "/FYP/static/css/main.67bb4c04.css.map",
+    "main.0d40dab2.js.map": "/FYP/static/js/main.0d40dab2.js.map",
+    "988.d8553045.chunk.js.map": "/FYP/static/js/988.d8553045.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.67bb4c04.css",
+    "static/js/main.0d40dab2.js"
+  ]
+}
