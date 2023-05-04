@@ -4,7 +4,7 @@ By UP923519
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-<img src="src/assets/videoBg.mp4"
+<video src="src/assets/videoBg.mp4"
      alt="Title Video"
      style="float: left; margin-right: 10px;" />
 
