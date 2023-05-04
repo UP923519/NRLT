@@ -69,24 +69,40 @@ export class InputLocation extends React.Component {
 
     async_function(date);
 
-    //autoFocus="autofocus"
+    setTimeout(
+      function() {
+        this.setState({value: event.target.value, trD: trD});
+      }
+      .bind(this),
+      7000
+    );
+
+    setTimeout(
+      function() {
+        this.setState({value: event.target.value, trD: trD});
+      }
+      .bind(this),
+      20000
+    );
+
+
   }
 
   render() {
     return (
         <div className = "divRailInput">
-            <div className = "divRailInputInner">
+          <div>
             <h3 style={{textAlign: "center"}}>National Rail Input</h3>
           <form onSubmit={this.handleSubmit}>
             <label>
             &nbsp;Date of travel{" "}<br/>
-            &nbsp;<input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="datetime-local" value={this.state.date} max={currDateTime} onChange={this.handleChangeDate} />
+            &nbsp;<input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="datetime-local" value={this.state.date} max={currDateTime} onChange={this.handleChangeDate} />
             <br/><br/>
             &nbsp;Origin station{" "}<br/>
-            &nbsp;<input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
+            &nbsp;<input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="text" value={this.state.value} onInput={this.handleChange} onFocus={this.handleChange}/>
             </label><br/>
             <br/>
-            <input style = {{border: "0", marginLeft: "4px"}} id = "journeySubmitButton" type="submit" value="☑ Submit" />
+            <input style = {{border: "0"}} id = "railSubmitButton" type="submit" value="☑ Submit" />
             <p style={{fontWeight: "bold"}}>
             {/*Original Starting Stations:</p><br /> {trO} <br /><br />
             <p style={{fontWeight: "bold"}}>*/}
@@ -96,13 +112,8 @@ export class InputLocation extends React.Component {
             {trcDropDown}
             <br/>
           </form>
-          
         </div>
-
       </div>
-      
-
-
 
     );
   }

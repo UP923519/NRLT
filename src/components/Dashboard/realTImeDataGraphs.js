@@ -1,6 +1,9 @@
 import XYPlot from 'reactochart/XYPlot';
 import XAxis from 'reactochart/XAxis';
+import XAxisTitle from 'reactochart/XAxisTitle';
 import YAxis from 'reactochart/YAxis';
+import YAxisTitle from 'reactochart/YAxisTitle';
+
 import LineChart from 'reactochart/LineChart';
 import BarChart from 'reactochart/BarChart';
 import 'reactochart/styles.css';
@@ -18,21 +21,24 @@ export const TrendBarChart = props => (
   <div>
     <h4>Trend over time </h4>
 
-    <XYPlot width={375} height={250} responsive={true}>
-      <XAxis title="Time period" />
-      <YAxis title="Carbon (CO2e)" />
+    <XYPlot xyPlotStyle={{fill:"#ebe6dd"}} width={360} height={275}>
+      <XAxis/>
+      <YAxis/>
       <BarChart
+        barStyle={{fill: "#9c5d76"}}
           data={graphArray}
           x={d => d.Transaction}
           y={d => d.Amount}
-    />
+          barThickness={40}
+
+      />
+          <XAxisTitle  title="Time period" style={{fontSize:"14px"}} distance={25}/>
+          <YAxisTitle  title="Carbon (CO2e)" style={{fontSize:"14px"}} distance={35} />
+
+      
     </XYPlot>
-    <br/> <br/>
-      <a href="/FYP">
-        <button id = "useCurrentLocation" className = "topRow1">
-          Refresh 
-        </button> 
-      </a>
+    <br/> 
+
   </div>
 );
 

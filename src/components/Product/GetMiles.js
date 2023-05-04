@@ -35,7 +35,7 @@ export class GetMiles extends React.Component {
       <form style = {{}} onSubmit={this.handleSubmit}>
         <label>
         </label>
-        <input style = {{border: "0"}} id = "journeySubmitButton" type="submit" value="⪼ Show calculated distance" />
+        <input style = {{marginTop:"18px", border: "0", marginBottom:"0"}} id = "journeySubmitButton" type="submit" value="⪼ Show calculated distance" />
       </form>
       
     );

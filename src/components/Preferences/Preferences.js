@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../App/App.css"
 import TableData from '../table/form';
-import { Handle } from "./handlesubmit";
+import { ViewAllData } from "../table/ViewAllData";
 import { RealTimeData } from '../table/realTImeData';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -37,25 +37,16 @@ export default function Preferences() {
   const [rows, setRows] = useState(cities)
 
   return (    
-    <div className="wrapper">
+    <div style={{width:"98vw", height:"150vh"}} className="wrapper">
       {/*<Table data = {rows} >
       </Table>*/}
       <h3>Carbon Transactions</h3>
       <div className='TableRow'>
-      {
-        emojis.map(emoji => (
-          <li key={emoji.name}>
-            <a href="/FYP">
-              <button id = "useCurrentLocation" onClick={displayEmojiName}>
-                <span role="img" aria-label={emoji.name} id={emoji.name}>{emoji.emoji} </span>
-              </button>
-              </a>
-          </li>
-        ))
-      }
+      
       </div>
-      <RealTimeData/>
+      <ViewAllData/>
       <TableData/>
+      <br/>
       
     </div>
     

@@ -9,7 +9,7 @@ export let recordsSD;
 export let recordsSorted;
 
 
-export class RealTimeData extends React.Component{
+export class RealTimeDataAll extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -71,7 +71,8 @@ export class RealTimeData extends React.Component{
 
             //console.log(recordsSorted);
             records = recordsSorted;
-            this.setState({tableData: records.reverse().slice(0,11)});
+            this.setState({tableData: records.reverse()});
+
         });
 
     }
@@ -109,7 +110,7 @@ export class RealTimeData extends React.Component{
                             ↻ Refresh
                         </button>
                     </a>
-                    &nbsp;Showing most recently added
+                    &nbsp;Showing all
                 </div>
                 <Table className= "transactions" style = {{backgroundColor: "#caddeb"}}>
                     <thead>

@@ -1,3 +1,7 @@
+element.style {
+  background-color: rgb(42, 42, 255);
+}
+
 .size{
   height: auto;
   font-size: 17px;
@@ -5,7 +9,6 @@
   text-align: center;
   flex-wrap: wrap;
   justify-content: space-evenly;
-
 }
 
 .wrapper {
@@ -76,9 +79,41 @@ li {
   text-decoration: inherit;
   color: white;
   font-size: 15px;
-  display: flex;
-  text-align: left;
 }
+
+#railSubmitButton {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 4px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  text-decoration: inherit;
+  color: white;
+  font-size: 15px;
+}
+
+
+#manualSubmitButton {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 4px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  text-decoration: inherit;
+  color: white;
+  font-size: 15px;
+}
+
 
 #useCurrentLocation{
   margin-left: 2px;
@@ -90,9 +125,28 @@ li {
   padding-top: 5px;
   padding-left: 12px;
   padding-right: 12px;
-  text-decoration: inherit;
+  text-decoration: none;
   color: white;
   font-size: 12px;
+}
+
+#useCurrentLocation:active{
+  background: #59a7ff;
+}
+
+
+#manualSubmitButton:active{
+  background: #59a7ff;
+}
+
+
+#journeySubmitButton:active{
+  background: #59a7ff;
+}
+
+button#showHide:active {
+  color: white;
+  background: #59a7ff;
 }
 
 .topRow2:active {
@@ -145,8 +199,7 @@ navbar.NavBar1{
 }
 
 .TableRow{
-  display:flex; 
-  flex-direction:row;
+  text-align: left;
 }
 
 .highlights{
@@ -185,15 +238,33 @@ div.gm-style {
   border-radius: 20px;
 }
 
-.divRailInputInner{
+.divBusInput{
   text-align: left;
-  background-color: #c1ecf0;
+  background-color: #f5dee9;
   border-radius: 20px;
 }
 
-#textLocation{
-  max-width: 300px;
+.divFlightInput{
   text-align: left;
+  background-color: #ddf0e8;
+  border-radius: 20px;
+}
+
+.manualInput{
+  text-align: left;
+  background-color: #ffe9f2;
+  border-radius: 20px;
+}
+
+.optionInput{
+  text-align: center;
+  background-color: #e2ddff;
+  border-radius: 20px;
+}
+
+
+#textLocation{
+  text-align: center;
 }
 
 #showLocation{
@@ -204,4 +275,128 @@ div.gm-style {
   margin-left: 10px;
 }
 
+
+.switchMode a{
+  background: #d8cab8;
+  color: rgb(57, 57, 57);
+  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  text-decoration: none;
+  margin-right: 10px;
+  border-radius: 20px;
+}
+
+a.btn-animation.active{
+  background: rgb(156, 196, 255);
+}
+
+a.active-animation:active{
+  background: #e6e6e6;
+}
+
+
+@media (orientation: landscape){
+  .manualInput{
+    display:inline-block;
+    text-align: center;
+    background-color: #ffe9f2;
+    border-radius: 20px;
+    width: 50vw;
+  }
+
+  .divRailInput{
+    display:inline-block;
+    text-align: center;
+    background-color: #c1ecf0;
+    border-radius: 20px;
+    width: 50vw;
+  }
+
+  .divCarInput{
+    display:inline-block;
+    text-align: center;
+    background-color: #ffe9e9;
+    border-radius: 20px;
+    width: 50vw;
+  }
+
+  .divBusInput{
+    display:inline-block;
+    text-align: center;
+    background-color: #f5dee9;
+    border-radius: 20px;
+    width: 50vw;
+  }
+
+  .divFlightInput{
+    display:inline-block;
+    text-align: center;
+    background-color: #ddf0e8;
+    border-radius: 20px;
+    width: 50vw;
+  }
+
+  .optionInput{
+    display:inline-block;
+    text-align: center;
+    background-color: #e2ddff;
+    border-radius: 20px;
+    width: 50vw;
+  }
+
+  #manualSubmitButton {
+    margin-left: 0px;
+    align-items: center;
+    background: #7f7f7f;
+    cursor: pointer;
+    border-radius: 9px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+    text-decoration: inherit;
+    color: white;
+    font-size: 15px;
+  }
+
+  #journeySubmitButton {
+    margin-left: 0px;
+    align-items: center;
+    background: #7f7f7f;
+    cursor: pointer;
+    border-radius: 9px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+    text-decoration: inherit;
+    color: white;
+    font-size: 15px;
+  }
+
+  #railSubmitButton {
+    margin-left: 0px;
+    align-items: center;
+    background: #7f7f7f;
+    cursor: pointer;
+    border-radius: 9px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+    text-decoration: inherit;
+    color: white;
+    font-size: 15px;
+  }
+
+  .titleClass{
+    text-align: center;
+    border-radius: 20px;
+    margin-left: 25vw;
+    margin-right: 25vw;
+  
+  }
+
+}
 

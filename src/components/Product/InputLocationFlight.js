@@ -9,16 +9,13 @@ export let pointB;
 const currDateTime =  new Date().toLocaleDateString('en-ca')+'T'+new Date().toLocaleTimeString();
 
 
-export class InputLocationCar extends React.Component{
+export class InputLocationFlight extends React.Component{
   constructor(props){
     super(props)
     this.state = { email:'',name:'', age:null, address:'',phoneNo:'', date: ''}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.showCurrent = this.showCurrent.bind(this)
-    this.showCurrentDest = this.showCurrentDest.bind(this)
-    this.showPrevious = this.showPrevious.bind(this)
-    this.showPreviousDest = this.showPreviousDest.bind(this)
 
     this.handleChangeDate = this.handleChangeDate.bind(this);
 
@@ -26,8 +23,7 @@ export class InputLocationCar extends React.Component{
   }
 
   state = {
-    email: '',
-    name: ''
+    email: ''
   }
   
   // Form submitting logic, prevent default page refresh 
@@ -50,7 +46,7 @@ export class InputLocationCar extends React.Component{
     let date1Time = date.slice(11,date.length);
     date = date1Day + "/" + date1Month + "/" + date1Year + " " + date1Time + ":00";
 
-    getLatBetween(email, name, "car", date);
+    getLatBetween(email, name, "flight", date);
 
   }
 
@@ -60,34 +56,8 @@ export class InputLocationCar extends React.Component{
     this.setState({
       email: addressS
     })
-    localStorage.setItem("savedOrigin",address);
-  }
 
-  showCurrentDest(event){
-    event.preventDefault()
-    let addressS = address.slice(address.length-12)
-    this.setState({
-      name: addressS
-    })
-    localStorage.setItem("savedDest",address);
-  }
 
-  showPrevious(event){
-    event.preventDefault()
-    let addressS = localStorage.getItem("savedOrigin");
-    addressS = addressS.slice(address.length-12)
-    this.setState({
-      email: addressS
-  })
-  }
-
-  showPreviousDest(event){
-    event.preventDefault()
-    let addressS = localStorage.getItem("savedDest");
-    addressS = addressS.slice(address.length-12)
-    this.setState({
-      name: addressS
-  })
   }
   
   // Method causes to store all the values of the 
@@ -112,8 +82,8 @@ export class InputLocationCar extends React.Component{
   // in react component itself as state
   render(){
     return(
-      <div className = "divCarInput">
-        <h3 style={{textAlign: "center"}}>Car Journey Input</h3>
+      <div className = "divFlightInput">
+        <h3 style={{textAlign: "center"}}>Flight Input</h3>
         &nbsp;Date of travel {" "}<br/>
         &nbsp;<input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="datetime-local" value={this.state.date} max={currDateTime} onChange={this.handleChangeDate} />
         <br/><br/>
@@ -126,9 +96,7 @@ export class InputLocationCar extends React.Component{
               placeholder='Origin Location' 
               value = {this.state.email}
               onChange={this.handleChange}
-            />
-            <button id = "useCurrentLocation" type="button" onClick={this.showCurrent}>𖡡 Record</button>
-            <button id = "useCurrentLocation" type="button" onClick={this.showPrevious}>🕑 Restore</button>
+            /><button id = "useCurrentLocation" type="button" onClick={this.showCurrent}>𖡡</button>
             <br/>
             <label htmlFor='name'>&nbsp;Destination</label>
             <br/>
@@ -139,10 +107,8 @@ export class InputLocationCar extends React.Component{
               value={this.state.name}
               onChange={this.handleChange}
             />
-            <button id = "useCurrentLocation" type="button" onClick={this.showCurrentDest}>𖡡 Record</button>
-            <button id = "useCurrentLocation" type="button" onClick={this.showPreviousDest}>🕑 Restore</button>
             <br/>
-            <button style = {{border: "0", marginLeft: "4px"}} id = "journeySubmitButton" type="submit">☑ Submit</button>
+            <button style = {{border: "0", marginLeft: "4px",marginTop: "23px"}} id = "journeySubmitButton" type="submit">☑ Submit</button>
             <br/><br/>
             
         </form>

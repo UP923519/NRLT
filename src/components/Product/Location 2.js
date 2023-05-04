@@ -227,6 +227,26 @@ export function DistanceBetweenPoints (mode, pointA, date){
         });
       }
 
+      if (mode == "flight"){
+        distanceConversion = (0.43*distanceMiles).toFixed(2);
+        set(ref(db, user2+"/"+timee+"/"),
+        {
+            Transaction: ("✈️"+pointA+" -> "+destStation),
+            Amount: Number(distanceConversion),
+            date: insertDate
+        });
+      }
+
+      if (mode == "bus"){
+        distanceConversion = (0.14*distanceMiles).toFixed(2);
+        set(ref(db, user2+"/"+timee+"/"),
+        {
+            Transaction: ("🚌"+pointA+" -> "+destStation),
+            Amount: Number(distanceConversion),
+            date: insertDate
+        });
+      }
+
 
       alert("Trip added successfully");
     }

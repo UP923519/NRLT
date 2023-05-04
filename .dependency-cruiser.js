@@ -3,17 +3,6 @@ module.exports = {
   forbidden: [
     /* rules from the 'recommended' preset: */
     {
-      name: 'no-circular',
-      severity: 'warn',
-      comment:
-        'This dependency is part of a circular relationship. You might want to revise ' +
-        'your solution (i.e. use dependency inversion, make sure the modules have a single responsibility) ',
-      from: {},
-      to: {
-        circular: true
-      }
-    },
-    {
       name: 'no-orphans',
       comment:
         "This is an orphan module - it's likely not used (anymore?). Either use it or " +
@@ -204,10 +193,10 @@ module.exports = {
        - dynamic: a boolean indicating whether to ignore dynamic (true) or static (false) dependencies.
           leave out if you want to exclude neither (recommended!)
     */
-    // exclude : {
-    //   path: '',
-    //   dynamic: true
-    // },
+    exclude : {
+       path: "(realtime-trains-scraper)",  
+       dynamic: true
+     },
 
     /* pattern specifying which files to include (regular expression)
        dependency-cruiser will skip everything not matching this pattern
@@ -437,4 +426,4 @@ module.exports = {
     }
   }
 };
-// generated: dependency-cruiser@12.6.0 on 2023-01-26T19:15:02.011Z
+// generated: dependency-cruiser@12.6.0 on 2023-03-23T22:25:48.196Z

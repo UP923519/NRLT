@@ -69,17 +69,15 @@ function TransactionForm(props) {
   };
   
   return (
-    <div>
-      <h3> Manual Activity Input</h3>
-      <li>
-        <ul><label>Transaction Type:</label>
-        <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="text" id="inputData" value={type} onChange={changeType} /></ul>
-        <ul><label>Amount of Carbon:</label>
-        <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="text" id="inputData" value={amount} onChange={changeAmount} /></ul>
-        <ul><label>Date of Activity:</label>
-        <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}} type="datetime-local" id="inputData" value={date} max={currDateTime} onChange={changeDate} /></ul>
-        <button id = "journeySubmitButton" onClick={transferValue}> Confirm</button>
-      </li>
+    <div className = "manualInput">
+      <h3 style={{textAlign:"center"}}> &nbsp;Manual Activity Input</h3>
+        <label>&nbsp;Transaction Type</label>
+        <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="text" id="inputData" value={type} onChange={changeType} /><br/><br/>
+        <label>&nbsp;Amount of Carbon</label>
+        <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="text" id="inputData" value={amount} onChange={changeAmount} /><br/><br/>
+        <label>&nbsp;Date of Activity</label>
+        <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="datetime-local" id="inputData" value={date} max={currDateTime} onChange={changeDate} /><br/>
+        <button id = "manualSubmitButton" onClick={transferValue}>☑ Submit</button><br/>
     </div>
   );
 }

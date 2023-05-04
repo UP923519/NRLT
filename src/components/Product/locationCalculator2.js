@@ -45,6 +45,21 @@ export class LocationCalc extends React.Component {
     });
   }
 
+  
+  componentDidMount(){
+    navigator.geolocation.getCurrentPosition(function(position) {
+    Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
+      (response) => {
+        address = response.results[0].formatted_address;
+      })})
+
+      this.setState({
+        address: address
+      });
+
+
+  }
+
   convertLocation2() {
 
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -90,7 +105,7 @@ export class LocationCalc extends React.Component {
 
     return(
       <div>
-        <input readOnly={true} onMouseDown={this.convertLocation2} onClick={this.convertLocation2} type="button" value="✉ Show Address" />
+        <input style={{border: "none"}} id="useCurrentLocation" readOnly={true} onMouseDown={this.convertLocation2} onClick={this.convertLocation2} type="button" value="✉ Show Address" />
         <h3 id = "textLocation">{Location}</h3>
       </div>
     )

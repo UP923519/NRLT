@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import './Product.css';
 import { MapUpdate, getCurrentLocation } from './Location.js';
 import { LocationCalc } from './locationCalculator2.js';
 import { address } from './locationCalculator.js';
 import { trO, trD, DistanceBetweenPoints } from './Location 2.js';
 
 //import 'realtime-trains-scraper';
+import { SwitchTransportMode } from './SwitchTransportMode';
 import { InputLocation } from './InputLocation';
 import { InputLocationCar } from './InputLocationCar';
+import { InputLocationFlight } from './InputLocationFlight';
+import { InputLocationBus } from './InputLocationBus';
+
 import { GetMiles } from './GetMiles';
 
 //const realtimeTrains = require('realtime-trains-scraper');
@@ -82,21 +85,19 @@ export default class Product extends Component {
 
   render() {
     return(
-      <div>
+      <div style={{width:"98vw", height:"150vh"}}>
         <h3>Journey Planner</h3>
-        
-        <div style={{ width: "100%", height: "500px" }}>
+        <div style={{ width: "auto", height: "500px" }}>
           <MapUpdate />
         </div>
         <p> <br></br></p>
         <LocationCalc/>
+
         <p>
-          <InputLocation/>
-          <GetMiles/>
+        <SwitchTransportMode/>
+        <GetMiles/>
         </p>
-        <p>
-        <InputLocationCar/>
-        </p>
+
 
         <div>
         <br/><br/>

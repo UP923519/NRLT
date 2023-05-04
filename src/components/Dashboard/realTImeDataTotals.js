@@ -4,6 +4,8 @@ import {ref, onValue, query, limitToLast, orderByChild, orderByPriority, orderBy
 
 import { Table } from "react-bootstrap";
 import { TrendBarChart } from "./realTImeDataGraphs";
+import { GraphEXP } from "./realTImeDataGraphsExp";
+
 
 const db = StartFirebase();
 
@@ -72,6 +74,8 @@ export class RealTimeDataTotals extends React.Component{
 
             let tmodeT = 0;
             let tmodeC = 0;
+            let tmodeB = 0;
+
 
             
             for (let i=0; i<records.length; i++){
@@ -92,6 +96,9 @@ export class RealTimeDataTotals extends React.Component{
                 if (transportMode == "🚗"){
                     tmodeC += 1; 
                 }
+                if (transportMode == "🚌"){
+                    tmodeB += 1; 
+                }
                                
                 if (date1 > date2){
                     recordsTotalMonth = recordsTotalMonth + Number(records[i].data.Amount);
@@ -99,7 +106,7 @@ export class RealTimeDataTotals extends React.Component{
                 }
 
                 if (date1 > dateStringW){
-                    console.log("The following date", date1, "should be bigger than", dateStringW, "Last week");
+                    //console.log("The following date", date1, "should be bigger than", dateStringW, "Last week");
                     recordsTotalWeek = recordsTotalWeek + Number(records[i].data.Amount);
                     //console.log("newer than last week");
                 }
@@ -110,17 +117,17 @@ export class RealTimeDataTotals extends React.Component{
                 }
 
                 if (date1 > dateStringL2W && date1 < dateStringW){
-                    console.log("The following date", date1, "should be less than", dateStringW, "and bigger than", dateStringL2W, "last 2 week");
+                    //console.log("The following date", date1, "should be less than", dateStringW, "and bigger than", dateStringL2W, "last 2 week");
                     recordsTotalL2W = recordsTotalL2W + Number(records[i].data.Amount);
                 }
 
                 if (date1 > dateStringL3W && date1 < dateStringL2W){
-                    console.log("The following date", date1, "should be less than", dateStringL2W, "and bigger than", dateStringL3W, "last 3 week");
+                    //console.log("The following date", date1, "should be less than", dateStringL2W, "and bigger than", dateStringL3W, "last 3 week");
                     recordsTotalL3W = recordsTotalL3W + Number(records[i].data.Amount);
                 }
 
                 if (date1 > date2 && date1 < dateStringL3W){
-                    console.log("The following date", date1, "should be less than", dateStringL3W, "and bigger than", date2, "last 4 week");
+                    //console.log("The following date", date1, "should be less than", dateStringL3W, "and bigger than", date2, "last 4 week");
                     recordsTotalL4W = recordsTotalL4W + Number(records[i].data.Amount);
                 }
                 //console.log (records[i].data.date.slice(0,-8));
@@ -132,9 +139,9 @@ export class RealTimeDataTotals extends React.Component{
 
             records.push({date: 'n/a', data: {Amount: recordsTotalWeek, Transaction: 'This Week', date: 'N/A'}});
             graphArray.push({Amount: recordsTotalWeek, Transaction: 'Last week'});
-            graphArray.push({Amount: recordsTotalL2W, Transaction: '2 weeks ago'});
-            graphArray.push({Amount: recordsTotalL3W, Transaction: '3 Weeks ago'});
-            graphArray.push({Amount: recordsTotalL4W, Transaction: 'A month ago'});
+            graphArray.push({Amount: recordsTotalL2W, Transaction: '2 weeks'});
+            graphArray.push({Amount: recordsTotalL3W, Transaction: '3 Weeks'});
+            graphArray.push({Amount: recordsTotalL4W, Transaction: '1 month'});
 
             records.push({date: 'n/a', data: {Amount: recordsTotalMonth, Transaction: 'This Month', date: 'N/A'}});
             records.push({date: 'n/a', data: {Amount: recordsTotalYear, Transaction: 'Past Year', date: 'N/A'}});
@@ -147,28 +154,28 @@ export class RealTimeDataTotals extends React.Component{
 
             //console.log("records iss", records);
 
-            if (tmodeT > tmodeC){
+            if (tmodeT > tmodeC && tmodeT > tmodeB){
                 tmode = "Train travel is your preferred method to get around"
                 tmodeTip = "Try switching to cycling or walking where possible"
-            } else if (tmodeT < tmodeC){
+            } else if (tmodeC > tmodeT && tmodeC > tmodeB){
                 tmode = "Car travel is your preferred method to get around"
                 tmodeTip = "Try taking the train more often to reduce your carbon emissions"
-            } else if (tmodeT == tmodeC){
-                tmode = "You take the same amount of car journeys as train journeys"
+            } else if (tmodeB > tmodeT && tmodeB > tmodeC){
+                tmode = "Bus travel is your preferred method to get around"
+                tmodeTip = "Are you able to cycle or walk more often to reduce your footprint even further?"
+            } else if (tmodeT == tmodeC && tmodeT == tmodeB){
+                tmode = "You take the same amount of car journeys as train and bus journeys"
                 tmodeTip = "Try to reduce your car journeys and take the train more often instead"
-            } if (tmodeT == 0 && tmodeC == 0){
+            } if (tmodeT == 0 && tmodeC == 0 && tmodeB == 0){
                 tmode = "Start adding journeys to recieve highlights"
                 tmodeTip = "Recommendations will appear once you have added a journey"
             }
 
-
-
-            console.log("records iss", ((records)));
-            console.log("graphArray iss", ((graphArray)));
+            //console.log("records iss", ((records)));
+            //console.log("graphArray iss", ((graphArray)));
 
             //console.log("recordsTotal iss", (recordsTotal));
             //console.log("recordsTotalMonth iss", (recordsTotalMonth));
-
         });
     }
 
@@ -199,9 +206,8 @@ export class RealTimeDataTotals extends React.Component{
                         })}
                     </tbody>
                 </Table>
+                <TrendBarChart/>
                 <div className='Wrapper2'>
-                    
-
                     {/*<Table data = {rows}></Table>*/}
                     <h4>Your highlights </h4>
                     <ul className = "highlights2">
@@ -210,7 +216,12 @@ export class RealTimeDataTotals extends React.Component{
                         {/*<li className = "highlights">Your carbon usage has reduced 12% since the previous month</li>*/}
                     </ul>
                 </div>
-                <TrendBarChart/>
+                <a href="/FYP">
+                    <button style={{marginLeft:"0"}} id = "useCurrentLocation">
+                        ↻ Refresh 
+                    </button> 
+                </a>
+               
             </div>
 
         )

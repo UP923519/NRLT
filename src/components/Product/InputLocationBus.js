@@ -9,7 +9,7 @@ export let pointB;
 const currDateTime =  new Date().toLocaleDateString('en-ca')+'T'+new Date().toLocaleTimeString();
 
 
-export class InputLocationCar extends React.Component{
+export class InputLocationBus extends React.Component{
   constructor(props){
     super(props)
     this.state = { email:'',name:'', age:null, address:'',phoneNo:'', date: ''}
@@ -50,7 +50,7 @@ export class InputLocationCar extends React.Component{
     let date1Time = date.slice(11,date.length);
     date = date1Day + "/" + date1Month + "/" + date1Year + " " + date1Time + ":00";
 
-    getLatBetween(email, name, "car", date);
+    getLatBetween(email, name, "bus", date);
 
   }
 
@@ -112,8 +112,8 @@ export class InputLocationCar extends React.Component{
   // in react component itself as state
   render(){
     return(
-      <div className = "divCarInput">
-        <h3 style={{textAlign: "center"}}>Car Journey Input</h3>
+      <div className = "divBusInput">
+        <h3 style={{textAlign: "center"}}>Bus Journey Input</h3>
         &nbsp;Date of travel {" "}<br/>
         &nbsp;<input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="datetime-local" value={this.state.date} max={currDateTime} onChange={this.handleChangeDate} />
         <br/><br/>

@@ -1,18 +1,108 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 
-class List extends React.Component {
-    render() {
-        return (
-            <div>
-                <h2>Settings</h2>
-                <p>Accessibility Options</p>
-                <ul>
-                    <li><Link to="/react">Toggle Font Size</Link></li>
-                </ul>
-            </div>
-        );
-    }
-}
+export let currentFontSize;
+export let currentTheme;
 
-export default List;
+console.log (localStorage.getItem("darkMode"));
+
+if (localStorage.getItem("fontSize") == null){
+    currentFontSize = "Standard font size"
+} 
+
+if (localStorage.getItem("fontSize") == 16){
+    currentFontSize = "Standard font size"
+} 
+if (localStorage.getItem("fontSize") == 18){
+    currentFontSize = "Increased font size"
+} 
+if (localStorage.getItem("fontSize") == 11){
+    currentFontSize = "Decreased font size"
+} 
+
+if (localStorage.getItem("darkMode") == null){
+    currentTheme = "Light theme"
+} 
+if (localStorage.getItem("darkMode") == "#ffffff"){
+    currentTheme = "Light theme"
+} 
+if (localStorage.getItem("darkMode") == "#a6a6a6"){
+    currentTheme = "Dark theme"
+} 
+
+export default function Settings(){
+    const [fontSize, setFontSize] = useState(16);
+
+    function fontSizeIncrease(){
+        setFontSize(fontSize + 2);
+        localStorage.setItem("fontSize", 18);
+        console.log (localStorage.getItem("fontSize"));
+
+    }
+
+    function fontSizeDecrease(){
+        setFontSize(fontSize - 2);
+        localStorage.setItem("fontSize", 11);
+        //console.log (localStorage.getItem("fontSize"));
+
+    }
+
+    
+    function fontSizeReset(){
+        setFontSize(fontSize - 2);
+        localStorage.setItem("fontSize", 16);
+        console.log (localStorage.getItem("fontSize"));
+
+    }
+
+
+    function darkMode(){
+        localStorage.setItem("darkMode", "#a6a6a6");
+
+    }
+
+    function lightMode(){
+        localStorage.setItem("darkMode", "#ffffff");
+
+    }
+
+    return(
+        <div style={{width:"98vw", height:"100vh"}}>
+            <h3>App Options</h3>
+            <div className = "optionInput">
+                <h3>Display Settings</h3>
+                <div> Current theme: {currentTheme}<br/>
+                    <button id = "useCurrentLocation" onClick={darkMode}>
+                        Dark mode
+                    </button>
+                    <button id = "useCurrentLocation" onClick={lightMode}>
+                        Light mode
+                    </button>
+                </div>
+                <br/>
+                <div> Current font size: {currentFontSize}<br/>
+                    <button id = "useCurrentLocation" onClick={fontSizeIncrease}>
+                        + Increased font size
+                    </button>
+                    <button id = "useCurrentLocation" onClick={fontSizeDecrease}>
+                        - Decreased font size
+                    </button><br/> 
+                    <button id = "useCurrentLocation" onClick={fontSizeReset}>
+                        Standard font size
+                    </button><br/>
+        
+                </div>
+                <br/>
+                <a href="/FYP">
+                <button style = {{textDecoration: "none"}}id = "manualSubmitButton">
+                    ☑ Apply
+                </button>
+                </a>
+                <p style = {{fontSize: Number(localStorage.getItem("fontSize"))}}>
+                    Example text to test font size
+                </p><br/>
+            </div>
+        </div>
+    )
+
+}

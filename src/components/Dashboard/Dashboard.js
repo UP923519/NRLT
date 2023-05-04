@@ -62,7 +62,7 @@ export default function Dashboard() {
 
   return (
     <div className='Wrapper2'>
-      <h3>Information overview </h3>
+      <h3>Information Overview </h3>
       <RealTimeDataOverview/>
       <RealTimeDataTotals/>
       <br/>
