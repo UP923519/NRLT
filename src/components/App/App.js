@@ -10,12 +10,12 @@ if (localStorage.getItem("fontSize") == null){
   localStorage.setItem("fontSize", 16);
 }
 
-let backGroundColour = "#edf8ff";
+let backGroundColour = "#636363";
 
 
-if (localStorage.getItem("darkMode") == "#a6a6a6"){
+if (localStorage.getItem("darkMode") == "#c7dcff"){
   console.log("darkModeActive");
-  backGroundColour = "#c1ecf0";
+  backGroundColour = "#07838f";
 }
 
 
@@ -42,11 +42,11 @@ function App() {
 
   return (   
     <div className="wrapper" style = {{fontSize: Number(localStorage.getItem("fontSize")), backgroundColor: localStorage.getItem("darkMode")}}>
-      <h1 className = "titleClass" style = {{color: "#2d9ba1", backgroundColor:backGroundColour, borderRadius:"20px"}} >Carbon Tracker</h1>
+      <h1 className = "titleClass" style = {{color: "#ffffff", backgroundColor:backGroundColour, borderRadius:"20px"}} >IOT Preventative Maintenance System</h1>
       <div className = "topBanner1">
         <h4> Welcome, {localStorage.getItem('username')}
         {displayAction && <p>I am writing JSX</p>}
-        <button id="showHide" style={{fontSize:"medium"}}className = "logOut" onClick={removeToken}>
+        <button id="showHide" style={{fontSize:"medium"}}className = "logOut">
           ￩ Log Out
         </button> </h4>
       </div>

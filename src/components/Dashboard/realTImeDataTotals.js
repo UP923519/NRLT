@@ -1,5 +1,5 @@
 import React from "react";
-import StartFirebase from "../Preferences/firebase";
+import StartFirebase from "../DataFeed/firebase";
 import {ref, onValue, query, limitToLast, orderByChild, orderByPriority, orderByValue } from "firebase/database";
 
 import { Table } from "react-bootstrap";
@@ -17,6 +17,26 @@ export let graphArray = [];
 export let tmode = "";
 export let tmodeTip = "";
 
+export let tmodeL = "";
+export let tmodeTipL = "";
+export let tmodeS = "";
+export let tmodeTipS = "";
+export let tmodeP = "";
+export let tmodeTipP = "";
+
+let saveCurrentAmount = 0
+
+const soundThreshold = 150;
+const proxThreshold = 5;
+const lightThreshold = 400;
+
+let avgCounter = 0
+let avgCounterW = 0;
+let avgCounterM = 0;
+let avgCounterY = 0;
+let avgCounterL2W = 0
+let avgCounterL3W = 0
+let avgCounterL4W = 0;
 
 export class RealTimeDataTotals extends React.Component{
     constructor(){
@@ -76,10 +96,13 @@ export class RealTimeDataTotals extends React.Component{
             let tmodeC = 0;
             let tmodeB = 0;
 
-
+            console.log("records.is.", records);
+            
             
             for (let i=0; i<records.length; i++){
-                recordsTotal = recordsTotal + Number(records[i].data.Amount);
+                let currentAmount = Number(records[i].data.Amount);
+                
+                
                 let date1 = records[i].data.date.slice(0,-8).slice(0,-1);
                 let date2 = dateString;
                 let date1Day = date1.slice(0,2);
@@ -88,48 +111,70 @@ export class RealTimeDataTotals extends React.Component{
                 date1 = date1Year + "-" + date1Month + "-" + date1Day;
                 //console.log(date1, date2);
                 //console.log(records[i].data.Transaction.slice(0,2));
-                let transportMode = records[i].data.Transaction.slice(0,2);
+                let transportMode = records[i].data.Transaction;
+
+                //console.log(currentAmount);
+                console.log(transportMode);
+
                 
-                if (transportMode == "🚂"){
-                    tmodeT += 1; 
+
+                if (transportMode == "SoundSensor"){
+                    //console.log("Detecting");
+
+                    if (currentAmount > soundThreshold){
+                        tmodeT = 1;
+                        //console.log("tmode is", tmodeT);
+                        saveCurrentAmount = currentAmount;
+                    }
+
                 }
-                if (transportMode == "🚗"){
-                    tmodeC += 1; 
-                }
-                if (transportMode == "🚌"){
-                    tmodeB += 1; 
+                if (transportMode == "LightSensor"){
+                    recordsTotal = recordsTotal + Number(records[i].data.Amount);
+                    avgCounter += 1;
+                    if (date1 > date2){
+                        recordsTotalMonth = recordsTotalMonth + Number(records[i].data.Amount);
+                        //console.log("newer than last month");
+                        avgCounterM += 1;
+                    }
+                    if (date1 > dateStringW){
+                        //console.log("The following date", date1, "should be bigger than", dateStringW, "Last week");
+                        recordsTotalWeek = recordsTotalWeek + Number(records[i].data.Amount);
+                        //console.log("newer than last week");
+                        avgCounterW += 1;
+                    }
+                    if (date1 > dateStringY){
+                        recordsTotalYear = recordsTotalYear + Number(records[i].data.Amount);
+                        //console.log("newer than last year");
+                        avgCounterY += 1;
+                    }
+                    if (date1 >= dateStringL2W && date1 < dateStringW){
+                        //console.log("The following date", date1, "should be less than", dateStringW, "and bigger than", dateStringL2W, "last 2 week");
+                        recordsTotalL2W = recordsTotalL2W + Number(records[i].data.Amount);
+                        avgCounterL2W += 1;
+                    }
+                    if (date1 >= dateStringL3W && date1 < dateStringL2W){
+                        console.log("The following date", date1, "should be less than", dateStringL2W, "and bigger than", dateStringL3W, "last 3 week");
+                        recordsTotalL3W = recordsTotalL3W + Number(records[i].data.Amount);
+                        avgCounterL3W += 1;
+                    }
+                    if (date1 >= date2 && date1 < dateStringL3W){
+                        //console.log("The following date", date1, "should be less than", dateStringL3W, "and bigger than", date2, "last 4 week");
+                        recordsTotalL4W = recordsTotalL4W + Number(records[i].data.Amount);
+                        avgCounterL4W += 1;
+                    }
+                        if (currentAmount > lightThreshold){
+                            tmodeC = 1;
+                            saveCurrentAmount = currentAmount;
+                        }
+                    }
+                if (transportMode == "ProximitySensor"){
+                    if (currentAmount > proxThreshold){
+                        tmodeB = 1;
+                        saveCurrentAmount = currentAmount;
+                    }
                 }
                                
-                if (date1 > date2){
-                    recordsTotalMonth = recordsTotalMonth + Number(records[i].data.Amount);
-                    //console.log("newer than last month");
-                }
 
-                if (date1 > dateStringW){
-                    //console.log("The following date", date1, "should be bigger than", dateStringW, "Last week");
-                    recordsTotalWeek = recordsTotalWeek + Number(records[i].data.Amount);
-                    //console.log("newer than last week");
-                }
-
-                if (date1 > dateStringY){
-                    recordsTotalYear = recordsTotalYear + Number(records[i].data.Amount);
-                    //console.log("newer than last year");
-                }
-
-                if (date1 > dateStringL2W && date1 < dateStringW){
-                    //console.log("The following date", date1, "should be less than", dateStringW, "and bigger than", dateStringL2W, "last 2 week");
-                    recordsTotalL2W = recordsTotalL2W + Number(records[i].data.Amount);
-                }
-
-                if (date1 > dateStringL3W && date1 < dateStringL2W){
-                    //console.log("The following date", date1, "should be less than", dateStringL2W, "and bigger than", dateStringL3W, "last 3 week");
-                    recordsTotalL3W = recordsTotalL3W + Number(records[i].data.Amount);
-                }
-
-                if (date1 > date2 && date1 < dateStringL3W){
-                    //console.log("The following date", date1, "should be less than", dateStringL3W, "and bigger than", date2, "last 4 week");
-                    recordsTotalL4W = recordsTotalL4W + Number(records[i].data.Amount);
-                }
                 //console.log (records[i].data.date.slice(0,-8));
                 //console.log(dateString);
             }
@@ -137,38 +182,35 @@ export class RealTimeDataTotals extends React.Component{
             let dataArr = ["Amount: ", [recordsTotal, recordsTotalMonth, recordsTotalWeek, recordsTotalWeek]];
             records = [];
 
-            records.push({date: 'n/a', data: {Amount: recordsTotalWeek, Transaction: 'This Week', date: 'N/A'}});
-            graphArray.push({Amount: recordsTotalWeek, Transaction: 'Last week'});
-            graphArray.push({Amount: recordsTotalL2W, Transaction: '2 weeks'});
-            graphArray.push({Amount: recordsTotalL3W, Transaction: '3 Weeks'});
-            graphArray.push({Amount: recordsTotalL4W, Transaction: '1 month'});
+            records.push({date: 'n/a', data: {Amount: recordsTotalWeek/avgCounterW, Transaction: 'This Week', date: 'N/A'}});
+            graphArray.push({Amount: recordsTotalWeek/avgCounterW, Transaction: 'Last week'});
+            graphArray.push({Amount: recordsTotalL2W/avgCounterL2W, Transaction: '2 weeks'});
+            graphArray.push({Amount: recordsTotalL3W/avgCounterL3W, Transaction: '3 Weeks'});
+            graphArray.push({Amount: recordsTotalL4W/avgCounterL4W, Transaction: '1 month'});
 
-            records.push({date: 'n/a', data: {Amount: recordsTotalMonth, Transaction: 'This Month', date: 'N/A'}});
-            records.push({date: 'n/a', data: {Amount: recordsTotalYear, Transaction: 'Past Year', date: 'N/A'}});
-            records.push({date: 'n/a', data: {Amount: recordsTotal, Transaction: 'All time', date: 'N/A'}});
+            records.push({date: 'n/a', data: {Amount: recordsTotalMonth/avgCounterM, Transaction: 'This Month', date: 'N/A'}});
+            records.push({date: 'n/a', data: {Amount: recordsTotalYear/avgCounterY, Transaction: 'Past Year', date: 'N/A'}});
+            records.push({date: 'n/a', data: {Amount: recordsTotal/avgCounter, Transaction: 'All time', date: 'N/A'}});
 
             //recordsL = ["All time", "This month"];
             graphArray = graphArray.reverse();
 
             this.setState({tableData: records});
 
-            //console.log("records iss", records);
+            console.log("avgcounter is", avgCounter);
 
-            if (tmodeT > tmodeC && tmodeT > tmodeB){
-                tmode = "Train travel is your preferred method to get around"
-                tmodeTip = "Try switching to cycling or walking where possible"
-            } else if (tmodeC > tmodeT && tmodeC > tmodeB){
-                tmode = "Car travel is your preferred method to get around"
-                tmodeTip = "Try taking the train more often to reduce your carbon emissions"
-            } else if (tmodeB > tmodeT && tmodeB > tmodeC){
-                tmode = "Bus travel is your preferred method to get around"
-                tmodeTip = "Are you able to cycle or walk more often to reduce your footprint even further?"
-            } else if (tmodeT == tmodeC && tmodeT == tmodeB){
-                tmode = "You take the same amount of car journeys as train and bus journeys"
-                tmodeTip = "Try to reduce your car journeys and take the train more often instead"
-            } if (tmodeT == 0 && tmodeC == 0 && tmodeB == 0){
-                tmode = "Start adding journeys to recieve highlights"
-                tmodeTip = "Recommendations will appear once you have added a journey"
+            if (tmodeT >= 1){
+                tmode = "⚠️ Sound Sensor";
+                tmodeTip = "Sound sensor value is " + saveCurrentAmount + ", Limit: " + soundThreshold + ". ";
+            } if (tmodeC >= 1){
+                tmode += "⚠️ Light Sensor"
+                tmodeTip += "Light sensor value is " + saveCurrentAmount + ", Limit: " + lightThreshold + ". ";
+            } if (tmodeB >= 1){
+                tmode += "⚠️ Proximity Sensor"
+                tmodeTip = "Proximity sensor value is " + saveCurrentAmount + ", Limit: " + proxThreshold + ". ";
+            } else if (tmodeT == 0 && tmodeC == 0 && tmodeB == 0) {
+                tmode = "IOT sensors are functioning normally"
+                tmodeTip = "No problems detected"
             }
 
             //console.log("records iss", ((records)));
@@ -182,13 +224,13 @@ export class RealTimeDataTotals extends React.Component{
     render(){
         return(
             <div className="wrapper">
-                <h4>Your recent carbon balance</h4>
-                <Table className= "transactions" style = {{backgroundColor: "#b4eced"}}>
+                <h4>Light sensor data report</h4>
+                <Table className= "transactions" style = {{backgroundColor: "#e3f2ff"}}>
                     <thead>
                     <tr>
                         {/*<th>#</th>*/}
                         <th>Time period</th>
-                        <th>Carbon (CO2e)</th>
+                        <th>Value</th>
                         {/*<th>Date Time</th>*/}
                     </tr>
                     </thead>
@@ -206,17 +248,25 @@ export class RealTimeDataTotals extends React.Component{
                         })}
                     </tbody>
                 </Table>
+                
                 <TrendBarChart/>
+
+                <GraphEXP/>
                 <div className='Wrapper2'>
                     {/*<Table data = {rows}></Table>*/}
-                    <h4>Your highlights </h4>
+                    <h4>Message Log </h4>
                     <ul className = "highlights2">
                         <li className = "highlights">{tmode}</li>
                         <li className = "highlights">{tmodeTip}</li>
+
                         {/*<li className = "highlights">Your carbon usage has reduced 12% since the previous month</li>*/}
                     </ul>
+                    <p>Voltage - consistent with expected range</p>
+                    <p>Sound sensor - consistent with expected range</p>
+                    <p>Failure detection - ❗ IOT Device fault</p>
+                    <p>Service status - ❗ replace at next maintenance cycle</p>
                 </div>
-                <a href="/FYP">
+                <a href="/IOTSystem">
                     <button style={{marginLeft:"0"}} id = "useCurrentLocation">
                         ↻ Refresh 
                     </button> 

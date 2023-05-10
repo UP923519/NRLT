@@ -1,5 +1,5 @@
 import React from "react";
-import StartFirebase from "../Preferences/firebase";
+import StartFirebase from "../DataFeed/firebase";
 import {ref, onValue, query, limitToLast, orderByChild, orderByPriority, orderByValue } from "firebase/database";
 import { where, orderBy } from "firebase/firestore";
 
@@ -20,7 +20,7 @@ export class RealTimeDataOverview extends React.Component{
     componentDidMount(){
         const user2 = localStorage.getItem('username');
         //const dbref = ref(db, user2);
-        const dbref = query(ref(db, user2), orderByChild("Amount"), limitToLast(3));
+        const dbref = query(ref(db, user2), orderByChild("Amount"), limitToLast(9));
 
         onValue(dbref, (snapshot)=>{
             let records = [];
@@ -50,13 +50,13 @@ export class RealTimeDataOverview extends React.Component{
     render(){
         return(
             <div className="wrapper">
-                <h4>Your largest transactions so far</h4>
-                <Table className= "transactions" style = {{backgroundColor: "#b4d3ed"}}>
+                <h4>Greatest anomalous readings</h4>
+                <Table className= "transactions" style = {{backgroundColor: "#e3f2ff"}}>
                     <thead>
                     <tr>
                         {/*<th>#</th>*/}
-                        <th>Transaction</th>
-                        <th>Carbon (CO2e)</th>
+                        <th>Sensor</th>
+                        <th>Value</th>
                         {/*<th>Date Time</th>*/}
                     </tr>
                     </thead>

@@ -55,9 +55,9 @@
 <text text-anchor="middle" x="307" y="-555.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">Navbar</text>
 </g>
 <g id="clust10" class="cluster">
-<title>cluster_src/components/Preferences</title>
+<title>cluster_src/components/DataFeed</title>
 <path fill="#ffffff" stroke="black" stroke-width="2" d="M526,-688C526,-688 731,-688 731,-688 737,-688 743,-694 743,-700 743,-700 743,-758 743,-758 743,-764 737,-770 731,-770 731,-770 526,-770 526,-770 520,-770 514,-764 514,-758 514,-758 514,-700 514,-700 514,-694 520,-688 526,-688"/>
-<text text-anchor="middle" x="628.5" y="-758.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">Preferences</text>
+<text text-anchor="middle" x="628.5" y="-758.8" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">DataFeed</text>
 </g>
 <g id="clust11" class="cluster">
 <title>cluster_src/components/Product</title>
@@ -154,18 +154,18 @@
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M593.68,-904.4C624.65,-904.4 671,-904.4 671,-904.4 671,-904.4 671,-969.75 671,-969.75"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="668.9,-969.75 671,-975.75 673.1,-969.75 668.9,-969.75"/>
 </g>
-<!-- src/components/Preferences/firebase.js -->
+<!-- src/components/DataFeed/firebase.js -->
 <g id="node17" class="node">
-<title>src/components/Preferences/firebase.js</title>
-<g id="a_node17"><a xlink:href="src/components/Preferences/firebase.js" xlink:title="firebase.js">
+<title>src/components/DataFeed/firebase.js</title>
+<g id="a_node17"><a xlink:href="src/components/DataFeed/firebase.js" xlink:title="firebase.js">
 <path fill="#ffffcc" stroke="black" d="M729,-744C729,-744 679,-744 679,-744 676,-744 673,-741 673,-738 673,-738 673,-732 673,-732 673,-729 676,-726 679,-726 679,-726 729,-726 729,-726 732,-726 735,-729 735,-732 735,-732 735,-738 735,-738 735,-741 732,-744 729,-744"/>
 <text text-anchor="start" x="681" y="-732.8" font-family="Helvetica,sans-Serif" font-size="9.00">firebase.js</text>
 </a>
 </g>
 </g>
-<!-- src/components/Login/Login.js&#45;&gt;src/components/Preferences/firebase.js -->
+<!-- src/components/Login/Login.js&#45;&gt;src/components/DataFeed/firebase.js -->
 <g id="edge17" class="edge">
-<title>src/components/Login/Login.js&#45;&gt;src/components/Preferences/firebase.js</title>
+<title>src/components/Login/Login.js&#45;&gt;src/components/DataFeed/firebase.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M593.91,-897.2C614.44,-897.2 639,-897.2 639,-897.2 639,-897.2 639,-740.4 639,-740.4 639,-740.4 666.64,-740.4 666.64,-740.4"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="666.64,-742.5 672.64,-740.4 666.64,-738.3 666.64,-742.5"/>
 </g>
@@ -224,18 +224,18 @@
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="526.84,-629 523.84,-629 "/>
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="521.44" cy="-629" rx="2.4" ry="2.4"/>
 </g>
-<!-- src/components/Preferences/Preferences.js -->
+<!-- src/components/DataFeed/DataFeed.js -->
 <g id="node20" class="node">
-<title>src/components/Preferences/Preferences.js</title>
-<g id="a_node20"><a xlink:href="src/components/Preferences/Preferences.js" xlink:title="Preferences.js">
+<title>src/components/DataFeed/DataFeed.js</title>
+<g id="a_node20"><a xlink:href="src/components/DataFeed/DataFeed.js" xlink:title="DataFeed.js">
 <path fill="#ffffcc" stroke="black" d="M600,-714C600,-714 533,-714 533,-714 530,-714 527,-711 527,-708 527,-708 527,-702 527,-702 527,-699 530,-696 533,-696 533,-696 600,-696 600,-696 603,-696 606,-699 606,-702 606,-702 606,-708 606,-708 606,-711 603,-714 600,-714"/>
-<text text-anchor="start" x="535" y="-702.8" font-family="Helvetica,sans-Serif" font-size="9.00">Preferences.js</text>
+<text text-anchor="start" x="535" y="-702.8" font-family="Helvetica,sans-Serif" font-size="9.00">DataFeed.js</text>
 </a>
 </g>
 </g>
-<!-- src/components/Navbar/Navbar.js&#45;&gt;src/components/Preferences/Preferences.js -->
+<!-- src/components/Navbar/Navbar.js&#45;&gt;src/components/DataFeed/DataFeed.js -->
 <g id="edge22" class="edge">
-<title>src/components/Navbar/Navbar.js&#45;&gt;src/components/Preferences/Preferences.js</title>
+<title>src/components/Navbar/Navbar.js&#45;&gt;src/components/DataFeed/DataFeed.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M302,-541.3C302,-577.24 302,-705 302,-705 302,-705 513.1,-705 513.1,-705"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="520.9,-707.1 526.9,-705 520.9,-702.9 520.9,-707.1"/>
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="520.9,-705 517.9,-705 "/>
@@ -429,9 +429,9 @@
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="642.3,-822 639.3,-822 "/>
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="636.9" cy="-822" rx="2.4" ry="2.4"/>
 </g>
-<!-- src/components/Dashboard/realTImeDataOverview.js&#45;&gt;src/components/Preferences/firebase.js -->
+<!-- src/components/Dashboard/realTImeDataOverview.js&#45;&gt;src/components/DataFeed/firebase.js -->
 <g id="edge11" class="edge">
-<title>src/components/Dashboard/realTImeDataOverview.js&#45;&gt;src/components/Preferences/firebase.js</title>
+<title>src/components/Dashboard/realTImeDataOverview.js&#45;&gt;src/components/DataFeed/firebase.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M615,-785.91C615,-769.54 615,-736.8 615,-736.8 615,-736.8 666.87,-736.8 666.87,-736.8"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="666.87,-738.9 672.87,-736.8 666.87,-734.7 666.87,-738.9"/>
 </g>
@@ -443,9 +443,9 @@
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="632.28,-828 635.28,-828 "/>
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="637.68" cy="-828" rx="2.4" ry="2.4"/>
 </g>
-<!-- src/components/Dashboard/realTImeDataTotals.js&#45;&gt;src/components/Preferences/firebase.js -->
+<!-- src/components/Dashboard/realTImeDataTotals.js&#45;&gt;src/components/DataFeed/firebase.js -->
 <g id="edge12" class="edge">
-<title>src/components/Dashboard/realTImeDataTotals.js&#45;&gt;src/components/Preferences/firebase.js</title>
+<title>src/components/Dashboard/realTImeDataTotals.js&#45;&gt;src/components/DataFeed/firebase.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M704,-815.71C704,-815.71 704,-750.11 704,-750.11"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="706.1,-750.11 704,-744.11 701.9,-750.11 706.1,-750.11"/>
 </g>
@@ -457,27 +457,27 @@
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="670.88,-496.8 667.88,-496.8 "/>
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="665.48" cy="-496.8" rx="2.4" ry="2.4"/>
 </g>
-<!-- src/components/Link/LinkPage.js&#45;&gt;src/components/Preferences/firebase.js -->
+<!-- src/components/Link/LinkPage.js&#45;&gt;src/components/DataFeed/firebase.js -->
 <g id="edge15" class="edge">
-<title>src/components/Link/LinkPage.js&#45;&gt;src/components/Preferences/firebase.js</title>
+<title>src/components/Link/LinkPage.js&#45;&gt;src/components/DataFeed/firebase.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M600.14,-633C640.84,-633 704,-633 704,-633 704,-633 704,-719.95 704,-719.95"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="701.9,-719.95 704,-725.95 706.1,-719.95 701.9,-719.95"/>
 </g>
-<!-- src/components/Preferences/Preferences.js&#45;&gt;src/components/App/App.css -->
+<!-- src/components/DataFeed/DataFeed.js&#45;&gt;src/components/App/App.css -->
 <g id="edge25" class="edge">
-<title>src/components/Preferences/Preferences.js&#45;&gt;src/components/App/App.css</title>
+<title>src/components/DataFeed/DataFeed.js&#45;&gt;src/components/App/App.css</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M606.08,-708C618.49,-708 629,-708 629,-708 629,-708 629,-472 629,-472 629,-472 670.92,-472 670.92,-472"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="670.92,-474.1 676.92,-472 670.92,-469.9 670.92,-474.1"/>
 </g>
-<!-- src/components/Preferences/Preferences.js&#45;&gt;src/components/table/data.json -->
+<!-- src/components/DataFeed/DataFeed.js&#45;&gt;src/components/table/data.json -->
 <g id="edge26" class="edge">
-<title>src/components/Preferences/Preferences.js&#45;&gt;src/components/table/data.json</title>
+<title>src/components/DataFeed/DataFeed.js&#45;&gt;src/components/table/data.json</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M606.18,-705C617.58,-705 627,-705 627,-705 627,-705 627,-381 627,-381 627,-381 668.89,-381 668.89,-381"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="668.89,-383.1 674.89,-381 668.89,-378.9 668.89,-383.1"/>
 </g>
-<!-- src/components/Preferences/Preferences.js&#45;&gt;src/components/table/form.jsx -->
+<!-- src/components/DataFeed/DataFeed.js&#45;&gt;src/components/table/form.jsx -->
 <g id="edge27" class="edge">
-<title>src/components/Preferences/Preferences.js&#45;&gt;src/components/table/form.jsx</title>
+<title>src/components/DataFeed/DataFeed.js&#45;&gt;src/components/table/form.jsx</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M606.14,-699C610.27,-699 613,-699 613,-699 613,-699 613,-409.5 613,-409.5 613,-409.5 607.35,-409.5 607.35,-409.5"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="599.55,-407.4 593.55,-409.5 599.55,-411.6 599.55,-407.4"/>
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="599.55,-409.5 602.55,-409.5 "/>
@@ -492,9 +492,9 @@
 </a>
 </g>
 </g>
-<!-- src/components/Preferences/Preferences.js&#45;&gt;src/components/table/realTImeData.js -->
+<!-- src/components/DataFeed/DataFeed.js&#45;&gt;src/components/table/realTImeData.js -->
 <g id="edge28" class="edge">
-<title>src/components/Preferences/Preferences.js&#45;&gt;src/components/table/realTImeData.js</title>
+<title>src/components/DataFeed/DataFeed.js&#45;&gt;src/components/table/realTImeData.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M606.22,-711C634.31,-711 667,-711 667,-711 667,-711 667,-420.16 667,-420.16"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="669.1,-420.16 667,-414.16 664.9,-420.16 669.1,-420.16"/>
 </g>
@@ -507,9 +507,9 @@
 </a>
 </g>
 </g>
-<!-- src/components/Preferences/Preferences.js&#45;&gt;src/components/table/ViewAllData.js -->
+<!-- src/components/DataFeed/DataFeed.js&#45;&gt;src/components/table/ViewAllData.js -->
 <g id="edge29" class="edge">
-<title>src/components/Preferences/Preferences.js&#45;&gt;src/components/table/ViewAllData.js</title>
+<title>src/components/DataFeed/DataFeed.js&#45;&gt;src/components/table/ViewAllData.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M606.11,-702C614.56,-702 621,-702 621,-702 621,-702 621,-375 621,-375 621,-375 612.11,-375 612.11,-375"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="612.11,-372.9 606.11,-375 612.11,-377.1 612.11,-372.9"/>
 </g>
@@ -677,9 +677,9 @@
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="106.68,-167 103.68,-167 "/>
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="101.28" cy="-167" rx="2.4" ry="2.4"/>
 </g>
-<!-- src/components/table/realTImeData.js&#45;&gt;src/components/Preferences/firebase.js -->
+<!-- src/components/table/realTImeData.js&#45;&gt;src/components/DataFeed/firebase.js -->
 <g id="edge74" class="edge">
-<title>src/components/table/realTImeData.js&#45;&gt;src/components/Preferences/firebase.js</title>
+<title>src/components/table/realTImeData.js&#45;&gt;src/components/DataFeed/firebase.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M742,-414.09C742,-466.9 742,-732 742,-732 742,-732 741.03,-732 741.03,-732"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="741.03,-729.9 735.03,-732 741.03,-734.1 741.03,-729.9"/>
 </g>
@@ -704,18 +704,18 @@
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M606.11,-369C633.86,-369 666,-369 666,-369 666,-369 666,-330.41 666,-330.41"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="668.1,-330.41 666,-324.41 663.9,-330.41 668.1,-330.41"/>
 </g>
-<!-- src/components/Preferences/handlesubmit.js -->
+<!-- src/components/DataFeed/handlesubmit.js -->
 <g id="node25" class="node">
-<title>src/components/Preferences/handlesubmit.js</title>
-<g id="a_node25"><a xlink:href="src/components/Preferences/handlesubmit.js" xlink:title="handlesubmit.js">
+<title>src/components/DataFeed/handlesubmit.js</title>
+<g id="a_node25"><a xlink:href="src/components/DataFeed/handlesubmit.js" xlink:title="handlesubmit.js">
 <path fill="#ffffcc" stroke="black" d="M605,-744C605,-744 528,-744 528,-744 525,-744 522,-741 522,-738 522,-738 522,-732 522,-732 522,-729 525,-726 528,-726 528,-726 605,-726 605,-726 608,-726 611,-729 611,-732 611,-732 611,-738 611,-738 611,-741 608,-744 605,-744"/>
 <text text-anchor="start" x="530" y="-732.8" font-family="Helvetica,sans-Serif" font-size="9.00">handlesubmit.js</text>
 </a>
 </g>
 </g>
-<!-- src/components/Preferences/handlesubmit.js&#45;&gt;src/components/Preferences/firebase.js -->
+<!-- src/components/DataFeed/handlesubmit.js&#45;&gt;src/components/DataFeed/firebase.js -->
 <g id="edge30" class="edge">
-<title>src/components/Preferences/handlesubmit.js&#45;&gt;src/components/Preferences/firebase.js</title>
+<title>src/components/DataFeed/handlesubmit.js&#45;&gt;src/components/DataFeed/firebase.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M611.14,-733.2C611.14,-733.2 666.63,-733.2 666.63,-733.2"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="666.63,-735.3 672.63,-733.2 666.63,-731.1 666.63,-735.3"/>
 </g>
@@ -758,9 +758,9 @@
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="533.23,-402 530.23,-402 "/>
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="527.83" cy="-402" rx="2.4" ry="2.4"/>
 </g>
-<!-- src/components/Product/Location 2.js&#45;&gt;src/components/Preferences/firebase.js -->
+<!-- src/components/Product/Location 2.js&#45;&gt;src/components/DataFeed/firebase.js -->
 <g id="edge43" class="edge">
-<title>src/components/Product/Location 2.js&#45;&gt;src/components/Preferences/firebase.js</title>
+<title>src/components/Product/Location 2.js&#45;&gt;src/components/DataFeed/firebase.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M470.04,-245.5C525.1,-245.5 623,-245.5 623,-245.5 623,-245.5 623,-729.6 623,-729.6 623,-729.6 666.91,-729.6 666.91,-729.6"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="666.91,-731.7 672.91,-729.6 666.91,-727.5 666.91,-731.7"/>
 </g>
@@ -934,9 +934,9 @@
 <polyline fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="243.69,-182 240.69,-182 "/>
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="238.29" cy="-182" rx="2.4" ry="2.4"/>
 </g>
-<!-- src/components/table/realTImeDataAll.js&#45;&gt;src/components/Preferences/firebase.js -->
+<!-- src/components/table/realTImeDataAll.js&#45;&gt;src/components/DataFeed/firebase.js -->
 <g id="edge75" class="edge">
-<title>src/components/table/realTImeDataAll.js&#45;&gt;src/components/Preferences/firebase.js</title>
+<title>src/components/table/realTImeDataAll.js&#45;&gt;src/components/DataFeed/firebase.js</title>
 <path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M752.62,-315C755.94,-315 758,-315 758,-315 758,-315 758,-738 758,-738 758,-738 741.1,-738 741.1,-738"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="741.1,-735.9 735.1,-738 741.1,-740.1 741.1,-735.9"/>
 </g>

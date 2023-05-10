@@ -30,7 +30,7 @@ function onChange(){
 
 }
 
-export default function Preferences() {
+export default function DataFeed() {
   
   const greeting = "greeting";
   const displayAction = false;
@@ -40,7 +40,7 @@ export default function Preferences() {
     <div style={{width:"98vw", height:"150vh"}} className="wrapper">
       {/*<Table data = {rows} >
       </Table>*/}
-      <h3>Carbon Transactions</h3>
+      <h3>Data Feed</h3>
       <div className='TableRow'>
       
       </div>

@@ -8,14 +8,15 @@ import { getDatabase } from "firebase/database";
 // Your web app's Firebase configuration
 function StartFirebase(){
     const firebaseConfig = {
-    apiKey: "AIzaSyDcSj4OO7lwn26RSBevf6SxeYkvgwKu-jQ",
-    authDomain: "carbonwebappdatabase.firebaseapp.com",
-    databaseURL: "https://carbonwebappdatabase-default-rtdb.firebaseio.com/",
-    projectId: "carbonwebappdatabase",
-    storageBucket: "carbonwebappdatabase.appspot.com",
-    messagingSenderId: "992511270042",
-    appId: "1:992511270042:web:093105b2f5ccd0933ed323"
-    };
+        apiKey: "AIzaSyCVEHBPAMoIz96ftl9pGedW94-M_3JKKYw",
+        authDomain: "iotsystem-7e021.firebaseapp.com",
+        databaseURL: "https://iotsystem-7e021-default-rtdb.firebaseio.com",
+        projectId: "iotsystem-7e021",
+        storageBucket: "iotsystem-7e021.appspot.com",
+        messagingSenderId: "653091219933",
+        appId: "1:653091219933:web:a00b411d966db7fba9ee34",
+        measurementId: "G-RK3D51KXEL"
+      };
 
     const app = initializeApp(firebaseConfig);
     return getDatabase(app);

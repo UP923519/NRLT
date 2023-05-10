@@ -5,7 +5,7 @@ import App from '../App/App.css';
 import LinkPage from '../Link/LinkPage';
 import Product from '../Product/Product';
 import Dashboard from '../Dashboard/Dashboard';
-import Preferences from '../Preferences/Preferences';
+import DataFeed from '../DataFeed/DataFeed';
 import Settings from '../Settings/Settings.js';
 
 
@@ -17,19 +17,17 @@ const Navbar = () => {
     <BrowserRouter>
       <navbar className = "NavBar1" >
         <NavLink exact className = "topRow2" activeClassName = "topRow2Active" to="/dashboard">Home</NavLink>
-        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/preferences">Balance</NavLink>
-        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/linkPage">Energy</NavLink>
-        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/product">Journeys</NavLink>
+        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/dataFeed">Feed</NavLink>
         <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/settings">Options</NavLink>
       </navbar>
 
         <Routes>
           <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/preferences" element={<Preferences/>} />
+          <Route path="/dataFeed" element={<DataFeed/>} />
           <Route path="/linkPage" element={<LinkPage/>} />
           <Route path="/product" element={<Product/>} />
           <Route path="/settings" element={<Settings/>} />
-          <Route path="/FYP" element={<Navigate to="/dashboard" />} />
+          <Route path="/IOTSystem" element={<Navigate to="/dashboard" />} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
 
           <Route

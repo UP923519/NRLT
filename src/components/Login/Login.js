@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import videoBg from '../../assets/videoBg.mp4';
+//import videoBg from '../../assets/videoBg.mp4';
 import {ref, onValue, query, set, orderByChild} from "firebase/database";
-import StartFirebase from "../Preferences/firebase";
+import StartFirebase from "../DataFeed/firebase";
 import bcrypt from 'bcryptjs'
 
 import './Login.css';
@@ -73,11 +73,13 @@ async function verifyUser(username, hashedPassword) {
 export default function Login({setToken}) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  localStorage.setItem('username',username);
+  localStorage.setItem('username',"Peter");
   let records = [];
   let recordsCheck = [];
   let savedPassword2;
   let hashedPassword;
+
+  setToken({token: 'User'});
 
   const handleSubmit = async e => {
     /*e.preventDefault();
@@ -132,7 +134,8 @@ export default function Login({setToken}) {
               function() {
                 verifyUser(username, hashedPassword);
               }
-              .bind(this),2000);
+              .bind(this),2000
+              );
             } else{
             alert("Username and password fields cannot be blank.")
           }
@@ -169,7 +172,6 @@ export default function Login({setToken}) {
   return (
     <div className = "main">
       <div className = "overlay"></div>
-      <video src={videoBg} autoPlay loop muted> </video>
       <div className="login-wrapper">     
         <div className = "divLoginInput1"> 
           <h1 style = {{color: "#2d9ba1"}} >Carbon Tracker</h1>

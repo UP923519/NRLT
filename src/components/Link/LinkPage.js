@@ -1,5 +1,5 @@
 import React from 'react';
-import StartFirebase from "../Preferences/firebase";
+import StartFirebase from "../DataFeed/firebase";
 import Select from 'react-select';
 import {getDatabase, ref, set, query, onValue } from "firebase/database";
 import {theUser} from "../App/App.js"
@@ -182,7 +182,7 @@ export default class List extends React.Component {
                     </label>
                     <input style = {{border: "0", marginLeft:"4px"}} id = "journeySubmitButton" value="☑ Submit" type="submit"/>
                 </form>
-                <a href="/FYP">
+                <a href="/IOTSystem">
 
                 </a>
                 </div>

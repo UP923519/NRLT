@@ -1,4 +1,4 @@
-import StartFirebase from "../Preferences/firebase";
+import StartFirebase from "../DataFeed/firebase";
 import React from "react";
 import {query, ref, set, get, limitToLast, remove, orderByChild, onValue } from "firebase/database";
 import { Table } from "react-bootstrap";
@@ -104,19 +104,19 @@ export class RealTimeData extends React.Component{
         return(
             <div className="wrapper">
                 <div className="TableRow">
-                    <a href="/FYP">
+                    <a href="/IOTSystem">
                         <button id = "useCurrentLocation">
                             ↻ Refresh
                         </button>
                     </a>
-                    &nbsp;Showing most recently added
+                    &nbsp;Showing most recent
                 </div>
-                <Table className= "transactions" style = {{backgroundColor: "#caddeb"}}>
+                <Table className= "transactions" style = {{backgroundColor: "#e3f2ff"}}>
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Transaction Type</th>
-                        <th>Carbon (CO2e)</th>
+                        <th>Sensor Device</th>
+                        <th>Value</th>
                         <th>Date & Time</th>
                     </tr>
                     </thead>
@@ -135,7 +135,7 @@ export class RealTimeData extends React.Component{
                     </tbody>
                 </Table>
                 <form onSubmit={this.handleSubmit}>
-                <label style = {{paddingRight: "7px"}} >Which row would you like to delete?</label> 
+                <label style = {{paddingRight: "7px"}} >Delete row:</label> 
                 <input style = {{backgroundColor: "#ebebeb", border: "0", borderRadius: "2px"}}
                 type="text" 
                 value={this.state.value}

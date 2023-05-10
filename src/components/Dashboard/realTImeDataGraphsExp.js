@@ -63,10 +63,10 @@ const funnelData4 = [
 
 export const GraphEXP = props => (
   <div>
-    <h4>LDR sensors C221 AVG - Drive belt component ⚠️</h4>
+    <h4>Comparison of all sensors</h4>
     <p>Failure detected</p>
 
-    <XYPlot xyPlotStyle={{fill:"#e3f2ff"}} width={500} height={275}>
+    <XYPlot xyPlotStyle={{fill:"#e3f2ff"}} width={360} height={275}>
       <XAxis/>
       <YAxis/>
       <LineChart
@@ -102,10 +102,7 @@ export const GraphEXP = props => (
 
       
     </XYPlot>
-    <p>Voltage - consistent with expected range</p>
-    <p>Sound sensor - consistent with expected range</p>
-    <p>Failure detection - IOT Device fault</p>
-    <p>Service status - replace at next maintenance cycle</p>
+
 
 
     <br/> 

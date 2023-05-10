@@ -26,7 +26,7 @@ if (localStorage.getItem("darkMode") == null){
 if (localStorage.getItem("darkMode") == "#ffffff"){
     currentTheme = "Light theme"
 } 
-if (localStorage.getItem("darkMode") == "#a6a6a6"){
+if (localStorage.getItem("darkMode") == "#c7dcff"){
     currentTheme = "Dark theme"
 } 
 
@@ -57,7 +57,7 @@ export default function Settings(){
 
 
     function darkMode(){
-        localStorage.setItem("darkMode", "#a6a6a6");
+        localStorage.setItem("darkMode", "#c7dcff");
 
     }
 
@@ -72,12 +72,14 @@ export default function Settings(){
             <div className = "optionInput">
                 <h3>Display Settings</h3>
                 <div> Current theme: {currentTheme}<br/>
-                    <button id = "useCurrentLocation" onClick={darkMode}>
-                        Dark mode
-                    </button>
-                    <button id = "useCurrentLocation" onClick={lightMode}>
-                        Light mode
-                    </button>
+                    <a href="/IOTSystem">
+                        <button id = "useCurrentLocation" onClick={darkMode}>
+                            Colourful mode
+                        </button>
+                        <button id = "useCurrentLocation" onClick={lightMode}>
+                            Light mode
+                        </button>
+                    </a>
                 </div>
                 <br/>
                 <div> Current font size: {currentFontSize}<br/>
@@ -93,7 +95,7 @@ export default function Settings(){
         
                 </div>
                 <br/>
-                <a href="/FYP">
+                <a href="/IOTSystem">
                 <button style = {{textDecoration: "none"}}id = "manualSubmitButton">
                     ☑ Apply
                 </button>

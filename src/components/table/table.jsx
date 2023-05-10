@@ -70,12 +70,12 @@ function TransactionForm(props) {
   
   return (
     <div className = "manualInput">
-      <h3 style={{textAlign:"center"}}> &nbsp;Manual Activity Input</h3>
-        <label>&nbsp;Transaction Type</label>
+      <h3 style={{textAlign:"center"}}> &nbsp;Manual Sensor Data Input</h3>
+        <label>&nbsp;Sensor Device</label>
         <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="text" id="inputData" value={type} onChange={changeType} /><br/><br/>
-        <label>&nbsp;Amount of Carbon</label>
+        <label>&nbsp;Value</label>
         <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="text" id="inputData" value={amount} onChange={changeAmount} /><br/><br/>
-        <label>&nbsp;Date of Activity</label>
+        <label>&nbsp;Date of recording</label>
         <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} type="datetime-local" id="inputData" value={date} max={currDateTime} onChange={changeDate} /><br/>
         <button id = "manualSubmitButton" onClick={transferValue}>☑ Submit</button><br/>
     </div>

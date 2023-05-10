@@ -1,8 +1,8 @@
 import './App.css';
 import './Dashboard.js';
-import './Preferences.js';
+import './DataFeed.js';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Preferences from './Preferences.js';
+import DataFeed from './DataFeed.js';
 import Dashboard from './Dashboard.js';
 
 
