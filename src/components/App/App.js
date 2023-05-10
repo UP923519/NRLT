@@ -5,7 +5,6 @@ import useToken from './useToken';
 
 export const theUser = localStorage.getItem('username');
 
-
 if (localStorage.getItem("fontSize") == null){
   localStorage.setItem("fontSize", 16);
 }
@@ -16,6 +15,10 @@ let backGroundColour = "#636363";
 if (localStorage.getItem("darkMode") == "#c7dcff"){
   console.log("darkModeActive");
   backGroundColour = "#07838f";
+}
+
+if (localStorage.getItem("darkMode") == null){
+  localStorage.setItem("darkMode", "#c7dcff");
 }
 
 

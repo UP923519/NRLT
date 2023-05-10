@@ -21,7 +21,7 @@ export const TrendBarChart = props => (
   <div>
     <h4>Trend over time </h4>
 
-    <XYPlot xyPlotStyle={{fill:"#e3f2ff"}} width={360} height={275}>
+    <XYPlot xyPlotStyle={{fill:"#e3f2ff"}} width={350} height={275}>
       <XAxis/>
       <YAxis/>
       <BarChart

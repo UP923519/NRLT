@@ -21,13 +21,13 @@ if (localStorage.getItem("fontSize") == 11){
 } 
 
 if (localStorage.getItem("darkMode") == null){
-    currentTheme = "Light theme"
+    currentTheme = "Colourful theme"
 } 
 if (localStorage.getItem("darkMode") == "#ffffff"){
     currentTheme = "Light theme"
 } 
 if (localStorage.getItem("darkMode") == "#c7dcff"){
-    currentTheme = "Dark theme"
+    currentTheme = "Colourful theme"
 } 
 
 export default function Settings(){

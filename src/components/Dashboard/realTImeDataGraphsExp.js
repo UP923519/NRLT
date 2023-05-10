@@ -66,7 +66,7 @@ export const GraphEXP = props => (
     <h4>Comparison of all sensors</h4>
     <p>Failure detected</p>
 
-    <XYPlot xyPlotStyle={{fill:"#e3f2ff"}} width={360} height={275}>
+    <XYPlot xyPlotStyle={{fill:"#e3f2ff"}} width={350} height={275}>
       <XAxis/>
       <YAxis/>
       <LineChart
