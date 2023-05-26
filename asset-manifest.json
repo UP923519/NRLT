@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/IOTSystem/static/css/main.d5057c85.css",
-    "main.js": "/IOTSystem/static/js/main.30311e0d.js",
-    "static/js/988.a5119c65.chunk.js": "/IOTSystem/static/js/988.a5119c65.chunk.js",
-    "static/media/videoBg.mp4": "/IOTSystem/static/media/videoBg.bf1f07c46403ea1418b7.mp4",
-    "index.html": "/IOTSystem/index.html",
-    "main.d5057c85.css.map": "/IOTSystem/static/css/main.d5057c85.css.map",
-    "main.30311e0d.js.map": "/IOTSystem/static/js/main.30311e0d.js.map",
-    "988.a5119c65.chunk.js.map": "/IOTSystem/static/js/988.a5119c65.chunk.js.map"
+    "main.css": "/NRLT/static/css/main.d5057c85.css",
+    "main.js": "/NRLT/static/js/main.470dabac.js",
+    "static/js/988.a5119c65.chunk.js": "/NRLT/static/js/988.a5119c65.chunk.js",
+    "static/media/videoBg.mp4": "/NRLT/static/media/videoBg.bf1f07c46403ea1418b7.mp4",
+    "index.html": "/NRLT/index.html",
+    "main.d5057c85.css.map": "/NRLT/static/css/main.d5057c85.css.map",
+    "main.470dabac.js.map": "/NRLT/static/js/main.470dabac.js.map",
+    "988.a5119c65.chunk.js.map": "/NRLT/static/js/988.a5119c65.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d5057c85.css",
-    "static/js/main.30311e0d.js"
+    "static/js/main.470dabac.js"
   ]
 }
