@@ -96,7 +96,7 @@ export class RealTimeDataTotals extends React.Component{
             let tmodeC = 0;
             let tmodeB = 0;
 
-            console.log("records.is.", records);
+            //console.log("records.is.", records);
             
             
             for (let i=0; i<records.length; i++){
@@ -114,7 +114,6 @@ export class RealTimeDataTotals extends React.Component{
                 let transportMode = records[i].data.Transaction;
 
                 //console.log(currentAmount);
-                console.log(transportMode);
 
                 
 
@@ -153,7 +152,7 @@ export class RealTimeDataTotals extends React.Component{
                         avgCounterL2W += 1;
                     }
                     if (date1 >= dateStringL3W && date1 < dateStringL2W){
-                        console.log("The following date", date1, "should be less than", dateStringL2W, "and bigger than", dateStringL3W, "last 3 week");
+                        //console.log("The following date", date1, "should be less than", dateStringL2W, "and bigger than", dateStringL3W, "last 3 week");
                         recordsTotalL3W = recordsTotalL3W + Number(records[i].data.Amount);
                         avgCounterL3W += 1;
                     }
@@ -197,7 +196,7 @@ export class RealTimeDataTotals extends React.Component{
 
             this.setState({tableData: records});
 
-            console.log("avgcounter is", avgCounter);
+            //console.log("avgcounter is", avgCounter);
 
             if (tmodeT >= 1){
                 tmode = "⚠️ Sound Sensor";

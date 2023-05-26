@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-//import videoBg from '../../assets/videoBg.mp4';
+import videoBg from '../../assets/videoBg.mp4';
 import {ref, onValue, query, set, orderByChild} from "firebase/database";
 import StartFirebase from "../DataFeed/firebase";
 import bcrypt from 'bcryptjs'
@@ -11,6 +11,8 @@ const db = StartFirebase();
 let records = [];
 const salt = bcrypt.genSaltSync(10);
 let first_promise;
+
+var passwFormat=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$/;
 
 
 async function getPassWord(username){
@@ -23,13 +25,10 @@ async function getPassWord(username){
         let data = childSnapshot.val();
         records.push({"date": keyName, "data":data})
         console.log("datais", data)
-   
     });
   });
   return records;
-
 }
-
 
 export var first_function = function(username) {
   let t = getPassWord(username);
@@ -37,22 +36,9 @@ export var first_function = function(username) {
       setTimeout(function() {
       resolve(t);
       console.log("Returned first promise");
-      }, 1000);
+      }, 0);
   });
   };
-
-
-async function loginUser(credentials) {
-  console.log(credentials, "test2");
-    return fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-   }
 
 async function verifyUser(username, hashedPassword) {
   first_promise = await first_function(username);
@@ -65,7 +51,7 @@ async function verifyUser(username, hashedPassword) {
       {
           Password: hashedPassword
       });
-      alert("This account does not exist, a new account has been created.\nPlease remember your details.");
+      alert("This account does not exist, a new account has been created.\nPlease remember your details. \nPlease log in now.");
     
     }
 }
@@ -73,108 +59,69 @@ async function verifyUser(username, hashedPassword) {
 export default function Login({setToken}) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  localStorage.setItem('username',"Peter");
+  localStorage.setItem('username',username);
   let records = [];
   let recordsCheck = [];
   let savedPassword2;
   let hashedPassword;
 
-  setToken({token: 'User'});
+  useEffect(() => {
+  });
+  localStorage.setItem('username',username);
+
+    
+  const dbref = query(ref(db, username+"Login"));
+  onValue(dbref, (snapshot)=>{
+    snapshot.forEach(childSnapshot => {
+        let keyName = childSnapshot.key;
+        let data = childSnapshot.val();
+        records.push({"date": keyName, "data":data})   
+        savedPassword2 = data.Password; 
+    });
+  }, []);
 
   const handleSubmit = async e => {
-    /*e.preventDefault();
-    const token = await loginUser({
-      username,
-      password
-    });
-    setToken(token);
-    console.log(token, "is token");*/
-
-    //const dbref = ref(db, user2);
-    const dbref = query(ref(db, username+"Login"));
     if (password != undefined){
       hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u');
     }
-
-    onValue(dbref, (snapshot)=>{
-        snapshot.forEach(childSnapshot => {
-            let keyName = childSnapshot.key;
-            let data = childSnapshot.val();
-            records.push({"date": keyName, "data":data})   
-            savedPassword2 = data.Password;    
-        });
-    });
-
-    setTimeout(
-      function() {
         try {
-          let test = records[0].data.Password;
+          let testPW = records[0].data.Password;
+          if (testPW == hashedPassword && savedPassword2 == hashedPassword && username != undefined && username != "" && password != "" && password != undefined){
+            console.log("passwords do match");
+            setToken({token: 'User'});
+          } else {
+            console.log ("passwords don't match");
+            console.log ("Entered is: ", hashedPassword);
+            console.log ("Saved is: ", testPW);
+            console.log ("Saved2 is: ", savedPassword2);
+            if (password == "" || password == undefined){
+              alert("Password field cannot be blank");
+            } else if (!password.match(passwFormat)) {
+              alert("Passwords must be between 8 to 15 characters which contains at least one numeric digit and a special character\nNo account? Try a new username/password combination");
+            } else {
+              alert("Incorrect username or password\nNo account? Try a new username/password combination");
+            }
+          }
         } catch (error) {
           console.error(error);
-          console.log("account doesn't exist");
-
-          onValue(dbref, (snapshot)=>{
-            snapshot.forEach(childSnapshot => {
-                let keyName = childSnapshot.key;
-                let data = childSnapshot.val();
-                recordsCheck.push({"date": keyName, "data":data})   
-            });
-            console.log("account doesn't exist check 2");
-
-          });
-
-          try {
-            let test = recordsCheck[0].data.Password;
-          } catch (error) {
-            console.error(error);
-          }
-
-          if (username != undefined && username != "" && password != "" && password != undefined){
-            setTimeout(
-              function() {
-                verifyUser(username, hashedPassword);
-              }
-              .bind(this),2000
-              );
-            } else{
-            alert("Username and password fields cannot be blank.")
-          }
-          
-        }
-    
-        let savedPassword = records[0].data.Password;
-
-        if (savedPassword == hashedPassword && savedPassword2 == hashedPassword && username != undefined && username != "" && password != "" && password != undefined){
-          console.log("passwords do match");
-          setToken({token: 'User'});
-        } else {
-          console.log ("passwords don't match");
-          console.log ("Entered is: ", hashedPassword);
-          console.log ("Saved is: ", savedPassword);
-          console.log ("Saved2 is: ", savedPassword2);
-
-
+          //alert("Account doesn't exist.");
           if (password == "" || password == undefined){
             alert("Password field cannot be blank");
+          } else if (!password.match(passwFormat)) {
+            alert("Passwords must be between 8 to 15 characters which contains at least one numeric digit and a special character");
           } else {
-            alert("Incorrect username or password");
+            verifyUser(username, hashedPassword);         
           }
         }
-      
-
-      }
-      .bind(this),
-      500
-    );
-
   }
 
   return (
     <div className = "main">
       <div className = "overlay"></div>
+      <video src={videoBg} autoPlay loop muted> </video>
       <div className="login-wrapper">     
         <div className = "divLoginInput1"> 
-          <h1 style = {{color: "#2d9ba1"}} >Carbon Tracker</h1>
+          <h1 style = {{color: "#2d9ba1"}} >National Rail Live</h1>
           <h2>Please Log In</h2>
         </div>
         
@@ -190,7 +137,7 @@ export default function Login({setToken}) {
             </label>
           </form>
           <div>
-            <button id = "loginButton" type="submit" onClick = {handleSubmit}>￫ Log In {username} </button>
+            <button id = "loginButton" type="submit" onClick = {handleSubmit}>￫ Log In {username} / Sign Up</button>
           </div>
         </div>
       </div>

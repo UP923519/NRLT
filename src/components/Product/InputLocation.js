@@ -6,6 +6,8 @@ import Select from 'react-select';
 import { stCoord } from "./LocationCalcDIstance";
 import { GetMiles } from "./GetMiles";
 import LoadingIcons from 'react-loading-icons'
+import { Puff } from 'react-loading-icons';
+
 
 
 
@@ -16,7 +18,8 @@ export class InputLocation extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = {value: '', trD: trD, date: ''};
+    this.state = {value: '', trD: trD, date: '',showHideLD: false,showHideErr: false};
+    
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -58,6 +61,8 @@ export class InputLocation extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({trD: ""});
+    this.setState({showHideLD: !this.state.showHideRail});
     originStation = this.state.value;
     let date = this.state.date;
     let date1Year = date.slice(0,4);
@@ -72,9 +77,16 @@ export class InputLocation extends React.Component {
     setTimeout(
       function() {
         this.setState({value: event.target.value, trD: trD});
+        this.setState({showHideLD: this.state.showHideRail});
+        console.log("TRD AFTER 7 is", this.state.trD);
+        if (this.state.trD == "Enter a station above to view destinations" || this.state.trD == ""){
+          this.setState({showHideErr: true});
+        } else {
+          this.setState({showHideErr: false});
+        }
       }
       .bind(this),
-      7000
+      11500
     );
 
     setTimeout(
@@ -85,10 +97,13 @@ export class InputLocation extends React.Component {
       20000
     );
 
+    this.setState({value: event.target.value, trD: trD});
+
 
   }
 
   render() {
+    const {showHideLD, showHideErr} = this.state;
     return (
         <div className = "divRailInput">
           <div>
@@ -103,12 +118,11 @@ export class InputLocation extends React.Component {
             </label><br/>
             <br/>
             <input style = {{border: "0"}} id = "railSubmitButton" type="submit" value="☑ Submit" />
+            {showHideLD && <Puff id = "puff1" stroke="#000000"/> }
+            {showHideErr && "⚠️ Please try again later" }
             <p style={{fontWeight: "bold"}}>
-            {/*Original Starting Stations:</p><br /> {trO} <br /><br />
-            <p style={{fontWeight: "bold"}}>*/}
             &nbsp;Destinations on this route:</p> <p style={{maxWidth: "400px", paddingLeft: "4px"}}>{/*trD*/}{this.state.trD}</p>
-            <p style={{fontWeight: "bold"}}>
-            &nbsp;Select your journey:</p>{/*{trC}*/} 
+            <p style={{fontWeight: "bold"}}> &nbsp;Select your journey:</p>
             {trcDropDown}
             <br/>
           </form>

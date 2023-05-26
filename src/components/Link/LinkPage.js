@@ -1,194 +1,136 @@
-import React from 'react';
-import StartFirebase from "../DataFeed/firebase";
-import Select from 'react-select';
-import {getDatabase, ref, set, query, onValue } from "firebase/database";
-import {theUser} from "../App/App.js"
+import React, { useState ,  useEffect } from 'react';
+import "../App/App.css"
+import { Table } from "react-bootstrap";
 
 
-export default class List extends React.Component {
-    constructor(props) {
-        super(props);
+let liveDeparture = "";
+let serviceMessage = "";
+let displayServiceMessage = "";
+let liveService = "";
+let liveService2 = "";
+let liveServiceTime = "";
+let location = "";
 
-        this.state = {
-          isGoing: "Monthly",
-          energyCost: 241.6,
-          override: false,
-          saved: localStorage.getItem("billCycle")
-        };
- 
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-      }
+let textInfo = "";
+
+
+
+
+export default function Dashboard() {
+  const [stringDepartures, setDepartures] = useState([]);
+  const [stringCalling, setCalling] = useState([]);
+
+  useEffect(() => {
+
+    setDepartures([""]);
+    setCalling([""]);
+    textInfo = "";
+  }, []);
+
+  function clearAll(e) {
+    setDepartures([""]);
+      setCalling([""]);
+      textInfo = "";
+  }
+
+  const displayAction = false;
+
+  function handleServiceClick(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = (Object.fromEntries(formData.entries())).myInput;
+
+    let locationList = JSON.stringify(getTrainArrivals(formJson));
+    let myArray = locationList.split("*");
+    myArray.shift();
+
+    let removeValue = (myArray.indexOf('","locationList2":"undefined'));
+    myArray.splice(removeValue, 1)
+    myArray[myArray.length-1] = myArray[myArray.length-1].replace('"}',"");
+
+    setCalling(myArray);
+  }
+
+
+  return (
+    <div className='Wrapper2'>
+      <h3>Service </h3>
+
+      <div className = "manualInput">
+      <h3 style={{textAlign:"center"}}>Service details</h3>
+        <form method="post" onSubmit={handleServiceClick}>
+          <label>
+            Service code&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
+            name="myInput" defaultValue="" />
+          </label>
+          <br/><br/>
+          <button type="reset" onClick={clearAll}>Reset</button>
+          <button>Select service</button>
+        </form>
+        <br/>
+      </div>
+      <hr />
+
+      <br/><br/>
+      <Table className= "transactions" style = {{backgroundColor: "#e3f2ff"}}>
+            <tr>
+                <th>Staton|Scheduled|Actual|Estimated</th>
+            </tr>
+            {stringCalling.map((calling, index) => (
+              <tr data-index={index}>
+                <td>{calling}</td>
+              </tr>
+            ))}
+      </Table>
+      <br/><br/>
+
+    </div>
     
-      handleInputChange(event) {
-        event.preventDefault();
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
     
-        this.setState({
-          [name]: value,
-        });
-
-      }
-
-      handleSubmit(event) {
-        event.preventDefault();
-        //console.log(this.state.isGoing);
-
-        //06/03/2023 15:29:00
-        const currDate = new Date().toLocaleDateString();
-        const currTime = new Date().toLocaleTimeString();
-
-        let currMonthYear = currDate.slice(3,10);
-        let currYear = currDate.slice(6,10);
-
-        let insertDate = currDate+ " "+ currTime;
-
-        var dateQ = new Date();
-        dateQ.setDate(dateQ.getDate() - 90); 
-        var dateStringQ = dateQ.getFullYear() + '-' + ("0" + (dateQ.getMonth() + 1)).slice(-2) + '-' + ("0" + dateQ.getDate()).slice(-2);
-
-        var dateTodayCompare = new Date();
-        dateTodayCompare.setDate(dateTodayCompare.getDate()); 
-        var dateStringTodayComp = dateTodayCompare.getFullYear() + '-' + ("0" + (dateTodayCompare.getMonth() + 1)).slice(-2) + '-' + ("0" + dateTodayCompare.getDate()).slice(-2);
-
-        var exampleDate = "2022-10-27"
-
-        //console.log ("1 Quarter ago is", dateStringQ)
-        //console.log ("today is", dateStringTodayComp)
-
-        if (exampleDate < dateStringTodayComp && exampleDate > dateStringQ){
-            //console.log ("this date is valid", exampleDate)
-        }
+  );
+}
 
 
-        const db = StartFirebase();
+function getTrainArrivals(serviceID){
+  //serviceID = serviceID[0];
 
-        const user2 = localStorage.getItem('username');
-        const dbref = query(ref(db, user2));
+  fetch('https://huxley2.azurewebsites.net/service/'+serviceID).then(function (response) {
+    // The API call was successful!
+    return response.json();
+  }).then(function (data) {
 
-        var timee = (currDate+currTime).replaceAll('/','');
+    liveService = data.previousCallingPoints[0].callingPoint;
+    liveService2 = (data.subsequentCallingPoints[0].callingPoint);
+    liveServiceTime = data;
+    location = (data.locationName);
+    console.log(data);
 
-        let recordsTotalM = 0;
+  }).catch(function (err) {
+    // There was an error
+    console.warn('Something went wrong.', err);
+  })
 
-        onValue(dbref, (snapshot)=>{
-            let records = [];
+  let locationList;
+  for (let i = 0; i < (liveService.length); i++) {
+    //console.log(liveService[i].locationName);
+    locationList+= "*"+liveService[i].locationName + " " + liveService[i].st + " " + liveService[i].at + " " + liveService[i].et ;
+  }
 
-            snapshot.forEach(childSnapshot => {
-                let keyName = childSnapshot.key;
-                let data = childSnapshot.val();
-                records.push({"date": keyName, "data":data})             
-            });
-           
-            console.log(currYear);
-            for (let i=0; i<records.length; i++){
-                console.log("RECORD", records[i]);
+  locationList+= "*"+location+" "+liveServiceTime.std+" "+liveServiceTime.atd+" "+liveServiceTime.etd+ " (plat." + liveServiceTime.platform+ ")*";
 
-                let date1 = records[i].data.date.slice(0,-8).slice(0,-1);
-                let date1Day = date1.slice(0,2);
-                let date1Month = date1.slice(3,5);
-                let date1Year = date1.slice(6,10);
-                date1 = date1Year + "-" + date1Month + "-" + date1Day;
+  let locationList2;
+  for (let i = 0; i < (liveService2.length); i++) {
+    locationList2+= "*"+liveService2[i].locationName + " " + liveService2[i].st + " " + liveService2[i].at + " " + liveService2[i].et ;
+  }
+  
+  
+
+  return({locationList, locationList2})
+} 
 
 
-                if(this.state.isGoing == "Monthly" && records[i].data.Transaction.includes("💡") && records[i].data.date.includes(currMonthYear)){
-                    console.log("An entry with this month of the year exists, so do not add new");
-                    recordsTotalM = 1;
-                }
 
-                else if(this.state.isGoing == "Quarterly" && records[i].data.Transaction.includes("💡") && date1 > dateStringQ && date1 <= dateStringTodayComp){
-                    console.log("An entry with this quarter of the year exists, so do not add new");
-                    recordsTotalM = 1;
-                }
 
-                else if(this.state.isGoing == "Yearly" && records[i].data.Transaction.includes("💡") && records[i].data.date.includes(currYear)){
-                    console.log("An entry with this year exists, so do not add new");
-                    recordsTotalM = 1;
-                }
 
-                if(this.state.override == true){
-                    //console.log("overriding plan and adding anyway");
-                    recordsTotalM = 0;
-                }
-                if(this.state.isGoing == "Manual"){
-                    //console.log("overriding plan and adding anyway");
-                    recordsTotalM = 0;
-                }
-            }
-        });
-
-        if (recordsTotalM > 0){
-            if(this.state.isGoing == "Monthly"){
-                alert("Your energy bill has already been entered for this "+this.state.isGoing+" period: "+currMonthYear+`\n`+"Check the override box to proceed anyway or switch to a manual cycle.");
-            }
-            if(this.state.isGoing == "Quarterly"){
-                alert("Your energy bill has already been entered for this "+this.state.isGoing+" period: "+dateStringQ+" - "+dateStringTodayComp+`\n`+"Check the override box to proceed anyway or switch to a manual cycle.");
-            }
-            if(this.state.isGoing == "Yearly"){
-                alert("Your energy bill has already been entered for this "+this.state.isGoing+" period: "+currYear+`\n`+"Check the override box to proceed anyway or switch to a manual cycle.");
-            }
-        } else if (recordsTotalM == 0) {
-            alert('Energy balance is : ' + this.state.energyCost*0.233 +`\n`+ "Your energy balance has been added successfully");
-            set(ref(db, user2+"/"+timee+"/"),
-            {
-                Transaction: "💡Energy Bill (" + this.state.isGoing + ")",
-                Amount: Number(this.state.energyCost)*0.233,
-                date: insertDate
-            });  
-            localStorage.setItem('billCycle', (this.state.isGoing));
-        }
-
-        this.setState({
-            saved: localStorage.getItem("billCycle") 
-          });
-      }
-      render() {
-        return (
-        <div style={{width:"98vw", height:"100vh"}}>
-            <div>
-                <h3 style={{textAlign:"center"}}>Energy Monitor</h3>
-                <div className = "manualInput">
-                <h3 style={{textAlign: "center"}}>&nbsp;Electricity Usage</h3>
-                <p>&nbsp;Saved billing cycle: {this.state.saved} </p>
-                <form onSubmit = {this.handleSubmit}>
-                    <label>
-                    <h3></h3>&nbsp;Electricity usage (kWh)
-                    <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} 
-                        id="inputData"
-                        name="energyCost"
-                        type="number"
-                        value={this.state.energyCost}
-                        onChange={this.handleInputChange} /> <br/>
-                    </label>
-                    <br />
-                    <label>
-                    &nbsp;Billing cycle
-                    <select name="isGoing" value={this.state.isGoing} onChange={this.handleInputChange} style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}} id="inputData">
-                        <option value="Monthly">Monthly</option>
-                        <option value="Quarterly">Quarterly</option>
-                        <option value="Yearly">Yearly</option>
-                        <option value="Manual">Manual (no cycle)</option>
-                    </select>
-                    </label>
-                    <br/><br/>
-                    <label>&nbsp;Override billing cycle
-                        <input
-                        name="override"
-                        type="checkbox"
-                        checked={this.state.override}
-                        onChange={this.handleInputChange} />
-                    <br/>
-                    </label>
-                    <input style = {{border: "0", marginLeft:"4px"}} id = "journeySubmitButton" value="☑ Submit" type="submit"/>
-                </form>
-                <a href="/IOTSystem">
-
-                </a>
-                </div>
-            </div>
-        </div>
-        );
-      }
-    }
-    

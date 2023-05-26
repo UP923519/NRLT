@@ -41,7 +41,7 @@ export class RealTimeDataOverview extends React.Component{
             records = records.reverse();
             this.setState({tableData: records});
             //console.log("recordsSort is", (recordsSort));
-            console.log("recordsTotal iss", (recordsTotal));
+            //console.log("recordsTotal iss", (recordsTotal));
 
 
         });

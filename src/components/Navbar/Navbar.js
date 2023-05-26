@@ -16,8 +16,9 @@ const Navbar = () => {
   return (
     <BrowserRouter>
       <navbar className = "NavBar1" >
-        <NavLink exact className = "topRow2" activeClassName = "topRow2Active" to="/dashboard">Home</NavLink>
-        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/dataFeed">Feed</NavLink>
+        <NavLink exact className = "topRow2" activeClassName = "topRow2Active" to="/dashboard">Departing</NavLink>
+        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/dataFeed">Arriving</NavLink>
+        <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/linkPage">Service</NavLink>
         <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/settings">Options</NavLink>
       </navbar>
 

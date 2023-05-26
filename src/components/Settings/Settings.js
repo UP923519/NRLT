@@ -14,20 +14,23 @@ if (localStorage.getItem("fontSize") == 16){
     currentFontSize = "Standard font size"
 } 
 if (localStorage.getItem("fontSize") == 18){
-    currentFontSize = "Increased font size"
+    currentFontSize = "Large font size"
 } 
 if (localStorage.getItem("fontSize") == 11){
-    currentFontSize = "Decreased font size"
+    currentFontSize = "Small font size"
 } 
 
 if (localStorage.getItem("darkMode") == null){
-    currentTheme = "Colourful theme"
+    currentTheme = "Light"
 } 
 if (localStorage.getItem("darkMode") == "#ffffff"){
-    currentTheme = "Light theme"
+    currentTheme = "Light"
+} 
+if (localStorage.getItem("darkMode") == "#000000"){
+    currentTheme = "Dark"
 } 
 if (localStorage.getItem("darkMode") == "#c7dcff"){
-    currentTheme = "Colourful theme"
+    currentTheme = "Colourful"
 } 
 
 export default function Settings(){
@@ -57,12 +60,17 @@ export default function Settings(){
 
 
     function darkMode(){
-        localStorage.setItem("darkMode", "#c7dcff");
+        localStorage.setItem("darkMode", "#000000");
 
     }
 
     function lightMode(){
         localStorage.setItem("darkMode", "#ffffff");
+
+    }
+
+    function ColourfulMode(){
+        localStorage.setItem("darkMode", "#c7dcff");
 
     }
 
@@ -72,37 +80,41 @@ export default function Settings(){
             <div className = "optionInput">
                 <h3>Display Settings</h3>
                 <div> Current theme: {currentTheme}<br/>
-                    <a href="/IOTSystem">
+                    <a href="/">
+
                         <button id = "useCurrentLocation" onClick={darkMode}>
-                            Colourful mode
+                            Dark mode
                         </button>
                         <button id = "useCurrentLocation" onClick={lightMode}>
                             Light mode
+                        </button><br/>
+                        <button id = "useCurrentLocation" onClick={ColourfulMode}>
+                            Colourful mode
                         </button>
                     </a>
                 </div>
                 <br/>
                 <div> Current font size: {currentFontSize}<br/>
                     <button id = "useCurrentLocation" onClick={fontSizeIncrease}>
-                        + Increased font size
+                        + Large font size
                     </button>
                     <button id = "useCurrentLocation" onClick={fontSizeDecrease}>
-                        - Decreased font size
+                        - Small font size
                     </button><br/> 
                     <button id = "useCurrentLocation" onClick={fontSizeReset}>
                         Standard font size
                     </button><br/>
         
                 </div>
-                <br/>
-                <a href="/IOTSystem">
-                <button style = {{textDecoration: "none"}}id = "manualSubmitButton">
-                    ☑ Apply
-                </button>
-                </a>
                 <p style = {{fontSize: Number(localStorage.getItem("fontSize"))}}>
                     Example text to test font size
-                </p><br/>
+                </p>
+                <a href="/">
+                <button style = {{textDecoration: "none",fontSize: Number(localStorage.getItem("fontSize")-3)}}id = "manualSubmitButton">
+                    ☑ Apply font size
+                </button>
+                </a>
+                <br/><br/>
             </div>
         </div>
     )

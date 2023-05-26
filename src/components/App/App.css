@@ -54,7 +54,7 @@ li {
 }
 
 .topRow2 {
-  margin: 30px;
+  margin: 10px;
   background: #f9f9f9;
   cursor: pointer;
   border-radius: 9px;
@@ -63,7 +63,7 @@ li {
   padding-left: 6.5px;
   padding-right: 6.5px;
   text-decoration: inherit;
-  color: rgb(55, 55, 55);
+  color: rgb(102, 102, 102);
 }
 
 #journeySubmitButton {
@@ -150,7 +150,7 @@ button#showHide:active {
 }
 
 .topRow2:active {
-  background: #ffffff;
+  background: #bfbfbf;
   color:black;
 }
 
@@ -160,7 +160,7 @@ a.topRow2.active{
 }
 
 navbar.NavBar1{
-  background: #cecece;
+  background: #c3c3c3;
   padding-bottom: 0.85pc;
   padding-top: 0.9pc;
   border-radius: 9px;
@@ -183,6 +183,7 @@ navbar.NavBar1{
   font-size: 13px;
   width: 98vw;
   border-radius: 20px;
+  color: black;
   
   }
 
@@ -203,15 +204,25 @@ navbar.NavBar1{
 }
 
 .highlights{
-  background: #ff6e6e;
+  background: #ffaeae;
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  text-align: center;
+  color: black;
+  font-size: 9px;
+}
+
+#highlights2{
+  background: #6bab9d;
   border-radius: 20px;
   padding: 10px;
   margin-right: 8px;
   margin-left: 8px;
-  width: 50%;
+
   display: flex;
   text-align: center;
-  
+  color: black;
 }
 
 div.gm-style {
@@ -230,36 +241,46 @@ div.gm-style {
   text-align: left;
   background-color: #ffe9e9;
   border-radius: 20px;
+  color: black;
+
 }
 
 .divRailInput{
   text-align: left;
   background-color: #c1ecf0;
   border-radius: 20px;
+  color: black;
 }
 
 .divBusInput{
   text-align: left;
   background-color: #f5dee9;
   border-radius: 20px;
+  color: black;
+
 }
 
 .divFlightInput{
   text-align: left;
   background-color: #ddf0e8;
   border-radius: 20px;
+  color: black;
+
 }
 
 .manualInput{
   text-align: left;
-  background-color: #e3f2ff;
+  background-color: #ffe9f2;
   border-radius: 20px;
+  color: black;
 }
 
 .optionInput{
   text-align: center;
-  background-color: #e3f2ff;
+  background-color: #e2ddff;
   border-radius: 20px;
+  color: black;
+
 }
 
 
@@ -295,12 +316,23 @@ a.active-animation:active{
   background: #e6e6e6;
 }
 
+.rct-xy-plot * {
+  fill: #028499
+}
+
+#puff1 {
+  position: relative;
+  top: 15px;
+  margin-top: -50px;
+
+}
+
 
 @media (orientation: landscape){
   .manualInput{
     display:inline-block;
     text-align: center;
-    background-color: #e3f2ff;
+    background-color: #ffe9f2;
     border-radius: 20px;
     width: 50vw;
   }
@@ -340,7 +372,7 @@ a.active-animation:active{
   .optionInput{
     display:inline-block;
     text-align: center;
-    background-color: #e3f2ff;
+    background-color: #e2ddff;
     border-radius: 20px;
     width: 50vw;
   }
@@ -396,6 +428,19 @@ a.active-animation:active{
     margin-left: 25vw;
     margin-right: 25vw;
   
+  }
+
+  .topRow2 {
+    margin: 50px;
+    background: #ffffff;
+    cursor: pointer;
+    border-radius: 9px;
+    padding-bottom: 11px;
+    padding-top: 12px;
+    padding-left: 6.5px;
+    padding-right: 6.5px;
+    text-decoration: inherit;
+    color: rgb(102, 102, 102);
   }
 
 }

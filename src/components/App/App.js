@@ -5,20 +5,19 @@ import useToken from './useToken';
 
 export const theUser = localStorage.getItem('username');
 
+
 if (localStorage.getItem("fontSize") == null){
   localStorage.setItem("fontSize", 16);
 }
 
-let backGroundColour = "#636363";
+let backGroundColour = "#edf8ff";
+let colour = "black";
 
 
-if (localStorage.getItem("darkMode") == "#c7dcff"){
+if (localStorage.getItem("darkMode") == "#000000"){
   console.log("darkModeActive");
-  backGroundColour = "#07838f";
-}
-
-if (localStorage.getItem("darkMode") == null){
-  localStorage.setItem("darkMode", "#c7dcff");
+  backGroundColour = "#c1ecf0";
+  colour = "#ffffff";
 }
 
 
@@ -26,8 +25,6 @@ if (localStorage.getItem("darkMode") == null){
     <item name="android:windowLightStatusBar">true</item>
     <item name="android:statusBarColor">@android:color/white</item>
 </style>
-
-
 
 
 function App() {
@@ -44,12 +41,12 @@ function App() {
   }
 
   return (   
-    <div className="wrapper" style = {{fontSize: Number(localStorage.getItem("fontSize")), backgroundColor: localStorage.getItem("darkMode")}}>
-      <h1 className = "titleClass" style = {{color: "#ffffff", backgroundColor:backGroundColour, borderRadius:"20px"}} >IOT Preventative Maintenance System</h1>
+    <div className="wrapper" style = {{fontSize: Number(localStorage.getItem("fontSize")), backgroundColor: localStorage.getItem("darkMode"), color: colour}}>
+      <h1 className = "titleClass" style = {{color: "#2d9ba1", backgroundColor:backGroundColour, borderRadius:"20px"}} >National Rail Live</h1>
       <div className = "topBanner1">
         <h4> Welcome, {localStorage.getItem('username')}
         {displayAction && <p>I am writing JSX</p>}
-        <button id="showHide" style={{fontSize:"medium"}}className = "logOut">
+        <button id="showHide" style={{fontSize:"medium"}}className = "logOut" onClick={removeToken}>
           ￩ Log Out
         </button> </h4>
       </div>
