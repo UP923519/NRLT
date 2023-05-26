@@ -118,7 +118,7 @@ export default function Login({setToken}) {
   return (
     <div className = "main">
       <div className = "overlay"></div>
-      <video src={videoBg} autoPlay loop muted> </video>
+      <video src={videoBg} autoPlay muted> </video>
       <div className="login-wrapper">     
         <div className = "divLoginInput1"> 
           <h1 style = {{color: "#2d9ba1"}} >National Rail Live</h1>

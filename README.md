@@ -1,4 +1,4 @@
- # Welcome to: Carbon Tracking using Progressive Web Technologies
+ # Welcome to: National Rail Live Train Times Web App
 
 By UP923519
 
@@ -33,4 +33,4 @@ It correctly bundles React in production mode and optimizes the build for the be
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 
-# FYP
+# NRLT

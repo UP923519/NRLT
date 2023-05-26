@@ -11,6 +11,9 @@ let liveService2 = "";
 let liveServiceTime = "";
 let location = "";
 
+let locationList = "test";
+
+
 let textInfo = "";
 
 
@@ -42,16 +45,40 @@ export default function Dashboard() {
     const formData = new FormData(form);
     const formJson = (Object.fromEntries(formData.entries())).myInput;
 
-    let locationList = JSON.stringify(getTrainArrivals(formJson));
-    let myArray = locationList.split("*");
-    myArray.shift();
+    JSON.stringify(logJSONData(formJson));
+    setTimeout(() => {
 
-    let removeValue = (myArray.indexOf('","locationList2":"undefined'));
-    myArray.splice(removeValue, 1)
-    myArray[myArray.length-1] = myArray[myArray.length-1].replace('"}',"");
+      let myArray = locationList.split("*");
+      myArray.shift();
 
-    setCalling(myArray);
+      let removeValue = (myArray.indexOf('","locationList2":"undefined'));
+      myArray.splice(removeValue, 1)
+      myArray[myArray.length-1] = myArray[myArray.length-1].replace('"}',"");
+
+      setCalling(myArray);
+    }, "1000");
   }
+
+  async function logJSONData(serviceID) {
+    const response = await fetch('https://huxley2.azurewebsites.net/service/'+serviceID);
+    const data = await response.json();
+
+       
+    try{
+        liveService = data.previousCallingPoints[0].callingPoint;
+    }catch{
+    }
+    
+    liveService2 = (data.subsequentCallingPoints[0].callingPoint);
+    liveServiceTime = data;
+    location = (data.locationName);
+    //console.log(data);
+
+    let t = getTrainArrivals();
+    //console.log("t is", t);
+    locationList = JSON.stringify(t);
+  }
+
 
 
   return (
@@ -96,33 +123,85 @@ export default function Dashboard() {
 function getTrainArrivals(serviceID){
   //serviceID = serviceID[0];
 
-  fetch('https://huxley2.azurewebsites.net/service/'+serviceID).then(function (response) {
-    // The API call was successful!
-    return response.json();
-  }).then(function (data) {
-
-    liveService = data.previousCallingPoints[0].callingPoint;
-    liveService2 = (data.subsequentCallingPoints[0].callingPoint);
-    liveServiceTime = data;
-    location = (data.locationName);
-    console.log(data);
-
-  }).catch(function (err) {
-    // There was an error
-    console.warn('Something went wrong.', err);
-  })
 
   let locationList;
   for (let i = 0; i < (liveService.length); i++) {
     //console.log(liveService[i].locationName);
-    locationList+= "*"+liveService[i].locationName + " " + liveService[i].st + " " + liveService[i].at + " " + liveService[i].et ;
+    let trainLocation;
+    let trainActual;
+    if (liveService[i].et == null){
+      if (liveService[i].at == "On time" || liveService[i].at == "No report"){
+        trainLocation = "✔️";
+      } else{
+        trainLocation = "❌";
+      }
+    } else {
+      trainLocation = liveService[i].et;
+      try{
+        if (liveService[i-1].et == null){
+          console.log("tlc is", trainLocation);
+          trainLocation = (liveService[i].et+"🚆");
+          console.log("tlc is", trainLocation);
+
+          
+        }
+      } catch{
+      }
+    }
+    if (liveService[i].at == null){
+      liveService[i].at = "N/A"
+    }
+
+    locationList+= "*"+liveService[i].locationName + " " + liveService[i].st + " " + liveService[i].at + " " + trainLocation;
   }
 
-  locationList+= "*"+location+" "+liveServiceTime.std+" "+liveServiceTime.atd+" "+liveServiceTime.etd+ " (plat." + liveServiceTime.platform+ ")*";
+  //console.log(liveService[liveService.length-1].et)
+  /////
+  let trainLocation;
+  if (liveServiceTime.etd == null){
+    if (liveServiceTime.atd == "On time" || liveServiceTime.atd == "No report"){
+      trainLocation = "✔️";
+    } else{
+      trainLocation = "❌";
+    }
+  } else {
+    trainLocation = liveServiceTime.etd;
+    try{
+      if (liveService[liveService.length-1].et == null && liveService2[0].et !=null){
+        trainLocation = liveServiceTime.etd + "🚆";
+      }
+    } catch{
+    }
+  }
+  if (liveServiceTime.atd == null){
+    liveServiceTime.atd = "N/A"
+  }
+
+  locationList+= "*"+location+" "+liveServiceTime.std+" "+liveServiceTime.atd+" "+trainLocation+ " (p." + liveServiceTime.platform+ ")*";
 
   let locationList2;
   for (let i = 0; i < (liveService2.length); i++) {
-    locationList2+= "*"+liveService2[i].locationName + " " + liveService2[i].st + " " + liveService2[i].at + " " + liveService2[i].et ;
+    let trainLocation;
+    if (liveService2[i].et == null){
+      if (liveService2[i].at == "On time" || liveService2[i].at == "No report"){
+        trainLocation = "✔️";
+      } else{
+        trainLocation = "❌";
+      }
+    } else {
+      trainLocation = liveService2[i].et;
+      try{
+        if (liveService2[i-1].et == null){
+          trainLocation = (liveService2[i].et+"🚆");
+        }
+      } catch{
+
+      }
+    }
+    if (liveService2[i].at == null){
+      liveService2[i].at = "N/A"
+    }
+    locationList2+= "*"+liveService2[i].locationName + " " + liveService2[i].st + " " + liveService2[i].at + " " + trainLocation ;
   }
   
   

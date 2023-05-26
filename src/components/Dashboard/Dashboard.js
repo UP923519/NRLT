@@ -11,53 +11,80 @@ let liveService2 = "";
 let liveServiceTime = "";
 let location = "";
 
+let departuresList = "test";
+
 let textInfo = "";
 
+let myArray;
 
+let first_promise;
+
+let stringDepartures2;
 
 
 export default function Dashboard() {
   const [stringDepartures, setDepartures] = useState([]);
-  const [stringCalling, setCalling] = useState([]);
+  const [formVal, setFormVal] = useState('');
 
+  
   useEffect(() => {
 
     setDepartures([""]);
-    setCalling([""]);
     textInfo = "";
   }, []);
 
   function clearAll(e) {
-    setDepartures([""]);
-      setCalling([""]);
+    setDepartures([]);
       textInfo = "";
   }
 
   const displayAction = false;
 
+
+
   function handleDepartureClick(e) {
     e.preventDefault();
+
     setDepartures(["Loading..."]);
     
-    const form = e.target;
-    const formData = new FormData(form);
-    const formJson = (Object.fromEntries(formData.entries())).myInput;
+    //const form = e.target;
+    //const formData = new FormData(form);
+    //const formJson = (Object.fromEntries(formData.entries())).formVal;
+    console.log("form says", formVal);
 
-    let departuresList = JSON.stringify(getTrainDepartures(formJson));
+    JSON.stringify(logJSONData(formVal));
 
-    let myArray = departuresList.split("\"");
-
-    myArray = myArray.filter((value, index) => !((index+1)%2));
-    myArray.shift();
+    setTimeout(() => {
+      //departuresList = stringDepartures2;
     
+      console.log("Returned first promise");
+      console.log("returned promise is", departuresList)
+  
+      myArray = departuresList.split("\"");
+  
+      myArray = myArray.filter((value, index) => !((index+1)%2));
+      myArray.shift();
+      
+  
+      textInfo = myArray[myArray.length-1];
+      //console.log (myArray);
+  
+      myArray = myArray.slice(0,-2);
+  
+      setDepartures(myArray);  
+        }, "1000");
+  }
 
-    textInfo = myArray[myArray.length-1];
-    console.log (textInfo);
 
-    myArray = myArray.slice(0,-2);
-
-    setDepartures(myArray);
-    
+  async function logJSONData(stationName) {
+    const response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150');
+    const data = await response.json();
+    liveDeparture = data.trainServices;
+    displayServiceMessage = "";
+    serviceMessage = data.nrccMessages;
+    let t = getTrainDepartures();
+    console.log("t is", t);
+    departuresList = JSON.stringify(t);
   }
 
 
@@ -71,7 +98,8 @@ export default function Dashboard() {
         <form method="post" onSubmit={handleDepartureClick}>
           <label>
             Departure station&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
-            name="myInput" defaultValue="" />
+            name="formVal" defaultValue=""
+            onChange={(event) => setFormVal(event.target.value)}/>
           </label>
           <br/><br/>
           <button type="reset" onClick={clearAll}>Reset</button>
@@ -105,19 +133,8 @@ export default function Dashboard() {
 
 
 function getTrainDepartures(stationName){
-  fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150').then(function (response) {
-    // The API call was successful!
-    return response.json();
-  }).then(function (data) {
-    //This is the JSON from our response
-    
-    liveDeparture = data.trainServices;
-    displayServiceMessage = "";
-    serviceMessage = data.nrccMessages;
-  }).catch(function (err) {
-    // There was an error
-    console.warn('Something went wrong.', err);
-  })
+
+  //let data = logJSONData(stationName);
 
 
   let sIdArray = [];
@@ -127,8 +144,6 @@ function getTrainDepartures(stationName){
     stringDepartures.push(liveDeparture[i].std +" "+ liveDeparture[i].destination[0].locationName + " (from " + liveDeparture[i].origin[0].locationName +") - "+ liveDeparture[i].etd +" - p."+ liveDeparture[i].platform +
     " - "+ liveDeparture[i].serviceID);
   }
-
-  
 
   try{
     for (let i = 0; i < (serviceMessage.length); i++){
@@ -140,10 +155,31 @@ function getTrainDepartures(stationName){
   catch{
 
   }
-  
+
+  console.log("Data sent back says", stringDepartures, displayServiceMessage);  
   return({stringDepartures, displayServiceMessage})
 
 } 
+
+/*async function logJSONData(stationName) {
+  fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150').then(function (response) {
+    // The API call was successful!
+    return response.json();
+  }).then(function (data) {
+    //This is the JSON from our response
+    liveDeparture = data.trainServices;
+    displayServiceMessage = "";
+    serviceMessage = data.nrccMessages;
+    let t = getTrainDepartures();
+    console.log("t is", t);
+    return t;
+  }).catch(function (err) {
+    // There was an error
+    console.warn('Something went wrong.', err);
+  })
+  console.log("t being returned is", t);
+}*/
+
 
 
 

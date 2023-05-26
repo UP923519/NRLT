@@ -265,7 +265,7 @@ export class RealTimeDataTotals extends React.Component{
                     <p>Failure detection - ❗ IOT Device fault</p>
                     <p>Service status - ❗ replace at next maintenance cycle</p>
                 </div>
-                <a href="/IOTSystem">
+                <a href="/NRLT">
                     <button style={{marginLeft:"0"}} id = "useCurrentLocation">
                         ↻ Refresh 
                     </button> 

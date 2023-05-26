@@ -104,7 +104,7 @@ export class RealTimeData extends React.Component{
         return(
             <div className="wrapper">
                 <div className="TableRow">
-                    <a href="/IOTSystem">
+                    <a href="/NRLT">
                         <button id = "useCurrentLocation">
                             ↻ Refresh
                         </button>
