@@ -1,10 +1,16 @@
 import React, { useState ,  useEffect } from 'react';
 import "../App/App.css"
 import { Table } from "react-bootstrap";
+import Select from 'react-select';
+
 
 
 let liveDeparture = "";
+let busDeparture = "";
+
 let serviceMessage = "";
+let listStation = "";
+
 let displayServiceMessage = "";
 let current = ""
 let earlier = "?timeOffset=-120&timeWindow=30";
@@ -17,16 +23,20 @@ var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
 
 
 let departuresList = "test";
+let stationsList = "";
+
 
 let textInfo = "There are no messages";
 
 let myArray = ["Enter a depature station to view services"];
 
 
-
 export default function Dashboard() {
   const [stringDepartures, setDepartures] = useState([]);
   const [formVal, setFormVal] = useState('');
+  const [dropVal, setDropVal] = useState('');
+  const [trcDropDown, setTRC] = useState('');
+
 
   
   useEffect(() => {
@@ -34,6 +44,9 @@ export default function Dashboard() {
     //setDepartures(["Enter a depature station to view services"]);
     //textInfo = "";
     setDepartures(myArray);
+    getStation();
+
+    
   }, []);
 
   function clearAll(e) {
@@ -45,7 +58,7 @@ export default function Dashboard() {
 
 
 
-  function handleDepartureClick(timeOffset) {
+  function handleDepartureClick(timeOffset, code) {
     //timeOffset = "";
     //e.preventDefault();
 
@@ -55,8 +68,19 @@ export default function Dashboard() {
     //const formData = new FormData(form);
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
     console.log("form says", formVal);
+    console.log("drop says", code);
 
-    JSON.stringify(logJSONData(formVal,timeOffset));
+    try{
+      if (code != undefined){
+        JSON.stringify(logJSONData(code,timeOffset));
+        setFormVal(code);
+      } else {
+        JSON.stringify(logJSONData(formVal,timeOffset));
+      }
+    } catch{
+      JSON.stringify(logJSONData(formVal,timeOffset));
+    }
+
 
     setTimeout(() => {
       //departuresList = stringDepartures2;
@@ -87,13 +111,53 @@ export default function Dashboard() {
   async function logJSONData(stationName, timeOffset) {
     const response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
     const data = await response.json();
+  
     liveDeparture = data.trainServices;
+    busDeparture = data.busServices;
+
+    if (liveDeparture == null && busDeparture != null){
+      liveDeparture = data.busServices;
+    }
+
+    if (liveDeparture == null && busDeparture == null){
+      liveDeparture = [];
+    }
+
+
     displayServiceMessage = "";
     serviceMessage = data.nrccMessages;
     let t = getTrainDepartures();
-    console.log("t is", t);
     departuresList = JSON.stringify(t);
   }
+
+  async function getStation() {
+    const response = await fetch('https://huxley2.azurewebsites.net/crs');
+    const data = await response.json();
+    listStation = data;
+    let t = getStationList();
+    //console.log("t is", t);
+    stationsList = JSON.stringify(t);
+  }
+
+  
+  function getStationList(){
+    //console.log(listStation);
+    let listOfStations = []
+    for (let i=0;i<listStation.length;i++){
+      listOfStations.push(listStation[i].stationName + " ("+ listStation[i].crsCode + ")");
+    }
+
+    const display = listOfStations.map(opt => ({ label: opt, value: opt }));
+
+    
+    setTRC(<Select 
+    options={display}
+    onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1)))}
+    />);
+
+    //console.log(listOfStations);
+  } 
+
 
 
   return (
@@ -109,7 +173,9 @@ export default function Dashboard() {
             name="formVal" defaultValue=""
             onChange={(event) => setFormVal(event.target.value)}/>
           </label>
-          <br/><br/>
+          <p>Or select from the menu below:</p>
+          {trcDropDown}
+          <br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleDepartureClick(current)}>View/Update live departures</button>
         </form>
@@ -118,9 +184,9 @@ export default function Dashboard() {
       </div>
       <hr />
 
-      <p className = "highlights">{textInfo}</p>
+      <p className = "highlights">{textInfo}</p><br/>
       <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
-      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button>
+      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
 
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             <tr>
@@ -132,7 +198,7 @@ export default function Dashboard() {
                 <br/><br/><br/>
               </tr>
             ))}
-      </Table>
+      </Table><br/>
       <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>
       <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later2)}>100 - 120 minutes later</button>
 
@@ -170,33 +236,10 @@ function getTrainDepartures(stationName){
     displayServiceMessage=displayServiceMessage.replaceAll("\n"," ");
     }
   catch{
-
   }
-
-  console.log("Data sent back says", stringDepartures, displayServiceMessage);  
+  //console.log("Data sent back says", stringDepartures, displayServiceMessage);  
   return({stringDepartures, displayServiceMessage})
-
 } 
-
-/*async function logJSONData(stationName) {
-  fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150').then(function (response) {
-    // The API call was successful!
-    return response.json();
-  }).then(function (data) {
-    //This is the JSON from our response
-    liveDeparture = data.trainServices;
-    displayServiceMessage = "";
-    serviceMessage = data.nrccMessages;
-    let t = getTrainDepartures();
-    console.log("t is", t);
-    return t;
-  }).catch(function (err) {
-    // There was an error
-    console.warn('Something went wrong.', err);
-  })
-  console.log("t being returned is", t);
-}*/
-
 
 
 

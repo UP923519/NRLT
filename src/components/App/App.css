@@ -204,7 +204,6 @@ navbar.NavBar1{
   border-radius: 20px;
   color: black;
   background-color: #f0f0f0;
-  
   }
 
 .transactions td{
@@ -357,6 +356,20 @@ a.active-animation:active{
     border-radius: 20px;
     width: 50vw;
   }
+
+  .highlights{
+    display:inline-block;
+    width: 50vw;
+    text-align: center;
+  }
+
+  .transactions {
+    display:inline-table;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    width: 50vw;
+    }
 
   .divRailInput{
     display:inline-block;

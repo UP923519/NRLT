@@ -96,7 +96,7 @@ export default function Dashboard() {
       <h3>Service </h3>
 
       <div className = "manualInput">
-      <h3 style={{textAlign:"center"}}>Service details</h3>
+      <h3 style={{textAlign:"center"}}>Service Details</h3>
         <form method="post" onSubmit={handleServiceClick}>
           <label>
             Service code&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}

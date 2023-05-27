@@ -1,9 +1,14 @@
 import React, { useState ,  useEffect } from 'react';
 import "../App/App.css"
 import { Table } from "react-bootstrap";
+import Select from 'react-select';
 
 
 let liveArrival = "";
+
+let busDeparture = "";
+let listStation = "";
+
 let serviceMessage = "";
 let displayServiceMessage = "";
 let current = ""
@@ -17,6 +22,8 @@ var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
 
 
 let arrivalsList = "test";
+let stationsList = "";
+
 
 let textInfo = "There are no messages";
 
@@ -27,13 +34,14 @@ let myArray = ["Enter an arrival station to view services"];
 export default function DataFeed() {
   const [stringArrivals, setArrivals] = useState([]);
   const [formVal, setFormVal] = useState('');
-
+  const [dropVal, setDropVal] = useState('');
+  const [trcDropDown, setTRC] = useState('');
   
   useEffect(() => {
 
     //setArrivals(["Enter a depature station to view services"]);
     setArrivals(myArray);
-    //textInfo = myArray[myArray.length-1];
+    getStation();
 
     //textInfo = "";
   }, []);
@@ -47,7 +55,7 @@ export default function DataFeed() {
 
 
 
-  function handleArrivalClick(timeOffset) {
+  function handleArrivalClick(timeOffset, code) {
 
     setArrivals(["Loading..."]);
     
@@ -56,7 +64,17 @@ export default function DataFeed() {
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
     console.log("form says", formVal);
 
-    JSON.stringify(logJSONData(formVal,timeOffset));
+    try{
+      if (code != undefined){
+        JSON.stringify(logJSONData(code,timeOffset));
+        setFormVal(code);
+      } else {
+        JSON.stringify(logJSONData(formVal,timeOffset));
+      }
+    } catch{
+      JSON.stringify(logJSONData(formVal,timeOffset));
+    }
+
 
     setTimeout(() => {
       //arrivalsList = stringArrivals2;
@@ -89,13 +107,53 @@ export default function DataFeed() {
   async function logJSONData(stationName, timeOffset) {
     const response = await fetch('https://huxley2.azurewebsites.net/arrivals/'+stationName+'/150'+timeOffset);
     const data = await response.json();
+
     liveArrival = data.trainServices;
+    busDeparture = data.busServices;
+
+
+    if (liveArrival == null && busDeparture != null){
+      liveArrival = data.busServices;
+    }
+
+    if (liveArrival == null && busDeparture == null){
+      liveArrival = [];
+    }
+
     displayServiceMessage = "";
     serviceMessage = data.nrccMessages;
     let t = getTrainArrivals();
-    console.log("t is", t);
     arrivalsList = JSON.stringify(t);
   }
+
+
+  async function getStation() {
+    const response = await fetch('https://huxley2.azurewebsites.net/crs');
+    const data = await response.json();
+    listStation = data;
+    let t = getStationList();
+    //console.log("t is", t);
+    stationsList = JSON.stringify(t);
+  }
+
+  
+  function getStationList(){
+    //console.log(listStation);
+    let listOfStations = []
+    for (let i=0;i<listStation.length;i++){
+      listOfStations.push(listStation[i].stationName + " ("+ listStation[i].crsCode + ")");
+    }
+
+    const display = listOfStations.map(opt => ({ label: opt, value: opt }));
+
+    
+    setTRC(<Select 
+    options={display}
+    onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleArrivalClick(current,opt.value.slice(opt.value.length-4,-1)))}
+    />);
+
+    //console.log(listOfStations);
+  } 
 
 
   return (
@@ -111,7 +169,9 @@ export default function DataFeed() {
             name="formVal" defaultValue=""
             onChange={(event) => setFormVal(event.target.value)}/>
           </label>
-          <br/><br/>
+          <p>Or select from the menu below:</p>
+          {trcDropDown}
+          <br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleArrivalClick(current)}>View/Update live arrivals</button>
         </form>      
@@ -119,9 +179,9 @@ export default function DataFeed() {
       </div>
       <hr />
 
-      <p className = "highlights">{textInfo}</p>
+      <p className = "highlights">{textInfo}</p><br/>
       <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleArrivalClick(earlier)}>120 - 100 minutes ago</button><br/>
-      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleArrivalClick(earlier2)}>100 minutes ago - present</button>
+      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleArrivalClick(earlier2)}>100 minutes ago - present</button><br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
       
 
@@ -134,7 +194,7 @@ export default function DataFeed() {
                 <br/><br/><br/>
               </tr>
             ))}
-      </Table>
+      </Table><br/>
       <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later)}>100 minutes later</button><br/>
       <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later2)}>100 - 120 minutes later</button>
       <br/><br/>
@@ -178,25 +238,6 @@ function getTrainArrivals(stationName){
   return({stringArrivals, displayServiceMessage})
 
 } 
-
-/*async function logJSONData(stationName) {
-  fetch('https://huxley2.azurewebsites.net/arrivals/'+stationName+'/150').then(function (response) {
-    // The API call was successful!
-    return response.json();
-  }).then(function (data) {
-    //This is the JSON from our response
-    liveArrival = data.trainServices;
-    displayServiceMessage = "";
-    serviceMessage = data.nrccMessages;
-    let t = getTrainArrivals();
-    console.log("t is", t);
-    return t;
-  }).catch(function (err) {
-    // There was an error
-    console.warn('Something went wrong.', err);
-  })
-  console.log("t being returned is", t);
-}*/
 
 
 
