@@ -13,7 +13,7 @@ let location = "";
 
 let locationList = "test";
 
-
+let myArray;
 let textInfo = "";
 
 
@@ -26,8 +26,10 @@ export default function Dashboard() {
   useEffect(() => {
 
     setDepartures([""]);
-    setCalling([""]);
+    setCalling(["Enter a service code above"]);
     textInfo = "";
+    myArray = [];
+    locationList = [];
   }, []);
 
   function clearAll(e) {
@@ -41,6 +43,8 @@ export default function Dashboard() {
   function handleServiceClick(e) {
     e.preventDefault();
 
+    setCalling(["Loading..."]);
+
     const form = e.target;
     const formData = new FormData(form);
     const formJson = (Object.fromEntries(formData.entries())).myInput;
@@ -48,7 +52,11 @@ export default function Dashboard() {
     JSON.stringify(logJSONData(formJson));
     setTimeout(() => {
 
-      let myArray = locationList.split("*");
+    try{
+      myArray = locationList.split("*");
+    }catch{
+      setCalling(["Error, please try another service."]);
+    }
       myArray.shift();
 
       let removeValue = (myArray.indexOf('","locationList2":"undefined'));
@@ -93,17 +101,17 @@ export default function Dashboard() {
             name="myInput" defaultValue="" />
           </label>
           <br/><br/>
-          <button type="reset" onClick={clearAll}>Reset</button>
-          <button>Select service</button>
+          <button id = "useTrains" type="reset" onClick={clearAll}>Reset</button>
+          <button id = "useTrains">View/Update train service</button>
         </form>
         <br/>
       </div>
       <hr />
 
-      <br/><br/>
-      <Table className= "transactions" style = {{backgroundColor: "#e3f2ff"}}>
+      <br/>
+      <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             <tr>
-                <th>Staton|Scheduled|Actual|Estimated</th>
+                <th style={{fontSize:13}}>Station|Scheduled|Actual|Estimated<br/><br/></th>
             </tr>
             {stringCalling.map((calling, index) => (
               <tr data-index={index}>

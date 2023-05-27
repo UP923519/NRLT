@@ -29,7 +29,7 @@ export default function Dashboard() {
   
   useEffect(() => {
 
-    setDepartures([""]);
+    setDepartures(["Enter a depature station to view services"]);
     textInfo = "";
   }, []);
 
@@ -102,17 +102,19 @@ export default function Dashboard() {
             onChange={(event) => setFormVal(event.target.value)}/>
           </label>
           <br/><br/>
-          <button type="reset" onClick={clearAll}>Reset</button>
-          <button>Departures</button>
+          <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
+          <button id = "useTrains">View/Update live departures</button>
         </form>      
         <br/>
       </div>
       <hr />
 
       <p className = "highlights">{textInfo}</p>
-      <Table className= "transactions" style = {{backgroundColor: "#e3f2ff"}}>
+      <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
+      
+
             <tr>
-                <th>Departure Time|Destination|Origin|Scheduled|Platform|Code</th>
+                <th style={{fontSize:13}}>Departure Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
             </tr>
             {stringDepartures.map((departures, index) => (
               <tr data-index={index} style={{textAlign:"center"}}>

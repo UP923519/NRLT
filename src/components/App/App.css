@@ -130,7 +130,26 @@ li {
   font-size: 12px;
 }
 
+#useTrains{
+  margin-left: 2px;
+  margin-bottom: 10px;
+  background: #7f7f7f;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+}
+
 #useCurrentLocation:active{
+  background: #59a7ff;
+}
+
+#useTrains:active{
   background: #59a7ff;
 }
 
@@ -184,6 +203,7 @@ navbar.NavBar1{
   width: 98vw;
   border-radius: 20px;
   color: black;
+  background-color: #f0f0f0;
   
   }
 
@@ -191,10 +211,11 @@ navbar.NavBar1{
   border: 0px solid #ddd;
   border-radius: 0px;
   padding: 6px;  
+
 }
 
 .transactions tr:hover {
-  background-color: #ddd;
+  background-color: #c2c2c2;
   border-radius: 20px;
 
 }
@@ -270,7 +291,7 @@ div.gm-style {
 
 .manualInput{
   text-align: left;
-  background-color: #ffe9f2;
+  background-color: #c4e8fd;
   border-radius: 20px;
   color: black;
 }
@@ -332,7 +353,7 @@ a.active-animation:active{
   .manualInput{
     display:inline-block;
     text-align: center;
-    background-color: #ffe9f2;
+    background-color: #c4e8fd;
     border-radius: 20px;
     width: 50vw;
   }
