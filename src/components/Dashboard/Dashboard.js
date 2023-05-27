@@ -6,20 +6,22 @@ import { Table } from "react-bootstrap";
 let liveDeparture = "";
 let serviceMessage = "";
 let displayServiceMessage = "";
-let liveService = "";
-let liveService2 = "";
-let liveServiceTime = "";
-let location = "";
+let current = ""
+let earlier = "?timeOffset=-120&timeWindow=30";
+let earlier2 = "?timeOffset=-98&timeWindow=120";
+let later = "?timeOffset=98&timeWindow=30";
+let later2 = "?timeOffset=119&timeWindow=120";
+
+
+var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
+
 
 let departuresList = "test";
 
-let textInfo = "";
+let textInfo = "There are no messages";
 
-let myArray;
+let myArray = ["Enter a depature station to view services"];
 
-let first_promise;
-
-let stringDepartures2;
 
 
 export default function Dashboard() {
@@ -29,21 +31,23 @@ export default function Dashboard() {
   
   useEffect(() => {
 
-    setDepartures(["Enter a depature station to view services"]);
-    textInfo = "";
+    //setDepartures(["Enter a depature station to view services"]);
+    //textInfo = "";
+    setDepartures(myArray);
   }, []);
 
   function clearAll(e) {
     setDepartures([]);
-      textInfo = "";
+      textInfo = "There are no messages";
   }
 
   const displayAction = false;
 
 
 
-  function handleDepartureClick(e) {
-    e.preventDefault();
+  function handleDepartureClick(timeOffset) {
+    //timeOffset = "";
+    //e.preventDefault();
 
     setDepartures(["Loading..."]);
     
@@ -52,7 +56,7 @@ export default function Dashboard() {
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
     console.log("form says", formVal);
 
-    JSON.stringify(logJSONData(formVal));
+    JSON.stringify(logJSONData(formVal,timeOffset));
 
     setTimeout(() => {
       //departuresList = stringDepartures2;
@@ -65,9 +69,13 @@ export default function Dashboard() {
       myArray = myArray.filter((value, index) => !((index+1)%2));
       myArray.shift();
       
-  
+      if (myArray[myArray.length-1] != ""){
       textInfo = myArray[myArray.length-1];
-      //console.log (myArray);
+      } else {
+        textInfo = "There are no messages at this station";
+      }
+
+      textInfo = textInfo.replace(htmlRegexG, '');
   
       myArray = myArray.slice(0,-2);
   
@@ -76,8 +84,8 @@ export default function Dashboard() {
   }
 
 
-  async function logJSONData(stationName) {
-    const response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150');
+  async function logJSONData(stationName, timeOffset) {
+    const response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
     const data = await response.json();
     liveDeparture = data.trainServices;
     displayServiceMessage = "";
@@ -93,9 +101,9 @@ export default function Dashboard() {
       <h3>Departing </h3>
 
       <div className = "manualInput">
-      <h3 style={{textAlign:"center"}}>Departure</h3>
+      <h3 style={{textAlign:"center"}}>Departures</h3>
 
-        <form method="post" onSubmit={handleDepartureClick}>
+        <form method="post" onSubmit={e => {e.preventDefault() ; handleDepartureClick(current)}}>
           <label>
             Departure station&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
             name="formVal" defaultValue=""
@@ -103,25 +111,31 @@ export default function Dashboard() {
           </label>
           <br/><br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
-          <button id = "useTrains">View/Update live departures</button>
-        </form>      
+          <button id = "useTrains" type="button" onClick={() => handleDepartureClick(current)}>View/Update live departures</button>
+        </form>
+
         <br/>
       </div>
       <hr />
 
       <p className = "highlights">{textInfo}</p>
-      <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
-      
+      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
+      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button>
 
+      <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             <tr>
                 <th style={{fontSize:13}}>Departure Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
             </tr>
             {stringDepartures.map((departures, index) => (
               <tr data-index={index} style={{textAlign:"center"}}>
                 <td>{departures}</td>
+                <br/><br/><br/>
               </tr>
             ))}
       </Table>
+      <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>
+      <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later2)}>100 - 120 minutes later</button>
+
       <br/><br/>
 
 
@@ -153,6 +167,7 @@ function getTrainDepartures(stationName){
     };
 
     displayServiceMessage=displayServiceMessage.replaceAll("\""," ");
+    displayServiceMessage=displayServiceMessage.replaceAll("\n"," ");
     }
   catch{
 

@@ -199,7 +199,7 @@ navbar.NavBar1{
   text-align: center;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 15px;
   width: 98vw;
   border-radius: 20px;
   color: black;
@@ -225,13 +225,13 @@ navbar.NavBar1{
 }
 
 .highlights{
+  font-weight:600;
   background: #ffaeae;
   border-radius: 20px;
   padding: 10px;
-  display: flex;
   text-align: center;
   color: black;
-  font-size: 9px;
+  font-size: 15px;
 }
 
 #highlights2{
@@ -290,7 +290,7 @@ div.gm-style {
 }
 
 .manualInput{
-  text-align: left;
+  text-align: center;
   background-color: #c4e8fd;
   border-radius: 20px;
   color: black;

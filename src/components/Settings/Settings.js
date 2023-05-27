@@ -80,7 +80,7 @@ export default function Settings(){
             <div className = "optionInput">
                 <h3>Display Settings</h3>
                 <div> Current theme: {currentTheme}<br/>
-                    <a href="/">
+                    <a href="/NRLT">
 
                         <button id = "useCurrentLocation" onClick={darkMode}>
                             Dark mode
@@ -109,7 +109,7 @@ export default function Settings(){
                 <p style = {{fontSize: Number(localStorage.getItem("fontSize"))}}>
                     Example text to test font size
                 </p>
-                <a href="/">
+                <a href="/NRLT">
                 <button style = {{textDecoration: "none",fontSize: Number(localStorage.getItem("fontSize")-3)}}id = "manualSubmitButton">
                     ☑ Apply font size
                 </button>

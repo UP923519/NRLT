@@ -75,6 +75,8 @@ export default function Dashboard() {
     try{
         liveService = data.previousCallingPoints[0].callingPoint;
     }catch{
+      console.log("CAUGHT ERROR");
+      liveService = "";
     }
     
     liveService2 = (data.subsequentCallingPoints[0].callingPoint);
@@ -116,6 +118,7 @@ export default function Dashboard() {
             {stringCalling.map((calling, index) => (
               <tr data-index={index}>
                 <td>{calling}</td>
+                <br/><br/><br/>
               </tr>
             ))}
       </Table>
@@ -148,10 +151,8 @@ function getTrainArrivals(serviceID){
       try{
         if (liveService[i-1].et == null){
           console.log("tlc is", trainLocation);
-          trainLocation = (liveService[i].et+"🚆");
+          trainLocation = (liveService[i].et+"🚂");
           console.log("tlc is", trainLocation);
-
-          
         }
       } catch{
       }
@@ -176,7 +177,7 @@ function getTrainArrivals(serviceID){
     trainLocation = liveServiceTime.etd;
     try{
       if (liveService[liveService.length-1].et == null && liveService2[0].et !=null){
-        trainLocation = liveServiceTime.etd + "🚆";
+        trainLocation = liveServiceTime.etd + "🚂";
       }
     } catch{
     }
@@ -200,9 +201,14 @@ function getTrainArrivals(serviceID){
       trainLocation = liveService2[i].et;
       try{
         if (liveService2[i-1].et == null){
-          trainLocation = (liveService2[i].et+"🚆");
+          trainLocation = (liveService2[i].et+"🚂");
         }
       } catch{
+        if (liveServiceTime.etd != null ){
+         
+        } else {
+          trainLocation = (liveService2[i].et+"🚂");
+        }
 
       }
     }
