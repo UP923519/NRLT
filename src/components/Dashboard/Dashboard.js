@@ -2,6 +2,10 @@ import React, { useState ,  useEffect } from 'react';
 import "../App/App.css"
 import { Table } from "react-bootstrap";
 import Select from 'react-select';
+import image from '../../assets/nre-logo.png';
+import Dashboard1 from '../Link/LinkPage';
+import { useNavigate } from "react-router-dom";
+import { test1 } from '../Link/LinkPage';
 
 
 
@@ -13,9 +17,9 @@ let listStation = "";
 
 let displayServiceMessage = "";
 let current = ""
-let earlier = "?timeOffset=-120&timeWindow=30";
-let earlier2 = "?timeOffset=-98&timeWindow=120";
-let later = "?timeOffset=98&timeWindow=30";
+let earlier = "?timeOffset=-120&timeWindow=120";
+let earlier2 = "?timeOffset=-82&timeWindow=120";
+let later = "?timeOffset=82&timeWindow=120";
 let later2 = "?timeOffset=119&timeWindow=120";
 
 
@@ -36,8 +40,6 @@ export default function Dashboard() {
   const [formVal, setFormVal] = useState('');
   const [dropVal, setDropVal] = useState('');
   const [trcDropDown, setTRC] = useState('');
-
-
   
   useEffect(() => {
 
@@ -158,6 +160,15 @@ export default function Dashboard() {
     //console.log(listOfStations);
   } 
 
+  let navigate = useNavigate(); 
+  const routeChange = (number) =>{ 
+    console.log("routeChanged", number);
+    //Dashboard1();
+    let path = "/linkPage"; 
+    navigate(path);
+    test1(number);
+
+  }
 
 
   return (
@@ -187,13 +198,13 @@ export default function Dashboard() {
       <p className = "highlights">{textInfo}</p><br/>
       <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
       <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
-
+      <br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             <tr>
                 <th style={{fontSize:13}}>Departure Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
             </tr>
             {stringDepartures.map((departures, index) => (
-              <tr data-index={index} style={{textAlign:"center"}}>
+              <tr data-index={index} style={{textAlign:"center"}} onClick={() => routeChange(departures.slice(departures.length-15,departures.length))}>
                 <td>{departures}</td>
                 <br/><br/><br/>
               </tr>
@@ -204,6 +215,10 @@ export default function Dashboard() {
 
       <br/><br/>
 
+      <p>
+        <img src={image} alt="powered by National Rail Enquiries" width="256" />
+      </p>
+      
 
 
     </div>

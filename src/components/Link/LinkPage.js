@@ -1,6 +1,8 @@
 import React, { useState ,  useEffect } from 'react';
 import "../App/App.css"
 import { Table } from "react-bootstrap";
+import image from '../../assets/nre-logo.png';
+
 
 
 let liveDeparture = "";
@@ -8,6 +10,7 @@ let serviceMessage = "";
 let displayServiceMessage = "";
 let liveService = "";
 let liveService2 = "";
+let liveService3 = "";
 let liveServiceTime = "";
 let location = "";
 
@@ -16,12 +19,18 @@ let locationList = "test";
 let myArray;
 let textInfo = "";
 
+let formJson = "";
+
+let sCode = "";
+
 
 
 
 export default function Dashboard() {
   const [stringDepartures, setDepartures] = useState([]);
   const [stringCalling, setCalling] = useState([]);
+  const [formVal, setFormVal] = useState('');
+
 
   useEffect(() => {
 
@@ -30,6 +39,10 @@ export default function Dashboard() {
     textInfo = "";
     myArray = [];
     locationList = [];
+
+    if (formJson != ""){
+      handleServiceClick();
+    }
   }, []);
 
   function clearAll(e) {
@@ -38,16 +51,25 @@ export default function Dashboard() {
       textInfo = "";
   }
 
+
+
   const displayAction = false;
 
   function handleServiceClick(e) {
-    e.preventDefault();
 
     setCalling(["Loading..."]);
 
-    const form = e.target;
-    const formData = new FormData(form);
-    const formJson = (Object.fromEntries(formData.entries())).myInput;
+    //const form = e.target;
+    //const formData = new FormData(form);
+
+    console.log("fjs is",formJson);
+
+    if (formJson == ""){
+      formJson = formVal;
+    }
+
+    console.log("fjs is",formJson);
+
 
     JSON.stringify(logJSONData(formJson));
     setTimeout(() => {
@@ -78,11 +100,36 @@ export default function Dashboard() {
       console.log("CAUGHT ERROR");
       liveService = "";
     }
+
+    try{
+      liveService2 = data.subsequentCallingPoints[0].callingPoint;
+    }catch{
+      console.log("CAUGHT ERROR");
+      liveService2 = "";
+    }
+
+    try{
+      liveService3 = data.subsequentCallingPoints[1].callingPoint;
+      console.log("train divides");
+      //console.log  ({...liveService3, ...liveService2});
+      //liveService3.push({locationName: 'Bognor Regis'});
+      for (let i=0; i<liveService3.length;i++){
+        liveService2.push(liveService3[i])
+        //console.log("ls2 is", liveService3[i]);
+
+      }
+      console.log("ls2 is", liveService2);
+
+      //console.log  (liveService2);
+
+    }catch{
+      liveService3 = "";
+    }
     
-    liveService2 = (data.subsequentCallingPoints[0].callingPoint);
+    //liveService2 = (data.subsequentCallingPoints[0].callingPoint);
     liveServiceTime = data;
     location = (data.locationName);
-    //console.log(data);
+    console.log(data);
 
     let t = getTrainArrivals();
     //console.log("t is", t);
@@ -97,14 +144,16 @@ export default function Dashboard() {
 
       <div className = "manualInput">
       <h3 style={{textAlign:"center"}}>Service Details</h3>
-        <form method="post" onSubmit={handleServiceClick}>
+        <form method="post" onSubmit={e => {e.preventDefault() ; handleServiceClick()}}>
           <label>
             Service code&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
-            name="myInput" defaultValue="" />
+            name="myInput" defaultValue="" 
+            onChange={(event) => setFormVal(event.target.value)}/>
           </label>
           <br/><br/>
           <button id = "useTrains" type="reset" onClick={clearAll}>Reset</button>
-          <button id = "useTrains">View/Update train service</button>
+          <button id = "useTrains" type="button" onClick={() => handleServiceClick()}>View/Update train service</button>
+
         </form>
         <br/>
       </div>
@@ -123,6 +172,10 @@ export default function Dashboard() {
             ))}
       </Table>
       <br/><br/>
+
+      <p>
+        <img src={image} alt="powered by National Rail Enquiries" width="256" />
+      </p>
 
     </div>
     
@@ -161,13 +214,14 @@ function getTrainArrivals(serviceID){
       liveService[i].at = "N/A"
     }
 
+
     locationList+= "*"+liveService[i].locationName + " " + liveService[i].st + " " + liveService[i].at + " " + trainLocation;
   }
 
   //console.log(liveService[liveService.length-1].et)
   /////
   let trainLocation;
-  if (liveServiceTime.etd == null){
+  if (liveServiceTime.etd == null && liveServiceTime.eta == null){
     if (liveServiceTime.atd == "On time" || liveServiceTime.atd == "No report"){
       trainLocation = "✔️";
     } else{
@@ -175,15 +229,33 @@ function getTrainArrivals(serviceID){
     }
   } else {
     trainLocation = liveServiceTime.etd;
+    if (trainLocation == null){
+      trainLocation = liveServiceTime.eta;
+    }
     try{
       if (liveService[liveService.length-1].et == null && liveService2[0].et !=null){
         trainLocation = liveServiceTime.etd + "🚂";
       }
     } catch{
+        trainLocation = liveServiceTime.eta + "🚂";
+
+      
     }
   }
   if (liveServiceTime.atd == null){
-    liveServiceTime.atd = "N/A"
+    if (liveServiceTime.ata != null){
+      liveServiceTime.atd = liveServiceTime.ata
+    } else {
+      liveServiceTime.atd = "N/A"
+    }
+  }
+
+  if (liveServiceTime.std == null){
+    if (liveServiceTime.sta != null){
+      liveServiceTime.std = liveServiceTime.sta
+    } else {
+      liveServiceTime.std = "N/A"
+    }
   }
 
   locationList+= "*"+location+" "+liveServiceTime.std+" "+liveServiceTime.atd+" "+trainLocation+ " (p." + liveServiceTime.platform+ ")*";
@@ -215,6 +287,8 @@ function getTrainArrivals(serviceID){
     if (liveService2[i].at == null){
       liveService2[i].at = "N/A"
     }
+    
+
     locationList2+= "*"+liveService2[i].locationName + " " + liveService2[i].st + " " + liveService2[i].at + " " + trainLocation ;
   }
   
@@ -222,6 +296,13 @@ function getTrainArrivals(serviceID){
 
   return({locationList, locationList2})
 } 
+
+
+export function test1(number){
+  console.log("RUNNING NOW number is", number);
+  formJson = number;
+
+}
 
 
 
