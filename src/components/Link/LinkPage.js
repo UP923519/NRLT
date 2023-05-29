@@ -13,11 +13,16 @@ let liveService2 = "";
 let liveService3 = "";
 let liveServiceTime = "";
 let location = "";
+let operator = "";
+let formation = "";
+
 
 let locationList = "test";
 
 let myArray;
 let textInfo = "";
+
+let divides = "";
 
 let formJson = "";
 
@@ -28,6 +33,7 @@ let sCode = "";
 
 export default function Dashboard() {
   const [stringDepartures, setDepartures] = useState([]);
+  const [excuseReason, setExcuseReason] = useState();
   const [stringCalling, setCalling] = useState([]);
   const [formVal, setFormVal] = useState('');
 
@@ -62,9 +68,13 @@ export default function Dashboard() {
     //const form = e.target;
     //const formData = new FormData(form);
 
-    console.log("fjs is",formJson);
+    console.log("fval",formVal);
 
     if (formJson == ""){
+      formJson = formVal;
+    }
+
+    if (formVal != ""){
       formJson = formVal;
     }
 
@@ -92,7 +102,6 @@ export default function Dashboard() {
   async function logJSONData(serviceID) {
     const response = await fetch('https://huxley2.azurewebsites.net/service/'+serviceID);
     const data = await response.json();
-
        
     try{
         liveService = data.previousCallingPoints[0].callingPoint;
@@ -111,6 +120,7 @@ export default function Dashboard() {
     try{
       liveService3 = data.subsequentCallingPoints[1].callingPoint;
       console.log("train divides");
+      divides = ("This train divides into 2 portions. ");
       //console.log  ({...liveService3, ...liveService2});
       //liveService3.push({locationName: 'Bognor Regis'});
       for (let i=0; i<liveService3.length;i++){
@@ -118,18 +128,43 @@ export default function Dashboard() {
         //console.log("ls2 is", liveService3[i]);
 
       }
-      console.log("ls2 is", liveService2);
 
       //console.log  (liveService2);
 
     }catch{
       liveService3 = "";
+      divides = ("");
     }
     
     //liveService2 = (data.subsequentCallingPoints[0].callingPoint);
     liveServiceTime = data;
     location = (data.locationName);
+    operator = "Service operated by " + (data.operator) + "";
+    if (data.length != 0){
+      formation = "This train is formed of " + (data.length) + " coaches.";
+    } else {
+      formation = "";
+    }
     console.log(data);
+
+    console.log(liveServiceTime.cancelReason)
+    console.log(liveServiceTime.delayReason)
+
+    
+      let exr = (divides + liveServiceTime.cancelReason +". "+ liveServiceTime.delayReason +". "+ formation +" "+ operator +". ");
+      exr = (exr.replace("null",""));
+      exr = (exr.replace("null",""));
+      exr = (exr.replace(". . ",". "));
+      exr = (exr.replace(". . ",". "));
+      exr = (exr.replace(". This train is formed","This train is formed"));
+      exr = (exr.replace(".  S","S"));
+
+      console.log(exr);
+      setExcuseReason(exr);
+
+    
+
+
 
     let t = getTrainArrivals();
     //console.log("t is", t);
@@ -152,14 +187,13 @@ export default function Dashboard() {
           </label>
           <br/><br/>
           <button id = "useTrains" type="reset" onClick={clearAll}>Reset</button>
-          <button id = "useTrains" type="button" onClick={() => handleServiceClick()}>View/Update train service</button>
+          <button id = "useTrains" type="button" onClick={() => handleServiceClick()}>View/Refresh train service</button>
 
         </form>
         <br/>
       </div>
       <hr />
-
-      <br/>
+      <p className = "highlights">{excuseReason}</p><br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             <tr>
                 <th style={{fontSize:13}}>Station|Scheduled|Actual|Estimated<br/><br/></th>
@@ -259,6 +293,7 @@ function getTrainArrivals(serviceID){
   }
 
   locationList+= "*"+location+" "+liveServiceTime.std+" "+liveServiceTime.atd+" "+trainLocation+ " (p." + liveServiceTime.platform+ ")*";
+
 
   let locationList2;
   for (let i = 0; i < (liveService2.length); i++) {
