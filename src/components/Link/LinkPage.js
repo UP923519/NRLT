@@ -150,17 +150,20 @@ export default function Dashboard() {
     console.log(liveServiceTime.cancelReason)
     console.log(liveServiceTime.delayReason)
 
-    
-      let exr = (divides + liveServiceTime.cancelReason +". "+ liveServiceTime.delayReason +". "+ formation +" "+ operator +". ");
-      exr = (exr.replace("null",""));
-      exr = (exr.replace("null",""));
-      exr = (exr.replace(". . ",". "));
-      exr = (exr.replace(". . ",". "));
-      exr = (exr.replace(". This train is formed","This train is formed"));
-      exr = (exr.replace(".  S","S"));
 
-      console.log(exr);
-      setExcuseReason(exr);
+    liveServiceTime.cancelReason += "."; 
+    liveServiceTime.delayReason += "."; 
+    
+    let exr = (divides + liveServiceTime.cancelReason +" "+ liveServiceTime.delayReason +" "+ formation +" "+ operator +". ");
+    exr = (exr.replace("null.",""));
+    exr = (exr.replace("null.",""));
+    /*exr = (exr.replace(". . ",". "));
+    exr = (exr.replace(". . ",". "));
+    exr = (exr.replace(". This train is formed","This train is formed"));
+    exr = (exr.replace(".  S","S"));*/
+
+    console.log(exr);
+    setExcuseReason(exr);
 
     
 

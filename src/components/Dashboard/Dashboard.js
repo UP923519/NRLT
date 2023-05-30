@@ -32,7 +32,7 @@ let stationsList = "";
 
 let textInfo = "There are no messages";
 
-let myArray = ["Enter a depature station to view services"];
+let myArray = [];
 
 
 export default function Dashboard() {
@@ -69,8 +69,8 @@ export default function Dashboard() {
     //const form = e.target;
     //const formData = new FormData(form);
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
-    console.log("form says", formVal);
-    console.log("drop says", code);
+    //console.log("form says", formVal);
+    //console.log("drop says", code);
 
     try{
       if (code != undefined){
@@ -87,8 +87,8 @@ export default function Dashboard() {
     setTimeout(() => {
       //departuresList = stringDepartures2;
     
-      console.log("Returned first promise");
-      console.log("returned promise is", departuresList)
+      //console.log("Returned first promise");
+      //console.log("returned promise is", departuresList)
   
       myArray = departuresList.split("\"");
   
@@ -204,7 +204,7 @@ export default function Dashboard() {
                 <th style={{fontSize:13}}>Departure Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
             </tr>
             {stringDepartures.map((departures, index) => (
-              <tr data-index={index} style={{textAlign:"center"}} onClick={() => routeChange(departures.slice(departures.length-15,departures.length))}>
+              <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(departures.slice(departures.length-15,departures.length))}>
                 <td>{departures}</td>
                 <br/><br/><br/>
               </tr>
@@ -238,8 +238,8 @@ function getTrainDepartures(stationName){
   let stringDepartures = [];
   for (let i = 0; i < (liveDeparture.length); i++) {
     sIdArray.push(liveDeparture[i].serviceID);
-    stringDepartures.push(liveDeparture[i].std +" "+ liveDeparture[i].destination[0].locationName + " (from " + liveDeparture[i].origin[0].locationName +") - "+ liveDeparture[i].etd +" - p."+ liveDeparture[i].platform +
-    " - "+ liveDeparture[i].serviceID);
+    stringDepartures.push(liveDeparture[i].std +" "+ liveDeparture[i].destination[0].locationName + " (from " + liveDeparture[i].origin[0].locationName +")  "+ liveDeparture[i].etd +"  p."+ liveDeparture[i].platform +
+    "  "+ liveDeparture[i].serviceID);
   }
 
   try{

@@ -32,7 +32,7 @@ let stationsList = "";
 
 let textInfo = "There are no messages";
 
-let myArray = ["Enter an arrival station to view services"];
+let myArray = [];
 
 
 
@@ -67,7 +67,7 @@ export default function DataFeed() {
     //const form = e.target;
     //const formData = new FormData(form);
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
-    console.log("form says", formVal);
+    //console.log("form says", formVal);
 
     try{
       if (code != undefined){
@@ -84,8 +84,8 @@ export default function DataFeed() {
     setTimeout(() => {
       //arrivalsList = stringArrivals2;
     
-      console.log("Returned first promise");
-      console.log("returned promise is", arrivalsList)
+      //console.log("Returned first promise");
+      //console.log("returned promise is", arrivalsList)
   
       myArray = arrivalsList.split("\"");
   
@@ -205,7 +205,7 @@ export default function DataFeed() {
                 <th style={{fontSize:13}}>Arrival Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
             </tr>
             {stringArrivals.map((arrivals, index) => (
-              <tr data-index={index} style={{textAlign:"center"}} onClick={() => routeChange(arrivals.slice(arrivals.length-15,arrivals.length))}>
+              <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(arrivals.slice(arrivals.length-15,arrivals.length))}>
                 <td>{arrivals}</td>
                 <br/><br/><br/>
               </tr>
@@ -238,8 +238,8 @@ function getTrainArrivals(stationName){
   let stringArrivals = [];
   for (let i = 0; i < (liveArrival.length); i++) {
     sIdArray.push(liveArrival[i].serviceID);
-    stringArrivals.push(liveArrival[i].sta +" "+ liveArrival[i].destination[0].locationName + " (from " + liveArrival[i].origin[0].locationName +") - "+ liveArrival[i].eta +" - p."+ liveArrival[i].platform +
-    " - "+ liveArrival[i].serviceID);
+    stringArrivals.push(liveArrival[i].sta +" "+ liveArrival[i].destination[0].locationName + " (from " + liveArrival[i].origin[0].locationName +")  "+ liveArrival[i].eta +"  p."+ liveArrival[i].platform +
+    "  "+ liveArrival[i].serviceID);
   }
 
   try{
