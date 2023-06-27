@@ -14,6 +14,9 @@ let liveArrival = "";
 let busDeparture = "";
 let listStation = "";
 
+let currentCRSCode;
+
+
 let serviceMessage = "";
 let displayServiceMessage = "";
 let current = ""
@@ -110,11 +113,19 @@ export default function DataFeed() {
 
 
   async function logJSONData(stationName, timeOffset) {
+    
+    if (stationName == ""){
+      stationName = currentCRSCode;
+    }
+
     const response = await fetch('https://huxley2.azurewebsites.net/arrivals/'+stationName+'/150'+timeOffset);
     const data = await response.json();
 
     liveArrival = data.trainServices;
     busDeparture = data.busServices;
+
+    currentCRSCode = data.crs;
+
 
 
     if (liveArrival == null && busDeparture != null){
@@ -162,7 +173,9 @@ export default function DataFeed() {
 
   let navigate = useNavigate(); 
   const routeChange = (number) =>{ 
-    console.log("routeChanged", number);
+    number = number.split(" ");
+    number = number.pop();
+    //console.log("routeChanged", number);
     //Dashboard1();
     let path = "/linkPage"; 
     navigate(path);
@@ -205,7 +218,7 @@ export default function DataFeed() {
                 <th style={{fontSize:13}}>Arrival Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
             </tr>
             {stringArrivals.map((arrivals, index) => (
-              <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(arrivals.slice(arrivals.length-15,arrivals.length))}>
+              <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(arrivals)}>
                 <td>{arrivals}</td>
                 <br/><br/><br/>
               </tr>

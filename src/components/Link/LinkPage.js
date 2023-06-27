@@ -34,14 +34,14 @@ let sCode = "";
 export default function Dashboard() {
   const [stringDepartures, setDepartures] = useState([]);
   const [excuseReason, setExcuseReason] = useState();
-  const [stringCalling, setCalling] = useState([]);
+  const [stringCalling, setCalling] = useState([[],[]]);
   const [formVal, setFormVal] = useState('');
 
 
   useEffect(() => {
 
     setDepartures([""]);
-    setCalling(["Enter a service code above"]);
+    setCalling([["Enter a service code above"],[]]);
     textInfo = "";
     myArray = [];
     locationList = [];
@@ -63,7 +63,7 @@ export default function Dashboard() {
 
   function handleServiceClick(e) {
 
-    setCalling(["Loading..."]);
+    setCalling([["Loading..."],[]]);
 
     //const form = e.target;
     //const formData = new FormData(form);
@@ -87,7 +87,7 @@ export default function Dashboard() {
     try{
       myArray = locationList.split("*");
     }catch{
-      setCalling(["Error, please try another service."]);
+      setCalling([["Error, please try another service."],[]]);
     }
       myArray.shift();
 
@@ -227,7 +227,7 @@ function getTrainArrivals(serviceID){
 
   let locationList;
   for (let i = 0; i < (liveService.length); i++) {
-    //console.log(liveService[i].locationName);
+    console.log(liveService[i]);
     let trainLocation;
     let trainActual;
     if (liveService[i].et == null){
@@ -235,6 +235,9 @@ function getTrainArrivals(serviceID){
         trainLocation = "✔️";
       } else{
         trainLocation = "❌";
+        if (liveService[i].at <= liveService[i].st){
+          trainLocation = "✔️";
+        }
       }
     } else {
       trainLocation = liveService[i].et;
@@ -306,6 +309,9 @@ function getTrainArrivals(serviceID){
         trainLocation = "✔️";
       } else{
         trainLocation = "❌";
+        if (liveService2[i].at <= liveService2[i].st){
+          trainLocation = "✔️";
+        }
       }
     } else {
       trainLocation = liveService2[i].et;

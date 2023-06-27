@@ -457,11 +457,12 @@ a.active-animation:active{
   }
 
   .titleClass{
+    display: inline;
     text-align: center;
     border-radius: 20px;
-    margin-left: 25vw;
-    margin-right: 25vw;
-  
+    padding-left: 10vw;
+    padding-right: 10vw;
+
   }
 
   .topRow2 {

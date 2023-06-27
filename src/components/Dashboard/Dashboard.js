@@ -15,6 +15,8 @@ let busDeparture = "";
 let serviceMessage = "";
 let listStation = "";
 
+let currentCRSCode;
+
 let displayServiceMessage = "";
 let current = ""
 let earlier = "?timeOffset=-120&timeWindow=120";
@@ -76,8 +78,10 @@ export default function Dashboard() {
       if (code != undefined){
         JSON.stringify(logJSONData(code,timeOffset));
         setFormVal(code);
+
       } else {
         JSON.stringify(logJSONData(formVal,timeOffset));
+
       }
     } catch{
       JSON.stringify(logJSONData(formVal,timeOffset));
@@ -101,7 +105,7 @@ export default function Dashboard() {
         textInfo = "There are no messages at this station";
       }
 
-      textInfo = textInfo.replace(htmlRegexG, '');
+      textInfo = textInfo.replace(htmlRegexG, ' ');
   
       myArray = myArray.slice(0,-2);
   
@@ -111,11 +115,21 @@ export default function Dashboard() {
 
 
   async function logJSONData(stationName, timeOffset) {
+
+    console.log(stationName, "is stNAME");
+    console.log(currentCRSCode, "is ccrs");
+
+    if (stationName == ""){
+      stationName = currentCRSCode;
+    }
+
     const response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
     const data = await response.json();
   
     liveDeparture = data.trainServices;
     busDeparture = data.busServices;
+
+    currentCRSCode = data.crs;
 
     if (liveDeparture == null && busDeparture != null){
       liveDeparture = data.busServices;
@@ -162,7 +176,13 @@ export default function Dashboard() {
 
   let navigate = useNavigate(); 
   const routeChange = (number) =>{ 
-    console.log("routeChanged", number);
+
+    //number = number.slice(number.length-1,number.length);
+    number = number.split(" ");
+    number = number.pop();
+
+
+    //console.log("routeChanged", number);
     //Dashboard1();
     let path = "/linkPage"; 
     navigate(path);
@@ -204,7 +224,7 @@ export default function Dashboard() {
                 <th style={{fontSize:13}}>Departure Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
             </tr>
             {stringDepartures.map((departures, index) => (
-              <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(departures.slice(departures.length-15,departures.length))}>
+              <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(departures)}>
                 <td>{departures}</td>
                 <br/><br/><br/>
               </tr>
@@ -252,7 +272,7 @@ function getTrainDepartures(stationName){
     }
   catch{
   }
-  //console.log("Data sent back says", stringDepartures, displayServiceMessage);  
+  //console.log("stringDepartures says", stringDepartures);  
   return({stringDepartures, displayServiceMessage})
 } 
 
