@@ -42,6 +42,8 @@ export default function Dashboard() {
   const [formVal, setFormVal] = useState('');
   const [dropVal, setDropVal] = useState('');
   const [trcDropDown, setTRC] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
   
   useEffect(() => {
 
@@ -67,7 +69,7 @@ export default function Dashboard() {
     //e.preventDefault();
 
     setDepartures(["Loading..."]);
-    
+    toggle();
     //const form = e.target;
     //const formData = new FormData(form);
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
@@ -177,23 +179,28 @@ export default function Dashboard() {
   let navigate = useNavigate(); 
   const routeChange = (number) =>{ 
 
+    let trainInfo = number;
+
     //number = number.slice(number.length-1,number.length);
     number = number.split(" ");
     number = number.pop();
 
 
-    //console.log("routeChanged", number);
     //Dashboard1();
     let path = "/linkPage"; 
     navigate(path);
-    test1(number);
+    test1(number, trainInfo);
 
+  }
+
+  function toggle() {
+    setIsOpen(true);
   }
 
 
   return (
     <div className='Wrapper2'>
-      <h3>Departing </h3>
+      <br/>
 
       <div className = "manualInput">
       <h3 style={{textAlign:"center"}}>Departures</h3>
@@ -208,36 +215,47 @@ export default function Dashboard() {
           {trcDropDown}
           <br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
-          <button id = "useTrains" type="button" onClick={() => handleDepartureClick(current)}>View/Update live departures</button>
+          <button id = "useTrains" type="button" onClick={() => handleDepartureClick(current)}>View/Refresh live departures</button>
         </form>
 
-        <br/>
+        
       </div>
       <hr />
 
-      <p className = "highlights">{textInfo}</p><br/>
-      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
-      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
-      <br/>
-      <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
-            <tr>
-                <th style={{fontSize:13}}>Departure Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
-            </tr>
-            {stringDepartures.map((departures, index) => (
-              <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(departures)}>
-                <td>{departures}</td>
-                <br/><br/><br/>
-              </tr>
-            ))}
-      </Table><br/>
-      <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>
-      <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later2)}>100 - 120 minutes later</button>
+      <div className="App">
+      {isOpen && (
+      <div>
 
-      <br/><br/>
+        <p className = "highlights">{textInfo}</p><br/>
+        <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
+        <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
+        <br/>
+        <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
+              <tr>
+                  <th style={{fontSize:13}}>Departure Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
+              </tr>
+              {stringDepartures.map((departures, index) => (
+                <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(departures)}>
+                  <td>{departures}</td>
+                  <br/><br/><br/>
+                </tr>
+              ))}
+        </Table><br/>
+        <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>
+        <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later2)}>100 - 120 minutes later</button>
+
+        <br/><br/>
+
+      </div>
+      )}
+      </div>
 
       <p>
         <img src={image} alt="powered by National Rail Enquiries" width="256" />
       </p>
+
+
+
       
 
 

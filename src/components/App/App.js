@@ -3,6 +3,9 @@ import Navbar from '../Navbar/Navbar.js';
 import Login, {} from '../Login/Login';
 import useToken from './useToken';
 
+import Nimage from '../../assets/NationalRailLogo.png';
+
+
 export const theUser = localStorage.getItem('username');
 
 
@@ -42,14 +45,12 @@ function App() {
 
   return (   
     <div className="wrapper" style = {{fontSize: Number(localStorage.getItem("fontSize")), backgroundColor: localStorage.getItem("darkMode"), color: colour}}>
-      <h1 className = "titleClass" style = {{color: "#2d9ba1", backgroundColor:backGroundColour, borderRadius:"20px"}} >National Rail Live</h1>
-      <div className = "topBanner1">
-        <h4> Welcome, {localStorage.getItem('username')}
-        {displayAction && <p>I am writing JSX</p>}
-        <button id="showHide" style={{fontSize:"medium"}}className = "logOut" onClick={removeToken}>
-          ￩ Log Out
-        </button> </h4>
-      </div>
+      <p><img src={Nimage} alt="powered by National Rail Enquiries" width="85" /></p>
+
+      <h2 className = "titleClass" style = {{color: "#2d9ba1", backgroundColor:backGroundColour, borderRadius:"20px"}}>National Rail Live</h2>
+
+
+      <br/>
       <div>
         <Navbar />
       </div>

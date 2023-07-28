@@ -1,5 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar.js';
+import Login, {} from '../Login/Login';
+import useToken from '../App/useToken';
+import byebye from '../App/App.js';
 
 export let currentFontSize;
 export let currentTheme;
@@ -35,12 +39,13 @@ if (localStorage.getItem("darkMode") == "#c7dcff"){
 
 export default function Settings(){
     const [fontSize, setFontSize] = useState(16);
+    const { token, setToken, removeToken, getToken} = useToken();
+
 
     function fontSizeIncrease(){
         setFontSize(fontSize + 2);
         localStorage.setItem("fontSize", 18);
         console.log (localStorage.getItem("fontSize"));
-
     }
 
     function fontSizeDecrease(){
@@ -76,7 +81,15 @@ export default function Settings(){
 
     return(
         <div style={{width:"98vw", height:"100vh"}}>
-            <h3>App Options</h3>
+            <br/>
+
+            <div className = "topBanner1">
+                <h4>Account: {localStorage.getItem('username')}
+                <button id="showHide" style={{fontSize:"medium"}}className = "logOut" onClick={removeToken}>
+                ￩ Log Out
+                </button></h4>
+            </div>
+
             <div className = "optionInput">
                 <h3>Display Settings</h3>
                 <div> Current theme: {currentTheme}<br/>

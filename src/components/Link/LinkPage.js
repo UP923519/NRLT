@@ -25,6 +25,7 @@ let textInfo = "";
 let divides = "";
 
 let formJson = "";
+let infoTrain = "";
 
 let sCode = "";
 
@@ -36,6 +37,8 @@ export default function Dashboard() {
   const [excuseReason, setExcuseReason] = useState();
   const [stringCalling, setCalling] = useState([[],[]]);
   const [formVal, setFormVal] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
 
 
   useEffect(() => {
@@ -64,9 +67,11 @@ export default function Dashboard() {
   function handleServiceClick(e) {
 
     setCalling([["Loading..."],[]]);
+    toggle();
 
     //const form = e.target;
     //const formData = new FormData(form);
+
 
     console.log("fval",formVal);
 
@@ -76,6 +81,8 @@ export default function Dashboard() {
 
     if (formVal != ""){
       formJson = formVal;
+      infoTrain = "";
+
     }
 
     console.log("fjs is",formJson);
@@ -174,11 +181,14 @@ export default function Dashboard() {
     locationList = JSON.stringify(t);
   }
 
+  function toggle() {
+    setIsOpen(true);
+  }
 
 
   return (
     <div className='Wrapper2'>
-      <h3>Service </h3>
+      <br/>
 
       <div className = "manualInput">
       <h3 style={{textAlign:"center"}}>Service Details</h3>
@@ -193,9 +203,14 @@ export default function Dashboard() {
           <button id = "useTrains" type="button" onClick={() => handleServiceClick()}>View/Refresh train service</button>
 
         </form>
-        <br/>
       </div>
       <hr />
+
+      <div className="App">
+      {isOpen && (
+      <div>
+
+      {infoTrain}
       <p className = "highlights">{excuseReason}</p><br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             <tr>
@@ -209,6 +224,10 @@ export default function Dashboard() {
             ))}
       </Table>
       <br/><br/>
+
+      </div>
+      )}
+      </div>
 
       <p>
         <img src={image} alt="powered by National Rail Enquiries" width="256" />
@@ -227,7 +246,6 @@ function getTrainArrivals(serviceID){
 
   let locationList;
   for (let i = 0; i < (liveService.length); i++) {
-    console.log(liveService[i]);
     let trainLocation;
     let trainActual;
     if (liveService[i].et == null){
@@ -244,7 +262,7 @@ function getTrainArrivals(serviceID){
       try{
         if (liveService[i-1].et == null){
           console.log("tlc is", trainLocation);
-          trainLocation = (liveService[i].et+"🚂");
+          trainLocation = (liveService[i].et+"🚂🚃🚃");
           console.log("tlc is", trainLocation);
         }
       } catch{
@@ -274,11 +292,13 @@ function getTrainArrivals(serviceID){
     }
     try{
       if (liveService[liveService.length-1].et == null && liveService2[0].et !=null){
-        trainLocation = liveServiceTime.etd + "🚂";
+        trainLocation = liveServiceTime.etd + "🚂🚃🚃";
       }
     } catch{
-        trainLocation = liveServiceTime.eta + "🚂";
-
+        trainLocation = liveServiceTime.eta + "🚂🚃🚃";
+        if (trainLocation.includes("null")){
+          trainLocation = trainLocation.replace('null', liveServiceTime.etd);
+        }
       
     }
   }
@@ -296,6 +316,14 @@ function getTrainArrivals(serviceID){
     } else {
       liveServiceTime.std = "N/A"
     }
+  }
+
+  if (trainLocation.includes("null")){
+    trainLocation = trainLocation.replace('null', 'N/A');
+  }
+
+  if (liveServiceTime.platform == null){
+    liveServiceTime.platform = " N/A";
   }
 
   locationList+= "*"+location+" "+liveServiceTime.std+" "+liveServiceTime.atd+" "+trainLocation+ " (p." + liveServiceTime.platform+ ")*";
@@ -317,13 +345,13 @@ function getTrainArrivals(serviceID){
       trainLocation = liveService2[i].et;
       try{
         if (liveService2[i-1].et == null){
-          trainLocation = (liveService2[i].et+"🚂");
+          trainLocation = (liveService2[i].et+"🚂🚃🚃");
         }
       } catch{
         if (liveServiceTime.etd != null ){
          
         } else {
-          trainLocation = (liveService2[i].et+"🚂");
+          trainLocation = (liveService2[i].et+"🚂🚃🚃");
         }
 
       }
@@ -342,9 +370,14 @@ function getTrainArrivals(serviceID){
 } 
 
 
-export function test1(number){
+export function test1(number, trainInfo){
   console.log("RUNNING NOW number is", number);
   formJson = number;
+  trainInfo = trainInfo.split(")");
+
+  //infoTrain = trainInfo[0]+")";
+
+  infoTrain = <p className='infoTrain'>{trainInfo[0]+")"}</p>
 
 }
 

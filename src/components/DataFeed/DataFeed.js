@@ -44,6 +44,8 @@ export default function DataFeed() {
   const [formVal, setFormVal] = useState('');
   const [dropVal, setDropVal] = useState('');
   const [trcDropDown, setTRC] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
   
   useEffect(() => {
 
@@ -66,7 +68,7 @@ export default function DataFeed() {
   function handleArrivalClick(timeOffset, code) {
 
     setArrivals(["Loading..."]);
-    
+    toggle();
     //const form = e.target;
     //const formData = new FormData(form);
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
@@ -173,21 +175,28 @@ export default function DataFeed() {
 
   let navigate = useNavigate(); 
   const routeChange = (number) =>{ 
+    let trainInfo = number;
+
+    //number = number.slice(number.length-1,number.length);
     number = number.split(" ");
     number = number.pop();
-    //console.log("routeChanged", number);
+
+
     //Dashboard1();
     let path = "/linkPage"; 
     navigate(path);
-    test1(number);
+    test1(number, trainInfo);
 
   }
 
+  function toggle() {
+    setIsOpen(true);
+  }
 
   return (
     <div className='Wrapper2'>
-      <h3>Arriving </h3>
-
+      <br/>
+      
       <div className = "manualInput">
       <h3 style={{textAlign:"center"}}>Arrivals</h3>
 
@@ -201,12 +210,15 @@ export default function DataFeed() {
           {trcDropDown}
           <br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
-          <button id = "useTrains" type="button" onClick={() => handleArrivalClick(current)}>View/Update live arrivals</button>
+          <button id = "useTrains" type="button" onClick={() => handleArrivalClick(current)}>View/Refresh live arrivals</button>
         </form>      
-        <br/>
       </div>
       <hr />
       
+      <div className="App">
+      {isOpen && (
+      <div>
+
       <p className = "highlights">{textInfo}</p><br/>
       <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleArrivalClick(earlier)}>120 - 100 minutes ago</button><br/>
       <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleArrivalClick(earlier2)}>100 minutes ago - present</button><br/>
@@ -227,6 +239,11 @@ export default function DataFeed() {
       <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later)}>100 minutes later</button><br/>
       <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later2)}>100 - 120 minutes later</button>
       <br/><br/>
+
+      </div>
+      )}
+      </div>
+
 
       <p>
         <img src={image} alt="powered by National Rail Enquiries" width="256" />

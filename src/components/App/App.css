@@ -35,8 +35,13 @@ li {
 }
 
 
-.topBanner1 {
-  padding-bottom: 10px;
+.topBanner1{
+  display:inline-block;
+  text-align: center;
+  background-color: #c5c5c54b;
+  border-radius: 20px;
+  width: 98vw;
+  margin-top: 10px;
 }
 
 .logOut {
@@ -231,6 +236,7 @@ navbar.NavBar1{
   text-align: center;
   color: black;
   font-size: 15px;
+  margin-bottom: 0px;
 }
 
 #highlights2{
@@ -293,6 +299,7 @@ div.gm-style {
   background-color: #c4e8fd;
   border-radius: 20px;
   color: black;
+  padding-bottom: 0px;
 }
 
 .optionInput{
@@ -347,6 +354,14 @@ a.active-animation:active{
 
 }
 
+.infoTrain{
+  font-weight:bold;
+  border-radius: 20px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
 
 @media (orientation: landscape){
   .manualInput{
@@ -355,12 +370,14 @@ a.active-animation:active{
     background-color: #c4e8fd;
     border-radius: 20px;
     width: 50vw;
+    padding-bottom: 15px;
   }
 
   .highlights{
     display:inline-block;
     width: 50vw;
     text-align: center;
+    margin-bottom: 25px;
   }
 
   .transactions {
@@ -369,7 +386,24 @@ a.active-animation:active{
     text-align: center;
     border-radius: 20px;
     width: 50vw;
-    }
+    
+  }
+
+  .infoTrain{
+    display:inline-block;
+    width: 50vw;
+    text-align: center;
+  }
+
+  .topBanner1{
+    display:inline-block;
+    text-align: center;
+    border-radius: 20px;
+    width: 50vw;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+  }
+
 
   .divRailInput{
     display:inline-block;
@@ -457,12 +491,13 @@ a.active-animation:active{
   }
 
   .titleClass{
-    display: inline;
+    display:inline-flex;
     text-align: center;
     border-radius: 20px;
     padding-left: 10vw;
     padding-right: 10vw;
-
+    margin-top: 0px;
+    margin-bottom: 30px;
   }
 
   .topRow2 {
