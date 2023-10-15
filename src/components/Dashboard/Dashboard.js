@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { test1 } from '../Link/LinkPage';
 
 
-
 let liveDeparture = "";
 let busDeparture = "";
 
@@ -42,7 +41,10 @@ export default function Dashboard() {
   const [formVal, setFormVal] = useState('');
   const [dropVal, setDropVal] = useState('');
   const [trcDropDown, setTRC] = useState('');
+  const [trcDropDownD, setTRCD] = useState('');
+
   const [isOpen, setIsOpen] = useState(false);
+
 
   
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function Dashboard() {
 
 
 
-  function handleDepartureClick(timeOffset, code) {
+  function handleDepartureClick(timeOffset, code, status) {
     //timeOffset = "";
     //e.preventDefault();
 
@@ -74,19 +76,19 @@ export default function Dashboard() {
     //const formData = new FormData(form);
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
     //console.log("form says", formVal);
-    //console.log("drop says", code);
+    console.log("status is", status)
 
     try{
       if (code != undefined){
-        JSON.stringify(logJSONData(code,timeOffset));
+        JSON.stringify(logJSONData(code,timeOffset,status));
         setFormVal(code);
 
       } else {
-        JSON.stringify(logJSONData(formVal,timeOffset));
+        JSON.stringify(logJSONData(formVal,timeOffset,0));
 
       }
     } catch{
-      JSON.stringify(logJSONData(formVal,timeOffset));
+      JSON.stringify(logJSONData(formVal,timeOffset,0));
     }
 
 
@@ -110,13 +112,21 @@ export default function Dashboard() {
       textInfo = textInfo.replace(htmlRegexG, ' ');
   
       myArray = myArray.slice(0,-2);
-  
+
+      console.log (myArray);
+
+      if (myArray == ""){
+        console.log ("myArray", myArray)
+        alert("No results found");
+      }
+
       setDepartures(myArray);  
+
         }, "1000");
   }
 
 
-  async function logJSONData(stationName, timeOffset) {
+  async function logJSONData(stationName, timeOffset, status) {
 
     console.log(stationName, "is stNAME");
     console.log(currentCRSCode, "is ccrs");
@@ -125,7 +135,14 @@ export default function Dashboard() {
       stationName = currentCRSCode;
     }
 
-    const response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
+    let response;
+
+    if (status == 1){
+        response = await fetch('https://huxley2.azurewebsites.net/departures/'+currentCRSCode+'/to/'+stationName+'/150'+timeOffset);
+    } else if (status == 0) {
+      response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
+    }
+
     const data = await response.json();
   
     liveDeparture = data.trainServices;
@@ -170,8 +187,13 @@ export default function Dashboard() {
     
     setTRC(<Select 
     options={display}
-    onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1)))}
+    onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1),0))}
     />);
+
+    setTRCD(<Select 
+      options={display}
+      onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1),1))}
+      />);
 
     //console.log(listOfStations);
   } 
@@ -199,6 +221,7 @@ export default function Dashboard() {
 
 
   return (
+
     <div className='Wrapper2'>
       <br/>
 
@@ -206,14 +229,18 @@ export default function Dashboard() {
       <h3 style={{textAlign:"center"}}>Departures</h3>
 
         <form method="post" onSubmit={e => {e.preventDefault() ; handleDepartureClick(current)}}>
+          <p>Departure station: </p>
+          {trcDropDown}
+          <p>Arrival station (optional): </p>
+          {trcDropDownD}
+          <br/>
+          <p>Or type station name manually: <br/></p>
           <label>
             Departure station&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
             name="formVal" defaultValue=""
             onChange={(event) => setFormVal(event.target.value)}/>
           </label>
-          <p>Or select from the menu below:</p>
-          {trcDropDown}
-          <br/>
+          <br/><br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleDepartureClick(current)}>View/Refresh live departures</button>
         </form>

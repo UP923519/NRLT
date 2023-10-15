@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import Navbar from '../Navbar/Navbar.js';
 import Login, {} from '../Login/Login';
 import useToken from './useToken';
-
 import Nimage from '../../assets/NationalRailLogo.png';
+import { CheckConnection } from '../CheckConnection/checkConnection.js'
 
 
 export const theUser = localStorage.getItem('username');
@@ -37,25 +37,31 @@ function App() {
 
   useEffect(() => {
     document.body.style.backgroundColor = (localStorage.getItem("darkMode"));
+
   }, []);
 
   if(!token) {
     return <Login setToken={setToken} />
   }
 
-  return (   
-    <div className="wrapper" style = {{fontSize: Number(localStorage.getItem("fontSize")), backgroundColor: localStorage.getItem("darkMode"), color: colour}}>
-      <p><img src={Nimage} alt="powered by National Rail Enquiries" width="85" /></p>
+  return (
+    
+      <div className="wrapper" style = {{fontSize: Number(localStorage.getItem("fontSize")), backgroundColor: localStorage.getItem("darkMode"), color: colour}}>
+        <CheckConnection/>
 
-      <h2 className = "titleClass" style = {{color: "#2d9ba1", backgroundColor:backGroundColour, borderRadius:"20px"}}>National Rail Live</h2>
+        <p><img src={Nimage} alt="powered by National Rail Enquiries" width="85" /></p>
+
+        <h2 className = "titleClass" style = {{color: "#2d9ba1", backgroundColor:backGroundColour, borderRadius:"20px"}}>National Rail Live</h2>
 
 
-      <br/>
-      <div>
-        <Navbar />
+        <br/>
+        <div>
+          <Navbar />
+        </div>
+
       </div>
+    
 
-    </div>
   );
 }
 

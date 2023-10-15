@@ -40,6 +40,7 @@
     "react-app-rewired": "^2.2.1",
     "react-bootstrap": "^2.7.0",
     "react-datetime": "^3.2.0",
+    "react-detect-offline": "^2.4.5",
     "react-dom": "^18.2.0",
     "react-geocode": "^0.2.3",
     "react-leaflet": "^4.2.0",
