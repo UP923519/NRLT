@@ -26,6 +26,8 @@ let later2 = "?timeOffset=119&timeWindow=120";
 let remStatus = "";
 let secondStation;
 
+let testFetch;
+
 
 var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
 
@@ -128,9 +130,12 @@ export default function Dashboard() {
     //console.log("Returned first promise");
     //console.log("returned promise is", departuresList)
 
+    //RUN THIS AS SEPARATE FUNCTION - CALL AFTER FETCH IS COMPLETE.//
+  }
     
+    function runLast(){
 
-    setTimeout(() => {
+    //setTimeout(() => {
 
 
     myArray = departuresList.split("\"");
@@ -157,12 +162,13 @@ export default function Dashboard() {
     }
 
     setDepartures(myArray);
+    testFetch = 1;
 
     if (remStatus == 1){
       clearValue();
     }
 
-  }, 1000);
+  //}, 1000);
 
   
 }
@@ -190,16 +196,24 @@ export default function Dashboard() {
       remStatus = 0;
     }
 
+    testFetch = 0;
+
     let response;
 
     if (remStatus == 1){
         response = await fetch('https://huxley2.azurewebsites.net/departures/'+fromCode+'/to/'+stationName+'/150'+timeOffset)
         trainSearch = "Services from " + fromCode + " to " + stationName;
         secondStation = stationName;
+        if (testFetch == 1){
+          alert("Network timed out, results may be incorrect.");
+        }
     } else if (remStatus == 0) {
       console.log("boo")
       response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
       trainSearch = "Services from " + stationName;
+      if (testFetch == 1){
+        alert("Network timed out, results may be incorrect.");
+      }
     }
 
     let data;
@@ -224,6 +238,10 @@ export default function Dashboard() {
       serviceMessage = data.nrccMessages;
       let t = getTrainDepartures();
       departuresList = JSON.stringify(t);
+
+      console.log("testingTimeout");
+
+      runLast();
       
 
     }
