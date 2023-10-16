@@ -23,6 +23,9 @@ let earlier2 = "?timeOffset=-82&timeWindow=120";
 let later = "?timeOffset=82&timeWindow=120";
 let later2 = "?timeOffset=119&timeWindow=120";
 
+let remStatus = "";
+let secondStation;
+
 
 var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
 
@@ -32,6 +35,8 @@ let stationsList = "";
 
 
 let textInfo = "There are no messages";
+let trainSearch = "";
+
 
 let myArray = [];
 
@@ -43,7 +48,7 @@ export default function Dashboard() {
   const [trcDropDown, setTRC] = useState('');
   const [trcDropDownD, setTRCD] = useState('');
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
 
   
@@ -53,13 +58,29 @@ export default function Dashboard() {
     //textInfo = "";
     setDepartures(myArray);
     getStation();
+    
+    if (myArray == ""){
+      setIsOpen(false);
+    }
 
     
   }, []);
 
+  function clearValue () {
+    setTRC(null);
+    setTRCD(null);
+    getStation();
+    
+    
+  };
+
   function clearAll(e) {
     setDepartures([]);
       textInfo = "There are no messages";
+      remStatus = "";
+      clearValue();
+      setIsOpen(false);
+
   }
 
   const displayAction = false;
@@ -76,6 +97,17 @@ export default function Dashboard() {
     //const formData = new FormData(form);
     //const formJson = (Object.fromEntries(formData.entries())).formVal;
     //console.log("form says", formVal);
+ 
+    console.log("code is", code);
+
+    if (remStatus == "" || remStatus == undefined){
+      remStatus = status;
+      if (status == undefined && remStatus == undefined){
+        remStatus = 0;
+      }
+    }
+
+    console.log("remstatus is", remStatus)
     console.log("status is", status)
 
     try{
@@ -84,86 +116,123 @@ export default function Dashboard() {
         setFormVal(code);
 
       } else {
-        JSON.stringify(logJSONData(formVal,timeOffset,0));
+        JSON.stringify(logJSONData(formVal,timeOffset,remStatus));
 
       }
     } catch{
-      JSON.stringify(logJSONData(formVal,timeOffset,0));
+      JSON.stringify(logJSONData(formVal,timeOffset,remStatus));
     }
 
+    //departuresList = stringDepartures2;
+  
+    //console.log("Returned first promise");
+    //console.log("returned promise is", departuresList)
+
+    
 
     setTimeout(() => {
-      //departuresList = stringDepartures2;
+
+
+    myArray = departuresList.split("\"");
+
+    myArray = myArray.filter((value, index) => !((index+1)%2));
+    myArray.shift();
     
-      //console.log("Returned first promise");
-      //console.log("returned promise is", departuresList)
+    if (myArray[myArray.length-1] != ""){
+    textInfo = myArray[myArray.length-1];
+    } else {
+      textInfo = "There are no messages for this station ("+ currentCRSCode + ").";
+    }
+
+    textInfo = textInfo.replace(htmlRegexG, ' ');
+
+    myArray = myArray.slice(0,-2);
+
+    console.log (myArray);
+
+    if (myArray == ""){
+      console.log ("myArray", myArray)
+      alert("No results found");
+      setIsOpen(false);
+    }
+
+    setDepartures(myArray);
+
+    if (remStatus == 1){
+      clearValue();
+    }
+
+  }, 1000);
+
   
-      myArray = departuresList.split("\"");
+}
+
   
-      myArray = myArray.filter((value, index) => !((index+1)%2));
-      myArray.shift();
-      
-      if (myArray[myArray.length-1] != ""){
-      textInfo = myArray[myArray.length-1];
-      } else {
-        textInfo = "There are no messages at this station";
-      }
-
-      textInfo = textInfo.replace(htmlRegexG, ' ');
-  
-      myArray = myArray.slice(0,-2);
-
-      console.log (myArray);
-
-      if (myArray == ""){
-        console.log ("myArray", myArray)
-        alert("No results found");
-      }
-
-      setDepartures(myArray);  
-
-        }, "1000");
-  }
 
 
   async function logJSONData(stationName, timeOffset, status) {
 
-    console.log(stationName, "is stNAME");
-    console.log(currentCRSCode, "is ccrs");
+    console.log(stationName, "is stationName");
+    console.log(currentCRSCode, "is fromCode");
+    console.log(secondStation, " is secondStation");
+    
+    let fromCode = currentCRSCode;
+
+    if (stationName == "" && remStatus == 1){
+      stationName = secondStation;
+    }
 
     if (stationName == ""){
       stationName = currentCRSCode;
     }
 
+    if (status == 0) {
+      remStatus = 0;
+    }
+
     let response;
 
-    if (status == 1){
-        response = await fetch('https://huxley2.azurewebsites.net/departures/'+currentCRSCode+'/to/'+stationName+'/150'+timeOffset);
-    } else if (status == 0) {
+    if (remStatus == 1){
+        response = await fetch('https://huxley2.azurewebsites.net/departures/'+fromCode+'/to/'+stationName+'/150'+timeOffset)
+        trainSearch = "Services from " + fromCode + " to " + stationName;
+        secondStation = stationName;
+    } else if (remStatus == 0) {
+      console.log("boo")
       response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
+      trainSearch = "Services from " + stationName;
     }
 
-    const data = await response.json();
-  
-    liveDeparture = data.trainServices;
-    busDeparture = data.busServices;
+    let data;
 
-    currentCRSCode = data.crs;
+    try{
+      data = await response.json()
 
-    if (liveDeparture == null && busDeparture != null){
-      liveDeparture = data.busServices;
+      liveDeparture = data.trainServices;
+      busDeparture = data.busServices;
+
+      currentCRSCode = data.crs;
+
+      if (liveDeparture == null && busDeparture != null){
+        liveDeparture = data.busServices;
+      }
+
+      if (liveDeparture == null && busDeparture == null){
+        liveDeparture = [];
+      }
+      
+      displayServiceMessage = "";
+      serviceMessage = data.nrccMessages;
+      let t = getTrainDepartures();
+      departuresList = JSON.stringify(t);
+      
+
     }
-
-    if (liveDeparture == null && busDeparture == null){
-      liveDeparture = [];
+    catch{
+      alert("Unable to retrieve results. Previous results may be shown.")
+      setDepartures([""]);
+      //setIsOpen(false);
     }
-
-
-    displayServiceMessage = "";
-    serviceMessage = data.nrccMessages;
-    let t = getTrainDepartures();
-    departuresList = JSON.stringify(t);
-  }
+    }
 
   async function getStation() {
     const response = await fetch('https://huxley2.azurewebsites.net/crs');
@@ -231,9 +300,9 @@ export default function Dashboard() {
         <form method="post" onSubmit={e => {e.preventDefault() ; handleDepartureClick(current)}}>
           <p>Departure station: </p>
           {trcDropDown}
-          <p>Arrival station (optional): </p>
+          <p>Destination station (optional): </p>
           {trcDropDownD}
-          <br/>
+          
           <p>Or type station name manually: <br/></p>
           <label>
             Departure station&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
@@ -252,7 +321,7 @@ export default function Dashboard() {
       <div className="App">
       {isOpen && (
       <div>
-
+        {trainSearch}<br/>
         <p className = "highlights">{textInfo}</p><br/>
         <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
         <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>

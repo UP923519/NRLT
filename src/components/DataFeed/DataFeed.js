@@ -44,7 +44,7 @@ export default function DataFeed() {
   const [formVal, setFormVal] = useState('');
   const [dropVal, setDropVal] = useState('');
   const [trcDropDown, setTRC] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   
   useEffect(() => {
@@ -53,12 +53,17 @@ export default function DataFeed() {
     setArrivals(myArray);
     getStation();
 
+    if (myArray == ""){
+      setIsOpen(false);
+    }
+
     //textInfo = "";
   }, []);
 
   function clearAll(e) {
     setArrivals([]);
     textInfo = "There are no messages";
+    setIsOpen(false);
   }
 
   const displayAction = false;
@@ -111,6 +116,7 @@ export default function DataFeed() {
   
       setArrivals(myArray);  
         }, "1000");
+      
   }
 
 

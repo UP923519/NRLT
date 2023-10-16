@@ -6,7 +6,7 @@ export function CheckConnection() {
         
             <div>
               <Online></Online>
-              <Offline>No internet connection</Offline>
+              <Offline><p className = "highlights" style = {{fontSize: "large"}}><br/>No internet connection<br/><br/></p><br/></Offline>
             </div>
     )
 }
