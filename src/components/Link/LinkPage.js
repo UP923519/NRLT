@@ -111,7 +111,13 @@ export default function Dashboard() {
   }
 
   async function logJSONData(serviceID) {
-    const response = await fetch('https://huxley2.azurewebsites.net/service/'+serviceID);
+    let response;
+    try{
+      response = await fetch('https://huxley2.azurewebsites.net/service/'+serviceID);
+    }catch{
+      alert("Failed to fetch. Please check internet connection.")
+      setIsOpen(false);
+    }
     const data = await response.json();
        
     try{

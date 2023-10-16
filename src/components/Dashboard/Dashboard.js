@@ -201,7 +201,11 @@ export default function Dashboard() {
     let response;
 
     if (remStatus == 1){
-        response = await fetch('https://huxley2.azurewebsites.net/departures/'+fromCode+'/to/'+stationName+'/150'+timeOffset)
+        try{
+          response = await fetch('https://huxley2.azurewebsites.net/departures/'+fromCode+'/to/'+stationName+'/150'+timeOffset)
+        } catch {
+          alert("Failed to fetch. Please check internet connection.")
+        }
         trainSearch = "Services from " + fromCode + " to " + stationName;
         secondStation = stationName;
         if (testFetch == 1){
@@ -209,7 +213,11 @@ export default function Dashboard() {
         }
     } else if (remStatus == 0) {
       console.log("boo")
+      try{
       response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
+      } catch {
+        alert("Failed to fetch. Please check internet connection.")
+      }
       trainSearch = "Services from " + stationName;
       if (testFetch == 1){
         alert("Network timed out, results may be incorrect.");
@@ -247,8 +255,8 @@ export default function Dashboard() {
     }
     catch{
       alert("Unable to retrieve results. Previous results may be shown.")
-      setDepartures([""]);
-      //setIsOpen(false);
+      //setDepartures([""]);
+      setIsOpen(false);
     }
     }
 

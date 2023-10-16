@@ -128,7 +128,14 @@ export default function DataFeed() {
       stationName = currentCRSCode;
     }
 
-    const response = await fetch('https://huxley2.azurewebsites.net/arrivals/'+stationName+'/150'+timeOffset);
+    let response;
+
+    try{
+      response = await fetch('https://huxley2.azurewebsites.net/arrivals/'+stationName+'/150'+timeOffset);
+    } catch{
+      alert("Failed to fetch. Please check internet connection.")
+      setIsOpen(false);
+    }
     const data = await response.json();
 
     liveArrival = data.trainServices;
