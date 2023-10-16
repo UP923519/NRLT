@@ -89,9 +89,11 @@ export default function DataFeed() {
     } catch{
       JSON.stringify(logJSONData(formVal,timeOffset));
     }
+  }
 
 
-    setTimeout(() => {
+    //setTimeout(() => {
+    function runLast(){
       //arrivalsList = stringArrivals2;
     
       //console.log("Returned first promise");
@@ -115,7 +117,7 @@ export default function DataFeed() {
       myArray = myArray.slice(0,-2);
   
       setArrivals(myArray);  
-        }, "1000");
+    //  }, "1000");
       
   }
 
@@ -148,6 +150,8 @@ export default function DataFeed() {
     serviceMessage = data.nrccMessages;
     let t = getTrainArrivals();
     arrivalsList = JSON.stringify(t);
+
+    runLast();
   }
 
 

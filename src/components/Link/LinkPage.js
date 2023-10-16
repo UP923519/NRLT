@@ -89,7 +89,11 @@ export default function Dashboard() {
 
 
     JSON.stringify(logJSONData(formJson));
-    setTimeout(() => {
+  }
+
+    function runLast(){
+
+    //setTimeout(() => {
 
     try{
       myArray = locationList.split("*");
@@ -103,7 +107,7 @@ export default function Dashboard() {
       myArray[myArray.length-1] = myArray[myArray.length-1].replace('"}',"");
 
       setCalling(myArray);
-    }, "1000");
+    //}, "1000");
   }
 
   async function logJSONData(serviceID) {
@@ -179,6 +183,8 @@ export default function Dashboard() {
     let t = getTrainArrivals();
     //console.log("t is", t);
     locationList = JSON.stringify(t);
+
+    runLast();
   }
 
   function toggle() {
