@@ -158,7 +158,6 @@ export default function Dashboard() {
     if (myArray == ""){
       console.log ("myArray", myArray)
       alert("No results found");
-      setIsOpen(false);
     }
 
     setDepartures(myArray);

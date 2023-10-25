@@ -61,9 +61,7 @@ export default function Login({setToken}) {
   const [password, setPassword] = useState();
   localStorage.setItem('username',username);
   let records = [];
-  let recordsCheck = [];
   let savedPassword2;
-  let hashedPassword;
 
   useEffect(() => {
   });
@@ -81,38 +79,7 @@ export default function Login({setToken}) {
   }, []);
 
   const handleSubmit = async e => {
-    if (password != undefined){
-      hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-    }
-        try {
-          let testPW = records[0].data.Password;
-          if (testPW == hashedPassword && savedPassword2 == hashedPassword && username != undefined && username != "" && password != "" && password != undefined){
-            console.log("passwords do match");
-            setToken({token: 'User'});
-          } else {
-            console.log ("passwords don't match");
-            console.log ("Entered is: ", hashedPassword);
-            console.log ("Saved is: ", testPW);
-            console.log ("Saved2 is: ", savedPassword2);
-            if (password == "" || password == undefined){
-              alert("Password field cannot be blank");
-            } else if (!password.match(passwFormat)) {
-              alert("Passwords must be between 8 to 15 characters which contains at least one numeric digit and a special character\nNo account? Try a new username/password combination");
-            } else {
-              alert("Incorrect username or password\nNo account? Try a new username/password combination");
-            }
-          }
-        } catch (error) {
-          console.error(error);
-          //alert("Account doesn't exist.");
-          if (password == "" || password == undefined){
-            alert("Password field cannot be blank");
-          } else if (!password.match(passwFormat)) {
-            alert("Passwords must be between 8 to 15 characters which contains at least one numeric digit and a special character");
-          } else {
-            verifyUser(username, hashedPassword);         
-          }
-        }
+    setToken({token: 'User'});
   }
 
   return (
@@ -126,18 +93,8 @@ export default function Login({setToken}) {
         </div>
         
         <div className = "divLoginInput2">
-          <form onSubmit={handleSubmit}>
-            <label>
-              <h4 className = "titles"><span>Username</span></h4>
-              <input style = {{backgroundColor: "#fbfbfbb9", border: "0", borderRadius: "2px"}} type="text" onChange={e => setUserName(e.target.value)}/>
-            </label>
-            <label>
-              <h4 className = "titles"><span>Password</span></h4>
-              <input style = {{backgroundColor: "#fbfbfbb9", border: "0", borderRadius: "2px"}}type="password" onChange={e => setPassword(e.target.value)}/>  
-            </label>
-          </form>
           <div>
-            <button id = "loginButton" type="submit" onClick = {handleSubmit}>￫ Log In {username} / Sign Up</button>
+            <button id = "loginButton" type="submit" onClick = {handleSubmit}>￫ Enter {username}</button>
           </div>
         </div>
       </div>

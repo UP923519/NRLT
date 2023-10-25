@@ -40,6 +40,7 @@ if (localStorage.getItem("darkMode") == "#c7dcff"){
 export default function Settings(){
     const [fontSize, setFontSize] = useState(16);
     const { token, setToken, removeToken, getToken} = useToken();
+    
 
 
     function fontSizeIncrease(){
@@ -79,14 +80,19 @@ export default function Settings(){
 
     }
 
+    function logOut(){
+        removeToken();
+        window.location.reload();
+    }
+
     return(
         <div style={{width:"98vw", height:"100vh"}}>
             <br/>
 
             <div className = "topBanner1">
-                <h4>Account: {localStorage.getItem('username')}
-                <button id="showHide" style={{fontSize:"medium"}}className = "logOut" onClick={removeToken}>
-                ￩ Log Out
+                <h4>
+                <button id="showHide" style={{fontSize:"medium"}}className = "logOut" onClick={logOut}>
+                ￩ Exit to home page
                 </button></h4>
             </div>
 
