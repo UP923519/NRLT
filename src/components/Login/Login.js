@@ -89,7 +89,7 @@ export default function Login({setToken}) {
       <div className="login-wrapper">     
         <div className = "divLoginInput1"> 
           <h1 style = {{color: "#2d9ba1"}} >National Rail Live</h1>
-          <h2>Please Log In</h2>
+          <h2>Welcome!</h2>
         </div>
         
         <div className = "divLoginInput2">
