@@ -59,7 +59,7 @@ async function verifyUser(username, hashedPassword) {
 export default function Login({setToken}) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  localStorage.setItem('username',username);
+  //localStorage.setItem('username',username);
   let records = [];
   let savedPassword2;
 

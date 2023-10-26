@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, Link, Navigate, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link, Navigate, NavLink, HashRouter } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import App from '../App/App.css';
 import LinkPage from '../Link/LinkPage';
@@ -14,7 +15,7 @@ import Settings from '../Settings/Settings.js';
 
 const Navbar = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <navbar className = "NavBar1" >
         <NavLink exact className = "topRow2" activeClassName = "topRow2Active" to="/dashboard">Departing</NavLink>
         <NavLink className = "topRow2" activeClassName = "topRow2Active" to="/dataFeed">Arriving</NavLink>
@@ -28,7 +29,7 @@ const Navbar = () => {
           <Route path="/linkPage" element={<LinkPage/>} />
           <Route path="/product" element={<Product/>} />
           <Route path="/settings" element={<Settings/>} />
-          <Route path="/NRLT" element={<Navigate to="/dashboard" />} />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
 
           <Route
@@ -43,7 +44,7 @@ const Navbar = () => {
             }
           />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     
   );
 };
