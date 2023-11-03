@@ -221,21 +221,19 @@ export default function Dashboard() {
       <div className="App">
       {isOpen && (
       <div>
-
-      {infoTrain}<br/>
-      
-      <p className = "highlights">{excuseReason}</p><br/>
-      <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
-            <tr>
-                <th style={{fontSize:13}}>Station|Scheduled|Actual|Estimated<br/><br/></th>
-            </tr>
-            {stringCalling.map((calling, index) => (
-              <tr data-index={index}>
-                <td>{calling}</td>
-                <br/><br/><br/>
+        <p style={{margin:"0px"}}>{infoTrain}</p>
+        <p className = "highlights">{excuseReason}</p><br/>
+        <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
+              <tr>
+                  <th style={{fontSize:13}}>Station|Scheduled|Actual|Estimated<br/><br/></th>
               </tr>
-            ))}
-      </Table>
+              {stringCalling.map((calling, index) => (
+                <tr data-index={index}>
+                  <td>{calling}</td>
+                  <br/><br/><br/>
+                </tr>
+              ))}
+        </Table>
       <br/><br/>
 
       </div>

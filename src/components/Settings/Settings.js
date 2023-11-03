@@ -95,7 +95,7 @@ export default function Settings(){
                 ￩ Exit to home page
                 </button></h4>
             </div>
-
+            <br/>
             <div className = "optionInput">
                 <h3>Display Settings</h3>
                 <div> Current theme: {currentTheme}<br/>

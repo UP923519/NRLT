@@ -297,11 +297,11 @@ div.gm-style {
 }
 
 .optionInput{
-  text-align: center;
   background-color: #e2ddff;
   border-radius: 20px;
+  width: 98vw;
   color: black;
-
+  margin-top: -30px;
 }
 
 
@@ -382,7 +382,6 @@ a.active-animation:active{
   .highlights{
     display:inline-block;
     align-items:center;
-
     width: 700px;
     text-align: center;
     margin-bottom: 25px;
@@ -453,10 +452,13 @@ a.active-animation:active{
 
   .optionInput{
     display:inline-block;
+    min-width: 700px;
+    max-width: 1000px;
     text-align: center;
     background-color: #e2ddff;
     border-radius: 20px;
     width: 50vw;
+    margin-top: 0px;
   }
 
   #manualSubmitButton {
@@ -524,6 +526,11 @@ a.active-animation:active{
     padding-right: 6.5px;
     text-decoration: inherit;
     color: rgb(102, 102, 102);
+  }
+
+  navbar.NavBar1{
+    display: inline-flex;
+    margin: -50px;
   }
 
 }
