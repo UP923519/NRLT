@@ -115,7 +115,7 @@ export default function Dashboard() {
     try{
       response = await fetch('https://huxley2.azurewebsites.net/service/'+serviceID);
     }catch{
-      alert("Failed to fetch. Please check internet connection.")
+      alert("Failed to fetch. Please check internet connection / service details.")
       setIsOpen(false);
     }
     const data = await response.json();
