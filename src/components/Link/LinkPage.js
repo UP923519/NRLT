@@ -222,7 +222,8 @@ export default function Dashboard() {
       {isOpen && (
       <div>
 
-      {infoTrain}
+      {infoTrain}<br/>
+      
       <p className = "highlights">{excuseReason}</p><br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             <tr>
@@ -241,9 +242,11 @@ export default function Dashboard() {
       )}
       </div>
 
-      <p>
-        <img src={image} alt="powered by National Rail Enquiries" width="256" />
-      </p>
+      <div className = "NRLogo">
+        
+          <img src={image} alt="powered by National Rail Enquiries" width="256" />
+        
+      </div>
 
     </div>
     

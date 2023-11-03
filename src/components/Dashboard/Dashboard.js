@@ -203,7 +203,7 @@ export default function Dashboard() {
         try{
           response = await fetch('https://huxley2.azurewebsites.net/departures/'+fromCode+'/to/'+stationName+'/150'+timeOffset)
         } catch {
-          alert("Failed to fetch. Please check internet connection.")
+          alert("Failed to fetch. Please check internet connection / search criteria.")
         }
         trainSearch = "Services from " + fromCode + " to " + stationName;
         secondStation = stationName;
@@ -215,7 +215,7 @@ export default function Dashboard() {
       try{
       response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
       } catch {
-        alert("Failed to fetch. Please check internet connection.")
+        alert("Failed to fetch. Please check internet connection / search criteria.")
       }
       trainSearch = "Services from " + stationName;
       if (testFetch == 1){
@@ -253,7 +253,7 @@ export default function Dashboard() {
 
     }
     catch{
-      alert("Unable to retrieve results. Previous results may be shown.")
+      alert("Unable to retrieve new results. Previous results may be shown.")
       //setDepartures([""]);
       setIsOpen(false);
     }
@@ -281,11 +281,13 @@ export default function Dashboard() {
     
     setTRC(<Select 
     options={display}
+    className="selectBox"
     onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1),0))}
     />);
 
     setTRCD(<Select 
       options={display}
+      className="selectBox"
       onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1),1))}
       />);
 
@@ -321,7 +323,7 @@ export default function Dashboard() {
 
       <div className = "manualInput">
       <h3 style={{textAlign:"center"}}>Departures</h3>
-
+        
         <form method="post" onSubmit={e => {e.preventDefault() ; handleDepartureClick(current)}}>
           <p>Departure station: </p>
           {trcDropDown}
@@ -338,12 +340,11 @@ export default function Dashboard() {
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleDepartureClick(current)}>View/Refresh live departures</button>
         </form>
-
         
       </div>
       <hr />
 
-      <div className="App">
+      <div>
       {isOpen && (
       <div>
         {trainSearch}<br/>
@@ -352,17 +353,14 @@ export default function Dashboard() {
         <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
         <br/>
         <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
-              <tr>
-                  <th style={{fontSize:13}}>Departure Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
-              </tr>
               {stringDepartures.map((departures, index) => (
-                <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(departures)}>
+                <tr data-index={index} className="tableTR"  onClick={() => routeChange(departures)}>
                   <td>{departures}</td>
                   <br/><br/><br/>
                 </tr>
               ))}
         </Table><br/>
-        <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>
+        <button style = {{marginTop: "40px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>
         <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later2)}>100 - 120 minutes later</button>
 
         <br/><br/>
@@ -370,11 +368,12 @@ export default function Dashboard() {
       </div>
       )}
       </div>
-
-      <p>
-        <img src={image} alt="powered by National Rail Enquiries" width="256" />
-      </p>
-
+      
+      <div className = "NRLogo">
+        
+          <img src={image} alt="powered by National Rail Enquiries" width="256" />
+        
+      </div>
 
 
       

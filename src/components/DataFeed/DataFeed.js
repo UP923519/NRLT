@@ -133,7 +133,7 @@ export default function DataFeed() {
     try{
       response = await fetch('https://huxley2.azurewebsites.net/arrivals/'+stationName+'/150'+timeOffset);
     } catch{
-      alert("Failed to fetch. Please check internet connection.")
+      alert("Failed to fetch. Please check internet connection / search criteria.")
       setIsOpen(false);
     }
     const data = await response.json();
@@ -218,14 +218,14 @@ export default function DataFeed() {
       <h3 style={{textAlign:"center"}}>Arrivals</h3>
 
       <form method="post" onSubmit={e => {e.preventDefault() ; handleArrivalClick(current)}}>
+          
+          {trcDropDown}
+          <p>Or select from the menu below:<br/></p>
           <label>
             Arrival station&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
             name="formVal" defaultValue=""
             onChange={(event) => setFormVal(event.target.value)}/>
-          </label>
-          <p>Or select from the menu below:</p>
-          {trcDropDown}
-          <br/>
+          </label><br/><br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleArrivalClick(current)}>View/Refresh live arrivals</button>
         </form>      
@@ -241,11 +241,6 @@ export default function DataFeed() {
       <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleArrivalClick(earlier2)}>100 minutes ago - present</button><br/>
       <br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
-      
-
-            <tr>
-                <th style={{fontSize:13}}>Arrival Time|Destination|Origin|Scheduled|Platform|Code<br/><br/></th>
-            </tr>
             {stringArrivals.map((arrivals, index) => (
               <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(arrivals)}>
                 <td>{arrivals}</td>
@@ -253,18 +248,19 @@ export default function DataFeed() {
               </tr>
             ))}
       </Table><br/>
-      <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later)}>100 minutes later</button><br/>
+      <button style = {{marginTop: "40px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later)}>100 minutes later</button><br/>
       <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later2)}>100 - 120 minutes later</button>
       <br/><br/>
 
       </div>
       )}
       </div>
-
-
-      <p>
-        <img src={image} alt="powered by National Rail Enquiries" width="256" />
-      </p>
+      
+      <div className = "NRLogo">
+        
+          <img src={image} alt="powered by National Rail Enquiries" width="256" />
+        
+      </div>
 
 
 

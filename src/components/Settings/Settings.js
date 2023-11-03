@@ -76,7 +76,7 @@ export default function Settings(){
     }
 
     function ColourfulMode(){
-        localStorage.setItem("darkMode", "#c7dcff");
+        localStorage.setItem("darkMode", "#8297b5");
 
     }
 

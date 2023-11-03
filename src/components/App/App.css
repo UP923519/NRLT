@@ -11,10 +11,6 @@ element.style {
   justify-content: space-evenly;
 }
 
-.wrapper {
-    padding: 0px;
-}
-
 
 .wrapper button {
   border: 0;
@@ -35,14 +31,6 @@ li {
 }
 
 
-.topBanner1{
-  display:inline-block;
-  text-align: center;
-  background-color: #c5c5c54b;
-  border-radius: 20px;
-  width: 98vw;
-  margin-top: 10px;
-}
 
 .logOut {
   margin-left: 10px;
@@ -59,14 +47,15 @@ li {
 }
 
 .topRow2 {
-  margin: 10px;
-  background: #f9f9f9;
+  display: flexbox;
+  margin: 1vw;
+  background: #f3f3f3;
   cursor: pointer;
   border-radius: 9px;
   padding-bottom: 11px;
   padding-top: 12px;
-  padding-left: 6.5px;
-  padding-right: 6.5px;
+  padding-left: 1vw;
+  padding-right: 1vw;
   text-decoration: inherit;
   color: rgb(102, 102, 102);
 }
@@ -184,7 +173,6 @@ a.topRow2.active{
 }
 
 navbar.NavBar1{
-  background: #c3c3c3;
   padding-bottom: 0.85pc;
   padding-top: 0.9pc;
   border-radius: 9px;
@@ -201,11 +189,12 @@ navbar.NavBar1{
 }
 
 .transactions {
+  display: inline-table;
+  width: 98vw;
   text-align: center;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   font-size: 15px;
-  width: 98vw;
   border-radius: 20px;
   color: black;
   background-color: #f0f0f0;
@@ -295,11 +284,16 @@ div.gm-style {
 }
 
 .manualInput{
-  text-align: center;
-  background-color: #c4e8fd;
+  background-color: #fafafa;
   border-radius: 20px;
+  width: 98vw;
   color: black;
-  padding-bottom: 0px;
+}
+
+.NRLogo{
+  padding:10px;
+  background-color: #ffffff;
+  border-radius:20px;
 }
 
 .optionInput{
@@ -363,19 +357,33 @@ a.active-animation:active{
 }
 
 
-@media (orientation: landscape){
+.tableTR{
+  text-align:justify;
+  text-align-last:right;
+}
+
+@media only screen and (max-width: 318px) {
+  .topRow2 {
+    display: flex;
+    height: 25px;
+    padding: 3px;
+  }
+
+}
+
+
+@media only screen and (min-width: 700px) {
   .manualInput{
-    display:inline-block;
-    text-align: center;
-    background-color: #c4e8fd;
-    border-radius: 20px;
-    width: 50vw;
-    padding-bottom: 15px;
+    display: inline-block;
+    min-width: 700px;
+    max-width: 1000px;
   }
 
   .highlights{
     display:inline-block;
-    width: 50vw;
+    align-items:center;
+
+    width: 700px;
     text-align: center;
     margin-bottom: 25px;
   }
@@ -386,7 +394,13 @@ a.active-animation:active{
     text-align: center;
     border-radius: 20px;
     width: 50vw;
-    
+    min-width: 700px;
+    max-width: 1000px;
+  }
+
+  .tableTR{
+    text-align:center;
+    text-align-last:center;
   }
 
   .infoTrain{
@@ -502,7 +516,6 @@ a.active-animation:active{
 
   .topRow2 {
     margin: 50px;
-    background: #ffffff;
     cursor: pointer;
     border-radius: 9px;
     padding-bottom: 11px;
