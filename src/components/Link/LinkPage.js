@@ -222,7 +222,7 @@ export default function Dashboard() {
       {isOpen && (
       <div>
         <p style={{margin:"0px"}}>{infoTrain}</p>
-        <p className = "highlights">{excuseReason}</p><br/>
+        <p className = "highlights" style={{backgroundColor:"#b1d1de"}}>{excuseReason}</p><br/>
         <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
               <tr>
                   <th style={{fontSize:13}}>Station|Scheduled|Actual|Estimated<br/><br/></th>

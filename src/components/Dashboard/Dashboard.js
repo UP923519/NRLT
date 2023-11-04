@@ -38,6 +38,11 @@ let stationsList = "";
 
 let textInfo = "There are no messages";
 let trainSearch = "";
+let newsLinkEx = new RegExp(
+  "(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))"
+ ,"g"
+);
+let newsLink = [];
 
 
 let myArray = [];
@@ -53,7 +58,6 @@ export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(true);
 
 
-  
   useEffect(() => {
 
     //setDepartures(["Enter a depature station to view services"]);
@@ -79,6 +83,7 @@ export default function Dashboard() {
   function clearAll(e) {
     setDepartures([]);
       textInfo = "There are no messages";
+      newsLink = [];
       remStatus = "";
       clearValue();
       setIsOpen(false);
@@ -144,12 +149,19 @@ export default function Dashboard() {
     myArray.shift();
     
     if (myArray[myArray.length-1] != ""){
-    textInfo = myArray[myArray.length-1];
+      newsLink = [myArray[myArray.length-1].match(newsLinkEx)]; 
+
+      textInfo = myArray[myArray.length-1];
     } else {
       textInfo = "There are no messages for this station ("+ currentCRSCode + ").";
+      newsLink = [];
     }
 
     textInfo = textInfo.replace(htmlRegexG, ' ');
+    textInfo = textInfo.replaceAll('News ', 'News. ');
+    textInfo = textInfo.replaceAll('in  Latest Travel News.', 'in  the link below.');
+
+
 
     myArray = myArray.slice(0,-2);
 
@@ -348,7 +360,7 @@ export default function Dashboard() {
       {isOpen && (
       <div>
         {trainSearch}<br/>
-        <p className = "highlights">{textInfo}</p><br/>
+        <p className = "highlights">{textInfo}<br/>{newsLink}</p><br/>
         <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
         <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
         <br/>
