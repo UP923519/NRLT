@@ -374,7 +374,7 @@ a.active-animation:active{
 #trainInfo{
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   gap: 10px;
   text-align: center;
