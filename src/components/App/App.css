@@ -124,10 +124,17 @@ li {
   font-size: 12px;
 }
 
+button.changeTime{
+  background: #ffffff;
+  color: rgb(47, 47, 47);
+  border: 1px solid #acacac;
+
+}
+
 #useTrains{
   margin-left: 2px;
   margin-bottom: 10px;
-  background: #7f7f7f;
+  background: #ffffff;
   cursor: pointer;
   border-radius: 9px;
   padding-bottom: 5px;
@@ -135,8 +142,9 @@ li {
   padding-left: 12px;
   padding-right: 12px;
   text-decoration: none;
-  color: white;
+  color: rgb(47, 47, 47);
   font-size: 15px;
+  border: 1px solid #acacac;
 
 }
 

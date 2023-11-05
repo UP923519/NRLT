@@ -115,7 +115,7 @@ export default function DataFeed() {
         newsLink = [myArray[myArray.length-1].match(newsLinkEx)]; 
         textInfo = myArray[myArray.length-1];
       } else {
-        textInfo = "There are no messages at this station";
+        textInfo = "There are no messages for this station ("+ currentCRSCode + ").";
         newsLink = [];
       }
 
@@ -248,8 +248,8 @@ export default function DataFeed() {
       <div>
 
       <p className = "highlights">{textInfo}<br/>{newsLink}</p><br/>
-      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleArrivalClick(earlier)}>120 - 100 minutes ago</button><br/>
-      <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleArrivalClick(earlier2)}>100 minutes ago - present</button><br/>
+      <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleArrivalClick(earlier)}>120 - 100 minutes ago</button><br/>
+      <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleArrivalClick(earlier2)}>100 minutes ago - present</button><br/>
       <br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             {stringArrivals.map((arrivals, index) => (
@@ -259,8 +259,8 @@ export default function DataFeed() {
               </tr>
             ))}
       </Table><br/>
-      <button style = {{marginTop: "40px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later)}>100 minutes later</button><br/>
-      <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleArrivalClick(later2)}>100 - 120 minutes later</button>
+      <button className = "changeTime" style = {{marginTop: "40px"}}onClick={() => handleArrivalClick(later)}>100 minutes later</button><br/>
+      <button className = "changeTime" style = {{marginTop: "10px"}}onClick={() => handleArrivalClick(later2)}>100 - 120 minutes later</button>
       <br/><br/>
 
       </div>

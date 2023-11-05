@@ -363,8 +363,8 @@ export default function Dashboard() {
       <div>
         {trainSearch}<br/>
         <p className = "highlights">{textInfo}<br/>{newsLink}</p><br/>
-        <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
-        <button style = {{marginBottom: "10px", backgroundColor:"#e8e2c1"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
+        <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
+        <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
         <br/>
         <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
               {stringDepartures.map((departures, index) => (
@@ -374,8 +374,8 @@ export default function Dashboard() {
                 </tr>
               ))}
         </Table><br/>
-        <button style = {{marginTop: "40px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>
-        <button style = {{marginTop: "10px", backgroundColor:"#e8e2c1"}}onClick={() => handleDepartureClick(later2)}>100 - 120 minutes later</button>
+        <button className = "changeTime" style = {{marginTop: "40px"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>
+        <button className = "changeTime" style = {{marginTop: "10px"}}onClick={() => handleDepartureClick(later2)}>100 - 120 minutes later</button>
 
         <br/><br/>
 
