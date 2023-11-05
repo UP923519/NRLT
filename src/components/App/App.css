@@ -385,6 +385,7 @@ a.active-animation:active{
   background-color:#b1d1de;
   border-radius: 20px;
   max-width: 150px;
+  color: black;
 }
 
 @media only screen and (max-width: 318px) {
