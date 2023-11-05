@@ -335,23 +335,25 @@ export default function Dashboard() {
 
       <div className = "manualInput">
       <h3 style={{textAlign:"center"}}>Departures</h3>
-        
-        <form method="post" onSubmit={e => {e.preventDefault() ; handleDepartureClick(current)}}>
-          <p>Departure station: </p>
-          {trcDropDown}
-          <p>Destination station (optional): </p>
-          {trcDropDownD}
+       
+        <form style={{paddingLeft:"10px",paddingRight:"10px"}} method="post" onSubmit={e => {e.preventDefault() ; handleDepartureClick(current)}}>
+          <p style={{textAlign:"left"}}>Departure station: </p>
+          <text style={{textAlign:"left"}}>{trcDropDown}</text>
+          <p style={{textAlign:"left"}}>Destination station (optional): </p>
+          <text style={{textAlign:"left"}}>{trcDropDownD}</text>
           
-          <p>Or type station name manually: <br/></p>
-          <label>
-            Departure station&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
+          {/* <p>Or type station name manually: </p> */}
+          {/* <label>
+            Enter manually: &nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
             name="formVal" defaultValue=""
             onChange={(event) => setFormVal(event.target.value)}/>
-          </label>
-          <br/><br/>
+          </label> */}
+          <br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleDepartureClick(current)}>View/Refresh live departures</button>
-        </form>
+          </form>
+
+          
         
       </div>
       <hr />

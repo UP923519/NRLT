@@ -227,15 +227,16 @@ export default function DataFeed() {
       <div className = "manualInput">
       <h3 style={{textAlign:"center"}}>Arrivals</h3>
 
-      <form method="post" onSubmit={e => {e.preventDefault() ; handleArrivalClick(current)}}>
-          
-          {trcDropDown}
-          <p>Or select from the menu below:<br/></p>
+      <form style={{paddingLeft:"10px",paddingRight:"10px"}} method="post" onSubmit={e => {e.preventDefault() ; handleArrivalClick(current)}}>
+          <p style={{textAlign:"left"}}>Arrival station: </p>
+          <text style={{textAlign:"left"}}>{trcDropDown}</text>
+          {/* <p>Or select from the menu below:<br/></p>
           <label>
             Arrival station&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
             name="formVal" defaultValue=""
             onChange={(event) => setFormVal(event.target.value)}/>
-          </label><br/><br/>
+          </label> */}
+          <br/>
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleArrivalClick(current)}>View/Refresh live arrivals</button>
         </form>      

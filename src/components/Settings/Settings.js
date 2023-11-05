@@ -37,7 +37,7 @@ if (localStorage.getItem("darkMode") == "#c7dcff"){
     currentTheme = "Colourful"
     localStorage.setItem("darkMode", "#8297b5");
 } 
-if (localStorage.getItem("darkMode") == "#c7dcff"){
+if (localStorage.getItem("darkMode") == "#8297b5"){
     currentTheme = "Colourful"
 } 
 

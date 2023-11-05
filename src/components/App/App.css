@@ -137,6 +137,7 @@ li {
   text-decoration: none;
   color: white;
   font-size: 15px;
+
 }
 
 #useCurrentLocation:active{
@@ -360,6 +361,22 @@ a.active-animation:active{
 .tableTR{
   text-align:justify;
   text-align-last:right;
+}
+
+#trainInfo{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.trainInfoBox{
+  padding: 10px;
+  background-color:#b1d1de;
+  border-radius: 20px;
+  max-width: 150px;
 }
 
 @media only screen and (max-width: 318px) {

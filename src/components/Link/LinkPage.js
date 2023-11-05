@@ -35,6 +35,8 @@ let sCode = "";
 export default function Dashboard() {
   const [stringDepartures, setDepartures] = useState([]);
   const [excuseReason, setExcuseReason] = useState();
+  const [operatorName, setOperator] = useState();
+  const [formationCar, setFormatiion] = useState();
   const [stringCalling, setCalling] = useState([[],[]]);
   const [formVal, setFormVal] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -56,8 +58,9 @@ export default function Dashboard() {
 
   function clearAll(e) {
     setDepartures([""]);
-      setCalling([""]);
-      textInfo = "";
+    setCalling([""]);
+    textInfo = "";
+    setIsOpen(false);
   }
 
 
@@ -137,7 +140,7 @@ export default function Dashboard() {
     try{
       liveService3 = data.subsequentCallingPoints[1].callingPoint;
       console.log("train divides");
-      divides = ("This train divides into 2 portions. ");
+      divides = ("This train divides into two portions. Please check that you are located in the correct part of the train. ");
       //console.log  ({...liveService3, ...liveService2});
       //liveService3.push({locationName: 'Bognor Regis'});
       for (let i=0; i<liveService3.length;i++){
@@ -156,9 +159,9 @@ export default function Dashboard() {
     //liveService2 = (data.subsequentCallingPoints[0].callingPoint);
     liveServiceTime = data;
     location = (data.locationName);
-    operator = "Service operated by " + (data.operator) + "";
+    operator = (data.operator) + "";
     if (data.length != 0){
-      formation = "This train is formed of " + (data.length) + " coaches.";
+      formation = (data.length) + " coaches";
     } else {
       formation = "";
     }
@@ -171,7 +174,7 @@ export default function Dashboard() {
     liveServiceTime.cancelReason += "."; 
     liveServiceTime.delayReason += "."; 
     
-    let exr = (divides + liveServiceTime.cancelReason +" "+ liveServiceTime.delayReason +" "+ formation +" "+ operator +". ");
+    let exr = (divides + liveServiceTime.cancelReason +" "+ liveServiceTime.delayReason +" ");
     exr = (exr.replace("null.",""));
     exr = (exr.replace("null.",""));
     /*exr = (exr.replace(". . ",". "));
@@ -180,7 +183,20 @@ export default function Dashboard() {
     exr = (exr.replace(".  S","S"));*/
 
     console.log(exr);
-    setExcuseReason(exr);
+    if (exr != "  "){
+      setExcuseReason(exr);
+    } else {
+      setExcuseReason("There are no messages for this service.");
+    }
+    if (formation != ""){
+      setFormatiion(formation);
+    } else{
+      setFormatiion("Information not provided");
+    }
+
+
+    
+    setOperator(operator);
 
     
 
@@ -206,7 +222,7 @@ export default function Dashboard() {
       <h3 style={{textAlign:"center"}}>Service Details</h3>
         <form method="post" onSubmit={e => {e.preventDefault() ; handleServiceClick()}}>
           <label>
-            Service code&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
+            Service code:&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
             name="myInput" defaultValue="" 
             onChange={(event) => setFormVal(event.target.value)}/>
           </label>
@@ -222,7 +238,12 @@ export default function Dashboard() {
       {isOpen && (
       <div>
         <p style={{margin:"0px"}}>{infoTrain}</p>
-        <p className = "highlights" style={{backgroundColor:"#b1d1de"}}>{excuseReason}</p><br/>
+        <p className = "highlights" >{excuseReason}</p><br/>
+        <div id = "trainInfo">
+          <p className={"trainInfoBox"}><text style={{fontWeight:"500"}}>Service operator:</text><br/><br/>{operatorName}</p>
+          <p className={"trainInfoBox"}><text style={{fontWeight:"500"}}>Train formation:</text><br/><br/>{formationCar}</p>
+        </div>
+        <br/>
         <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
               <tr>
                   <th style={{fontSize:13}}>Station|Scheduled|Actual|Estimated<br/><br/></th>
