@@ -71,16 +71,19 @@ export default function Settings(){
 
     function darkMode(){
         localStorage.setItem("darkMode", "#000000");
+        window.location.reload();
 
     }
 
     function lightMode(){
         localStorage.setItem("darkMode", "#ffffff");
+        window.location.reload();
 
     }
 
     function ColourfulMode(){
         localStorage.setItem("darkMode", "#8297b5");
+        window.location.reload();
 
     }
 
@@ -88,6 +91,11 @@ export default function Settings(){
         removeToken();
         window.location.reload();
     }
+
+    function applyFont(){
+        window.location.reload();
+    }
+
 
     return(
         <div style={{width:"98vw", height:"100vh"}}>
@@ -103,7 +111,6 @@ export default function Settings(){
             <div className = "optionInput">
                 <h3>Display Settings</h3>
                 <div> Current theme: {currentTheme}<br/>
-                    <a href="/NRLT">
 
                         <button id = "useCurrentLocation" onClick={darkMode}>
                             Dark mode
@@ -114,7 +121,6 @@ export default function Settings(){
                         <button id = "useCurrentLocation" onClick={ColourfulMode}>
                             Colourful mode
                         </button>
-                    </a>
                 </div>
                 <br/>
                 <div> Current font size: {currentFontSize}<br/>
@@ -132,11 +138,12 @@ export default function Settings(){
                 <p style = {{fontSize: Number(localStorage.getItem("fontSize"))}}>
                     Example text to test font size
                 </p>
-                <a href="/NRLT">
-                <button style = {{textDecoration: "none",fontSize: Number(localStorage.getItem("fontSize")-3)}}id = "manualSubmitButton">
+                <button style = {{textDecoration: "none",fontSize: Number(localStorage.getItem("fontSize")-3)}} 
+                id = "manualSubmitButton"
+                onClick={applyFont}
+                >
                     ☑ Apply font size
                 </button>
-                </a>
                 <br/><br/>
             </div>
         </div>
