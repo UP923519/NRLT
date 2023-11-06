@@ -216,17 +216,15 @@ export default function Dashboard() {
 
   return (
     <div className='Wrapper2'>
-      <br/>
-
-      <div className = "manualInput">
+      {/* <br/> */}
       <h3 style={{textAlign:"center"}}>Service Details</h3>
+      <div className = "manualInput">
         <form method="post" onSubmit={e => {e.preventDefault() ; handleServiceClick()}}>
           <label>
-            Service code:&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
+            <p>Service code:&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
             name="myInput" defaultValue="" 
-            onChange={(event) => setFormVal(event.target.value)}/>
+            onChange={(event) => setFormVal(event.target.value)}/></p>
           </label>
-          <br/><br/>
           <button id = "useTrains" type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleServiceClick()}>View/Refresh train service</button>
 

@@ -99,11 +99,10 @@ export default function Settings(){
 
     return(
         <div style={{width:"98vw", height:"100vh"}}>
-            <br/>
-
+            <h3 style={{textAlign:"center"}}>Options</h3>
             <div className = "topBanner1">
                 <h4>
-                <button id="showHide" style={{fontSize:"medium"}}className = "logOut" onClick={logOut}>
+                <button id="showHide" style={{fontSize:"medium", padding:"15px"}}className = "logOut" onClick={logOut}>
                 ￩ Exit to home page
                 </button></h4>
             </div>
@@ -138,7 +137,7 @@ export default function Settings(){
                 <p style = {{fontSize: Number(localStorage.getItem("fontSize"))}}>
                     Example text to test font size
                 </p>
-                <button style = {{textDecoration: "none",fontSize: Number(localStorage.getItem("fontSize")-3)}} 
+                <button style = {{textDecoration: "none",fontSize: Number(localStorage.getItem("fontSize")-5)}} 
                 id = "manualSubmitButton"
                 onClick={applyFont}
                 >

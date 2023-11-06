@@ -39,6 +39,8 @@ let newsLinkEx = new RegExp(
  ,"g"
 );
 let newsLink = [];
+let newsLink2 = [];
+
 
 let myArray = [];
 
@@ -119,10 +121,14 @@ export default function DataFeed() {
         newsLink = [];
       }
 
-      textInfo = textInfo.replace(htmlRegexG, '');
-      textInfo = textInfo.replaceAll('News', 'News. ');
-      textInfo = textInfo.replaceAll('in Latest Travel News.', 'in  the link below.');
+      newsLink2 = <a href = "https://www.nationalrail.co.uk/status-and-disruptions/">{newsLink}</a>
 
+      textInfo = textInfo.replace(htmlRegexG, ' ');
+      textInfo = textInfo.replaceAll('News ', 'News. ');
+      textInfo = textInfo.replaceAll('in  Latest Travel News.', 'in  the link below.');
+      textInfo = textInfo.replaceAll('.', '. ');
+      textInfo = textInfo.replaceAll(' .', ' ');
+      textInfo = textInfo.replaceAll('amp;', ' ');
   
       myArray = myArray.slice(0,-2);
   
@@ -222,10 +228,10 @@ export default function DataFeed() {
 
   return (
     <div className='Wrapper2'>
-      <br/>
-      
-      <div className = "manualInput">
+      {/* <br/> */}
       <h3 style={{textAlign:"center"}}>Arrivals</h3>
+
+      <div className = "manualInput">
 
       <form style={{paddingLeft:"10px",paddingRight:"10px"}} method="post" onSubmit={e => {e.preventDefault() ; handleArrivalClick(current)}}>
           <p style={{textAlign:"left"}}>Arrival station: </p>
@@ -247,7 +253,7 @@ export default function DataFeed() {
       {isOpen && (
       <div>
 
-      <p className = "highlights">{textInfo}<br/>{newsLink}</p><br/>
+      <p className = "highlights">{textInfo}<br/>{newsLink2}</p><br/>
       <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleArrivalClick(earlier)}>120 - 100 minutes ago</button><br/>
       <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleArrivalClick(earlier2)}>100 minutes ago - present</button><br/>
       <br/>

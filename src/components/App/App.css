@@ -297,6 +297,7 @@ div.gm-style {
   border-radius: 20px;
   width: 98vw;
   color: black;
+  padding-top: 1px;
 }
 
 .NRLogo{
@@ -403,6 +404,7 @@ a.active-animation:active{
     display: inline-block;
     min-width: 700px;
     max-width: 1000px;
+    padding-top: 0px;
   }
 
   .highlights{

@@ -43,6 +43,9 @@ let newsLinkEx = new RegExp(
  ,"g"
 );
 let newsLink = [];
+let newsLink2;
+
+
 
 
 let myArray = [];
@@ -150,18 +153,22 @@ export default function Dashboard() {
     
     if (myArray[myArray.length-1] != ""){
       newsLink = [myArray[myArray.length-1].match(newsLinkEx)]; 
-
       textInfo = myArray[myArray.length-1];
     } else {
       textInfo = "There are no messages for this station ("+ currentCRSCode + ").";
       newsLink = [];
     }
 
+    newsLink2 = <a href = "https://www.nationalrail.co.uk/status-and-disruptions/">{newsLink}</a>
+
+
+
     textInfo = textInfo.replace(htmlRegexG, ' ');
     textInfo = textInfo.replaceAll('News ', 'News. ');
     textInfo = textInfo.replaceAll('in  Latest Travel News.', 'in  the link below.');
-
-
+    textInfo = textInfo.replaceAll('.', '. ');
+    textInfo = textInfo.replaceAll(' .', ' ');
+    textInfo = textInfo.replaceAll('amp;', ' ');
 
     myArray = myArray.slice(0,-2);
 
@@ -331,10 +338,10 @@ export default function Dashboard() {
   return (
 
     <div className='Wrapper2'>
-      <br/>
+      {/* <br/> */}
+      <h3 style={{textAlign:"center"}}>Departures</h3>
 
       <div className = "manualInput">
-      <h3 style={{textAlign:"center"}}>Departures</h3>
        
         <form style={{paddingLeft:"10px",paddingRight:"10px"}} method="post" onSubmit={e => {e.preventDefault() ; handleDepartureClick(current)}}>
           <p style={{textAlign:"left"}}>Departure station: </p>
@@ -362,7 +369,12 @@ export default function Dashboard() {
       {isOpen && (
       <div>
         {trainSearch}<br/>
-        <p className = "highlights">{textInfo}<br/>{newsLink}</p><br/>
+        <p className = "highlights">{textInfo}<br/>
+          {newsLink2}
+
+        </p>
+        <br/>
+        
         <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleDepartureClick(earlier)}>120 - 100 minutes ago</button><br/>
         <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleDepartureClick(earlier2)}>100 minutes ago - present</button><br/>
         <br/>
