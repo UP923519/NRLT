@@ -39,11 +39,8 @@ let newsLinkEx = new RegExp(
  ,"g"
 );
 let newsLink = [];
-let newsLink2 = [];
-
 
 let myArray = [];
-
 
 
 export default function DataFeed() {
@@ -121,14 +118,13 @@ export default function DataFeed() {
         newsLink = [];
       }
 
-      newsLink2 = <a href = "https://www.nationalrail.co.uk/status-and-disruptions/">{newsLink}</a>
-
       textInfo = textInfo.replace(htmlRegexG, ' ');
       textInfo = textInfo.replaceAll('News ', 'News. ');
-      textInfo = textInfo.replaceAll('in  Latest Travel News.', 'in  the link below.');
+      textInfo = textInfo.replaceAll('in  Latest Travel News.', 'in the link below.\n\n');
       textInfo = textInfo.replaceAll('.', '. ');
       textInfo = textInfo.replaceAll(' .', ' ');
       textInfo = textInfo.replaceAll('amp;', ' ');
+      textInfo = textInfo.trim();
   
       myArray = myArray.slice(0,-2);
   
@@ -253,13 +249,24 @@ export default function DataFeed() {
       {isOpen && (
       <div>
 
-      <p className = "highlights">{textInfo}<br/>{newsLink2}</p><br/>
+      <p className = "highlights">
+      <pre style={{whiteSpace: "pre-wrap", fontFamily: "unset", marginBottom: "-20px", marginTop: "-1px"}}>{textInfo}</pre><br/>
+      
+        <div>
+            {newsLink[0]?.map((row) => (
+              <a href = {row}><br/>{row}</a>
+            ))}
+          </div>
+      
+      
+      </p>
+      <br/>
       <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleArrivalClick(earlier)}>120 - 100 minutes ago</button><br/>
       <button className = "changeTime" style = {{marginBottom: "10px"}} onClick={() => handleArrivalClick(earlier2)}>100 minutes ago - present</button><br/>
       <br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             {stringArrivals.map((arrivals, index) => (
-              <tr data-index={index} style={{textAlign:"justify", textAlignLast:"right"}} onClick={() => routeChange(arrivals)}>
+              <tr data-index={index} className="tableTR" onClick={() => routeChange(arrivals)}>
                 <td>{arrivals}</td>
                 <br/><br/><br/>
               </tr>
