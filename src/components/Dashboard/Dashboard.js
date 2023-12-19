@@ -19,7 +19,7 @@ let currentCRSCode;
 let displayServiceMessage = "";
 let current = ""
 let earlier = "?timeOffset=-120&timeWindow=120";
-let earlier2 = "?timeOffset=-82&timeWindow=120";
+let earlier2 = "?timeOffset=-65&timeWindow=120";
 let later = "?timeOffset=82&timeWindow=120";
 let later2 = "?timeOffset=119&timeWindow=120";
 
@@ -46,6 +46,9 @@ let newsLink = [];
 
 let myArray = [];
 
+let sIdArray = [];
+
+
 
 export default function Dashboard() {
   const [stringDepartures, setDepartures] = useState([]);
@@ -59,8 +62,6 @@ export default function Dashboard() {
 
   useEffect(() => {
 
-    //setDepartures(["Enter a depature station to view services"]);
-    //textInfo = "";
     setDepartures(myArray);
     getStation();
     
@@ -94,17 +95,12 @@ export default function Dashboard() {
 
 
   function handleDepartureClick(timeOffset, code, status) {
-    //timeOffset = "";
-    //e.preventDefault();
+
 
     setDepartures(["Loading..."]);
     toggle();
-    //const form = e.target;
-    //const formData = new FormData(form);
-    //const formJson = (Object.fromEntries(formData.entries())).formVal;
-    //console.log("form says", formVal);
+
  
-    console.log("code is", code);
 
     if (remStatus == "" || remStatus == undefined){
       remStatus = status;
@@ -112,9 +108,6 @@ export default function Dashboard() {
         remStatus = 0;
       }
     }
-
-    console.log("remstatus is", remStatus)
-    console.log("status is", status)
 
     try{
       if (code != undefined){
@@ -129,19 +122,10 @@ export default function Dashboard() {
       JSON.stringify(logJSONData(formVal,timeOffset,remStatus));
     }
 
-    //departuresList = stringDepartures2;
-  
-    //console.log("Returned first promise");
-    //console.log("returned promise is", departuresList)
-
-    //RUN THIS AS SEPARATE FUNCTION - CALL AFTER FETCH IS COMPLETE.//
   }
     
     function runLast(){
-
-    //setTimeout(() => {
-
-
+    departuresList = departuresList.replaceAll("p.null", "p.N/A");
     myArray = departuresList.split("\"");
 
     myArray = myArray.filter((value, index) => !((index+1)%2));
@@ -165,10 +149,8 @@ export default function Dashboard() {
 
     myArray = myArray.slice(0,-2);
 
-    console.log (myArray);
 
     if (myArray == ""){
-      console.log ("myArray", myArray)
       alert("No results found");
     }
 
@@ -178,9 +160,6 @@ export default function Dashboard() {
     if (remStatus == 1){
       clearValue();
     }
-
-  //}, 1000);
-
   
 }
 
@@ -188,10 +167,6 @@ export default function Dashboard() {
 
 
   async function logJSONData(stationName, timeOffset, status) {
-
-    console.log(stationName, "is stationName");
-    console.log(currentCRSCode, "is fromCode");
-    console.log(secondStation, " is secondStation");
     
     let fromCode = currentCRSCode;
 
@@ -223,7 +198,6 @@ export default function Dashboard() {
           alert("Network timed out, results may be incorrect.");
         }
     } else if (remStatus == 0) {
-      console.log("boo")
       try{
       response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
       } catch {
@@ -258,7 +232,6 @@ export default function Dashboard() {
       let t = getTrainDepartures();
       departuresList = JSON.stringify(t);
 
-      console.log("testingTimeout");
 
       runLast();
       
@@ -266,7 +239,6 @@ export default function Dashboard() {
     }
     catch{
       alert("Unable to retrieve new results. Previous results may be shown.")
-      //setDepartures([""]);
       setIsOpen(false);
     }
     }
@@ -276,13 +248,11 @@ export default function Dashboard() {
     const data = await response.json();
     listStation = data;
     let t = getStationList();
-    //console.log("t is", t);
     stationsList = JSON.stringify(t);
   }
 
   
   function getStationList(){
-    //console.log(listStation);
     let listOfStations = []
     for (let i=0;i<listStation.length;i++){
       listOfStations.push(listStation[i].stationName + " ("+ listStation[i].crsCode + ")");
@@ -294,32 +264,29 @@ export default function Dashboard() {
     setTRC(<Select 
     options={display}
     className="selectBox"
-    onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1),0))}
+    onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1),0))}
     />);
 
     setTRCD(<Select 
       options={display}
       className="selectBox"
-      onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1),1))}
+      onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+handleDepartureClick(current,opt.value.slice(opt.value.length-4,-1),1))}
       />);
 
-    //console.log(listOfStations);
   } 
 
   let navigate = useNavigate(); 
-  const routeChange = (number) =>{ 
+  const routeChange = (number, index) =>{ 
 
     let trainInfo = number;
 
-    //number = number.slice(number.length-1,number.length);
     number = number.split(" ");
     number = number.pop();
 
-
-    //Dashboard1();
     let path = "/linkPage"; 
     navigate(path);
-    test1(number, trainInfo);
+    
+    test1(sIdArray[index], trainInfo);
 
   }
 
@@ -379,7 +346,7 @@ export default function Dashboard() {
         <br/>
         <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
               {stringDepartures.map((departures, index) => (
-                <tr data-index={index} className="tableTR"  onClick={() => routeChange(departures)}>
+                <tr data-index={index} className="tableTR"  onClick={() => routeChange(departures, index)}>
                   <td>{departures}</td>
                   <br/><br/><br/>
                 </tr>
@@ -414,16 +381,15 @@ export default function Dashboard() {
 
 function getTrainDepartures(stationName){
 
-  //let data = logJSONData(stationName);
 
 
-  let sIdArray = [];
   let stringDepartures = [];
+  sIdArray = [];
   for (let i = 0; i < (liveDeparture.length); i++) {
     sIdArray.push(liveDeparture[i].serviceID);
-    stringDepartures.push(liveDeparture[i].std +" "+ liveDeparture[i].destination[0].locationName + " (from " + liveDeparture[i].origin[0].locationName +")  "+ liveDeparture[i].etd +"  p."+ liveDeparture[i].platform +
-    "  "+ liveDeparture[i].serviceID);
+    stringDepartures.push(liveDeparture[i].std +" "+ liveDeparture[i].destination[0].locationName + " (from " + liveDeparture[i].origin[0].locationName +")  "+ liveDeparture[i].etd +"  p."+ liveDeparture[i].platform);
   }
+
 
   try{
     for (let i = 0; i < (serviceMessage.length); i++){
@@ -435,7 +401,6 @@ function getTrainDepartures(stationName){
     }
   catch{
   }
-  //console.log("stringDepartures says", stringDepartures);  
   return({stringDepartures, displayServiceMessage})
 } 
 

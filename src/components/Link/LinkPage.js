@@ -2,6 +2,7 @@ import React, { useState ,  useEffect } from 'react';
 import "../App/App.css"
 import { Table } from "react-bootstrap";
 import image from '../../assets/nre-logo.png';
+import { calculatePosition, calculatePositionCentral } from './calculatePosition';
 
 
 
@@ -33,19 +34,18 @@ let sCode = "";
 
 
 export default function Dashboard() {
-  const [stringDepartures, setDepartures] = useState([]);
   const [excuseReason, setExcuseReason] = useState();
   const [operatorName, setOperator] = useState();
   const [formationCar, setFormatiion] = useState();
   const [stringCalling, setCalling] = useState([[],[]]);
   const [formVal, setFormVal] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [infoTrainDisplay, setInfoTrain] = useState('');
 
 
 
   useEffect(() => {
 
-    setDepartures([""]);
     setCalling([["Enter a service code above"],[]]);
     textInfo = "";
     myArray = [];
@@ -54,10 +54,13 @@ export default function Dashboard() {
     if (formJson != ""){
       handleServiceClick();
     }
+
+
+
+
   }, []);
 
   function clearAll(e) {
-    setDepartures([""]);
     setCalling([""]);
     textInfo = "";
     setIsOpen(false);
@@ -72,12 +75,6 @@ export default function Dashboard() {
     setCalling([["Loading..."],[]]);
     toggle();
 
-    //const form = e.target;
-    //const formData = new FormData(form);
-
-
-    console.log("fval",formVal);
-
     if (formJson == ""){
       formJson = formVal;
     }
@@ -88,29 +85,34 @@ export default function Dashboard() {
 
     }
 
-    console.log("fjs is",formJson);
-
 
     JSON.stringify(logJSONData(formJson));
   }
 
     function runLast(){
 
-    //setTimeout(() => {
+      console.log("inft", infoTrain);
 
-    try{
-      myArray = locationList.split("*");
-    }catch{
-      setCalling([["Error, please try another service."],[]]);
-    }
+      let infoTrain2 = infoTrain[0]+")";
+      infoTrain2 = infoTrain2.replace(" ", " "+liveServiceTime.locationName+" to ");
+
+      setInfoTrain(infoTrain2)
+  
+      infoTrain2 = 0;
+
+
+
+
+      try{
+        myArray = locationList.split("*");
+      }catch{
+        setCalling([["Error, please try another service."],[]]);
+      }
       myArray.shift();
 
-      let removeValue = (myArray.indexOf('","locationList2":"undefined'));
-      myArray.splice(removeValue, 1)
       myArray[myArray.length-1] = myArray[myArray.length-1].replace('"}',"");
 
       setCalling(myArray);
-    //}, "1000");
   }
 
   async function logJSONData(serviceID) {
@@ -126,37 +128,30 @@ export default function Dashboard() {
     try{
         liveService = data.previousCallingPoints[0].callingPoint;
     }catch{
-      console.log("CAUGHT ERROR");
       liveService = "";
     }
 
     try{
       liveService2 = data.subsequentCallingPoints[0].callingPoint;
     }catch{
-      console.log("CAUGHT ERROR");
       liveService2 = "";
     }
 
     try{
       liveService3 = data.subsequentCallingPoints[1].callingPoint;
-      console.log("train divides");
       divides = ("This train divides into two portions. Please check that you are located in the correct part of the train. ");
-      //console.log  ({...liveService3, ...liveService2});
-      //liveService3.push({locationName: 'Bognor Regis'});
+
       for (let i=0; i<liveService3.length;i++){
         liveService2.push(liveService3[i])
-        //console.log("ls2 is", liveService3[i]);
 
       }
 
-      //console.log  (liveService2);
 
     }catch{
       liveService3 = "";
       divides = ("");
     }
     
-    //liveService2 = (data.subsequentCallingPoints[0].callingPoint);
     liveServiceTime = data;
     location = (data.locationName);
     operator = (data.operator) + "";
@@ -165,10 +160,6 @@ export default function Dashboard() {
     } else {
       formation = "";
     }
-    console.log(data);
-
-    console.log(liveServiceTime.cancelReason)
-    console.log(liveServiceTime.delayReason)
 
 
     liveServiceTime.cancelReason += "."; 
@@ -177,12 +168,7 @@ export default function Dashboard() {
     let exr = (divides + liveServiceTime.cancelReason +" "+ liveServiceTime.delayReason +" ");
     exr = (exr.replace("null.",""));
     exr = (exr.replace("null.",""));
-    /*exr = (exr.replace(". . ",". "));
-    exr = (exr.replace(". . ",". "));
-    exr = (exr.replace(". This train is formed","This train is formed"));
-    exr = (exr.replace(".  S","S"));*/
 
-    console.log(exr);
     if (exr != "  "){
       setExcuseReason(exr);
     } else {
@@ -199,12 +185,20 @@ export default function Dashboard() {
     setOperator(operator);
 
     
+    let beforeStations = calculatePosition(liveService);
+    let middleStation = calculatePositionCentral(liveService, liveServiceTime, liveService2, location)
+    let afterStations = calculatePosition(liveService2, liveServiceTime);
 
 
+    let t = (beforeStations + middleStation + afterStations);
+    console.log("t is", t);
 
-    let t = getTrainArrivals();
-    //console.log("t is", t);
-    locationList = JSON.stringify(t);
+    t = t.replaceAll("*undefined","");
+    t = t.replaceAll("undefined","");
+
+    locationList = (t);
+
+
 
     runLast();
   }
@@ -216,7 +210,6 @@ export default function Dashboard() {
 
   return (
     <div className='Wrapper2'>
-      {/* <br/> */}
       <h3 style={{textAlign:"center"}}>Service Details</h3>
       <div className = "manualInput">
         <form method="post" onSubmit={e => {e.preventDefault() ; handleServiceClick()}}>
@@ -235,12 +228,17 @@ export default function Dashboard() {
       <div className="App">
       {isOpen && (
       <div>
-        <p style={{margin:"0px"}}>{infoTrain}</p>
+        <p className='infoTrain' style={{margin:"0px"}}>{infoTrainDisplay}</p>
         <p className = "highlights" >{excuseReason}</p><br/>
-        <div id = "trainInfo">
+        <div className = "trainInfo">
+          <p className={"platformBox"}><text style={{fontWeight:"500"}}>Platform:&nbsp; </text><text>{liveServiceTime.platform}</text></p>
+        </div>
+        <div className = "trainInfo">
           <p className={"trainInfoBox"}><text style={{fontWeight:"500"}}>Service operator:</text><br/><br/>{operatorName}</p>
           <p className={"trainInfoBox"}><text style={{fontWeight:"500"}}>Train formation:</text><br/><br/>{formationCar}</p>
         </div>
+
+
         <br/>
         <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
               <tr>
@@ -272,144 +270,12 @@ export default function Dashboard() {
 }
 
 
-function getTrainArrivals(serviceID){
-  //serviceID = serviceID[0];
-
-
-  let locationList;
-  for (let i = 0; i < (liveService.length); i++) {
-    let trainLocation;
-    let trainActual;
-    if (liveService[i].et == null){
-      if (liveService[i].at == "On time" || liveService[i].at == "No report"){
-        trainLocation = "✔️";
-      } else{
-        trainLocation = "❌";
-        if (liveService[i].at <= liveService[i].st){
-          trainLocation = "✔️";
-        }
-      }
-    } else {
-      trainLocation = liveService[i].et;
-      try{
-        if (liveService[i-1].et == null){
-          console.log("tlc is", trainLocation);
-          trainLocation = (liveService[i].et+"🚂🚃🚃");
-          console.log("tlc is", trainLocation);
-        }
-      } catch{
-      }
-    }
-    if (liveService[i].at == null){
-      liveService[i].at = "N/A"
-    }
-
-
-    locationList+= "*"+liveService[i].locationName + " " + liveService[i].st + " " + liveService[i].at + " " + trainLocation;
-  }
-
-  //console.log(liveService[liveService.length-1].et)
-  /////
-  let trainLocation;
-  if (liveServiceTime.etd == null && liveServiceTime.eta == null){
-    if (liveServiceTime.atd == "On time" || liveServiceTime.atd == "No report"){
-      trainLocation = "✔️";
-    } else{
-      trainLocation = "❌";
-    }
-  } else {
-    trainLocation = liveServiceTime.etd;
-    if (trainLocation == null){
-      trainLocation = liveServiceTime.eta;
-    }
-    try{
-      if (liveService[liveService.length-1].et == null && liveService2[0].et !=null){
-        trainLocation = liveServiceTime.etd + "🚂🚃🚃";
-      }
-    } catch{
-        trainLocation = liveServiceTime.eta + "🚂🚃🚃";
-        if (trainLocation.includes("null")){
-          trainLocation = trainLocation.replace('null', liveServiceTime.etd);
-        }
-      
-    }
-  }
-  if (liveServiceTime.atd == null){
-    if (liveServiceTime.ata != null){
-      liveServiceTime.atd = liveServiceTime.ata
-    } else {
-      liveServiceTime.atd = "N/A"
-    }
-  }
-
-  if (liveServiceTime.std == null){
-    if (liveServiceTime.sta != null){
-      liveServiceTime.std = liveServiceTime.sta
-    } else {
-      liveServiceTime.std = "N/A"
-    }
-  }
-
-  if (trainLocation.includes("null")){
-    trainLocation = trainLocation.replace('null', 'N/A');
-  }
-
-  if (liveServiceTime.platform == null){
-    liveServiceTime.platform = " N/A";
-  }
-
-  locationList+= "*"+location+" "+liveServiceTime.std+" "+liveServiceTime.atd+" "+trainLocation+ " (p." + liveServiceTime.platform+ ")*";
-
-
-  let locationList2;
-  for (let i = 0; i < (liveService2.length); i++) {
-    let trainLocation;
-    if (liveService2[i].et == null){
-      if (liveService2[i].at == "On time" || liveService2[i].at == "No report"){
-        trainLocation = "✔️";
-      } else{
-        trainLocation = "❌";
-        if (liveService2[i].at <= liveService2[i].st){
-          trainLocation = "✔️";
-        }
-      }
-    } else {
-      trainLocation = liveService2[i].et;
-      try{
-        if (liveService2[i-1].et == null){
-          trainLocation = (liveService2[i].et+"🚂🚃🚃");
-        }
-      } catch{
-        if (liveServiceTime.etd != null ){
-         
-        } else {
-          trainLocation = (liveService2[i].et+"🚂🚃🚃");
-        }
-
-      }
-    }
-    if (liveService2[i].at == null){
-      liveService2[i].at = "N/A"
-    }
-    
-
-    locationList2+= "*"+liveService2[i].locationName + " " + liveService2[i].st + " " + liveService2[i].at + " " + trainLocation ;
-  }
-  
-  
-
-  return({locationList, locationList2})
-} 
-
 
 export function test1(number, trainInfo){
-  console.log("RUNNING NOW number is", number);
   formJson = number;
   trainInfo = trainInfo.split(")");
 
-  //infoTrain = trainInfo[0]+")";
-
-  infoTrain = <p className='infoTrain'>{trainInfo[0]+")"}</p>
+  infoTrain = trainInfo;
 
 }
 

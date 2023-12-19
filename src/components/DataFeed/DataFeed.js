@@ -41,6 +41,8 @@ let newsLinkEx = new RegExp(
 let newsLink = [];
 
 let myArray = [];
+let sIdArray = [];
+
 
 
 export default function DataFeed() {
@@ -53,7 +55,6 @@ export default function DataFeed() {
   
   useEffect(() => {
 
-    //setArrivals(["Enter a depature station to view services"]);
     setArrivals(myArray);
     getStation();
 
@@ -61,7 +62,6 @@ export default function DataFeed() {
       setIsOpen(false);
     }
 
-    //textInfo = "";
   }, []);
 
   function clearAll(e) {
@@ -79,10 +79,7 @@ export default function DataFeed() {
 
     setArrivals(["Loading..."]);
     toggle();
-    //const form = e.target;
-    //const formData = new FormData(form);
-    //const formJson = (Object.fromEntries(formData.entries())).formVal;
-    //console.log("form says", formVal);
+
 
     try{
       if (code != undefined){
@@ -97,12 +94,11 @@ export default function DataFeed() {
   }
 
 
-    //setTimeout(() => {
+
     function runLast(){
-      //arrivalsList = stringArrivals2;
-    
-      //console.log("Returned first promise");
-      //console.log("returned promise is", arrivalsList)
+
+
+      arrivalsList = arrivalsList.replaceAll("p.null", "p.N/A");
   
       myArray = arrivalsList.split("\"");
   
@@ -129,7 +125,6 @@ export default function DataFeed() {
       myArray = myArray.slice(0,-2);
   
       setArrivals(myArray);  
-    //  }, "1000");
       
   }
 
@@ -179,13 +174,11 @@ export default function DataFeed() {
     const data = await response.json();
     listStation = data;
     let t = getStationList();
-    //console.log("t is", t);
     stationsList = JSON.stringify(t);
   }
 
   
   function getStationList(){
-    //console.log(listStation);
     let listOfStations = []
     for (let i=0;i<listStation.length;i++){
       listOfStations.push(listStation[i].stationName + " ("+ listStation[i].crsCode + ")");
@@ -196,25 +189,22 @@ export default function DataFeed() {
     
     setTRC(<Select 
     options={display}
-    onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+console.log(opt.value.slice(opt.value.length-4,-1))+handleArrivalClick(current,opt.value.slice(opt.value.length-4,-1)))}
+    onChange={opt => setDropVal(opt.value.slice(opt.value.length-4,-1)+handleArrivalClick(current,opt.value.slice(opt.value.length-4,-1)))}
     />);
-
-    //console.log(listOfStations);
   } 
 
   let navigate = useNavigate(); 
-  const routeChange = (number) =>{ 
+  const routeChange = (number, index) =>{ 
     let trainInfo = number;
 
-    //number = number.slice(number.length-1,number.length);
     number = number.split(" ");
     number = number.pop();
 
 
-    //Dashboard1();
     let path = "/linkPage"; 
     navigate(path);
-    test1(number, trainInfo);
+    
+    test1(sIdArray[index], trainInfo);
 
   }
 
@@ -266,7 +256,7 @@ export default function DataFeed() {
       <br/>
       <Table className= "transactions" style = {{backgroundColor: "#f0f0f0"}}>
             {stringArrivals.map((arrivals, index) => (
-              <tr data-index={index} className="tableTR" onClick={() => routeChange(arrivals)}>
+              <tr data-index={index} className="tableTR" onClick={() => routeChange(arrivals, index)}>
                 <td>{arrivals}</td>
                 <br/><br/><br/>
               </tr>
@@ -298,15 +288,11 @@ export default function DataFeed() {
 
 function getTrainArrivals(stationName){
 
-  //let data = logJSONData(stationName);
-
-
-  let sIdArray = [];
   let stringArrivals = [];
+  sIdArray = [];
   for (let i = 0; i < (liveArrival.length); i++) {
     sIdArray.push(liveArrival[i].serviceID);
-    stringArrivals.push(liveArrival[i].sta +" "+ liveArrival[i].destination[0].locationName + " (from " + liveArrival[i].origin[0].locationName +")  "+ liveArrival[i].eta +"  p."+ liveArrival[i].platform +
-    "  "+ liveArrival[i].serviceID);
+    stringArrivals.push(liveArrival[i].sta +" "+ liveArrival[i].destination[0].locationName + " (from " + liveArrival[i].origin[0].locationName +")  "+ liveArrival[i].eta +"  p."+ liveArrival[i].platform);
   }
 
   try{
@@ -321,7 +307,6 @@ function getTrainArrivals(stationName){
 
   }
 
-  console.log("Data sent back says", stringArrivals, displayServiceMessage);  
   return({stringArrivals, displayServiceMessage})
 
 } 

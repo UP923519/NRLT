@@ -373,7 +373,7 @@ a.active-animation:active{
   text-align-last:right;
 }
 
-#trainInfo{
+.trainInfo{
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
@@ -388,6 +388,16 @@ a.active-animation:active{
   border-radius: 20px;
   max-width: 150px;
   color: black;
+}
+
+.platformBox{
+  padding: 10px;
+  background-color:#adceab;
+  border-radius: 20px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 150px;
 }
 
 @media only screen and (max-width: 318px) {

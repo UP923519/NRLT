@@ -1,0 +1,121 @@
+import "../App/App.css"
+
+
+export function calculatePosition(liveService, liveServiceTime){
+  let locationList;
+  for (let i = 0; i < (liveService.length); i++) {
+    let trainLocation;
+    let trainActual;
+    if (liveService[i].et == null){
+      if (liveService[i].at == "On time" || liveService[i].at == "No report"){
+        trainLocation = "✔️";
+      } else{
+        trainLocation = "❌";
+        if (liveService[i].at <= liveService[i].st){
+          trainLocation = "✔️";
+        }
+      }
+    } else {
+      trainLocation = liveService[i].et;
+      try{
+        if (liveService[i-1].et == null){
+          trainLocation = (liveService[i].et+"🚂🚃🚃");
+        } 
+
+      } catch{
+        try{
+        if (liveServiceTime.etd != null ){
+         
+        } else {
+          trainLocation = (liveService[i].et+"🚂🚃🚃");
+        }
+      } catch {
+
+      }
+
+      }
+      try{if (liveService[i].et == "Cancelled") trainLocation = "Cancelled ❌";
+    }catch{}
+    try{if (liveService[i-1].et == "Cancelled" && liveService[i].et != "Cancelled"){
+        trainLocation = (liveService[i].et+"🚂🚃🚃");
+      } }catch{}
+    }
+    if (liveService[i].at == null){
+      liveService[i].at = "N/A"
+    }
+
+
+
+    locationList+= "*"+liveService[i].locationName + " " + liveService[i].st + " " + liveService[i].at + " " + trainLocation;
+  }
+
+  return(locationList)
+} 
+
+export function calculatePositionCentral(liveService, liveServiceTime, liveService2, location){
+  let trainLocation;
+  let locationList;
+  console.log("LST etd", liveServiceTime)
+  if (liveServiceTime.etd == null && liveServiceTime.eta == null){
+    
+    if (liveServiceTime.atd == "On time" || liveServiceTime.atd == "No report"){
+      trainLocation = "✔️";
+    } else{
+      
+      trainLocation = "❌";
+    }
+  } else {
+    trainLocation = liveServiceTime.etd;
+    if (trainLocation == null){
+      trainLocation = liveServiceTime.eta;
+    }
+    try{
+      if (liveService[liveService.length-1].et == null && liveService2[0].et !=null){
+        trainLocation = liveServiceTime.etd + "🚂🚃🚃";
+      }
+    } catch{
+        trainLocation = liveServiceTime.eta + "🚂🚃🚃";
+        if (trainLocation.includes("null")){
+          trainLocation = trainLocation.replace('null', liveServiceTime.etd);
+        }
+    } try {
+      if (liveService[liveService.length+1].et != null) trainLocation = "No report ❌";
+    } catch {}
+  }
+  try{if (liveServiceTime.etd == "Cancelled"){
+    trainLocation = "Cancelled ❌";
+  }}catch{}
+  if (liveServiceTime.atd == null){
+    if (liveServiceTime.ata != null){
+      liveServiceTime.atd = liveServiceTime.ata
+    } else {
+      if (liveService2[0].at != null) {
+        trainLocation = liveServiceTime.etd + " (Not confirmed) ❌";
+      }
+
+      liveServiceTime.atd = "N/A"
+    
+    }
+  }
+
+  if (liveServiceTime.std == null){
+    if (liveServiceTime.sta != null){
+      liveServiceTime.std = liveServiceTime.sta
+    } else {
+      liveServiceTime.std = "N/A"
+    }
+  }
+
+  if (trainLocation.includes("null")){
+    trainLocation = trainLocation.replaceAll('null', 'N/A');
+  }
+
+  if (liveServiceTime.platform == null){
+    liveServiceTime.platform = " N/A";
+  }
+
+  locationList+= "*"+location+" "+liveServiceTime.std+" "+liveServiceTime.atd+" "+trainLocation+ " (p." + liveServiceTime.platform+ ")*";
+  return(locationList)
+
+}
+
