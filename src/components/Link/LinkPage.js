@@ -91,14 +91,19 @@ export default function Dashboard() {
 
     function runLast(){
 
-      console.log("inft", infoTrain);
 
-      let infoTrain2 = infoTrain[0]+")";
-      infoTrain2 = infoTrain2.replace(" ", " "+liveServiceTime.locationName+" to ");
+      let infoTrainSet = infoTrain;
 
-      setInfoTrain(infoTrain2)
+      infoTrainSet = infoTrainSet.replace(" ", " at "+liveServiceTime.locationName+": ");
+      infoTrainSet = infoTrainSet.split("+");
+      infoTrainSet.pop();
+      infoTrainSet.pop();
+      infoTrainSet.pop();
+      console.log("trainInfo is", infoTrainSet);
+
+      setInfoTrain(infoTrainSet)
   
-      infoTrain2 = 0;
+      infoTrainSet = 0;
 
 
 
@@ -191,7 +196,6 @@ export default function Dashboard() {
 
 
     let t = (beforeStations + middleStation + afterStations);
-    console.log("t is", t);
 
     t = t.replaceAll("*undefined","");
     t = t.replaceAll("undefined","");
@@ -273,7 +277,16 @@ export default function Dashboard() {
 
 export function test1(number, trainInfo){
   formJson = number;
-  trainInfo = trainInfo.split(")");
+
+
+  console.log("trainInfo is", trainInfo);
+  trainInfo = trainInfo.replaceAll(" "," + ");
+  trainInfo = trainInfo.replaceAll("On"," ");
+
+
+
+
+
 
   infoTrain = trainInfo;
 

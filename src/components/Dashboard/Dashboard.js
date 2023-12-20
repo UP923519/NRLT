@@ -276,12 +276,15 @@ export default function Dashboard() {
   } 
 
   let navigate = useNavigate(); 
-  const routeChange = (number, index) =>{ 
+  const routeChange = (row, index) =>{ 
 
-    let trainInfo = number;
 
-    number = number.split(" ");
-    number = number.pop();
+    let trainInfo = row;
+
+    row = row.split(" ");
+    row = row.pop();
+
+
 
     let path = "/linkPage"; 
     navigate(path);
@@ -349,7 +352,7 @@ export default function Dashboard() {
                 <tr data-index={index} className="tableTR"  onClick={() => routeChange(departures, index)}>
                   <td>{departures}</td>
                   <br/><br/><br/>
-                </tr>
+                  </tr>
               ))}
         </Table><br/>
         <button className = "changeTime" style = {{marginTop: "40px"}}onClick={() => handleDepartureClick(later)}>100 minutes later</button><br/>

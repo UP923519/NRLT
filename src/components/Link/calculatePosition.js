@@ -55,7 +55,6 @@ export function calculatePosition(liveService, liveServiceTime){
 export function calculatePositionCentral(liveService, liveServiceTime, liveService2, location){
   let trainLocation;
   let locationList;
-  console.log("LST etd", liveServiceTime)
   if (liveServiceTime.etd == null && liveServiceTime.eta == null){
     
     if (liveServiceTime.atd == "On time" || liveServiceTime.atd == "No report"){
@@ -89,9 +88,10 @@ export function calculatePositionCentral(liveService, liveServiceTime, liveServi
     if (liveServiceTime.ata != null){
       liveServiceTime.atd = liveServiceTime.ata
     } else {
+      try{
       if (liveService2[0].at != null) {
         trainLocation = liveServiceTime.etd + " (Not confirmed) ❌";
-      }
+      }}catch{}
 
       liveServiceTime.atd = "N/A"
     
