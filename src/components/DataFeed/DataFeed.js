@@ -51,6 +51,8 @@ export default function DataFeed() {
   const [dropVal, setDropVal] = useState('');
   const [trcDropDown, setTRC] = useState('');
   const [isOpen, setIsOpen] = useState(true);
+  const [isOpenForm, setIsOpenForm] = useState(true);
+
 
   
   useEffect(() => {
@@ -69,6 +71,8 @@ export default function DataFeed() {
     textInfo = "There are no messages";
     newsLink = [];
     setIsOpen(false);
+    setIsOpenForm(true);
+
   }
 
   const displayAction = false;
@@ -210,6 +214,12 @@ export default function DataFeed() {
 
   function toggle() {
     setIsOpen(true);
+    setIsOpenForm(false);
+
+  }
+
+  function toggleForm() {
+    setIsOpenForm((isOpenForm) => !isOpenForm);
   }
 
   return (
@@ -220,6 +230,10 @@ export default function DataFeed() {
       <div className = "manualInput">
 
       <form style={{paddingLeft:"10px",paddingRight:"10px"}} method="post" onSubmit={e => {e.preventDefault() ; handleArrivalClick(current)}}>
+      <button type="button" style={{textAlign: "center", width: "30px", margin: "10px", paddingBottom:"3px"}} onClick={toggleForm}>{"↨"}</button><br/>
+      {isOpenForm && (
+          <text>
+
           <p style={{textAlign:"left"}}>Arrival station: </p>
           <text style={{textAlign:"left"}}>{trcDropDown}</text>
           {/* <p>Or select from the menu below:<br/></p>
@@ -228,7 +242,8 @@ export default function DataFeed() {
             name="formVal" defaultValue=""
             onChange={(event) => setFormVal(event.target.value)}/>
           </label> */}
-          <br/>
+          <br/></text>)}
+
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleArrivalClick(current)}>View/Refresh live arrivals</button>
         </form>      

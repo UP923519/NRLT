@@ -40,7 +40,10 @@ export default function Dashboard() {
   const [stringCalling, setCalling] = useState([[],[]]);
   const [formVal, setFormVal] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenForm, setIsOpenForm] = useState(false);
+
   const [infoTrainDisplay, setInfoTrain] = useState('');
+  
 
 
 
@@ -211,17 +214,22 @@ export default function Dashboard() {
     setIsOpen(true);
   }
 
+  function toggleForm() {
+    setIsOpenForm((isOpenForm) => !isOpenForm);
+  }
+
 
   return (
     <div className='Wrapper2'>
       <h3 style={{textAlign:"center"}}>Service Details</h3>
       <div className = "manualInput">
         <form method="post" onSubmit={e => {e.preventDefault() ; handleServiceClick()}}>
-          <label>
+        <button type="button" style={{textAlign: "center", width: "30px", margin: "10px", paddingBottom:"3px"}} onClick={toggleForm}>{"↨"}</button><br/>
+        {isOpenForm && <label>
             <p>Service code:&nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
             name="myInput" defaultValue="" 
             onChange={(event) => setFormVal(event.target.value)}/></p>
-          </label>
+          </label>}
           <button id = "useTrains" type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleServiceClick()}>View/Refresh train service</button>
 

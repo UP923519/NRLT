@@ -58,6 +58,8 @@ export default function Dashboard() {
   const [trcDropDownD, setTRCD] = useState('');
 
   const [isOpen, setIsOpen] = useState(true);
+  const [isOpenForm, setIsOpenForm] = useState(true);
+
 
 
   useEffect(() => {
@@ -87,6 +89,7 @@ export default function Dashboard() {
       remStatus = "";
       clearValue();
       setIsOpen(false);
+      setIsOpenForm(true);
 
   }
 
@@ -295,6 +298,11 @@ export default function Dashboard() {
 
   function toggle() {
     setIsOpen(true);
+    setIsOpenForm(false);
+  }
+
+  function toggleForm() {
+    setIsOpenForm((isOpenForm) => !isOpenForm);
   }
 
 
@@ -307,6 +315,10 @@ export default function Dashboard() {
       <div className = "manualInput">
        
         <form style={{paddingLeft:"10px",paddingRight:"10px"}} method="post" onSubmit={e => {e.preventDefault() ; handleDepartureClick(current)}}>
+        <button type="button" style={{textAlign: "center", width: "30px", margin: "10px", paddingBottom:"3px"}} onClick={toggleForm}>{"↨"}</button><br/>
+
+        {isOpenForm && (
+          <text>
           <p style={{textAlign:"left"}}>Departure station: </p>
           <text style={{textAlign:"left"}}>{trcDropDown}</text>
           <p style={{textAlign:"left"}}>Destination station (optional): </p>
@@ -318,7 +330,7 @@ export default function Dashboard() {
             name="formVal" defaultValue=""
             onChange={(event) => setFormVal(event.target.value)}/>
           </label> */}
-          <br/>
+          <br/></text>)}
           <button id = "useTrains"type="reset" onClick={clearAll}>Reset</button>
           <button id = "useTrains" type="button" onClick={() => handleDepartureClick(current)}>View/Refresh live departures</button>
           </form>
