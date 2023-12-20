@@ -2,7 +2,7 @@ element.style {
   background-color: rgb(42, 42, 255);
 }
 
-.size{
+.size {
   height: auto;
   font-size: 17px;
   display: flex;
@@ -11,13 +11,12 @@ element.style {
   justify-content: space-evenly;
 }
 
-
 .wrapper button {
   border: 0;
   background: #bcbcbc;
   cursor: pointer;
   border-radius: 9px;
-  }
+}
 
 ul {
   display: flex;
@@ -30,8 +29,6 @@ li {
   padding: 0;
 }
 
-
-
 .logOut {
   margin-left: 10px;
 }
@@ -43,7 +40,7 @@ li {
 .topRow1:active {
   margin: 5px;
   background: #dfdfdf;
-  color:rgb(111, 111, 111);
+  color: rgb(111, 111, 111);
 }
 
 .topRow2 {
@@ -91,7 +88,6 @@ li {
   font-size: 15px;
 }
 
-
 #manualSubmitButton {
   margin-bottom: 10px;
   margin-top: 10px;
@@ -108,8 +104,7 @@ li {
   font-size: 15px;
 }
 
-
-#useCurrentLocation{
+#useCurrentLocation {
   margin-left: 2px;
   margin-bottom: 10px;
   background: #7f7f7f;
@@ -124,14 +119,13 @@ li {
   font-size: 12px;
 }
 
-button.changeTime{
+button.changeTime {
   background: #ffffff;
   color: rgb(47, 47, 47);
   border: 1px solid #acacac;
-
 }
 
-#useTrains{
+#useTrains {
   margin-left: 2px;
   margin-bottom: 10px;
   background: #ffffff;
@@ -145,24 +139,21 @@ button.changeTime{
   color: rgb(47, 47, 47);
   font-size: 15px;
   border: 1px solid #acacac;
-
 }
 
-#useCurrentLocation:active{
+#useCurrentLocation:active {
   background: #59a7ff;
 }
 
-#useTrains:active{
+#useTrains:active {
   background: #59a7ff;
 }
 
-
-#manualSubmitButton:active{
+#manualSubmitButton:active {
   background: #59a7ff;
 }
 
-
-#journeySubmitButton:active{
+#journeySubmitButton:active {
   background: #59a7ff;
 }
 
@@ -173,21 +164,21 @@ button#showHide:active {
 
 .topRow2:active {
   background: #bfbfbf;
-  color:black;
+  color: black;
 }
 
-a.topRow2.active{
+a.topRow2.active {
   background: #0080ff;
   color: rgb(255, 255, 255);
 }
 
-navbar.NavBar1{
+navbar.NavBar1 {
   padding-bottom: 0.85pc;
   padding-top: 0.9pc;
   border-radius: 9px;
 }
 
-.backHome{
+.backHome {
   margin: 0;
   background: #efefef;
   cursor: pointer;
@@ -207,28 +198,25 @@ navbar.NavBar1{
   border-radius: 20px;
   color: black;
   background-color: #f0f0f0;
-  
-  }
+}
 
-.transactions td{
+.transactions td {
   border: 0px solid #ddd;
   border-radius: 0px;
-  padding: 6px;  
-
+  padding: 6px;
 }
 
 .transactions tr:hover {
   background-color: #c2c2c2;
   border-radius: 20px;
-
 }
 
-.TableRow{
+.TableRow {
   text-align: left;
 }
 
-.highlights{
-  font-weight:600;
+.highlights {
+  font-weight: 600;
   background: #ffaeae;
   border-radius: 20px;
   padding: 10px;
@@ -236,10 +224,9 @@ navbar.NavBar1{
   color: black;
   font-size: 15px;
   margin-bottom: 0px;
-
 }
 
-#highlights2{
+#highlights2 {
   background: #6bab9d;
   border-radius: 20px;
   padding: 10px;
@@ -256,45 +243,42 @@ div.gm-style {
   white-space: nowrap;
   font: 400 15px Roboto, Arial, sans-serif;
   font-weight: bold;
-  color:#336bbf;
+  color: #336bbf;
 }
 
-#locationAddress{
+#locationAddress {
   min-height: 1000%;
 }
 
-.divCarInput{
+.divCarInput {
   text-align: left;
   background-color: #ffe9e9;
   border-radius: 20px;
   color: black;
-
 }
 
-.divRailInput{
+.divRailInput {
   text-align: left;
   background-color: #c1ecf0;
   border-radius: 20px;
   color: black;
 }
 
-.divBusInput{
+.divBusInput {
   text-align: left;
   background-color: #f5dee9;
   border-radius: 20px;
   color: black;
-
 }
 
-.divFlightInput{
+.divFlightInput {
   text-align: left;
   background-color: #ddf0e8;
   border-radius: 20px;
   color: black;
-
 }
 
-.manualInput{
+.manualInput {
   background-color: #fafafa;
   border-radius: 20px;
   width: 98vw;
@@ -302,13 +286,13 @@ div.gm-style {
   padding-top: 1px;
 }
 
-.NRLogo{
-  padding:10px;
+.NRLogo {
+  padding: 10px;
   background-color: #ffffff;
-  border-radius:20px;
+  border-radius: 20px;
 }
 
-.optionInput{
+.optionInput {
   background-color: #e2ddff;
   border-radius: 20px;
   width: 98vw;
@@ -316,21 +300,19 @@ div.gm-style {
   margin-top: -30px;
 }
 
-
-#textLocation{
+#textLocation {
   text-align: center;
 }
 
-#showLocation{
+#showLocation {
   text-align: right;
 }
 
-#inputData{
+#inputData {
   margin-left: 10px;
 }
 
-
-.switchMode a{
+.switchMode a {
   background: #d8cab8;
   color: rgb(57, 57, 57);
   padding: 10px;
@@ -341,45 +323,41 @@ div.gm-style {
   border-radius: 20px;
 }
 
-a.btn-animation.active{
+a.btn-animation.active {
   background: rgb(156, 196, 255);
 }
 
-a.active-animation:active{
+a.active-animation:active {
   background: #e6e6e6;
 }
 
 .rct-xy-plot * {
-  fill: #028499
+  fill: #028499;
 }
 
 #puff1 {
   position: relative;
   top: 15px;
   margin-top: -50px;
-
 }
 
-.infoTrain{
-  font-weight:bold;
+.infoTrain {
+  font-weight: bold;
   border-radius: 20px;
   padding: 10px;
   text-align: center;
   margin-bottom: 0px;
 }
 
-
-.tableTR{
-  text-align:justify;
-  text-align-last:right;
-  width:100%;
-  height:3.5em;
-  display:inline-block;
-  
+.tableTR {
+  text-align: justify;
+  text-align-last: right;
+  width: 100%;
+  height: 3.5em;
+  display: inline-block;
 }
 
-
-.trainInfo{
+.trainInfo {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
@@ -388,17 +366,17 @@ a.active-animation:active{
   text-align: center;
 }
 
-.trainInfoBox{
+.trainInfoBox {
   padding: 10px;
-  background-color:#b1d1de;
+  background-color: #b1d1de;
   border-radius: 20px;
   max-width: 150px;
   color: black;
 }
 
-.platformBox{
+.platformBox {
   padding: 10px;
-  background-color:#adceab;
+  background-color: #adceab;
   border-radius: 20px;
   justify-content: center;
   display: flex;
@@ -412,29 +390,26 @@ a.active-animation:active{
     height: 25px;
     padding: 3px;
   }
-
 }
 
-
 @media only screen and (min-width: 700px) {
-  .manualInput{
+  .manualInput {
     display: inline-block;
     min-width: 700px;
     max-width: 1000px;
     padding-top: 0px;
   }
 
-  .highlights{
-    display:inline-block;
-    align-items:center;
+  .highlights {
+    display: inline-block;
+    align-items: center;
     width: 700px;
     text-align: center;
     margin-bottom: 25px;
-
   }
 
   .transactions {
-    display:inline-table;
+    display: inline-table;
     align-items: center;
     text-align: center;
     border-radius: 20px;
@@ -443,20 +418,20 @@ a.active-animation:active{
     max-width: 1000px;
   }
 
-  .tableTR{
-    display:inline-table;
-    text-align:center;
-    text-align-last:center;
+  .tableTR {
+    display: inline-table;
+    text-align: center;
+    text-align-last: center;
   }
 
-  .infoTrain{
-    display:inline-block;
+  .infoTrain {
+    display: inline-block;
     width: 50vw;
     text-align: center;
   }
 
-  .topBanner1{
-    display:inline-block;
+  .topBanner1 {
+    display: inline-block;
     text-align: center;
     border-radius: 20px;
     width: 50vw;
@@ -464,41 +439,40 @@ a.active-animation:active{
     margin-bottom: 10px;
   }
 
-
-  .divRailInput{
-    display:inline-block;
+  .divRailInput {
+    display: inline-block;
     text-align: center;
     background-color: #c1ecf0;
     border-radius: 20px;
     width: 50vw;
   }
 
-  .divCarInput{
-    display:inline-block;
+  .divCarInput {
+    display: inline-block;
     text-align: center;
     background-color: #ffe9e9;
     border-radius: 20px;
     width: 50vw;
   }
 
-  .divBusInput{
-    display:inline-block;
+  .divBusInput {
+    display: inline-block;
     text-align: center;
     background-color: #f5dee9;
     border-radius: 20px;
     width: 50vw;
   }
 
-  .divFlightInput{
-    display:inline-block;
+  .divFlightInput {
+    display: inline-block;
     text-align: center;
     background-color: #ddf0e8;
     border-radius: 20px;
     width: 50vw;
   }
 
-  .optionInput{
-    display:inline-block;
+  .optionInput {
+    display: inline-block;
     min-width: 700px;
     max-width: 1000px;
     text-align: center;
@@ -553,8 +527,8 @@ a.active-animation:active{
     font-size: 15px;
   }
 
-  .titleClass{
-    display:inline-flex;
+  .titleClass {
+    display: inline-flex;
     text-align: center;
     border-radius: 20px;
     padding-left: 10vw;
@@ -575,10 +549,8 @@ a.active-animation:active{
     color: rgb(102, 102, 102);
   }
 
-  navbar.NavBar1{
+  navbar.NavBar1 {
     display: inline-flex;
     margin: -50px;
   }
-
 }
-
