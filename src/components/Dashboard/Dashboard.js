@@ -188,12 +188,14 @@ export default function Dashboard() {
     testFetch = 0;
 
     let response;
+    let failedAlert;
 
     if (remStatus == 1){
         try{
           response = await fetch('https://huxley2.azurewebsites.net/departures/'+fromCode+'/to/'+stationName+'/150'+timeOffset)
         } catch {
           alert("Failed to fetch. Please check internet connection / search criteria.")
+          failedAlert = true;
         }
         trainSearch = "Services from " + fromCode + " to " + stationName;
         secondStation = stationName;
@@ -205,6 +207,7 @@ export default function Dashboard() {
       response = await fetch('https://huxley2.azurewebsites.net/departures/'+stationName+'/150'+timeOffset);
       } catch {
         alert("Failed to fetch. Please check internet connection / search criteria.")
+        failedAlert = true;
       }
       trainSearch = "Services from " + stationName;
       if (testFetch == 1){
@@ -241,7 +244,7 @@ export default function Dashboard() {
 
     }
     catch{
-      alert("Unable to retrieve new results. Previous results may be shown.")
+      if (!failedAlert) alert("Unable to retrieve new results. Previous results may be shown.");
       setIsOpen(false);
     }
     }

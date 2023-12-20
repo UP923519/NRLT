@@ -375,6 +375,7 @@ a.active-animation:active{
   width:100%;
   height:3.5em;
   display:inline-block;
+  
 }
 
 
@@ -443,7 +444,7 @@ a.active-animation:active{
   }
 
   .tableTR{
-    display: inline;
+    display:inline-table;
     text-align:center;
     text-align-last:center;
   }
