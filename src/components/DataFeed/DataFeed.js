@@ -115,7 +115,7 @@ export default function DataFeed() {
     myArray = myArray.slice(0, -2);
 
     if (myArray == "") {
-      alert("No results found");
+      alert("No results found. Check earlier/later times.");
     }
 
     setArrivals(myArray);

@@ -293,8 +293,12 @@ export default function Dashboard() {
             <br />
             <div className="trainInfo">
               <p className={"platformBox"}>
-                <text style={{ fontWeight: "500" }}>Platform:&nbsp; </text>
-                <text>{liveServiceTime.platform}</text>
+                <text style={{ fontWeight: "500", color: "white" }}>
+                  Platform:&nbsp;{" "}
+                </text>
+                <text style={{ color: "white" }}>
+                  {liveServiceTime.platform}
+                </text>
               </p>
             </div>
             <div className="trainInfo">
