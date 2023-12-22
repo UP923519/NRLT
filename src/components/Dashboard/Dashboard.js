@@ -230,6 +230,8 @@ export default function Dashboard() {
 
     try {
       data = await response.json();
+
+      console.log("data is", data);
       liveDeparture = data.trainServices;
       busDeparture = data.busServices;
 
@@ -493,12 +495,19 @@ function getTrainDepartures(stationName) {
   sIdArray = [];
   for (let i = 0; i < liveDeparture.length; i++) {
     sIdArray.push(liveDeparture[i].serviceID);
+    if (liveDeparture[i].destination[0].via == null)
+      liveDeparture[i].destination[0].via = "";
+    if (liveDeparture[i].origin[0].via == null)
+      liveDeparture[i].origin[0].via = "";
     stringDepartures.push(
       liveDeparture[i].std +
         " " +
         liveDeparture[i].destination[0].locationName +
+        " " +
+        liveDeparture[i].destination[0].via +
         " (from " +
         liveDeparture[i].origin[0].locationName +
+        liveDeparture[i].origin[0].via +
         ")  " +
         liveDeparture[i].etd +
         "  p." +

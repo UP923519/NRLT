@@ -132,7 +132,6 @@ export default function Dashboard() {
     }
     try {
       const data = await response.json();
-
       try {
         liveService = data.previousCallingPoints[0].callingPoint;
       } catch {

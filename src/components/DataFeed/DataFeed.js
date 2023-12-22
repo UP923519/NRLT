@@ -384,12 +384,18 @@ function getTrainArrivals(stationName) {
   sIdArray = [];
   for (let i = 0; i < liveArrival.length; i++) {
     sIdArray.push(liveArrival[i].serviceID);
+    if (liveArrival[i].destination[0].via == null)
+      liveArrival[i].destination[0].via = "";
+    if (liveArrival[i].origin[0].via == null) liveArrival[i].origin[0].via = "";
     stringArrivals.push(
       liveArrival[i].sta +
         " " +
         liveArrival[i].destination[0].locationName +
+        " " +
+        liveArrival[i].destination[0].via +
         " (from " +
         liveArrival[i].origin[0].locationName +
+        liveArrival[i].origin[0].via +
         ")  " +
         liveArrival[i].eta +
         "  p." +
