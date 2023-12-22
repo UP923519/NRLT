@@ -114,6 +114,10 @@ export default function DataFeed() {
 
     myArray = myArray.slice(0, -2);
 
+    if (myArray == "") {
+      alert("No results found");
+    }
+
     setArrivals(myArray);
   }
 
