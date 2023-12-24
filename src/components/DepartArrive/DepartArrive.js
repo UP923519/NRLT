@@ -62,7 +62,7 @@ export default function DepartArrive(departArrive) {
   const [isOpenForm, setIsOpenForm] = useState(true);
 
   useEffect(() => {
-    console.log("CURRENT LOCATION", departArrive);
+    console.log("DEPARTARRIVE", departArrive);
     setDepartures(myArray);
     getStation();
 
@@ -91,8 +91,6 @@ export default function DepartArrive(departArrive) {
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
     setDepartures(["Loading..."]);
-
-    console.log("DepartArrive is", departArrive);
 
     if (departArrive == "Arrivals") {
       departArrive = "arrivals";
@@ -536,11 +534,20 @@ export default function DepartArrive(departArrive) {
 
           {isOpenForm && (
             <text>
-              <p style={{ textAlign: "left" }}>Departure station: </p>
+              {departArrive == "Departures" ? (
+                <p style={{ textAlign: "left" }}>Departure station: </p>
+              ) : (
+                <p style={{ textAlign: "left" }}>Arrival station: </p>
+              )}
               <text style={{ textAlign: "left" }}>{trcDropDown}</text>
-              <p style={{ textAlign: "left" }}>
-                Destination station (optional):{" "}
-              </p>
+              {departArrive == "Departures" ? (
+                <p style={{ textAlign: "left" }}>
+                  Destination station (optional):{" "}
+                </p>
+              ) : (
+                <p style={{ textAlign: "left" }}>Origin station (optional): </p>
+              )}
+
               <text style={{ textAlign: "left" }}>{trcDropDownD}</text>
 
               {/* <p>Or type station name manually: </p> */}

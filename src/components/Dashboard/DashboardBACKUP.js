@@ -365,8 +365,6 @@ export default function Dashboard() {
   let navigate = useNavigate();
   const routeChange = (row, index) => {
     let trainInfo = row;
-    console.log("CRS is", liveDeparture[index].serviceID);
-
     row = row.split(" ");
     row = row.pop();
 
