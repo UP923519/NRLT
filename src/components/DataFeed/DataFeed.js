@@ -310,7 +310,9 @@ export default function DataFeed() {
                 {newsLink[0]?.map((row) => (
                   <a href={row}>
                     <br />
-                    {row}
+                    <text style={{ wordBreak: "break-word", hyphens: "auto" }}>
+                      {row}
+                    </text>
                   </a>
                 ))}
               </div>
