@@ -45,6 +45,7 @@ let newsLink = [];
 let myArray = [];
 
 let sIdArray = [];
+let failedAlert;
 
 let contextURL = "";
 
@@ -66,7 +67,9 @@ export default function DepartArrive(departArrive) {
     setDepartures(myArray);
     getStation();
 
-    if (myArray == "") {
+    console.log("failedALert is", failedAlert);
+
+    if (myArray == "" || failedAlert == true) {
       setIsOpen(false);
     }
   }, []);
@@ -82,6 +85,7 @@ export default function DepartArrive(departArrive) {
     textInfo = "There are no messages";
     newsLink = [];
     remStatus = "";
+    trainSearch = "";
     clearValue();
     setIsOpen(false);
     setIsOpenForm(true);
@@ -100,7 +104,7 @@ export default function DepartArrive(departArrive) {
       departArrive = "departures";
       contextURL = "to";
     }
-
+    failedAlert = false;
     toggle();
 
     if (remStatus == "" || remStatus == undefined) {
@@ -266,7 +270,6 @@ export default function DepartArrive(departArrive) {
     testFetch = 0;
 
     let response;
-    let failedAlert;
 
     if (remStatus == 1) {
       try {
@@ -356,9 +359,18 @@ export default function DepartArrive(departArrive) {
 
       runLast();
     } catch {
-      if (!failedAlert)
-        alert("Unable to retrieve new results. Previous results may be shown.");
       setIsOpen(false);
+      if (!failedAlert) {
+        failedAlert = true;
+        if (serviceMessage != "") {
+          alert(serviceMessage[0].value);
+        } else {
+          alert(
+            "Unable to retrieve new results. Previous results may be shown."
+          );
+        }
+      }
+      clearAll();
     }
   }
 
@@ -567,7 +579,7 @@ export default function DepartArrive(departArrive) {
             type="button"
             onClick={() => handleDepartureClick(current)}
           >
-            View/Refresh live departures
+            View/Refresh results
           </button>
         </form>
       </div>
