@@ -63,11 +63,8 @@ export default function DepartArrive(departArrive) {
   const [isOpenForm, setIsOpenForm] = useState(true);
 
   useEffect(() => {
-    console.log("DEPARTARRIVE", departArrive);
     setDepartures(myArray);
     getStation();
-
-    console.log("failedALert is", failedAlert);
 
     if (myArray == "" || failedAlert == true) {
       setIsOpen(false);
@@ -191,40 +188,42 @@ export default function DepartArrive(departArrive) {
       }
     } catch {}
 
-    for (let i = 0; i < brokentextInfo.length; i++) {
-      brokentextInfo[i] = brokentextInfo[i] + " ";
-      if (
-        brokentextInfo[i].includes("below.") &&
-        brokentextInfo[i - 1].includes("link")
-      ) {
-        brokentextInfo[i] = (
-          <text>
-            following:
-            <br />
-            <br />
-            <a href={newsLink[0][found]}>{newsLink[0][found]}</a>
-          </text>
-        );
-        found += 1;
-      }
-      if (
-        i == brokentextInfo.length - 1 &&
-        newsLink.length > 0 &&
-        found != newsLink[0].length
-      ) {
-        showLinks = true;
-      }
-    }
-
-    if (showLinks) {
-      brokentextInfo.push("\n\n");
-
-      for (let i = 0; i < newsLink[0].length; i++) {
-        brokentextInfo.push(<a href={newsLink[0][i]}>{newsLink[0][i]}</a>);
+    try {
+      for (let i = 0; i < brokentextInfo.length; i++) {
+        brokentextInfo[i] = brokentextInfo[i] + " ";
+        if (
+          brokentextInfo[i].includes("below.") &&
+          brokentextInfo[i - 1].includes("link")
+        ) {
+          brokentextInfo[i] = (
+            <text>
+              following:
+              <br />
+              <br />
+              <a href={newsLink[0][found]}>{newsLink[0][found]}</a>
+            </text>
+          );
+          found += 1;
+        }
+        if (
+          i == brokentextInfo.length - 1 &&
+          newsLink.length > 0 &&
+          found != newsLink[0].length
+        ) {
+          showLinks = true;
+        }
       }
 
-      brokentextInfo.push("\n\n");
-    }
+      if (showLinks) {
+        brokentextInfo.push("\n\n");
+
+        for (let i = 0; i < newsLink[0].length; i++) {
+          brokentextInfo.push(<a href={newsLink[0][i]}>{newsLink[0][i]}</a>);
+        }
+
+        brokentextInfo.push("\n\n");
+      }
+    } catch {}
 
     textInfo = brokentextInfo;
 
