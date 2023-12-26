@@ -293,7 +293,7 @@ export default function DepartArrive(departArrive) {
       displayStation = stationTwoD;
     }
 
-    if (displayStation == stationFullName) {
+    if (displayStation == stationFullName && remStatus == 1) {
       stationFullName = stationTwoD;
       stationName = secondStation;
       // displayStation = stationTwoD;
