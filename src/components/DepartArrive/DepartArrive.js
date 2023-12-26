@@ -48,6 +48,7 @@ let sIdArray = [];
 let failedAlert;
 
 let contextURL = "";
+let contextTime;
 
 export default function DepartArrive(departArrive) {
   // const [departArrive, setDepartArrive] = useState();
@@ -63,11 +64,27 @@ export default function DepartArrive(departArrive) {
   const [isOpenForm, setIsOpenForm] = useState(true);
 
   useEffect(() => {
+    console.log("trainsearch is", trainSearch);
+    console.log("departArrive is", departArrive);
+    console.log("failedAlert is", failedAlert);
+
     setDepartures(myArray);
     getStation();
 
     if (myArray == "" || failedAlert == true) {
       setIsOpen(false);
+    } else {
+      if (
+        trainSearch.includes("departing") &&
+        departArrive.includes("Arrival")
+      ) {
+        handleDepartureClick(contextTime);
+      } else if (
+        trainSearch.includes("arriving") &&
+        departArrive.includes("Departure")
+      ) {
+        handleDepartureClick(contextTime);
+      }
     }
   }, []);
 
@@ -92,6 +109,13 @@ export default function DepartArrive(departArrive) {
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
     setDepartures(["Loading..."]);
+
+    let switchFlag = false;
+    if (code == "SWITCH-st") {
+      console.log("TRUE");
+      code = undefined;
+      switchFlag = true;
+    }
 
     if (departArrive == "Arrivals") {
       departArrive = "arrivals";
@@ -133,7 +157,8 @@ export default function DepartArrive(departArrive) {
             remStatus,
             rememberStation,
             departArrive,
-            contextURL
+            contextURL,
+            switchFlag
           )
         );
       }
@@ -151,7 +176,7 @@ export default function DepartArrive(departArrive) {
     }
   }
 
-  function runLast() {
+  function runLast(timeOffset) {
     departuresList = departuresList.replaceAll("p.null", "p.N/A");
     myArray = departuresList.split('"');
 
@@ -231,10 +256,12 @@ export default function DepartArrive(departArrive) {
 
     if (myArray == "") {
       alert("No results found");
+      failedAlert = true;
     }
 
     setDepartures(myArray);
     testFetch = 1;
+    contextTime = timeOffset;
 
     if (remStatus == 1) {
       clearValue();
@@ -247,10 +274,35 @@ export default function DepartArrive(departArrive) {
     status,
     stationFullName,
     departArrive,
-    contextURL
+    contextURL,
+    switchVal
   ) {
     let fromCode = currentCRSCode;
+
+    console.log("CCRS is", currentCRSCode);
+
     let displayStation = stationOneD;
+
+    if (switchVal == true) {
+      let tempVar = fromCode;
+      fromCode = secondStation;
+      stationName = tempVar;
+
+      tempVar = stationFullName;
+      stationFullName = displayStation;
+      displayStation = stationTwoD;
+    }
+
+    if (displayStation == stationFullName) {
+      stationFullName = stationTwoD;
+      stationName = secondStation;
+      // displayStation = stationTwoD;
+    }
+
+    console.log("DEPARTING FROM", displayStation);
+    console.log("GOING TO", stationFullName);
+
+    console.log("switchVal is", switchVal);
 
     if (stationName == "" && remStatus == 1) {
       stationName = secondStation;
@@ -265,6 +317,8 @@ export default function DepartArrive(departArrive) {
     if (status == 0) {
       remStatus = 0;
     }
+
+    // console.log("FC, SN", fromCode, stationName);
 
     testFetch = 0;
 
@@ -356,7 +410,7 @@ export default function DepartArrive(departArrive) {
       let t = getTrainDepartures();
       departuresList = JSON.stringify(t);
 
-      runLast();
+      runLast(timeOffset);
     } catch {
       setIsOpen(false);
       if (!failedAlert) {
@@ -542,7 +596,6 @@ export default function DepartArrive(departArrive) {
             {"↨"}
           </button>
           <br />
-
           {isOpenForm && (
             <text>
               {departArrive == "Departures" ? (
@@ -558,27 +611,29 @@ export default function DepartArrive(departArrive) {
               ) : (
                 <p style={{ textAlign: "left" }}>Origin station (optional): </p>
               )}
-
               <text style={{ textAlign: "left" }}>{trcDropDownD}</text>
-
-              {/* <p>Or type station name manually: </p> */}
-              {/* <label>
-            Enter manually: &nbsp; <input style = {{backgroundColor: "#cfcfcf", border: "0", borderRadius: "2px"}}
-            name="formVal" defaultValue=""
-            onChange={(event) => setFormVal(event.target.value)}/>
-          </label> */}
+              <br />
+              <button
+                type="button"
+                id="useTrains"
+                style={{ fontSize: "small" }}
+                onClick={() => handleDepartureClick(contextTime, "SWITCH-st")}
+              >
+                🔄 Switch stations
+              </button>
               <br />
             </text>
           )}
+
           <button id="useTrains" type="reset" onClick={clearAll}>
-            Reset
+            ❌ Reset
           </button>
           <button
             id="useTrains"
             type="button"
             onClick={() => handleDepartureClick(current)}
           >
-            View/Refresh results
+            🔎 View/Refresh results
           </button>
         </form>
       </div>
