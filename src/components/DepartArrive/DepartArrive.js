@@ -327,7 +327,7 @@ export default function DepartArrive(departArrive) {
     if (remStatus == 1) {
       try {
         response = await fetch(
-          "https://trainwebapp.azurewebsites.net/" +
+          "https://huxley2.azurewebsites.net/" +
             departArrive +
             "/" +
             fromCode +
@@ -361,7 +361,7 @@ export default function DepartArrive(departArrive) {
     } else if (remStatus == 0) {
       try {
         response = await fetch(
-          "https://trainwebapp.azurewebsites.net/" +
+          "https://huxley2.azurewebsites.net/" +
             departArrive +
             "/" +
             stationName +
@@ -428,7 +428,7 @@ export default function DepartArrive(departArrive) {
   }
 
   async function getStation() {
-    const response = await fetch("https://trainwebapp.azurewebsites.net/crs");
+    const response = await fetch("https://huxley2.azurewebsites.net/crs");
     const data = await response.json();
     listStation = data;
     let t = getStationList();
