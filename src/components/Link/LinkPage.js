@@ -253,6 +253,10 @@ export default function Dashboard() {
 
           {isOpenForm && (
             <label>
+              <a href = "https://www.nationalrail.co.uk/status-and-disruptions/">
+              <button type = "button" id="showHide" style={{fontSize:"medium", padding:"15px", background:"#243a5e", color:"white"}}className = "logOut">
+              🔗 Status and disruptions
+               </button></a>
               <p>
                 Service code:&nbsp;{" "}
                 <input
