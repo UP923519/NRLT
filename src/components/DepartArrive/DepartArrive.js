@@ -100,6 +100,9 @@ export default function DepartArrive(departArrive) {
 
     if (myArray == "" || failedAlert == true) {
       setIsOpen(false);
+      setDisplayFirstStation("");
+      setDisplaySecondStation("");
+      console.log("TRUE SO CLOSING");
     } else {
       if (
         trainSearch.includes("departing") &&
