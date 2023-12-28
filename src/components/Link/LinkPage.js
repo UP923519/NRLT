@@ -6,6 +6,7 @@ import {
   calculatePosition,
   calculatePositionCentral,
 } from "./calculatePosition";
+import { currentAzure } from "../Settings/Settings";
 
 let liveDeparture = "";
 let serviceMessage = "";
@@ -33,6 +34,9 @@ let sCode = "";
 
 let failedAlert;
 
+let serverName = "trainwebapp";
+
+
 export default function Dashboard() {
   const [excuseReason, setExcuseReason] = useState();
   const [operatorName, setOperator] = useState();
@@ -45,6 +49,18 @@ export default function Dashboard() {
   const [infoTrainDisplay, setInfoTrain] = useState("");
 
   useEffect(() => {
+
+    console.log("CAZURE L/P is", currentAzure);
+
+    if (currentAzure == "External"){
+      serverName = "huxley2";
+    } else if (currentAzure == "Local"){
+      serverName = "trainwebapp";
+    }
+
+    console.log("Using Server L/P", serverName);
+
+
     setCalling([["Enter a service code above"], []]);
     textInfo = "";
     myArray = [];
@@ -65,6 +81,12 @@ export default function Dashboard() {
 
   function handleServiceClick(e) {
     setCalling([["Loading..."], []]);
+    if (infoTrainDisplay == ""){
+      setInfoTrain("Loading...");
+    }
+    if (excuseReason == null){
+      setExcuseReason("Loading...");
+    }
     toggle();
 
     if (formJson == "") {
@@ -124,8 +146,9 @@ export default function Dashboard() {
   async function logJSONData(serviceID) {
     let response;
     try {
+      console.log("currentAzure is", serverName);
       response = await fetch(
-        "https://huxley2.azurewebsites.net/service/" + serviceID
+        "https://"+serverName+".azurewebsites.net/service/" + serviceID
       );
     } catch {
       alert(

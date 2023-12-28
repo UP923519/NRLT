@@ -51,7 +51,7 @@ let failedAlert;
 let contextURL = "";
 let contextTime;
 
-let serverName = "huxley2";
+let serverName = "trainwebapp";
 let showServiceCode = false;
 
 let rememberFirstStation
@@ -75,10 +75,17 @@ export default function DepartArrive(departArrive) {
 
   useEffect(() => {
 
+    console.log("CAZURE D/A is", currentAzure);
 
-    if (currentAzure == "Local"){
+
+    if (currentAzure == "External"){
+      serverName = "huxley2";
+    } else if (currentAzure == "Local"){
       serverName = "trainwebapp";
     }
+
+    console.log("Using Server D/A", serverName);
+
 
     if (serviceCode == "Show"){
       showServiceCode = true
@@ -660,8 +667,9 @@ export default function DepartArrive(departArrive) {
               ) : (
                 <p style={{ textAlign: "left" }}>Origin station (optional): {displaySecondStation}</p>
               )}
-              <text style={{ textAlign: "left" }}>{trcDropDownD}</text>
+              <text style={{ textAlign: "left"}}>{trcDropDownD}</text>
               <br />
+              {trcDropDownD=="loading..." && <br/>}
               <button
                 type="button"
                 id="useTrains"

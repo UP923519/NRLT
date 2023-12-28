@@ -53,8 +53,8 @@ export default function Settings(){
     useEffect(() => {
         if(currentAzureDisplay == undefined){
             if (currentAzure == undefined){
-                currentAzure = "External";
-                setCurrentAzureDisplay("External");
+                currentAzure = "Local";
+                setCurrentAzureDisplay("Local");
             } else {
                 setCurrentAzureDisplay (currentAzure);
 
@@ -121,19 +121,18 @@ export default function Settings(){
     }
 
     function changeAzure(){
-    if (currentAzure == "Local" ){
-        currentAzure = "External";
-        setCurrentAzureDisplay("External");
-    }
-     else if (currentAzure == "External"){
+    if (currentAzure == "External"){
         currentAzure = "Local";
-
         setCurrentAzureDisplay("Local");
     }
-    if (currentAzure == undefined){
+    else if (currentAzure == "Local" ){
         currentAzure = "External";
-
         setCurrentAzureDisplay("External");
+    }
+
+    if (currentAzure == undefined){
+        currentAzure = "Local";
+        setCurrentAzureDisplay("Local");
 
 
     }
