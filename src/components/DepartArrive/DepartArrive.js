@@ -6,6 +6,7 @@ import image from "../../assets/nre-logo.png";
 import Dashboard1 from "../Link/LinkPage";
 import { useNavigate } from "react-router-dom";
 import { test1 } from "../Link/LinkPage";
+import { currentAzure, serviceCode } from "../Settings/Settings";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -34,7 +35,7 @@ var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
 let departuresList = "test";
 let stationsList = "";
 
-let textInfo = "There are no messages";
+let textInfo = "loading...";
 let trainSearch = "";
 let newsLinkEx = new RegExp(
   "(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))",
@@ -50,6 +51,13 @@ let failedAlert;
 let contextURL = "";
 let contextTime;
 
+let serverName = "huxley2";
+let showServiceCode = false;
+
+let rememberFirstStation
+let rememberSecondStation
+
+
 export default function DepartArrive(departArrive) {
   // const [departArrive, setDepartArrive] = useState();
   const [stringDepartures, setDepartures] = useState([]);
@@ -62,11 +70,23 @@ export default function DepartArrive(departArrive) {
   const [stationTwo, setStationTwo] = useState();
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenForm, setIsOpenForm] = useState(true);
+  const [displayFirstStation, setDisplayFirstStation] = useState("");
+  const [displaySecondStation, setDisplaySecondStation] = useState("");
 
   useEffect(() => {
-    console.log("trainsearch is", trainSearch);
-    console.log("departArrive is", departArrive);
-    console.log("failedAlert is", failedAlert);
+
+
+    if (currentAzure == "Local"){
+      serverName = "trainwebapp";
+    }
+
+    if (serviceCode == "Show"){
+      showServiceCode = true
+    }
+
+    setDisplayFirstStation(rememberFirstStation);
+    setDisplaySecondStation(rememberSecondStation);
+
 
     setDepartures(myArray);
     getStation();
@@ -96,23 +116,29 @@ export default function DepartArrive(departArrive) {
 
   function clearAll(e) {
     setDepartures([]);
-    textInfo = "There are no messages";
+    textInfo = "loading...";
     newsLink = [];
     remStatus = "";
     trainSearch = "";
     clearValue();
     setIsOpen(false);
     setIsOpenForm(true);
+    setDisplayFirstStation("");
+    setDisplaySecondStation("");
+    rememberFirstStation = "";
+    rememberSecondStation = "";
+
   }
 
   const displayAction = false;
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
     setDepartures(["Loading..."]);
+    textInfo = "loading..."
+    trainSearch = "loading..."
 
     let switchFlag = false;
     if (code == "SWITCH-st") {
-      console.log("TRUE");
       code = undefined;
       switchFlag = true;
     }
@@ -257,6 +283,9 @@ export default function DepartArrive(departArrive) {
     if (myArray == "") {
       alert("No results found");
       failedAlert = true;
+      if (currentCRSCode == undefined){
+        clearAll();
+      }
     }
 
     setDepartures(myArray);
@@ -279,9 +308,13 @@ export default function DepartArrive(departArrive) {
   ) {
     let fromCode = currentCRSCode;
 
-    console.log("CCRS is", currentCRSCode);
 
     let displayStation = stationOneD;
+
+
+    if (status == 0) {
+      remStatus = 0;
+    }
 
     if (switchVal == true) {
       let tempVar = fromCode;
@@ -299,10 +332,7 @@ export default function DepartArrive(departArrive) {
       // displayStation = stationTwoD;
     }
 
-    console.log("DEPARTING FROM", displayStation);
-    console.log("GOING TO", stationFullName);
-
-    console.log("switchVal is", switchVal);
+ 
 
     if (stationName == "" && remStatus == 1) {
       stationName = secondStation;
@@ -314,12 +344,6 @@ export default function DepartArrive(departArrive) {
       stationFullName = stationOneD;
     }
 
-    if (status == 0) {
-      remStatus = 0;
-    }
-
-    // console.log("FC, SN", fromCode, stationName);
-
     testFetch = 0;
 
     let response;
@@ -327,7 +351,7 @@ export default function DepartArrive(departArrive) {
     if (remStatus == 1) {
       try {
         response = await fetch(
-          "https://huxley2.azurewebsites.net/" +
+          "https://"+serverName+".azurewebsites.net/" +
             departArrive +
             "/" +
             fromCode +
@@ -353,6 +377,11 @@ export default function DepartArrive(departArrive) {
           "Services arriving at " + displayStation + " from " + stationFullName;
       }
 
+      setDisplayFirstStation(displayStation);
+      rememberFirstStation = displayStation;
+      setDisplaySecondStation(stationFullName);
+      rememberSecondStation = stationFullName;
+
       secondStation = stationName;
       stationTwoD = stationFullName;
       if (testFetch == 1) {
@@ -361,7 +390,7 @@ export default function DepartArrive(departArrive) {
     } else if (remStatus == 0) {
       try {
         response = await fetch(
-          "https://huxley2.azurewebsites.net/" +
+          "https://"+serverName+".azurewebsites.net/" +
             departArrive +
             "/" +
             stationName +
@@ -379,6 +408,11 @@ export default function DepartArrive(departArrive) {
       if (departArrive == "arrivals") {
         trainSearch = trainSearch = "Services arriving at " + stationFullName;
       }
+      setDisplayFirstStation(stationFullName);
+      setDisplaySecondStation("");
+      rememberFirstStation = displayStation;
+      rememberSecondStation = "";
+
 
       setStationTwo("");
       if (testFetch == 1) {
@@ -428,7 +462,9 @@ export default function DepartArrive(departArrive) {
   }
 
   async function getStation() {
-    const response = await fetch("https://huxley2.azurewebsites.net/crs");
+    setTRC("loading...");
+    setTRCD("loading...");
+    const response = await fetch("https://"+serverName+".azurewebsites.net/crs");
     const data = await response.json();
     listStation = data;
     let t = getStationList();
@@ -487,7 +523,6 @@ export default function DepartArrive(departArrive) {
   let navigate = useNavigate();
   const routeChange = (row, index) => {
     let trainInfo = row;
-    console.log("CRS is", liveDeparture[index].serviceID);
 
     row = row.split(" ");
     row = row.pop();
@@ -500,7 +535,9 @@ export default function DepartArrive(departArrive) {
 
   function getTrainDepartures() {
     let stringDepartures = [];
+    let sCode = "";
     sIdArray = [];
+
 
     if (departArrive == "arrivals") {
       for (let i = 0; i < liveDeparture.length; i++) {
@@ -509,6 +546,11 @@ export default function DepartArrive(departArrive) {
           liveDeparture[i].destination[0].via = "";
         if (liveDeparture[i].origin[0].via == null)
           liveDeparture[i].origin[0].via = "";
+        if (serviceCode == "Show"){
+          sCode = "|" + liveDeparture[i].serviceID
+        } else {
+          sCode = ""
+        }
         stringDepartures.push(
           liveDeparture[i].sta +
             " " +
@@ -521,7 +563,8 @@ export default function DepartArrive(departArrive) {
             ")  " +
             liveDeparture[i].eta +
             "  p." +
-            liveDeparture[i].platform
+            liveDeparture[i].platform +
+            sCode
         );
       }
     }
@@ -532,6 +575,11 @@ export default function DepartArrive(departArrive) {
           liveDeparture[i].destination[0].via = "";
         if (liveDeparture[i].origin[0].via == null)
           liveDeparture[i].origin[0].via = "";
+          if (serviceCode == "Show"){
+            sCode = "|" + liveDeparture[i].serviceID
+          } else {
+            sCode = ""
+          }
         stringDepartures.push(
           liveDeparture[i].std +
             " " +
@@ -544,7 +592,8 @@ export default function DepartArrive(departArrive) {
             ")  " +
             liveDeparture[i].etd +
             "  p." +
-            liveDeparture[i].platform
+            liveDeparture[i].platform +
+            sCode
         );
       }
     }
@@ -599,17 +648,17 @@ export default function DepartArrive(departArrive) {
           {isOpenForm && (
             <text>
               {departArrive == "Departures" ? (
-                <p style={{ textAlign: "left" }}>Departure station: </p>
+                <p style={{ textAlign: "left" }}>Departure station: {displayFirstStation}</p>
               ) : (
-                <p style={{ textAlign: "left" }}>Arrival station: </p>
+                <p style={{ textAlign: "left" }}>Arrival station: {displayFirstStation}</p>
               )}
               <text style={{ textAlign: "left" }}>{trcDropDown}</text>
               {departArrive == "Departures" ? (
                 <p style={{ textAlign: "left" }}>
-                  Destination station (optional):{" "}
+                  Destination station (optional): {displaySecondStation}
                 </p>
               ) : (
-                <p style={{ textAlign: "left" }}>Origin station (optional): </p>
+                <p style={{ textAlign: "left" }}>Origin station (optional): {displaySecondStation}</p>
               )}
               <text style={{ textAlign: "left" }}>{trcDropDownD}</text>
               <br />

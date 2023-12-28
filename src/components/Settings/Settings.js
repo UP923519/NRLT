@@ -7,8 +7,10 @@ import byebye from '../App/App.js';
 
 export let currentFontSize;
 export let currentTheme;
+export let currentAzure;
+export let serviceCode;
 
-console.log (localStorage.getItem("darkMode"));
+
 
 if (localStorage.getItem("fontSize") == null){
     currentFontSize = "Standard font size"
@@ -44,19 +46,42 @@ if (localStorage.getItem("darkMode") == "#8297b5"){
 export default function Settings(){
     const [fontSize, setFontSize] = useState(16);
     const { token, setToken, removeToken, getToken} = useToken();
+    const [currentAzureDisplay, setCurrentAzureDisplay] = useState();
+    const [serviceCodeDisplay, setServiceCodeDisplay] = useState();
+
     
+    useEffect(() => {
+        if(currentAzureDisplay == undefined){
+            if (currentAzure == undefined){
+                currentAzure = "External";
+                setCurrentAzureDisplay("External");
+            } else {
+                setCurrentAzureDisplay (currentAzure);
+
+            }
+        }
+
+        if(serviceCodeDisplay == undefined){
+            if (serviceCode == undefined){
+                serviceCode = "Hide";
+                setServiceCodeDisplay("Hide");
+            } else {
+                setServiceCodeDisplay (serviceCode);
+
+            }
+        }
+
+    }, []);
 
 
     function fontSizeIncrease(){
         setFontSize(fontSize + 2);
         localStorage.setItem("fontSize", 18);
-        console.log (localStorage.getItem("fontSize"));
     }
 
     function fontSizeDecrease(){
         setFontSize(fontSize - 2);
         localStorage.setItem("fontSize", 11);
-        //console.log (localStorage.getItem("fontSize"));
 
     }
 
@@ -64,7 +89,6 @@ export default function Settings(){
     function fontSizeReset(){
         setFontSize(fontSize - 2);
         localStorage.setItem("fontSize", 16);
-        console.log (localStorage.getItem("fontSize"));
 
     }
 
@@ -96,6 +120,42 @@ export default function Settings(){
         window.location.reload();
     }
 
+    function changeAzure(){
+    if (currentAzure == "Local" ){
+        currentAzure = "External";
+        setCurrentAzureDisplay("External");
+    }
+     else if (currentAzure == "External"){
+        currentAzure = "Local";
+
+        setCurrentAzureDisplay("Local");
+    }
+    if (currentAzure == undefined){
+        currentAzure = "External";
+
+        setCurrentAzureDisplay("External");
+
+
+    }
+
+
+    }
+
+    function showServiceCode(){
+        if (serviceCode == "Show" ){
+            serviceCode = "Hide";
+            setServiceCodeDisplay("Hide");
+        }
+         else if (serviceCode == "Hide" ){
+            serviceCode = "Show";
+            setServiceCodeDisplay("Show");
+        }
+        if (serviceCode == undefined){
+            serviceCode = "Hide";
+            setServiceCodeDisplay("Hide");
+        }    
+        }
+
 
     return(
         <div style={{width:"98vw", height:"100vh"}}>
@@ -107,9 +167,25 @@ export default function Settings(){
                 </button></h4>
             </div>
             <br/>
+            <div className = "optionInput" style={{background:"#b9ebe5"}}>
+                <h3>Data Settings</h3>
+                <div> Azure server: {currentAzureDisplay} owner<br/>
+                <button id = "useCurrentLocation" onClick={changeAzure}>
+                            Use Local / External Azure
+                        </button>
+                </div>
+                <br/>
+                <div> Show service code in departures/arrivals: {serviceCodeDisplay}<br/>
+                <button id = "useCurrentLocation" onClick={showServiceCode}>
+                            Show/hide
+                </button>
+                </div>
+                <br/>
+            </div>
+            <br/><br/>
             <div className = "optionInput">
                 <h3>Display Settings</h3>
-                <div> Current theme: {currentTheme}<br/>
+                <div> Theme: {currentTheme}<br/>
 
                         <button id = "useCurrentLocation" onClick={darkMode}>
                             Dark mode
@@ -122,7 +198,8 @@ export default function Settings(){
                         </button>
                 </div>
                 <br/>
-                <div> Current font size: {currentFontSize}<br/>
+
+                <div> Font size: {currentFontSize}<br/>
                     <button id = "useCurrentLocation" onClick={fontSizeIncrease}>
                         + Large font size
                     </button>
@@ -145,6 +222,8 @@ export default function Settings(){
                 </button>
                 <br/><br/>
             </div>
+            <br/><br/>
+
         </div>
     )
 

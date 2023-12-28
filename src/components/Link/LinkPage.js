@@ -82,6 +82,9 @@ export default function Dashboard() {
   function runLast() {
     let infoTrainSet = infoTrain;
 
+    // infoTrainSet = infoTrainSet.replace("Cancelled","");
+    // infoTrainSet = infoTrainSet.replace("Delayed","");
+
     infoTrainSet = infoTrainSet.replace(
       " ",
       " at " + liveServiceTime.locationName + ": "
@@ -90,6 +93,8 @@ export default function Dashboard() {
     infoTrainSet.pop();
     infoTrainSet.pop();
     infoTrainSet.pop();
+
+
 
     // console.log("Origin Station is", liveServiceTime.locationName);
 
@@ -253,8 +258,9 @@ export default function Dashboard() {
 
           {isOpenForm && (
             <label>
+              National Rail status page: <br/>
               <a href = "https://www.nationalrail.co.uk/status-and-disruptions/">
-              <button type = "button" id="showHide" style={{fontSize:"medium", padding:"15px", background:"#243a5e", color:"white"}}className = "logOut">
+              <button type = "button" id="showHide" style={{fontSize:"medium", marginTop: "5px", padding:"9px", background:"#243a5eAA", color:"white"}}className = "logOut">
               🔗 Status and disruptions
                </button></a>
               <p>
