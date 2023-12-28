@@ -40,6 +40,7 @@ let serverName = "trainwebapp";
 export default function Dashboard() {
   const [excuseReason, setExcuseReason] = useState();
   const [operatorName, setOperator] = useState();
+  const [platformNumber, setPlatformNumber] = useState();
   const [formationCar, setFormatiion] = useState();
   const [stringCalling, setCalling] = useState([[], []]);
   const [formVal, setFormVal] = useState("");
@@ -236,6 +237,8 @@ export default function Dashboard() {
       t = t.replaceAll("*undefined", "");
       t = t.replaceAll("undefined", "");
 
+      setPlatformNumber(liveServiceTime.platform)
+
       locationList = t;
 
       runLast();
@@ -316,7 +319,7 @@ export default function Dashboard() {
       <hr />
 
       <div className="App">
-        {isOpen && liveServiceTime && (
+        {isOpen && (
           <div>
             <p className="infoTrain" style={{ margin: "0px" }}>
               {infoTrainDisplay}
@@ -329,7 +332,7 @@ export default function Dashboard() {
                   Platform:&nbsp;{" "}
                 </text>
                 <text style={{ color: "white" }}>
-                  {liveServiceTime.platform}
+                  {platformNumber}
                 </text>
               </p>
             </div>
