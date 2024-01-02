@@ -392,6 +392,8 @@ export default function DepartArrive(departArrive) {
       setDisplaySecondStation(stationFullName);
       rememberSecondStation = stationFullName;
 
+      console.log("remFirstSt is", rememberFirstStation)
+
       secondStation = stationName;
       stationTwoD = stationFullName;
       if (testFetch == 1) {
@@ -420,7 +422,7 @@ export default function DepartArrive(departArrive) {
       }
       setDisplayFirstStation(stationFullName);
       setDisplaySecondStation("");
-      rememberFirstStation = displayStation;
+      rememberFirstStation = stationFullName;
       rememberSecondStation = "";
 
 
