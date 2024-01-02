@@ -50,16 +50,11 @@ export default function Dashboard() {
   const [infoTrainDisplay, setInfoTrain] = useState("");
 
   useEffect(() => {
-
-    console.log("CAZURE L/P is", currentAzure);
-
     if (currentAzure == "External"){
       serverName = "huxley2";
     } else if (currentAzure == "Local"){
       serverName = "trainwebapp";
     }
-
-    console.log("Using Server L/P", serverName);
 
 
     setCalling([["Enter a service code above"], []]);
@@ -147,7 +142,6 @@ export default function Dashboard() {
   async function logJSONData(serviceID) {
     let response;
     try {
-      console.log("currentAzure is", serverName);
       response = await fetch(
         "https://"+serverName+".azurewebsites.net/service/" + serviceID
       );

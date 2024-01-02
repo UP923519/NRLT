@@ -18,7 +18,7 @@ let colour = "black";
 
 
 if (localStorage.getItem("darkMode") == "#000000"){
-  console.log("darkModeActive");
+  // console.log("darkModeActive");
   backGroundColour = "#c1ecf0";
   colour = "#ffffff";
 }

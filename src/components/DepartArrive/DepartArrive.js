@@ -75,17 +75,11 @@ export default function DepartArrive(departArrive) {
 
   useEffect(() => {
 
-    console.log("CAZURE D/A is", currentAzure);
-
-
     if (currentAzure == "External"){
       serverName = "huxley2";
     } else if (currentAzure == "Local"){
       serverName = "trainwebapp";
     }
-
-    console.log("Using Server D/A", serverName);
-
 
     if (serviceCode == "Show"){
       showServiceCode = true
@@ -102,7 +96,6 @@ export default function DepartArrive(departArrive) {
       setIsOpen(false);
       setDisplayFirstStation("");
       setDisplaySecondStation("");
-      console.log("TRUE SO CLOSING");
     } else {
       if (
         trainSearch.includes("departing") &&
@@ -391,8 +384,6 @@ export default function DepartArrive(departArrive) {
       rememberFirstStation = displayStation;
       setDisplaySecondStation(stationFullName);
       rememberSecondStation = stationFullName;
-
-      console.log("remFirstSt is", rememberFirstStation)
 
       secondStation = stationName;
       stationTwoD = stationFullName;

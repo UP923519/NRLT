@@ -16,7 +16,6 @@ var passwFormat=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$/;
 
 
 async function getPassWord(username){
-  console.log("username is ", username);
   const dbref = query(ref(db, username+"Login"));
   records = [];
   onValue(dbref, (snapshot)=>{
@@ -24,7 +23,6 @@ async function getPassWord(username){
         let keyName = childSnapshot.key;
         let data = childSnapshot.val();
         records.push({"date": keyName, "data":data})
-        console.log("datais", data)
     });
   });
   return records;
@@ -35,7 +33,6 @@ export var first_function = function(username) {
   return new Promise(resolve => {
       setTimeout(function() {
       resolve(t);
-      console.log("Returned first promise");
       }, 0);
   });
   };
@@ -44,7 +41,6 @@ async function verifyUser(username, hashedPassword) {
   first_promise = await first_function(username);
     try {
       let test = first_promise[0].data.Password;
-      console.log ("promise is", first_promise[0].data.Password);
       alert("An error occurred, please try again.");
     } catch (error) {
       set(ref(db, username+"Login"+"/"+"Login"+"/"),
