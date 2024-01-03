@@ -54,9 +54,8 @@ let contextTime;
 let serverName = "trainwebapp";
 let showServiceCode = false;
 
-let rememberFirstStation
-let rememberSecondStation
-
+let rememberFirstStation;
+let rememberSecondStation;
 
 export default function DepartArrive(departArrive) {
   // const [departArrive, setDepartArrive] = useState();
@@ -72,22 +71,21 @@ export default function DepartArrive(departArrive) {
   const [isOpenForm, setIsOpenForm] = useState(true);
   const [displayFirstStation, setDisplayFirstStation] = useState("");
   const [displaySecondStation, setDisplaySecondStation] = useState("");
+  const [staffData, setStaffData] = useState("");
 
   useEffect(() => {
-
-    if (currentAzure == "External"){
+    if (currentAzure == "External") {
       serverName = "huxley2";
-    } else if (currentAzure == "Local"){
+    } else if (currentAzure == "Local") {
       serverName = "trainwebapp";
     }
 
-    if (serviceCode == "Show"){
-      showServiceCode = true
+    if (serviceCode == "Show") {
+      showServiceCode = true;
     }
 
     setDisplayFirstStation(rememberFirstStation);
     setDisplaySecondStation(rememberSecondStation);
-
 
     setDepartures(myArray);
     getStation();
@@ -130,15 +128,14 @@ export default function DepartArrive(departArrive) {
     setDisplaySecondStation("");
     rememberFirstStation = "";
     rememberSecondStation = "";
-
   }
 
   const displayAction = false;
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
     setDepartures(["Loading..."]);
-    textInfo = "loading..."
-    trainSearch = "loading..."
+    textInfo = "loading...";
+    trainSearch = "loading...";
 
     let switchFlag = false;
     if (code == "SWITCH-st") {
@@ -286,7 +283,7 @@ export default function DepartArrive(departArrive) {
     if (myArray == "") {
       alert("No results found");
       failedAlert = true;
-      if (currentCRSCode == undefined){
+      if (currentCRSCode == undefined) {
         clearAll();
       }
     }
@@ -311,9 +308,7 @@ export default function DepartArrive(departArrive) {
   ) {
     let fromCode = currentCRSCode;
 
-
     let displayStation = stationOneD;
-
 
     if (status == 0) {
       remStatus = 0;
@@ -335,8 +330,6 @@ export default function DepartArrive(departArrive) {
       // displayStation = stationTwoD;
     }
 
- 
-
     if (stationName == "" && remStatus == 1) {
       stationName = secondStation;
       stationFullName = stationTwoD;
@@ -350,11 +343,27 @@ export default function DepartArrive(departArrive) {
     testFetch = 0;
 
     let response;
+    let staffResponse;
 
     if (remStatus == 1) {
       try {
         response = await fetch(
-          "https://"+serverName+".azurewebsites.net/" +
+          "https://" +
+            serverName +
+            ".azurewebsites.net/" +
+            departArrive +
+            "/" +
+            fromCode +
+            "/" +
+            contextURL +
+            "/" +
+            stationName +
+            "/150" +
+            timeOffset
+        );
+        staffResponse = await fetch(
+          "https://huxley2.azurewebsites.net/" +
+            "staff" +
             departArrive +
             "/" +
             fromCode +
@@ -393,7 +402,19 @@ export default function DepartArrive(departArrive) {
     } else if (remStatus == 0) {
       try {
         response = await fetch(
-          "https://"+serverName+".azurewebsites.net/" +
+          "https://" +
+            serverName +
+            ".azurewebsites.net/" +
+            departArrive +
+            "/" +
+            stationName +
+            "/150" +
+            timeOffset
+        );
+        staffResponse = await fetch(
+          "https://" +
+            "huxley2.azurewebsites.net/" +
+            "staff" +
             departArrive +
             "/" +
             stationName +
@@ -416,7 +437,6 @@ export default function DepartArrive(departArrive) {
       rememberFirstStation = stationFullName;
       rememberSecondStation = "";
 
-
       setStationTwo("");
       if (testFetch == 1) {
         alert("Network timed out, results may be incorrect.");
@@ -427,6 +447,9 @@ export default function DepartArrive(departArrive) {
 
     try {
       data = await response.json();
+      setStaffData(await staffResponse.json());
+      console.log("DATA is", data);
+      // console.log("staffData is", staffData);
 
       liveDeparture = data.trainServices;
       busDeparture = data.busServices;
@@ -467,7 +490,9 @@ export default function DepartArrive(departArrive) {
   async function getStation() {
     setTRC("loading...");
     setTRCD("loading...");
-    const response = await fetch("https://"+serverName+".azurewebsites.net/crs");
+    const response = await fetch(
+      "https://" + serverName + ".azurewebsites.net/crs"
+    );
     const data = await response.json();
     listStation = data;
     let t = getStationList();
@@ -525,6 +550,7 @@ export default function DepartArrive(departArrive) {
 
   let navigate = useNavigate();
   const routeChange = (row, index) => {
+    const staffUID = staffData.trainServices[index].uid;
     let trainInfo = row;
 
     row = row.split(" ");
@@ -533,14 +559,13 @@ export default function DepartArrive(departArrive) {
     let path = "/linkPage";
     navigate(path);
 
-    test1(sIdArray[index], trainInfo);
+    test1(sIdArray[index], trainInfo, staffUID);
   };
 
   function getTrainDepartures() {
     let stringDepartures = [];
     let sCode = "";
     sIdArray = [];
-
 
     if (departArrive == "arrivals") {
       for (let i = 0; i < liveDeparture.length; i++) {
@@ -549,10 +574,10 @@ export default function DepartArrive(departArrive) {
           liveDeparture[i].destination[0].via = "";
         if (liveDeparture[i].origin[0].via == null)
           liveDeparture[i].origin[0].via = "";
-        if (serviceCode == "Show"){
-          sCode = "|" + liveDeparture[i].serviceID
+        if (serviceCode == "Show") {
+          sCode = "|" + liveDeparture[i].serviceID;
         } else {
-          sCode = ""
+          sCode = "";
         }
         stringDepartures.push(
           liveDeparture[i].sta +
@@ -578,11 +603,11 @@ export default function DepartArrive(departArrive) {
           liveDeparture[i].destination[0].via = "";
         if (liveDeparture[i].origin[0].via == null)
           liveDeparture[i].origin[0].via = "";
-          if (serviceCode == "Show"){
-            sCode = "|" + liveDeparture[i].serviceID
-          } else {
-            sCode = ""
-          }
+        if (serviceCode == "Show") {
+          sCode = "|" + liveDeparture[i].serviceID;
+        } else {
+          sCode = "";
+        }
         stringDepartures.push(
           liveDeparture[i].std +
             " " +
@@ -651,9 +676,13 @@ export default function DepartArrive(departArrive) {
           {isOpenForm && (
             <text>
               {departArrive == "Departures" ? (
-                <p style={{ textAlign: "left" }}>Departure station: {displayFirstStation}</p>
+                <p style={{ textAlign: "left" }}>
+                  Departure station: {displayFirstStation}
+                </p>
               ) : (
-                <p style={{ textAlign: "left" }}>Arrival station: {displayFirstStation}</p>
+                <p style={{ textAlign: "left" }}>
+                  Arrival station: {displayFirstStation}
+                </p>
               )}
               <text style={{ textAlign: "left" }}>{trcDropDown}</text>
               {departArrive == "Departures" ? (
@@ -661,11 +690,13 @@ export default function DepartArrive(departArrive) {
                   Destination station (optional): {displaySecondStation}
                 </p>
               ) : (
-                <p style={{ textAlign: "left" }}>Origin station (optional): {displaySecondStation}</p>
+                <p style={{ textAlign: "left" }}>
+                  Origin station (optional): {displaySecondStation}
+                </p>
               )}
-              <text style={{ textAlign: "left"}}>{trcDropDownD}</text>
+              <text style={{ textAlign: "left" }}>{trcDropDownD}</text>
               <br />
-              {trcDropDownD=="loading..." && <br/>}
+              {trcDropDownD == "loading..." && <br />}
               <button
                 type="button"
                 id="useTrains"

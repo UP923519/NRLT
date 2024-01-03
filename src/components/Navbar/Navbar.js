@@ -12,7 +12,6 @@ import { HashLink } from "react-router-hash-link";
 
 import App from "../App/App.css";
 import LinkPage from "../Link/LinkPage";
-import Product from "../Product/Product";
 import Dashboard from "../Dashboard/Dashboard";
 import DataFeed from "../DataFeed/DataFeed";
 import DepartArrive from "../DepartArrive/DepartArrive";
@@ -60,7 +59,6 @@ const Navbar = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dataFeed" element={<DataFeed />} />
         <Route path="/linkPage" element={<LinkPage />} />
-        <Route path="/product" element={<Product />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/" element={<Navigate to="/dashboard" />} />

@@ -29,13 +29,13 @@ let divideLocation;
 
 let formJson = "";
 let infoTrain = "";
+let staffUIDVal = "";
 
 let sCode = "";
 
 let failedAlert;
 
 let serverName = "trainwebapp";
-
 
 export default function Dashboard() {
   const [excuseReason, setExcuseReason] = useState();
@@ -46,16 +46,18 @@ export default function Dashboard() {
   const [formVal, setFormVal] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenForm, setIsOpenForm] = useState(false);
-
   const [infoTrainDisplay, setInfoTrain] = useState("");
+  const currentDate = new Date();
+  const useDate = currentDate.toISOString().split("T")[0];
+  const [staffSCode, setStaffSCode] = useState("");
+  const [trainDetailUrl, setTrainDetailUrl] = useState("");
 
   useEffect(() => {
-    if (currentAzure == "External"){
+    if (currentAzure == "External") {
       serverName = "huxley2";
-    } else if (currentAzure == "Local"){
+    } else if (currentAzure == "Local") {
       serverName = "trainwebapp";
     }
-
 
     setCalling([["Enter a service code above"], []]);
     textInfo = "";
@@ -77,10 +79,10 @@ export default function Dashboard() {
 
   function handleServiceClick(e) {
     setCalling([["Loading..."], []]);
-    if (infoTrainDisplay == ""){
+    if (infoTrainDisplay == "") {
       setInfoTrain("Loading...");
     }
-    if (excuseReason == null){
+    if (excuseReason == null) {
       setExcuseReason("Loading...");
     }
     toggle();
@@ -112,8 +114,6 @@ export default function Dashboard() {
     infoTrainSet.pop();
     infoTrainSet.pop();
 
-
-
     // console.log("Origin Station is", liveServiceTime.locationName);
 
     // console.log(
@@ -137,13 +137,21 @@ export default function Dashboard() {
     myArray[myArray.length - 1] = myArray[myArray.length - 1].replace('"}', "");
 
     setCalling(myArray);
+
+    setTrainDetailUrl(
+      "https://www.realtimetrains.co.uk/service/gb-nr:" +
+        staffUIDVal +
+        "/" +
+        useDate +
+        "/detailed"
+    );
   }
 
   async function logJSONData(serviceID) {
     let response;
     try {
       response = await fetch(
-        "https://"+serverName+".azurewebsites.net/service/" + serviceID
+        "https://" + serverName + ".azurewebsites.net/service/" + serviceID
       );
     } catch {
       alert(
@@ -155,6 +163,7 @@ export default function Dashboard() {
     }
     try {
       const data = await response.json();
+      // console.log("DATA is", data);
       try {
         liveService = data.previousCallingPoints[0].callingPoint;
       } catch {
@@ -231,7 +240,7 @@ export default function Dashboard() {
       t = t.replaceAll("*undefined", "");
       t = t.replaceAll("undefined", "");
 
-      setPlatformNumber(liveServiceTime.platform)
+      setPlatformNumber(liveServiceTime.platform);
 
       locationList = t;
 
@@ -278,11 +287,23 @@ export default function Dashboard() {
 
           {isOpenForm && (
             <label>
-              National Rail status page: <br/>
-              <a href = "https://www.nationalrail.co.uk/status-and-disruptions/">
-              <button type = "button" id="showHide" style={{fontSize:"medium", marginTop: "5px", padding:"9px", background:"#243a5eAA", color:"white"}}className = "logOut">
-              🔗 Status and disruptions
-               </button></a>
+              National Rail status page: <br />
+              <a href="https://www.nationalrail.co.uk/status-and-disruptions/">
+                <button
+                  type="button"
+                  id="showHide"
+                  style={{
+                    fontSize: "medium",
+                    marginTop: "5px",
+                    padding: "9px",
+                    background: "#243a5eAA",
+                    color: "white",
+                  }}
+                  className="logOut"
+                >
+                  🔗 Status and disruptions
+                </button>
+              </a>
               <p>
                 Service code:&nbsp;{" "}
                 <input
@@ -325,9 +346,7 @@ export default function Dashboard() {
                 <text style={{ fontWeight: "500", color: "white" }}>
                   Platform:&nbsp;{" "}
                 </text>
-                <text style={{ color: "white" }}>
-                  {platformNumber}
-                </text>
+                <text style={{ color: "white" }}>{platformNumber}</text>
               </p>
             </div>
             <div className="trainInfo">
@@ -383,6 +402,14 @@ export default function Dashboard() {
             </Table>
             <br />
             <br />
+            <div>
+              <iframe
+                style={{ width: "95vw" }}
+                id="iFrameExample"
+                title="iFrame Example"
+                src={trainDetailUrl}
+              ></iframe>
+            </div>
           </div>
         )}
       </div>
@@ -394,11 +421,12 @@ export default function Dashboard() {
   );
 }
 
-export function test1(number, trainInfo) {
+export function test1(number, trainInfo, staffUID) {
   formJson = number;
 
   trainInfo = trainInfo.replaceAll(" ", " + ");
   trainInfo = trainInfo.replaceAll("On", " ");
 
   infoTrain = trainInfo;
+  staffUIDVal = staffUID;
 }
