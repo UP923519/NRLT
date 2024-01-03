@@ -404,7 +404,7 @@ export default function Dashboard() {
             <br />
             <div>
               <iframe
-                style={{ width: "95vw", height: "293px" }}
+                style={{ width: "95vw", height: "250px" }}
                 id="iFrameExample"
                 title="iFrame Example"
                 src={trainDetailUrl}
