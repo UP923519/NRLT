@@ -10,6 +10,7 @@ import { currentAzure, serviceCode } from "../Settings/Settings";
 
 let liveDeparture = "";
 let busDeparture = "";
+let staffData = "";
 
 let serviceMessage = "";
 let listStation = "";
@@ -71,7 +72,6 @@ export default function DepartArrive(departArrive) {
   const [isOpenForm, setIsOpenForm] = useState(true);
   const [displayFirstStation, setDisplayFirstStation] = useState("");
   const [displaySecondStation, setDisplaySecondStation] = useState("");
-  const [staffData, setStaffData] = useState("");
 
   useEffect(() => {
     if (currentAzure == "External") {
@@ -447,9 +447,8 @@ export default function DepartArrive(departArrive) {
 
     try {
       data = await response.json();
-      setStaffData(await staffResponse.json());
+      staffData = await staffResponse.json();
       console.log("DATA is", data);
-      // console.log("staffData is", staffData);
 
       liveDeparture = data.trainServices;
       busDeparture = data.busServices;

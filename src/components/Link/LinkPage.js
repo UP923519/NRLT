@@ -414,6 +414,7 @@ export default function Dashboard() {
                 src={trainDetailUrl}
               ></iframe>
             </div>
+            <br />
           </div>
         )}
       </div>
