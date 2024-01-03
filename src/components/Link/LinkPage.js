@@ -221,7 +221,7 @@ export default function Dashboard() {
       if (formation != "") {
         setFormatiion(formation);
       } else {
-        setFormatiion("Information not provided");
+        setFormatiion("Info may be available below");
       }
 
       setOperator(operator);
