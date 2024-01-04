@@ -30,6 +30,7 @@ let divideLocation;
 let formJson = "";
 let infoTrain = "";
 let staffUIDVal = "";
+let staffRIDVAL = "";
 
 let sCode = "";
 
@@ -51,6 +52,14 @@ export default function Dashboard() {
   const useDate = currentDate.toISOString().split("T")[0];
   const [staffSCode, setStaffSCode] = useState("");
   const [trainDetailUrl, setTrainDetailUrl] = useState("");
+
+  const staffDay = staffRIDVAL.substring(6, 8);
+  const staffMonth = staffRIDVAL.substring(4, 6);
+  const staffYear = staffRIDVAL.substring(0, 4);
+  console.log("sd", staffDay);
+  console.log("sm", staffMonth);
+  console.log("sy", staffYear);
+  console.log("used8", useDate);
 
   useEffect(() => {
     if (currentAzure == "External") {
@@ -142,7 +151,11 @@ export default function Dashboard() {
       "https://www.realtimetrains.co.uk/service/gb-nr:" +
         staffUIDVal +
         "/" +
-        useDate +
+        staffYear +
+        "-" +
+        staffMonth +
+        "-" +
+        staffDay +
         "/detailed"
     );
   }
@@ -426,7 +439,7 @@ export default function Dashboard() {
   );
 }
 
-export function test1(number, trainInfo, staffUID) {
+export function test1(number, trainInfo, staffUID, staffRID) {
   formJson = number;
 
   trainInfo = trainInfo.replaceAll(" ", " + ");
@@ -434,4 +447,5 @@ export function test1(number, trainInfo, staffUID) {
 
   infoTrain = trainInfo;
   staffUIDVal = staffUID;
+  staffRIDVAL = staffRID;
 }

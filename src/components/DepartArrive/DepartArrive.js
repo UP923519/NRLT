@@ -449,6 +449,7 @@ export default function DepartArrive(departArrive) {
       data = await response.json();
       staffData = await staffResponse.json();
       console.log("DATA is", data);
+      console.log("SD is", staffData);
 
       liveDeparture = data.trainServices;
       busDeparture = data.busServices;
@@ -550,6 +551,9 @@ export default function DepartArrive(departArrive) {
   let navigate = useNavigate();
   const routeChange = (row, index) => {
     const staffUID = staffData.trainServices[index].uid;
+    const staffRID = staffData.trainServices[index].rid;
+    console.log("STAFFDAY is", staffRID);
+
     let trainInfo = row;
 
     row = row.split(" ");
@@ -558,7 +562,7 @@ export default function DepartArrive(departArrive) {
     let path = "/linkPage";
     navigate(path);
 
-    test1(sIdArray[index], trainInfo, staffUID);
+    test1(sIdArray[index], trainInfo, staffUID, staffRID);
   };
 
   function getTrainDepartures() {
