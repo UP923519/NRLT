@@ -6,7 +6,7 @@ import {
   calculatePosition,
   calculatePositionCentral,
 } from "./calculatePosition";
-import { currentAzure } from "../Settings/Settings";
+import { currentAzure, enableWindow } from "../Settings/Settings";
 
 let liveDeparture = "";
 let serviceMessage = "";
@@ -30,7 +30,7 @@ let divideLocation;
 let formJson = "";
 let infoTrain = "";
 let staffUIDVal = "";
-let staffRIDVAL = "";
+let staffSDDVal = "";
 
 let sCode = "";
 
@@ -48,18 +48,14 @@ export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [infoTrainDisplay, setInfoTrain] = useState("");
-  const currentDate = new Date();
-  const useDate = currentDate.toISOString().split("T")[0];
-  const [staffSCode, setStaffSCode] = useState("");
+  // const currentDate = new Date();
+  // const useDate = currentDate.toISOString().split("T")[0];
+  // const [staffSCode, setStaffSCode] = useState("");
   const [trainDetailUrl, setTrainDetailUrl] = useState("");
 
-  const staffDay = staffRIDVAL.substring(6, 8);
-  const staffMonth = staffRIDVAL.substring(4, 6);
-  const staffYear = staffRIDVAL.substring(0, 4);
-  console.log("sd", staffDay);
-  console.log("sm", staffMonth);
-  console.log("sy", staffYear);
-  console.log("used8", useDate);
+  const staffDay = staffSDDVal.substring(8, 10);
+  const staffMonth = staffSDDVal.substring(5, 7);
+  const staffYear = staffSDDVal.substring(0, 4);
 
   useEffect(() => {
     if (currentAzure == "External") {
@@ -415,18 +411,20 @@ export default function Dashboard() {
             </Table>
             <br />
             <br />
-            <div>
-              <iframe
-                className="transactions"
-                style={{
-                  height: "265px",
-                  border: "0",
-                }}
-                id="iFrameExample"
-                title="iFrame Example"
-                src={trainDetailUrl}
-              ></iframe>
-            </div>
+            {(enableWindow == "Show" || enableWindow == undefined) && (
+              <div>
+                <iframe
+                  className="transactions"
+                  style={{
+                    height: "265px",
+                    border: "0",
+                  }}
+                  id="iFrameExample"
+                  title="iFrame Example"
+                  src={trainDetailUrl}
+                ></iframe>
+              </div>
+            )}
             <br />
           </div>
         )}
@@ -439,7 +437,7 @@ export default function Dashboard() {
   );
 }
 
-export function test1(number, trainInfo, staffUID, staffRID) {
+export function test1(number, trainInfo, staffUID, staffSDD) {
   formJson = number;
 
   trainInfo = trainInfo.replaceAll(" ", " + ");
@@ -447,5 +445,5 @@ export function test1(number, trainInfo, staffUID, staffRID) {
 
   infoTrain = trainInfo;
   staffUIDVal = staffUID;
-  staffRIDVAL = staffRID;
+  staffSDDVal = staffSDD;
 }
