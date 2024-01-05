@@ -448,6 +448,7 @@ export default function DepartArrive(departArrive) {
     try {
       data = await response.json();
       staffData = await staffResponse.json();
+      console.log("data is", data);
 
       liveDeparture = data.trainServices;
       busDeparture = data.busServices;
@@ -566,14 +567,31 @@ export default function DepartArrive(departArrive) {
     let stringDepartures = [];
     let sCode = "";
     sIdArray = [];
+    let destination2Depart;
+    let destination2Via;
+    let destination2Origin;
 
     if (departArrive == "arrivals") {
       for (let i = 0; i < liveDeparture.length; i++) {
+        destination2Depart = "";
+        destination2Via = "";
+        destination2Origin = "";
+
         sIdArray.push(liveDeparture[i].serviceID);
         if (liveDeparture[i].destination[0].via == null)
           liveDeparture[i].destination[0].via = "";
         if (liveDeparture[i].origin[0].via == null)
           liveDeparture[i].origin[0].via = "";
+        if (liveDeparture[i].destination.length > 1) {
+          destination2Depart =
+            " and " + liveDeparture[i].destination[1].locationName;
+          if (liveDeparture[i].destination[1].via != null)
+            destination2Via = liveDeparture[i].destination[1].via;
+        }
+        if (liveDeparture[i].origin.length > 1) {
+          destination2Origin =
+            " and " + liveDeparture[i].origin[1].locationName;
+        }
         if (serviceCode == "Show") {
           sCode = "|" + liveDeparture[i].serviceID;
         } else {
@@ -585,9 +603,13 @@ export default function DepartArrive(departArrive) {
             liveDeparture[i].destination[0].locationName +
             " " +
             liveDeparture[i].destination[0].via +
+            destination2Depart +
+            " " +
+            destination2Via +
             " (from " +
             liveDeparture[i].origin[0].locationName +
             liveDeparture[i].origin[0].via +
+            destination2Origin +
             ")  " +
             liveDeparture[i].eta +
             "  p." +
@@ -598,11 +620,25 @@ export default function DepartArrive(departArrive) {
     }
     if (departArrive == "departures") {
       for (let i = 0; i < liveDeparture.length; i++) {
+        destination2Depart = "";
+        destination2Via = "";
+        destination2Origin = "";
+
         sIdArray.push(liveDeparture[i].serviceID);
         if (liveDeparture[i].destination[0].via == null)
           liveDeparture[i].destination[0].via = "";
         if (liveDeparture[i].origin[0].via == null)
           liveDeparture[i].origin[0].via = "";
+        if (liveDeparture[i].destination.length > 1) {
+          destination2Depart =
+            " and " + liveDeparture[i].destination[1].locationName;
+          if (liveDeparture[i].destination[1].via != null)
+            destination2Via = liveDeparture[i].destination[1].via;
+        }
+        if (liveDeparture[i].origin.length > 1) {
+          destination2Origin =
+            " and " + liveDeparture[i].origin[1].locationName;
+        }
         if (serviceCode == "Show") {
           sCode = "|" + liveDeparture[i].serviceID;
         } else {
@@ -614,9 +650,13 @@ export default function DepartArrive(departArrive) {
             liveDeparture[i].destination[0].locationName +
             " " +
             liveDeparture[i].destination[0].via +
+            destination2Depart +
+            " " +
+            destination2Via +
             " (from " +
             liveDeparture[i].origin[0].locationName +
             liveDeparture[i].origin[0].via +
+            destination2Origin +
             ")  " +
             liveDeparture[i].etd +
             "  p." +

@@ -14,6 +14,8 @@ let displayServiceMessage = "";
 let liveService = "";
 let liveService2 = "";
 let liveService3 = "";
+let liveServicePrevAdd = "";
+
 let liveServiceTime = "";
 let location = "";
 let operator = "";
@@ -101,6 +103,8 @@ export default function Dashboard() {
       infoTrain = "";
     }
 
+    divides = "";
+
     JSON.stringify(logJSONData(formJson));
   }
 
@@ -172,7 +176,7 @@ export default function Dashboard() {
     }
     try {
       const data = await response.json();
-      // console.log("DATA is", data);
+      console.log("DATA is", data);
       try {
         liveService = data.previousCallingPoints[0].callingPoint;
       } catch {
@@ -198,7 +202,23 @@ export default function Dashboard() {
         }
       } catch {
         liveService3 = "";
-        divides = "";
+      }
+
+      try {
+        liveServicePrevAdd = data.previousCallingPoints[1].callingPoint;
+        divideLocation =
+          liveServicePrevAdd[liveServicePrevAdd.length - 1].locationName;
+
+        divides =
+          "This train merges from two portions at " + divideLocation + ".";
+        console.log("padd", liveServicePrevAdd);
+
+        for (let i = liveServicePrevAdd.length - 1; i > -1; i--) {
+          console.log("nono");
+          liveService.unshift(liveServicePrevAdd[i]);
+        }
+      } catch {
+        liveServicePrevAdd = "";
       }
 
       liveServiceTime = data;
