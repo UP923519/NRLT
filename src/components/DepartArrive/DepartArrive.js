@@ -7,6 +7,8 @@ import Dashboard1 from "../Link/LinkPage";
 import { useNavigate } from "react-router-dom";
 import { test1 } from "../Link/LinkPage";
 import { currentAzure, serviceCode } from "../Settings/Settings";
+import LinearProgress from "@mui/material-next/LinearProgress";
+import CircularProgress from "@mui/material-next/CircularProgress";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -66,12 +68,14 @@ export default function DepartArrive(departArrive) {
   const [dropVal, setDropVal] = useState("");
   const [trcDropDown, setTRC] = useState("");
   const [trcDropDownD, setTRCD] = useState("");
+  const [trcDropDownSP, setTRCSP] = useState("");
   const [stationOne, setStationOne] = useState();
   const [stationTwo, setStationTwo] = useState();
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenForm, setIsOpenForm] = useState(true);
   const [displayFirstStation, setDisplayFirstStation] = useState("");
   const [displaySecondStation, setDisplaySecondStation] = useState("");
+  const [processingState, setProcessingState] = useState(false);
 
   useEffect(() => {
     if (currentAzure == "External") {
@@ -110,6 +114,7 @@ export default function DepartArrive(departArrive) {
   }, []);
 
   function clearValue() {
+    setTRCSP(null);
     setTRC(null);
     setTRCD(null);
     getStation();
@@ -133,6 +138,7 @@ export default function DepartArrive(departArrive) {
   const displayAction = false;
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
+    setProcessingState(true);
     setDepartures(["Loading..."]);
     textInfo = "loading...";
     trainSearch = "loading...";
@@ -291,10 +297,14 @@ export default function DepartArrive(departArrive) {
     setDepartures(myArray);
     testFetch = 1;
     contextTime = timeOffset;
+    setProcessingState(false);
 
     if (remStatus == 1) {
       clearValue();
     }
+    console.log("first staion is", rememberFirstStation);
+    console.log("second staion is", rememberSecondStation);
+    console.log("crs staion is", currentCRSCode);
   }
 
   async function logJSONData(
@@ -487,8 +497,23 @@ export default function DepartArrive(departArrive) {
   }
 
   async function getStation() {
-    setTRC("loading...");
-    setTRCD("loading...");
+    setTRCSP("Loading...");
+    setTRC(
+      <CircularProgress
+        color="tertiary"
+        fourColor
+        variant="indeterminate"
+        style={{ width: "34px", height: "34px" }}
+      />
+    );
+    setTRCD(
+      <CircularProgress
+        color="tertiary"
+        fourColor
+        variant="indeterminate"
+        style={{ width: "34px", height: "34px" }}
+      />
+    );
     const response = await fetch(
       "https://" + serverName + ".azurewebsites.net/crs"
     );
@@ -545,6 +570,7 @@ export default function DepartArrive(departArrive) {
         }
       />
     );
+    setTRCSP(null);
   }
 
   let navigate = useNavigate();
@@ -745,7 +771,7 @@ export default function DepartArrive(departArrive) {
               )}
               <text style={{ textAlign: "left" }}>{trcDropDownD}</text>
               <br />
-              {trcDropDownD == "loading..." && <br />}
+              {trcDropDownSP == "Loading..." && <br />}
               <button
                 type="button"
                 id="useTrains"
@@ -753,6 +779,21 @@ export default function DepartArrive(departArrive) {
                 onClick={() => handleDepartureClick(contextTime, "SWITCH-st")}
               >
                 🔄 Switch stations
+              </button>
+              <button
+                type="button"
+                id="useTrains"
+                style={{ fontSize: "small" }}
+                onClick={() =>
+                  handleDepartureClick(
+                    contextTime,
+                    currentCRSCode,
+                    0,
+                    rememberFirstStation
+                  )
+                }
+              >
+                🗑️ Remove second station
               </button>
               <br />
             </text>
@@ -770,7 +811,17 @@ export default function DepartArrive(departArrive) {
           </button>
         </form>
       </div>
-      <hr />
+      {processingState ? (
+        <>
+          <div style={{ height: "6.75px" }} />
+          <LinearProgress color="secondary" fourColor />
+          <div style={{ height: "6.75px" }} />
+        </>
+      ) : (
+        <>
+          <hr />
+        </>
+      )}
 
       <div>
         {isOpen && (

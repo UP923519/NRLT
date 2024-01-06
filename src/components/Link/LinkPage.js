@@ -9,6 +9,7 @@ import {
 import { currentAzure, enableWindow } from "../Settings/Settings";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import LinearProgress from "@mui/material-next/LinearProgress";
 
 let liveDeparture = "";
 let serviceMessage = "";
@@ -57,6 +58,8 @@ export default function Dashboard() {
   // const useDate = currentDate.toISOString().split("T")[0];
   // const [staffSCode, setStaffSCode] = useState("");
   const [trainDetailUrl, setTrainDetailUrl] = useState("");
+  const [loadedState, setLoadedState] = useState(false);
+  const [processingState, setProcessingState] = useState(false);
 
   const staffDay = staffSDDVal.substring(8, 10);
   const staffMonth = staffSDDVal.substring(5, 7);
@@ -92,6 +95,9 @@ export default function Dashboard() {
   const displayAction = false;
 
   function handleServiceClick(e) {
+    setLoadedState(false);
+    setProcessingState(true);
+
     setCalling([["Loading..."], []]);
     if (infoTrainDisplay == "") {
       setInfoTrain("Loading...");
@@ -167,6 +173,8 @@ export default function Dashboard() {
     );
 
     executeScroll();
+    setLoadedState(true);
+    setProcessingState(false);
   }
 
   async function logJSONData(serviceID) {
@@ -360,18 +368,28 @@ export default function Dashboard() {
             </label>
           )}
           <button id="useTrains" type="reset" onClick={clearAll}>
-            Reset
+            ❌ Reset
           </button>
           <button
             id="useTrains"
             type="button"
             onClick={() => handleServiceClick()}
           >
-            View/Refresh train service
+            🔎 View/Refresh train service
           </button>
         </form>
       </div>
-      <hr />
+      {processingState ? (
+        <>
+          <div style={{ height: "6.75px" }} />
+          <LinearProgress color="secondary" fourColor />
+          <div style={{ height: "6.75px" }} />
+        </>
+      ) : (
+        <>
+          <hr />
+        </>
+      )}
 
       <div ref={myRef} className="App">
         {isOpen && (
@@ -453,6 +471,7 @@ export default function Dashboard() {
                                 height: "270px",
                                 border: "0",
                                 marginTop: "3px",
+                                width: "99%",
                               }}
                               id="iFrameExample"
                               // title="iFrame Example"
@@ -506,7 +525,7 @@ export default function Dashboard() {
       <div className="NRLogo">
         <img src={image} alt="powered by National Rail Enquiries" width="256" />
       </div>
-      <p style={{ marginBottom: "300px" }}></p>
+      {loadedState == false && <p style={{ marginBottom: "300px" }}></p>}
     </div>
   );
 }
