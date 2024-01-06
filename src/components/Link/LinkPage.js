@@ -165,6 +165,8 @@ export default function Dashboard() {
         staffDay +
         "/detailed"
     );
+
+    executeScroll();
   }
 
   async function logJSONData(serviceID) {
@@ -281,7 +283,6 @@ export default function Dashboard() {
       setPlatformNumber(liveServiceTime.platform);
 
       locationList = t;
-      executeScroll();
 
       runLast();
     } catch {
@@ -498,23 +499,6 @@ export default function Dashboard() {
             </Table>
             <br />
             <br />
-            {/* {(enableWindow == "Show" || enableWindow == undefined) && (
-              <div>
-                Additional service details:
-                <iframe
-                  className="transactions"
-                  style={{
-                    height: "265px",
-                    border: "0",
-                    marginTop: "3px",
-                  }}
-                  id="iFrameExample"
-                  // title="iFrame Example"
-                  src={trainDetailUrl}
-                ></iframe>
-              </div>
-            )} */}
-            <br />
           </div>
         )}
       </div>
@@ -522,6 +506,7 @@ export default function Dashboard() {
       <div className="NRLogo">
         <img src={image} alt="powered by National Rail Enquiries" width="256" />
       </div>
+      <p style={{ marginBottom: "300px" }}></p>
     </div>
   );
 }
