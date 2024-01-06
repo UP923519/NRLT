@@ -28,6 +28,7 @@ let textInfo = "";
 
 let divides = "";
 let divideLocation;
+let divideMerge;
 
 let formJson = "";
 let infoTrain = "";
@@ -197,6 +198,7 @@ export default function Dashboard() {
           "This train divides into two portions at " +
           divideLocation +
           ". Please check that you are located in the correct part of the train. ";
+        divideMerge = "divides";
         for (let i = 0; i < liveService3.length; i++) {
           liveService2.push(liveService3[i]);
         }
@@ -211,6 +213,7 @@ export default function Dashboard() {
 
         divides =
           "This train merges from two portions at " + divideLocation + ".";
+        divideMerge = "merges";
         console.log("padd", liveServicePrevAdd);
 
         for (let i = liveServicePrevAdd.length - 1; i > -1; i--) {
@@ -400,7 +403,9 @@ export default function Dashboard() {
                     background: "orange",
                   }}
                 >
-                  <text style={{ fontWeight: "500" }}>Train divides at:</text>
+                  <text style={{ fontWeight: "500" }}>
+                    Train {divideMerge} at:
+                  </text>
                   <br />
                   <br />
                   {divideLocation}
