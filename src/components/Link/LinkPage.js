@@ -445,12 +445,12 @@ export default function Dashboard() {
                         <div>
                           <div>
                             <p style={{ margin: "5px" }}>
-                              Additional service details:
+                              Additional train and service details:
                             </p>
                             <iframe
                               className="transactions"
                               style={{
-                                height: "265px",
+                                height: "275px",
                                 border: "0",
                                 marginTop: "3px",
                               }}
