@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../App/App.css";
 import { Table } from "react-bootstrap";
 import image from "../../assets/nre-logo.png";
@@ -7,6 +7,8 @@ import {
   calculatePositionCentral,
 } from "./calculatePosition";
 import { currentAzure, enableWindow } from "../Settings/Settings";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 let liveDeparture = "";
 let serviceMessage = "";
@@ -45,7 +47,7 @@ export default function Dashboard() {
   const [excuseReason, setExcuseReason] = useState();
   const [operatorName, setOperator] = useState();
   const [platformNumber, setPlatformNumber] = useState();
-  const [formationCar, setFormatiion] = useState();
+  const [formationCar, setFormation] = useState();
   const [stringCalling, setCalling] = useState([[], []]);
   const [formVal, setFormVal] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -59,8 +61,10 @@ export default function Dashboard() {
   const staffDay = staffSDDVal.substring(8, 10);
   const staffMonth = staffSDDVal.substring(5, 7);
   const staffYear = staffSDDVal.substring(0, 4);
+  const myRef = useRef(null);
 
-  window.scrollTo({ top: 385, behavior: "smooth" });
+  const executeScroll = () =>
+    myRef.current.scrollIntoView({ behavior: "smooth" });
 
   useEffect(() => {
     if (currentAzure == "External") {
@@ -253,9 +257,9 @@ export default function Dashboard() {
         setExcuseReason("There are no messages for this service.");
       }
       if (formation != "") {
-        setFormatiion(formation);
+        setFormation(formation);
       } else {
-        setFormatiion("Info may be available below");
+        setFormation("Info may be available below");
       }
 
       setOperator(operator);
@@ -277,6 +281,7 @@ export default function Dashboard() {
       setPlatformNumber(liveServiceTime.platform);
 
       locationList = t;
+      executeScroll();
 
       runLast();
     } catch {
@@ -367,7 +372,7 @@ export default function Dashboard() {
       </div>
       <hr />
 
-      <div className="App">
+      <div ref={myRef} className="App">
         {isOpen && (
           <div>
             <p className="infoTrain" style={{ margin: "0px" }}>
@@ -414,6 +419,61 @@ export default function Dashboard() {
                 </p>
               </div>
             )}
+            <div>
+              {(enableWindow == "Show" || enableWindow == undefined) && (
+                <text>
+                  <br />
+
+                  <Popup
+                    trigger={
+                      <button
+                        id="useTrains"
+                        type="button"
+                        // onClick={() =>
+                        //   window.scrollTo({ top: 99999, behavior: "smooth" })
+                        // }
+                      >
+                        View train details
+                      </button>
+                    }
+                    modal
+                    nested
+                  >
+                    {(close) => (
+                      <div>
+                        <div>
+                          <div>
+                            <p style={{ margin: "5px" }}>
+                              Additional service details:
+                            </p>
+                            <iframe
+                              className="transactions"
+                              style={{
+                                height: "265px",
+                                border: "0",
+                                marginTop: "3px",
+                              }}
+                              id="iFrameExample"
+                              // title="iFrame Example"
+                              src={trainDetailUrl}
+                            ></iframe>
+                          </div>
+                        </div>
+                        <div>
+                          <button
+                            id="useTrains"
+                            style={{ margin: "0px" }}
+                            onClick={() => close()}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </Popup>
+                </text>
+              )}
+            </div>
 
             <br />
             <Table
@@ -438,20 +498,22 @@ export default function Dashboard() {
             </Table>
             <br />
             <br />
-            {(enableWindow == "Show" || enableWindow == undefined) && (
+            {/* {(enableWindow == "Show" || enableWindow == undefined) && (
               <div>
+                Additional service details:
                 <iframe
                   className="transactions"
                   style={{
                     height: "265px",
                     border: "0",
+                    marginTop: "3px",
                   }}
                   id="iFrameExample"
                   // title="iFrame Example"
                   src={trainDetailUrl}
                 ></iframe>
               </div>
-            )}
+            )} */}
             <br />
           </div>
         )}

@@ -384,6 +384,11 @@ a.active-animation:active {
   width: 150px;
 }
 
+.popup-content {
+  width: 100% !important;
+  border-radius: 20px !important;
+}
+
 @media only screen and (max-width: 318px) {
   .topRow2 {
     display: flex;
