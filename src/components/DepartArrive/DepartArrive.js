@@ -549,8 +549,17 @@ export default function DepartArrive(departArrive) {
 
   let navigate = useNavigate();
   const routeChange = (row, index) => {
-    const staffUID = staffData.trainServices[index].uid;
-    const staffSDD = staffData.trainServices[index].sdd;
+    var staffUID;
+    var staffSDD;
+    try {
+      staffUID = staffData.trainServices[index].uid;
+      staffSDD = staffData.trainServices[index].sdd;
+    } catch {
+      try {
+        staffUID = staffData.busServices[index].uid;
+        staffSDD = staffData.busServices[index].sdd;
+      } catch {}
+    }
 
     let trainInfo = row;
 

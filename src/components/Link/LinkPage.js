@@ -60,6 +60,8 @@ export default function Dashboard() {
   const staffMonth = staffSDDVal.substring(5, 7);
   const staffYear = staffSDDVal.substring(0, 4);
 
+  window.scrollTo({ top: 385, behavior: "smooth" });
+
   useEffect(() => {
     if (currentAzure == "External") {
       serverName = "huxley2";
@@ -445,7 +447,7 @@ export default function Dashboard() {
                     border: "0",
                   }}
                   id="iFrameExample"
-                  title="iFrame Example"
+                  // title="iFrame Example"
                   src={trainDetailUrl}
                 ></iframe>
               </div>
