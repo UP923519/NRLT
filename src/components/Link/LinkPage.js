@@ -450,7 +450,7 @@ export default function Dashboard() {
                             <iframe
                               className="transactions"
                               style={{
-                                height: "275px",
+                                height: "270px",
                                 border: "0",
                                 marginTop: "3px",
                               }}
