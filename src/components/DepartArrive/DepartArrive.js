@@ -60,6 +60,8 @@ let showServiceCode = false;
 let rememberFirstStation;
 let rememberSecondStation;
 
+const _ = require("lodash");
+
 export default function DepartArrive(departArrive) {
   // const [departArrive, setDepartArrive] = useState();
   const [stringDepartures, setDepartures] = useState([]);
@@ -96,6 +98,7 @@ export default function DepartArrive(departArrive) {
 
     if (myArray == "" || failedAlert == true) {
       setIsOpen(false);
+      setProcessingState(false);
       setDisplayFirstStation("");
       setDisplaySecondStation("");
     } else {
@@ -128,6 +131,7 @@ export default function DepartArrive(departArrive) {
     trainSearch = "";
     clearValue();
     setIsOpen(false);
+    setProcessingState(false);
     setIsOpenForm(true);
     setDisplayFirstStation("");
     setDisplaySecondStation("");
@@ -224,6 +228,16 @@ export default function DepartArrive(departArrive) {
       newsLink = [];
     }
 
+    if (busDeparture != null) {
+      if (textInfo.includes("no messages for this station")) {
+        textInfo =
+          "Rail replacement bus services may be in use at this station. If there is a combination of bus and rail services, bus services are shown below rail services in the list.";
+      } else {
+        textInfo +=
+          "\n\nRail replacement bus services may be in use at this station. If there is a combination of bus and rail services, bus services will be shown below rail services in the list.";
+      }
+    }
+
     textInfo = textInfo.replace(htmlRegexG, " ");
     textInfo = textInfo.replaceAll("News ", "News. ");
     textInfo = textInfo.replaceAll(
@@ -302,9 +316,6 @@ export default function DepartArrive(departArrive) {
     if (remStatus == 1) {
       clearValue();
     }
-    console.log("first staion is", rememberFirstStation);
-    console.log("second staion is", rememberSecondStation);
-    console.log("crs staion is", currentCRSCode);
   }
 
   async function logJSONData(
@@ -461,10 +472,17 @@ export default function DepartArrive(departArrive) {
       console.log("data is", data);
 
       liveDeparture = data.trainServices;
+
       busDeparture = data.busServices;
 
       currentCRSCode = data.crs;
       stationOneD = data.locationName + " (" + data.crs + ")";
+
+      if (liveDeparture != null && busDeparture != null) {
+        var newDeparture = [];
+        newDeparture = liveDeparture.concat(busDeparture);
+        liveDeparture = newDeparture;
+      }
 
       if (liveDeparture == null && busDeparture != null) {
         liveDeparture = data.busServices;
@@ -474,6 +492,8 @@ export default function DepartArrive(departArrive) {
         liveDeparture = [];
       }
 
+      console.log("LD", JSON.stringify(liveDeparture[0]));
+
       displayServiceMessage = "";
       serviceMessage = data.nrccMessages;
       let t = getTrainDepartures();
@@ -482,6 +502,7 @@ export default function DepartArrive(departArrive) {
       runLast(timeOffset);
     } catch {
       setIsOpen(false);
+      setProcessingState(false);
       if (!failedAlert) {
         failedAlert = true;
         if (serviceMessage != "") {

@@ -90,6 +90,7 @@ export default function Dashboard() {
     setCalling([""]);
     textInfo = "";
     setIsOpen(false);
+    setProcessingState(false);
   }
 
   const displayAction = false;
@@ -190,6 +191,7 @@ export default function Dashboard() {
       failedAlert = true;
 
       setIsOpen(false);
+      setProcessingState(false);
     }
     try {
       const data = await response.json();
@@ -269,7 +271,10 @@ export default function Dashboard() {
       if (formation != "") {
         setFormation(formation);
       } else {
-        setFormation("Info may be available below");
+        setFormation("Info may be available in train details");
+        if (staffUIDVal == "") {
+          setFormation("Information not provided");
+        }
       }
 
       setOperator(operator);
@@ -297,6 +302,7 @@ export default function Dashboard() {
       if (!failedAlert)
         alert("Unable to retrieve new results. Previous results may be shown.");
       setIsOpen(false);
+      setProcessingState(false);
     }
   }
 
@@ -439,60 +445,61 @@ export default function Dashboard() {
               </div>
             )}
             <div>
-              {(enableWindow == "Show" || enableWindow == undefined) && (
-                <text>
-                  <br />
+              {(enableWindow == "Show" || enableWindow == undefined) &&
+                staffUIDVal != "" && (
+                  <text>
+                    <br />
 
-                  <Popup
-                    trigger={
-                      <button
-                        id="useTrains"
-                        type="button"
-                        // onClick={() =>
-                        //   window.scrollTo({ top: 99999, behavior: "smooth" })
-                        // }
-                      >
-                        View train details
-                      </button>
-                    }
-                    modal
-                    nested
-                  >
-                    {(close) => (
-                      <div>
+                    <Popup
+                      trigger={
+                        <button
+                          id="useTrains"
+                          type="button"
+                          // onClick={() =>
+                          //   window.scrollTo({ top: 99999, behavior: "smooth" })
+                          // }
+                        >
+                          View train details
+                        </button>
+                      }
+                      modal
+                      nested
+                    >
+                      {(close) => (
                         <div>
                           <div>
-                            <p style={{ margin: "5px" }}>
-                              Additional train and service details:
-                            </p>
-                            <iframe
-                              className="transactions"
-                              style={{
-                                height: "270px",
-                                border: "0",
-                                marginTop: "3px",
-                                width: "99%",
-                              }}
-                              id="iFrameExample"
-                              // title="iFrame Example"
-                              src={trainDetailUrl}
-                            ></iframe>
+                            <div>
+                              <p style={{ margin: "5px" }}>
+                                Additional train and service details:
+                              </p>
+                              <iframe
+                                className="transactions"
+                                style={{
+                                  height: "270px",
+                                  border: "0",
+                                  marginTop: "3px",
+                                  width: "99%",
+                                }}
+                                id="iFrameExample"
+                                // title="iFrame Example"
+                                src={trainDetailUrl}
+                              ></iframe>
+                            </div>
+                          </div>
+                          <div>
+                            <button
+                              id="useTrains"
+                              style={{ margin: "0px" }}
+                              onClick={() => close()}
+                            >
+                              Close
+                            </button>
                           </div>
                         </div>
-                        <div>
-                          <button
-                            id="useTrains"
-                            style={{ margin: "0px" }}
-                            onClick={() => close()}
-                          >
-                            Close
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </Popup>
-                </text>
-              )}
+                      )}
+                    </Popup>
+                  </text>
+                )}
             </div>
 
             <br />
@@ -539,4 +546,8 @@ export function test1(number, trainInfo, staffUID, staffSDD) {
   infoTrain = trainInfo;
   staffUIDVal = staffUID;
   staffSDDVal = staffSDD;
+  if (!staffSDDVal || !staffSDDVal) {
+    staffUIDVal = "";
+    staffSDDVal = "";
+  }
 }
