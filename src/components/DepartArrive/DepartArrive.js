@@ -7,11 +7,14 @@ import Dashboard1 from "../Link/LinkPage";
 import { useNavigate } from "react-router-dom";
 import { test1 } from "../Link/LinkPage";
 import { currentAzure, serviceCode } from "../Settings/Settings";
+import TrainBus from "./trainBus.js";
 import LinearProgress from "@mui/material-next/LinearProgress";
 import CircularProgress from "@mui/material-next/CircularProgress";
 
 let liveDeparture = "";
 let busDeparture = "";
+let saveLD = "";
+let saveBD = "";
 let staffData = "";
 
 let serviceMessage = "";
@@ -60,6 +63,10 @@ let showServiceCode = false;
 let rememberFirstStation;
 let rememberSecondStation;
 
+let busDisplayMode = "train";
+let showBuses = false;
+let showTrains = true;
+
 const _ = require("lodash");
 
 export default function DepartArrive(departArrive) {
@@ -78,6 +85,12 @@ export default function DepartArrive(departArrive) {
   const [displayFirstStation, setDisplayFirstStation] = useState("");
   const [displaySecondStation, setDisplaySecondStation] = useState("");
   const [processingState, setProcessingState] = useState(false);
+  const [activeBus, setActiveBus] = useState("white");
+  const [activeTrain, setActiveTrain] = useState("white");
+  const [activeBusT, setActiveBusT] = useState("white");
+  const [activeTrainT, setActiveTrainT] = useState("white");
+  const [busDisabled, setBusDisabled] = useState(false);
+  const [trainDisabled, setTrainDisabled] = useState(false);
 
   useEffect(() => {
     if (currentAzure == "External") {
@@ -88,6 +101,67 @@ export default function DepartArrive(departArrive) {
 
     if (serviceCode == "Show") {
       showServiceCode = true;
+    }
+
+    console.log("SHOW BUSSES IS STILL", showBuses);
+    console.log("BUS OR TRAIN is", busDisplayMode);
+
+    console.log("SHOW TRAINS IS STILL", showTrains);
+
+    if (saveLD != null && saveBD != null) {
+      console.log("busDisplay is", busDisplayMode);
+      if (busDisplayMode == "bus") {
+        setActiveBus("#0080ff");
+        setActiveBusT("white");
+        setActiveTrain("white");
+        setActiveTrainT("black");
+        setBusDisabled(false);
+        setTrainDisabled(false);
+      } else {
+        setTrainDisabled(false);
+        setBusDisabled(false);
+
+        setActiveTrain("#0080ff");
+        setActiveTrainT("white");
+        setActiveBus("white");
+        setActiveBusT("black");
+      }
+    }
+
+    if (saveLD == null && saveBD != null) {
+      showTrains = false;
+      setTrainDisabled(true);
+      setBusDisabled(false);
+      setActiveTrain("#f5f5f5");
+      setActiveTrainT("#d1d1d1");
+      if (busDisplayMode == "train") {
+        alert(
+          "No train services available at this time. Bus services are available."
+        );
+      }
+      busDisplayMode = "bus";
+      setActiveBus("#0080ff");
+      setActiveBusT("white");
+    }
+
+    if (saveLD != null && saveBD == null) {
+      showTrains = true;
+      setBusDisabled(true);
+      setTrainDisabled(false);
+      setActiveBus("#f5f5f5");
+      setActiveBusT("#d1d1d1");
+      setActiveTrain("#0080ff");
+      setActiveTrainT("white");
+    }
+
+    if (saveLD == null && saveBD == null) {
+      console.log("truem");
+      setBusDisabled(true);
+      setActiveBus("#f5f5f5");
+      setActiveBusT("#d1d1d1");
+      setTrainDisabled(true);
+      setActiveTrain("#f5f5f5");
+      setActiveTrainT("#d1d1d1");
     }
 
     setDisplayFirstStation(rememberFirstStation);
@@ -229,13 +303,16 @@ export default function DepartArrive(departArrive) {
     }
 
     if (busDeparture != null) {
+      showBuses = true;
       if (textInfo.includes("no messages for this station")) {
         textInfo =
-          "Rail replacement bus services may be in use at this station. If there is a combination of bus and rail services, bus services are shown below rail services in the list.";
+          "Rail replacement bus services may be in use at this station. Select 'Show Bus Services' in the menu above to view bus services.";
       } else {
         textInfo +=
-          "\n\nRail replacement bus services may be in use at this station. If there is a combination of bus and rail services, bus services will be shown below rail services in the list.";
+          "\n\nRail replacement bus services may be in use at this station. Select 'Show Bus Services' in the menu above to view bus services.";
       }
+    } else {
+      showBuses = false;
     }
 
     textInfo = textInfo.replace(htmlRegexG, " ");
@@ -470,29 +547,86 @@ export default function DepartArrive(departArrive) {
       data = await response.json();
       staffData = await staffResponse.json();
       console.log("data is", data);
+      console.log("Sdata is", staffData);
 
       liveDeparture = data.trainServices;
 
       busDeparture = data.busServices;
 
+      saveLD = data.trainServices;
+      saveBD = data.busServices;
+
       currentCRSCode = data.crs;
       stationOneD = data.locationName + " (" + data.crs + ")";
 
-      if (liveDeparture != null && busDeparture != null) {
-        var newDeparture = [];
-        newDeparture = liveDeparture.concat(busDeparture);
-        liveDeparture = newDeparture;
+      if (data.trainServices == null) {
+        showTrains = false;
+      } else {
+        showTrains = true;
       }
 
-      if (liveDeparture == null && busDeparture != null) {
+      if (data.trainServices != null && data.busServices != null) {
+        // var newDeparture = [];
+        // newDeparture = liveDeparture.concat(busDeparture);
+        // liveDeparture = newDeparture;
+        console.log("busDisplay is", busDisplayMode);
+        if (busDisplayMode == "bus") {
+          liveDeparture = busDeparture;
+          setActiveBus("#0080ff");
+          setActiveBusT("white");
+          setActiveTrain("white");
+          setActiveTrainT("black");
+          setBusDisabled(false);
+          setTrainDisabled(false);
+        } else {
+          setTrainDisabled(false);
+          setBusDisabled(false);
+
+          setActiveTrain("#0080ff");
+          setActiveTrainT("white");
+          setActiveBus("white");
+          setActiveBusT("black");
+        }
+      }
+
+      if (data.trainServices == null && data.busServices != null) {
+        showTrains = false;
+        setTrainDisabled(true);
+        setBusDisabled(false);
+        setActiveTrain("#f5f5f5");
+        setActiveTrainT("#d1d1d1");
         liveDeparture = data.busServices;
+        if (busDisplayMode == "train") {
+          alert(
+            "No train services available at this time. Bus services are available."
+          );
+        }
+        busDisplayMode = "bus";
+        setActiveBus("#0080ff");
+        setActiveBusT("white");
       }
 
-      if (liveDeparture == null && busDeparture == null) {
+      if (data.trainServices != null && data.busServices == null) {
+        showTrains = true;
+        setBusDisabled(true);
+        setTrainDisabled(false);
+        setActiveBus("#f5f5f5");
+        setActiveBusT("#d1d1d1");
+        setActiveTrain("#0080ff");
+        setActiveTrainT("white");
+        liveDeparture = data.trainServices;
+      }
+
+      if (data.trainServices == null && data.busServices == null) {
+        console.log("truem");
         liveDeparture = [];
+        setBusDisabled(true);
+        setActiveBus("#f5f5f5");
+        setActiveBusT("#d1d1d1");
+        setTrainDisabled(true);
+        setActiveTrain("#f5f5f5");
+        setActiveTrainT("#d1d1d1");
       }
-
-      console.log("LD", JSON.stringify(liveDeparture[0]));
 
       displayServiceMessage = "";
       serviceMessage = data.nrccMessages;
@@ -606,6 +740,13 @@ export default function DepartArrive(departArrive) {
         staffUID = staffData.busServices[index].uid;
         staffSDD = staffData.busServices[index].sdd;
       } catch {}
+    }
+
+    if (showBuses == true) {
+      if (busDisplayMode == "bus") {
+        staffUID = staffData.busServices[index].uid;
+        staffSDD = staffData.busServices[index].sdd;
+      }
     }
 
     let trainInfo = row;
@@ -746,7 +887,6 @@ export default function DepartArrive(departArrive) {
     <div className="Wrapper2">
       {/* <br/> */}
       <h3 style={{ textAlign: "center" }}>{departArrive}</h3>
-
       <div className="manualInput">
         <form
           style={{ paddingLeft: "10px", paddingRight: "10px" }}
@@ -844,93 +984,47 @@ export default function DepartArrive(departArrive) {
         </>
       )}
 
-      <div>
-        {isOpen && (
-          <div>
-            {trainSearch}
-            <br />
-            <p className="highlights">
-              <pre
-                style={{
-                  whiteSpace: "pre-wrap",
-                  fontFamily: "unset",
-                  marginBottom: "-20px",
-                  marginTop: "-1px",
-                }}
-              >
-                <text style={{ wordBreak: "break-word", hyphens: "auto" }}>
-                  {textInfo}
-                </text>
-              </pre>
-              <br />
-
-              {/* <div>
-                {newsLink[0]?.map((row) => (
-                  <a href={row}>
-                    <br />
-                    <text style={{ wordBreak: "break-word", hyphens: "auto" }}>
-                      {row}
-                    </text>
-                  </a>
-                ))}
-              </div> */}
-            </p>
-            <br />
+      {isOpen && (
+        <>
+          <>
             <button
-              className="changeTime"
-              style={{ marginBottom: "10px" }}
-              onClick={() => handleDepartureClick(earlier)}
+              id="useTrains"
+              type="button"
+              disabled={trainDisabled}
+              style={{ color: activeTrainT, background: activeTrain }}
+              onClick={() => (
+                (busDisplayMode = "train"), handleDepartureClick(contextTime)
+              )}
             >
-              120 - 100 minutes ago
+              Show Train Services
             </button>
-            <br />
             <button
-              className="changeTime"
-              style={{ marginBottom: "10px" }}
-              onClick={() => handleDepartureClick(earlier2)}
+              id="useTrains"
+              type="button"
+              disabled={busDisabled}
+              style={{ color: activeBusT, background: activeBus }}
+              onClick={() => (
+                (busDisplayMode = "bus"), handleDepartureClick(contextTime)
+              )}
             >
-              100 minutes ago - present
+              Show Bus Services
             </button>
-            <br />
-            <br />
-            <Table
-              className="transactions"
-              style={{ backgroundColor: "#f0f0f0" }}
-            >
-              {stringDepartures.map((departures, index) => (
-                <tr
-                  data-index={index}
-                  className="tableTR"
-                  onClick={() => routeChange(departures, index)}
-                >
-                  <td>{departures}</td>
-                  <br />
-                  <br />
-                  <br />
-                </tr>
-              ))}
-            </Table>
-            <br />
-            <button
-              className="changeTime"
-              style={{ marginTop: "40px" }}
-              onClick={() => handleDepartureClick(later)}
-            >
-              100 minutes later
-            </button>
-            <br />
-            <button
-              className="changeTime"
-              style={{ marginTop: "10px" }}
-              onClick={() => handleDepartureClick(later2)}
-            >
-              100 - 120 minutes later
-            </button>
-            <br />
-            <br />
-          </div>
-        )}
-      </div>
+          </>
+          <TrainBus
+            isOpen={isOpen}
+            trainSearch={trainSearch}
+            textInfo={textInfo}
+            handleDepartureClick={handleDepartureClick}
+            earlier={earlier}
+            earlier2={earlier2}
+            Table={Table}
+            stringDepartures={stringDepartures}
+            routeChange={routeChange}
+            later={later}
+            later2={later2}
+          />
+        </>
+      )}
 
       <div className="NRLogo">
         <img src={image} alt="powered by National Rail Enquiries" width="256" />
