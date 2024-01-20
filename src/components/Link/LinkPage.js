@@ -175,7 +175,7 @@ export default function Dashboard() {
 
     executeScroll();
     setLoadedState(true);
-    navigator.vibrate(100);
+    navigator.vibrate(50);
     setProcessingState(false);
   }
 
