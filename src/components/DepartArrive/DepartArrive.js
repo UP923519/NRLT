@@ -388,7 +388,7 @@ export default function DepartArrive(departArrive) {
     setDepartures(myArray);
     testFetch = 1;
     contextTime = timeOffset;
-    navigator.vibrate(50);
+    navigator.vibrate(1);
     setProcessingState(false);
 
     if (remStatus == 1) {
