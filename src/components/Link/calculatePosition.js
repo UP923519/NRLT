@@ -34,7 +34,8 @@ export function calculatePosition(liveService, liveServiceTime) {
       try {
         if (
           liveService[i - 1].et == "Cancelled" &&
-          liveService[i].et != "Cancelled"
+          liveService[i].et != "Cancelled" &&
+          !trainLocation.includes("🚂🚃🚃")
         ) {
           trainLocation = liveService[i].et + "🚂🚃🚃";
         }
