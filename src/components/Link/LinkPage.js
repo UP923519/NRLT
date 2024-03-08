@@ -477,7 +477,7 @@ export default function Dashboard() {
                           <div>
                             <div>
                               <p style={{ margin: "5px" }}>
-                                Additional train and service details:
+                                Additional train details
                               </p>
                               <iframe
                                 className="transactions"
