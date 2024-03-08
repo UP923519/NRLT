@@ -10,6 +10,7 @@ import { currentAzure, enableWindow } from "../Settings/Settings";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import LinearProgress from "@mui/material-next/LinearProgress";
+import { PopupStations } from "./PopupStations";
 
 let liveService = "";
 let liveService2 = "";
@@ -53,6 +54,7 @@ export default function Dashboard() {
   const [loadedState, setLoadedState] = useState(false);
   const [processingState, setProcessingState] = useState(false);
   const [data, setData] = useState([]);
+  const [popOpen, setPopOpen] = useState(false);
 
   const staffDay = staffSDDVal.substring(8, 10);
   const staffMonth = staffSDDVal.substring(5, 7);
@@ -455,7 +457,6 @@ export default function Dashboard() {
                 staffUIDVal != "" && (
                   <text>
                     <br />
-
                     <Popup
                       trigger={
                         <button
@@ -465,7 +466,7 @@ export default function Dashboard() {
                           //   window.scrollTo({ top: 99999, behavior: "smooth" })
                           // }
                         >
-                          View train details
+                          More train details
                         </button>
                       }
                       modal
@@ -504,6 +505,24 @@ export default function Dashboard() {
                         </div>
                       )}
                     </Popup>
+
+                    {!stringCalling[0][0].includes("Loading") && (
+                      <>
+                        <PopupStations
+                          calling={
+                            stringCalling[
+                              stringCalling.findIndex((element) =>
+                                JSON.stringify(element).includes(location)
+                              )
+                            ]
+                          }
+                          Popup={Popup}
+                          platformNumber={platformNumber}
+                          popOpen={true}
+                          stringCalling={stringCalling}
+                        ></PopupStations>
+                      </>
+                    )}
                   </text>
                 )}
             </div>
@@ -520,240 +539,15 @@ export default function Dashboard() {
                   <br />
                 </th>
               </tr>
+
               {stringCalling.map((calling, position) => (
                 <tr data-index={position}>
-                  <Popup trigger={<td>{calling[0]}</td>} modal nested>
-                    {(close) => (
-                      <>
-                        <div>
-                          {calling[0] && (
-                            <>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  justifyContent: "center",
-                                  gap: "10px",
-                                }}
-                              >
-                                {" "}
-                                <p
-                                  style={{
-                                    background: "#f0f0f0",
-                                    borderRadius: "15px",
-                                    padding: "10px",
-                                    width: "50%",
-                                  }}
-                                >
-                                  {calling[0][0]}
-                                </p>
-                              </div>
-                            </>
-                          )}
-
-                          {calling.length > 1 ? (
-                            <>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  justifyContent: "center",
-                                  gap: "10px",
-                                }}
-                              >
-                                <p
-                                  style={{
-                                    background: "#f0f0f0",
-                                    borderRadius: "15px",
-                                    padding: "10px",
-                                    width: "50%",
-                                  }}
-                                >
-                                  Scheduled arrival:
-                                  <br />{" "}
-                                  {calling[5] ? <>{calling[5]}</> : <>N/A</>}
-                                </p>
-                                <p
-                                  style={{
-                                    background: "#f0f0f0",
-                                    borderRadius: "15px",
-                                    padding: "10px",
-                                    width: "50%",
-                                  }}
-                                >
-                                  Scheduled departure:
-                                  <br />{" "}
-                                  {calling[6] ? <>{calling[6]}</> : <>N/A</>}
-                                </p>
-                              </div>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  justifyContent: "center",
-                                  gap: "10px",
-                                }}
-                              >
-                                <p
-                                  style={{
-                                    background: "#f0f0f0",
-                                    borderRadius: "15px",
-                                    padding: "10px",
-                                    width: "50%",
-                                  }}
-                                >
-                                  Actual arrival: <br />
-                                  {calling[1] ? <>{calling[1]}</> : <>N/A</>}
-                                </p>
-                                <p
-                                  style={{
-                                    background: "#f0f0f0",
-                                    borderRadius: "15px",
-                                    padding: "10px",
-                                    width: "50%",
-                                  }}
-                                >
-                                  Actual departure:
-                                  <br />{" "}
-                                  {calling[2] ? <>{calling[2]}</> : <>N/A</>}
-                                </p>
-                              </div>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  justifyContent: "center",
-                                  gap: "10px",
-                                }}
-                              >
-                                <p
-                                  style={{
-                                    background: "#f0f0f0",
-                                    borderRadius: "15px",
-                                    padding: "10px",
-                                    width: "50%",
-                                  }}
-                                >
-                                  Estimated arrival:
-                                  <br />
-                                  {calling[3] ? <>{calling[3]}</> : <>N/A</>}
-                                </p>
-                                <p
-                                  style={{
-                                    background: "#f0f0f0",
-                                    borderRadius: "15px",
-                                    padding: "10px",
-                                    width: "50%",
-                                  }}
-                                >
-                                  {calling[0][3].includes(":") ||
-                                  calling[0][3].includes("On time") ? (
-                                    <>Estimated departure: </>
-                                  ) : (
-                                    <>Departure status: </>
-                                  )}
-                                  <br />{" "}
-                                  {calling[0][3] ? (
-                                    <>{calling[0][3]}</>
-                                  ) : (
-                                    <>N/A</>
-                                  )}
-                                </p>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              {" "}
-                              {calling[0] && (
-                                <>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "row",
-                                      justifyContent: "center",
-                                      // gap: "10px",
-                                    }}
-                                  >
-                                    <p
-                                      style={{
-                                        background: "#f0f0f0",
-                                        borderRadius: "15px",
-                                        padding: "10px",
-                                        width: "50%",
-                                        marginBottom: "-5px",
-                                      }}
-                                    >
-                                      {calling[0][3].includes(":") ||
-                                      calling[0][3].includes("On time") ? (
-                                        <>Estimated departure: </>
-                                      ) : (
-                                        <>Departure status: </>
-                                      )}
-                                      <br />{" "}
-                                      {calling[0][3] ? (
-                                        <>{calling[0][3]}</>
-                                      ) : (
-                                        <>N/A</>
-                                      )}
-                                    </p>
-                                  </div>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "row",
-                                      justifyContent: "center",
-                                      gap: "10px",
-                                    }}
-                                  >
-                                    <p
-                                      style={{
-                                        background: "#f0f0f0",
-                                        borderRadius: "15px",
-                                        padding: "10px",
-                                        width: "50%",
-                                      }}
-                                    >
-                                      Scheduled departure:
-                                      <br />{" "}
-                                      {calling[0][1] ? (
-                                        <>{calling[0][1]}</>
-                                      ) : (
-                                        <>N/A</>
-                                      )}
-                                    </p>
-                                    <p
-                                      style={{
-                                        background: "#f0f0f0",
-                                        borderRadius: "15px",
-                                        padding: "10px",
-                                        width: "50%",
-                                      }}
-                                    >
-                                      Actual departure:
-                                      <br />{" "}
-                                      {calling[0][2] ? (
-                                        <>{calling[0][2]}</>
-                                      ) : (
-                                        <>N/A</>
-                                      )}
-                                    </p>
-                                  </div>{" "}
-                                </>
-                              )}
-                            </>
-                          )}
-                        </div>
-                        <button
-                          id="useTrains"
-                          style={{ margin: "0px" }}
-                          onClick={() => close()}
-                        >
-                          Close
-                        </button>
-                      </>
-                    )}
-                  </Popup>
-
+                  <PopupStations
+                    calling={calling}
+                    Popup={Popup}
+                    platformNumber={platformNumber}
+                    popOpen={popOpen}
+                  />
                   <br />
                   <br />
                   <br />
