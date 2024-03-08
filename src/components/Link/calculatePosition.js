@@ -2,6 +2,7 @@ import "../App/App.css";
 
 export function calculatePosition(liveService, liveServiceTime) {
   let locationList;
+  let stationsArray = [];
   for (let i = 0; i < liveService.length; i++) {
     let trainLocation;
     let trainActual;
@@ -54,9 +55,21 @@ export function calculatePosition(liveService, liveServiceTime) {
       liveService[i].at +
       " " +
       trainLocation;
+
+    stationsArray.push([
+      [
+        " " + liveService[i].locationName + " ",
+
+        " " + liveService[i].st + " ",
+
+        " " + liveService[i].at + " ",
+
+        " " + trainLocation,
+      ],
+    ]);
   }
 
-  return locationList;
+  return [locationList, stationsArray];
 }
 
 export function calculatePositionCentral(
@@ -67,6 +80,8 @@ export function calculatePositionCentral(
 ) {
   let trainLocation;
   let locationList;
+  let stationsArray = [];
+
   if (liveServiceTime.etd == null && liveServiceTime.eta == null) {
     if (
       liveServiceTime.atd == "On time" ||
@@ -146,5 +161,21 @@ export function calculatePositionCentral(
     " (p." +
     liveServiceTime.platform +
     ")*";
-  return locationList;
+
+  stationsArray.push([
+    [
+      " " + location + " ",
+      " " + liveServiceTime.std + " ",
+      " " + liveServiceTime.atd + " ",
+      " " + trainLocation + " ",
+      " (p." + liveServiceTime.platform + ")",
+    ],
+    liveServiceTime.ata,
+    liveServiceTime.atd,
+    liveServiceTime.eta,
+    liveServiceTime.etd,
+    liveServiceTime.sta,
+    liveServiceTime.std,
+  ]);
+  return [locationList, stationsArray];
 }

@@ -103,13 +103,7 @@ export default function DepartArrive(departArrive) {
       showServiceCode = true;
     }
 
-    console.log("SHOW BUSSES IS STILL", showBuses);
-    console.log("BUS OR TRAIN is", busDisplayMode);
-
-    console.log("SHOW TRAINS IS STILL", showTrains);
-
     if (saveLD != null && saveBD != null) {
-      console.log("busDisplay is", busDisplayMode);
       if (busDisplayMode == "bus") {
         setActiveBus("#0080ff");
         setActiveBusT("white");
@@ -155,7 +149,6 @@ export default function DepartArrive(departArrive) {
     }
 
     if (saveLD == null && saveBD == null) {
-      console.log("truem");
       setBusDisabled(true);
       setActiveBus("#f5f5f5");
       setActiveBusT("#d1d1d1");
@@ -547,8 +540,6 @@ export default function DepartArrive(departArrive) {
     try {
       data = await response.json();
       staffData = await staffResponse.json();
-      console.log("data is", data);
-      console.log("Sdata is", staffData);
 
       liveDeparture = data.trainServices;
 
@@ -570,7 +561,6 @@ export default function DepartArrive(departArrive) {
         // var newDeparture = [];
         // newDeparture = liveDeparture.concat(busDeparture);
         // liveDeparture = newDeparture;
-        console.log("busDisplay is", busDisplayMode);
         if (busDisplayMode == "bus") {
           liveDeparture = busDeparture;
           setActiveBus("#0080ff");
@@ -619,7 +609,6 @@ export default function DepartArrive(departArrive) {
       }
 
       if (data.trainServices == null && data.busServices == null) {
-        console.log("truem");
         liveDeparture = [];
         setBusDisabled(true);
         setActiveBus("#f5f5f5");

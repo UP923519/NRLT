@@ -11,9 +11,6 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import LinearProgress from "@mui/material-next/LinearProgress";
 
-let liveDeparture = "";
-let serviceMessage = "";
-let displayServiceMessage = "";
 let liveService = "";
 let liveService2 = "";
 let liveService3 = "";
@@ -38,8 +35,6 @@ let infoTrain = "";
 let staffUIDVal = "";
 let staffSDDVal = "";
 
-let sCode = "";
-
 let failedAlert;
 
 let serverName = "trainwebapp";
@@ -54,12 +49,10 @@ export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [infoTrainDisplay, setInfoTrain] = useState("");
-  // const currentDate = new Date();
-  // const useDate = currentDate.toISOString().split("T")[0];
-  // const [staffSCode, setStaffSCode] = useState("");
   const [trainDetailUrl, setTrainDetailUrl] = useState("");
   const [loadedState, setLoadedState] = useState(false);
   const [processingState, setProcessingState] = useState(false);
+  const [data, setData] = useState([]);
 
   const staffDay = staffSDDVal.substring(8, 10);
   const staffMonth = staffSDDVal.substring(5, 7);
@@ -150,14 +143,18 @@ export default function Dashboard() {
 
     infoTrainSet = 0;
 
-    try {
-      myArray = locationList.split("*");
-    } catch {
-      setCalling([["Error, please try another service."], []]);
-    }
-    myArray.shift();
+    // try {
+    //   myArray = locationList.split("*");
+    myArray = locationList;
 
-    myArray[myArray.length - 1] = myArray[myArray.length - 1].replace('"}', "");
+    // } catch {
+    //   setCalling([["Error, please try another service."], []]);
+    // }
+    // myArray.shift();
+
+    // myArray[myArray.length - 1] = myArray[myArray.length - 1].replace('"}', "");
+
+    // console.log("myArray", myArray);
 
     setCalling(myArray);
 
@@ -196,7 +193,9 @@ export default function Dashboard() {
     }
     try {
       const data = await response.json();
-      console.log("DATA is", data);
+      if (data) {
+        setData(data);
+      }
       try {
         liveService = data.previousCallingPoints[0].callingPoint;
       } catch {
@@ -233,10 +232,8 @@ export default function Dashboard() {
         divides =
           "This train merges from two portions at " + divideLocation + ".";
         divideMerge = "merges";
-        console.log("padd", liveServicePrevAdd);
 
         for (let i = liveServicePrevAdd.length - 1; i > -1; i--) {
-          console.log("nono");
           liveService.unshift(liveServicePrevAdd[i]);
         }
       } catch {
@@ -289,14 +286,22 @@ export default function Dashboard() {
       );
       let afterStations = calculatePosition(liveService2, liveServiceTime);
 
-      let t = beforeStations + middleStation + afterStations;
+      // beforeStations = beforeStations[0];
+      // afterStations = afterStations[0];
+      // middleStation = middleStation[0];
+
+      let t = beforeStations[0] + middleStation[0] + afterStations[0];
+
+      let u = [];
+      u = [...beforeStations[1], ...middleStation[1], ...afterStations[1]];
 
       t = t.replaceAll("*undefined", "");
       t = t.replaceAll("undefined", "");
 
       setPlatformNumber(liveServiceTime.platform);
 
-      locationList = t;
+      // locationList = t;
+      locationList = u;
 
       runLast();
     } catch {
@@ -515,9 +520,240 @@ export default function Dashboard() {
                   <br />
                 </th>
               </tr>
-              {stringCalling.map((calling, index) => (
-                <tr data-index={index}>
-                  <td>{calling}</td>
+              {stringCalling.map((calling, position) => (
+                <tr data-index={position}>
+                  <Popup trigger={<td>{calling[0]}</td>} modal nested>
+                    {(close) => (
+                      <>
+                        <div>
+                          {calling[0] && (
+                            <>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  justifyContent: "center",
+                                  gap: "10px",
+                                }}
+                              >
+                                {" "}
+                                <p
+                                  style={{
+                                    background: "#f0f0f0",
+                                    borderRadius: "15px",
+                                    padding: "10px",
+                                    width: "50%",
+                                  }}
+                                >
+                                  {calling[0][0]}
+                                </p>
+                              </div>
+                            </>
+                          )}
+
+                          {calling.length > 1 ? (
+                            <>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  justifyContent: "center",
+                                  gap: "10px",
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    background: "#f0f0f0",
+                                    borderRadius: "15px",
+                                    padding: "10px",
+                                    width: "50%",
+                                  }}
+                                >
+                                  Scheduled arrival:
+                                  <br />{" "}
+                                  {calling[5] ? <>{calling[5]}</> : <>N/A</>}
+                                </p>
+                                <p
+                                  style={{
+                                    background: "#f0f0f0",
+                                    borderRadius: "15px",
+                                    padding: "10px",
+                                    width: "50%",
+                                  }}
+                                >
+                                  Scheduled departure:
+                                  <br />{" "}
+                                  {calling[6] ? <>{calling[6]}</> : <>N/A</>}
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  justifyContent: "center",
+                                  gap: "10px",
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    background: "#f0f0f0",
+                                    borderRadius: "15px",
+                                    padding: "10px",
+                                    width: "50%",
+                                  }}
+                                >
+                                  Actual arrival: <br />
+                                  {calling[1] ? <>{calling[1]}</> : <>N/A</>}
+                                </p>
+                                <p
+                                  style={{
+                                    background: "#f0f0f0",
+                                    borderRadius: "15px",
+                                    padding: "10px",
+                                    width: "50%",
+                                  }}
+                                >
+                                  Actual departure:
+                                  <br />{" "}
+                                  {calling[2] ? <>{calling[2]}</> : <>N/A</>}
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  justifyContent: "center",
+                                  gap: "10px",
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    background: "#f0f0f0",
+                                    borderRadius: "15px",
+                                    padding: "10px",
+                                    width: "50%",
+                                  }}
+                                >
+                                  Estimated arrival:
+                                  <br />
+                                  {calling[3] ? <>{calling[3]}</> : <>N/A</>}
+                                </p>
+                                <p
+                                  style={{
+                                    background: "#f0f0f0",
+                                    borderRadius: "15px",
+                                    padding: "10px",
+                                    width: "50%",
+                                  }}
+                                >
+                                  {calling[0][3].includes(":") ||
+                                  calling[0][3].includes("On time") ? (
+                                    <>Estimated departure: </>
+                                  ) : (
+                                    <>Departure status: </>
+                                  )}
+                                  <br />{" "}
+                                  {calling[0][3] ? (
+                                    <>{calling[0][3]}</>
+                                  ) : (
+                                    <>N/A</>
+                                  )}
+                                </p>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              {" "}
+                              {calling[0] && (
+                                <>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "row",
+                                      justifyContent: "center",
+                                      // gap: "10px",
+                                    }}
+                                  >
+                                    <p
+                                      style={{
+                                        background: "#f0f0f0",
+                                        borderRadius: "15px",
+                                        padding: "10px",
+                                        width: "50%",
+                                        marginBottom: "-5px",
+                                      }}
+                                    >
+                                      {calling[0][3].includes(":") ||
+                                      calling[0][3].includes("On time") ? (
+                                        <>Estimated departure: </>
+                                      ) : (
+                                        <>Departure status: </>
+                                      )}
+                                      <br />{" "}
+                                      {calling[0][3] ? (
+                                        <>{calling[0][3]}</>
+                                      ) : (
+                                        <>N/A</>
+                                      )}
+                                    </p>
+                                  </div>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "row",
+                                      justifyContent: "center",
+                                      gap: "10px",
+                                    }}
+                                  >
+                                    <p
+                                      style={{
+                                        background: "#f0f0f0",
+                                        borderRadius: "15px",
+                                        padding: "10px",
+                                        width: "50%",
+                                      }}
+                                    >
+                                      Scheduled departure:
+                                      <br />{" "}
+                                      {calling[0][1] ? (
+                                        <>{calling[0][1]}</>
+                                      ) : (
+                                        <>N/A</>
+                                      )}
+                                    </p>
+                                    <p
+                                      style={{
+                                        background: "#f0f0f0",
+                                        borderRadius: "15px",
+                                        padding: "10px",
+                                        width: "50%",
+                                      }}
+                                    >
+                                      Actual departure:
+                                      <br />{" "}
+                                      {calling[0][2] ? (
+                                        <>{calling[0][2]}</>
+                                      ) : (
+                                        <>N/A</>
+                                      )}
+                                    </p>
+                                  </div>{" "}
+                                </>
+                              )}
+                            </>
+                          )}
+                        </div>
+                        <button
+                          id="useTrains"
+                          style={{ margin: "0px" }}
+                          onClick={() => close()}
+                        >
+                          Close
+                        </button>
+                      </>
+                    )}
+                  </Popup>
+
                   <br />
                   <br />
                   <br />
