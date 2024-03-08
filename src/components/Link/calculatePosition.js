@@ -43,7 +43,7 @@ export function calculatePosition(liveService, liveServiceTime) {
       } catch {}
     }
     if (liveService[i].at == null) {
-      liveService[i].at = "N/A";
+      // liveService[i].at = "N/A";
     }
 
     locationList +=
@@ -94,7 +94,7 @@ export function calculatePositionCentral(
   } else {
     trainLocation = liveServiceTime.etd;
     if (trainLocation == null) {
-      trainLocation = liveServiceTime.eta;
+      // trainLocation = liveServiceTime.eta;
     }
     try {
       if (
@@ -121,7 +121,7 @@ export function calculatePositionCentral(
   } catch {}
   if (liveServiceTime.atd == null) {
     if (liveServiceTime.ata != null) {
-      liveServiceTime.atd = liveServiceTime.ata;
+      // liveServiceTime.atd = liveServiceTime.ata;
     } else {
       try {
         if (liveService2[0].at != null) {
@@ -129,15 +129,15 @@ export function calculatePositionCentral(
         }
       } catch {}
 
-      liveServiceTime.atd = "N/A";
+      // liveServiceTime.atd = "N/A";
     }
   }
 
   if (liveServiceTime.std == null) {
     if (liveServiceTime.sta != null) {
-      liveServiceTime.std = liveServiceTime.sta;
+      // liveServiceTime.std = liveServiceTime.sta;
     } else {
-      liveServiceTime.std = "N/A";
+      // liveServiceTime.std = "N/A";
     }
   }
 
