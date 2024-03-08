@@ -125,7 +125,7 @@ export function calculatePositionCentral(
     } else {
       try {
         if (liveService2[0].at != null) {
-          trainLocation = liveServiceTime.etd + "❌";
+          trainLocation = liveServiceTime.etd + " ❌";
         }
       } catch {}
 
