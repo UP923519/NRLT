@@ -141,8 +141,12 @@ export function calculatePositionCentral(
     }
   }
 
-  if (trainLocation.includes("null")) {
-    trainLocation = trainLocation.replaceAll("null", "N/A");
+  if (trainLocation) {
+    if (trainLocation.includes("null")) {
+      trainLocation = trainLocation.replaceAll("null", "N/A");
+    }
+  } else {
+    trainLocation = "N/A";
   }
 
   if (liveServiceTime.platform == null) {
