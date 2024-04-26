@@ -57,7 +57,7 @@ let failedAlert;
 let contextURL = "";
 let contextTime;
 
-let serverName = "trainwebapp";
+let serverName = "trainwebappv2";
 let showServiceCode = false;
 
 let rememberFirstStation;
@@ -96,7 +96,7 @@ export default function DepartArrive(departArrive) {
     if (currentAzure == "External") {
       serverName = "huxley2";
     } else if (currentAzure == "Local") {
-      serverName = "trainwebapp";
+      serverName = "trainwebappv2";
     }
 
     if (serviceCode == "Show") {
@@ -454,7 +454,9 @@ export default function DepartArrive(departArrive) {
             timeOffset
         );
         staffResponse = await fetch(
-          "https://huxley2.azurewebsites.net/" +
+          "https://" +
+            serverName +
+            ".azurewebsites.net/" +
             "staff" +
             departArrive +
             "/" +
@@ -505,7 +507,8 @@ export default function DepartArrive(departArrive) {
         );
         staffResponse = await fetch(
           "https://" +
-            "huxley2.azurewebsites.net/" +
+            serverName +
+            ".azurewebsites.net/" +
             "staff" +
             departArrive +
             "/" +

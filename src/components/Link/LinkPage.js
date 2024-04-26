@@ -38,7 +38,7 @@ let staffSDDVal = "";
 
 let failedAlert;
 
-let serverName = "trainwebapp";
+let serverName = "trainwebappv2";
 
 export default function Dashboard() {
   const [excuseReason, setExcuseReason] = useState();
@@ -68,7 +68,7 @@ export default function Dashboard() {
     if (currentAzure == "External") {
       serverName = "huxley2";
     } else if (currentAzure == "Local") {
-      serverName = "trainwebapp";
+      serverName = "trainwebappv2";
     }
 
     setCalling([["Enter a service code above"], []]);
