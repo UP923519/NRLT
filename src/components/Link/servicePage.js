@@ -145,18 +145,7 @@ export default function ServicePage() {
 
     infoTrainSet = 0;
 
-    // try {
-    //   myArray = locationList.split("*");
     myArray = locationList;
-
-    // } catch {
-    //   setCalling([["Error, please try another service."], []]);
-    // }
-    // myArray.shift();
-
-    // myArray[myArray.length - 1] = myArray[myArray.length - 1].replace('"}', "");
-
-    // console.log("myArray", myArray);
 
     setCalling(myArray);
 
