@@ -40,7 +40,7 @@ let failedAlert;
 
 let serverName = "trainwebappv2";
 
-export default function Dashboard() {
+export default function ServicePage() {
   const [excuseReason, setExcuseReason] = useState();
   const [operatorName, setOperator] = useState();
   const [platformNumber, setPlatformNumber] = useState();

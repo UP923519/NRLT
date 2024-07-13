@@ -11,7 +11,7 @@ import {
 import { HashLink } from "react-router-hash-link";
 
 import App from "../App/App.css";
-import LinkPage from "../Link/LinkPage";
+import LinkPage from "../Link/servicePage.js";
 import Dashboard from "../Dashboard/Dashboard";
 import DataFeed from "../DataFeed/DataFeed";
 import DepartArrive from "../DepartArrive/DepartArrive";

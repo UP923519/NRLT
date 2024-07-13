@@ -4,7 +4,7 @@ import { Table } from "react-bootstrap";
 import Select from "react-select";
 import image from "../../assets/nre-logo.png";
 import { useNavigate } from "react-router-dom";
-import { test1 } from "../Link/LinkPage";
+import { test1 } from "../Link/servicePage";
 import DepartArrive from "../DepartArrive/DepartArrive";
 
 let liveArrival = "";

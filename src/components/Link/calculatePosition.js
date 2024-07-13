@@ -109,6 +109,7 @@ export function calculatePositionCentral(
         trainLocation = trainLocation.replace("null", liveServiceTime.etd);
       }
     }
+
     try {
       if (liveService[liveService.length + 1].et != null)
         trainLocation = "No report ❌";
@@ -153,6 +154,25 @@ export function calculatePositionCentral(
     liveServiceTime.platform = " N/A";
   }
 
+  if (liveServiceTime.subsequentCallingPoints == null) {
+    // If this is the last station, show the status as on time/positive
+    // if train arrives on or before expected
+    if (trainLocation == "N/A") {
+      trainLocation = liveServiceTime.eta;
+    }
+    if (trainLocation.includes("Cancelled")) {
+      trainLocation = "Cancelled ❌";
+    }
+
+    if (
+      liveServiceTime.ata <= liveServiceTime.sta ||
+      liveServiceTime.ata == "On time"
+    ) {
+      trainLocation = "✔️";
+    }
+  }
+
+  // TODO Location list not used - needs to be confirmed
   locationList +=
     "*" +
     location +
@@ -166,20 +186,40 @@ export function calculatePositionCentral(
     liveServiceTime.platform +
     ")*";
 
-  stationsArray.push([
-    [
-      " " + location + " ",
-      " " + liveServiceTime.std + " ",
-      " " + liveServiceTime.atd + " ",
-      " " + trainLocation + " ",
-      " (p." + liveServiceTime.platform + ")",
-    ],
-    liveServiceTime.ata,
-    liveServiceTime.atd,
-    liveServiceTime.eta,
-    liveServiceTime.etd,
-    liveServiceTime.sta,
-    liveServiceTime.std,
-  ]);
+  if (liveServiceTime.subsequentCallingPoints == null) {
+    //If this is the last station, show arrival times instead of departure
+    stationsArray.push([
+      [
+        " " + location + " ",
+        " " + liveServiceTime.sta + " ",
+        " " + liveServiceTime.ata + " ",
+        " " + trainLocation + " ",
+        " (p." + liveServiceTime.platform + ")",
+      ],
+      liveServiceTime.ata,
+      liveServiceTime.atd,
+      liveServiceTime.eta,
+      liveServiceTime.etd,
+      liveServiceTime.sta,
+      liveServiceTime.std,
+    ]);
+  } else {
+    //If this is not the last station, show only departure times
+    stationsArray.push([
+      [
+        " " + location + " ",
+        " " + liveServiceTime.std + " ",
+        " " + liveServiceTime.atd + " ",
+        " " + trainLocation + " ",
+        " (p." + liveServiceTime.platform + ")",
+      ],
+      liveServiceTime.ata,
+      liveServiceTime.atd,
+      liveServiceTime.eta,
+      liveServiceTime.etd,
+      liveServiceTime.sta,
+      liveServiceTime.std,
+    ]);
+  }
   return [locationList, stationsArray];
 }
