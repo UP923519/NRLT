@@ -11,6 +11,7 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import LinearProgress from "@mui/material-next/LinearProgress";
 import { PopupStations } from "./PopupStations";
+import Fade from "react-reveal/Fade";
 
 let liveService = "";
 let liveService2 = "";
@@ -406,181 +407,185 @@ export default function ServicePage() {
             </div>
           )}
         </div>
-        {isOpen && !stringCalling[0][0].includes("Loading") ? (
-          <>
-            <div className="App">
-              {isOpen && (
-                <div>
-                  {/* {!stringCalling[0][0].includes("Loading") ? (
+        <Fade bottom duration={1500} when={loadedState}>
+          {isOpen && !stringCalling[0][0].includes("Loading") ? (
+            <>
+              <div className="App">
+                {isOpen && (
+                  <div>
+                    {/* {!stringCalling[0][0].includes("Loading") ? (
                   <> */}
-                  <p className="highlights">{excuseReason}</p>
-                  <br />
-                  <div className="trainInfo">
-                    <p className={"platformBox"}>
-                      <text style={{ fontWeight: "500", color: "white" }}>
-                        Platform:&nbsp;{" "}
-                      </text>
-                      <text style={{ color: "white" }}>{platformNumber}</text>
-                    </p>
-                  </div>
-                  <div className="trainInfo">
-                    <p className={"trainInfoBox"}>
-                      <text style={{ fontWeight: "500" }}>
-                        Service operator:
-                      </text>
-                      <br />
-                      <br />
-                      {operatorName}
-                    </p>
-                    <p className={"trainInfoBox"}>
-                      <text style={{ fontWeight: "500" }}>
-                        Train formation:
-                      </text>
-                      <br />
-                      <br />
-                      {formationCar}
-                    </p>
-                  </div>
-                  {divides != "" && (
+                    <p className="highlights">{excuseReason}</p>
+                    <br />
                     <div className="trainInfo">
-                      <p
-                        className={"trainInfoBox"}
-                        style={{
-                          background: "orange",
-                        }}
-                      >
-                        <text style={{ fontWeight: "500" }}>
-                          Train {divideMerge} at:
+                      <p className={"platformBox"}>
+                        <text style={{ fontWeight: "500", color: "white" }}>
+                          Platform:&nbsp;{" "}
                         </text>
-                        <br />
-                        <br />
-                        {divideLocation}
+                        <text style={{ color: "white" }}>{platformNumber}</text>
                       </p>
                     </div>
-                  )}
-
-                  <div>
-                    {(enableWindow == "Show" || enableWindow == undefined) &&
-                      staffUIDVal != "" && (
-                        <text>
+                    <div className="trainInfo">
+                      <p className={"trainInfoBox"}>
+                        <text style={{ fontWeight: "500" }}>
+                          Service operator:
+                        </text>
+                        <br />
+                        <br />
+                        {operatorName}
+                      </p>
+                      <p className={"trainInfoBox"}>
+                        <text style={{ fontWeight: "500" }}>
+                          Train formation:
+                        </text>
+                        <br />
+                        <br />
+                        {formationCar}
+                      </p>
+                    </div>
+                    {divides != "" && (
+                      <div className="trainInfo">
+                        <p
+                          className={"trainInfoBox"}
+                          style={{
+                            background: "orange",
+                          }}
+                        >
+                          <text style={{ fontWeight: "500" }}>
+                            Train {divideMerge} at:
+                          </text>
                           <br />
+                          <br />
+                          {divideLocation}
+                        </p>
+                      </div>
+                    )}
 
-                          {!stringCalling[0][0].includes("Loading") ? (
-                            <>
-                              <Popup
-                                trigger={
-                                  <button
-                                    id="useTrains"
-                                    type="button"
-                                    // onClick={() =>
-                                    //   window.scrollTo({ top: 99999, behavior: "smooth" })
-                                    // }
-                                  >
-                                    More train details
-                                  </button>
-                                }
-                                modal
-                                nested
-                              >
-                                {(close) => (
-                                  <div>
+                    <div>
+                      {(enableWindow == "Show" || enableWindow == undefined) &&
+                        staffUIDVal != "" && (
+                          <text>
+                            <br />
+
+                            {!stringCalling[0][0].includes("Loading") ? (
+                              <>
+                                <Popup
+                                  trigger={
+                                    <button
+                                      id="useTrains"
+                                      type="button"
+                                      // onClick={() =>
+                                      //   window.scrollTo({ top: 99999, behavior: "smooth" })
+                                      // }
+                                    >
+                                      More train details
+                                    </button>
+                                  }
+                                  modal
+                                  nested
+                                >
+                                  {(close) => (
                                     <div>
                                       <div>
-                                        <p style={{ margin: "5px" }}>
-                                          Additional train details
-                                        </p>
-                                        <iframe
-                                          className="transactions"
-                                          style={{
-                                            height: "270px",
-                                            border: "0",
-                                            marginTop: "3px",
-                                            width: "99%",
-                                          }}
-                                          id="iFrameExample"
-                                          // title="iFrame Example"
-                                          src={trainDetailUrl}
-                                        ></iframe>
+                                        <div>
+                                          <p style={{ margin: "5px" }}>
+                                            Additional train details
+                                          </p>
+                                          <iframe
+                                            className="transactions"
+                                            style={{
+                                              height: "270px",
+                                              border: "0",
+                                              marginTop: "3px",
+                                              width: "99%",
+                                            }}
+                                            id="iFrameExample"
+                                            // title="iFrame Example"
+                                            src={trainDetailUrl}
+                                          ></iframe>
+                                        </div>
+                                      </div>
+                                      <div>
+                                        <button
+                                          id="useTrains"
+                                          style={{ margin: "0px" }}
+                                          onClick={() => close()}
+                                        >
+                                          Close
+                                        </button>
                                       </div>
                                     </div>
-                                    <div>
-                                      <button
-                                        id="useTrains"
-                                        style={{ margin: "0px" }}
-                                        onClick={() => close()}
-                                      >
-                                        Close
-                                      </button>
-                                    </div>
-                                  </div>
-                                )}
-                              </Popup>
+                                  )}
+                                </Popup>
 
-                              <PopupStations
-                                calling={
-                                  stringCalling[
-                                    stringCalling.findIndex((element) =>
-                                      JSON.stringify(element).includes(location)
-                                    )
-                                  ]
-                                }
-                                Popup={Popup}
-                                platformNumber={platformNumber}
-                                popOpen={true}
-                                stringCalling={stringCalling}
-                              ></PopupStations>
-                            </>
-                          ) : (
-                            <div>
-                              <br />
-                              <br />
-                            </div>
-                          )}
+                                <PopupStations
+                                  calling={
+                                    stringCalling[
+                                      stringCalling.findIndex((element) =>
+                                        JSON.stringify(element).includes(
+                                          location
+                                        )
+                                      )
+                                    ]
+                                  }
+                                  Popup={Popup}
+                                  platformNumber={platformNumber}
+                                  popOpen={true}
+                                  stringCalling={stringCalling}
+                                ></PopupStations>
+                              </>
+                            ) : (
+                              <div>
+                                <br />
+                                <br />
+                              </div>
+                            )}
 
-                          {/* {!stringCalling[0][0].includes("Loading") && } */}
-                        </text>
-                      )}
+                            {/* {!stringCalling[0][0].includes("Loading") && } */}
+                          </text>
+                        )}
+                    </div>
+
+                    <br />
+
+                    <Table
+                      className="transactions"
+                      style={{ backgroundColor: "#f0f0f0" }}
+                    >
+                      <tr>
+                        <th style={{ fontSize: 13 }}>
+                          Station|Scheduled|Actual|Estimated
+                          <br />
+                          <br />
+                        </th>
+                      </tr>
+
+                      {stringCalling.map((calling, position) => {
+                        return (
+                          <tr data-index={position}>
+                            <PopupStations
+                              calling={calling}
+                              Popup={Popup}
+                              platformNumber={platformNumber}
+                              popOpen={popOpen}
+                            />
+                            <br />
+                            <br />
+                            <br />
+                          </tr>
+                        );
+                      })}
+                    </Table>
+                    <br />
+                    <br />
                   </div>
-
-                  <br />
-
-                  <Table
-                    className="transactions"
-                    style={{ backgroundColor: "#f0f0f0" }}
-                  >
-                    <tr>
-                      <th style={{ fontSize: 13 }}>
-                        Station|Scheduled|Actual|Estimated
-                        <br />
-                        <br />
-                      </th>
-                    </tr>
-
-                    {stringCalling.map((calling, position) => {
-                      return (
-                        <tr data-index={position}>
-                          <PopupStations
-                            calling={calling}
-                            Popup={Popup}
-                            platformNumber={platformNumber}
-                            popOpen={popOpen}
-                          />
-                          <br />
-                          <br />
-                          <br />
-                        </tr>
-                      );
-                    })}
-                  </Table>
-                  <br />
-                  <br />
-                </div>
-              )}
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
+                )}
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+        </Fade>
       </ref>
 
       {loadedState == false ? (
