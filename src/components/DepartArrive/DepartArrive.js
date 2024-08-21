@@ -10,6 +10,8 @@ import { currentAzure, serviceCode } from "../Settings/Settings";
 import TrainBus from "./trainBus.js";
 import LinearProgress from "@mui/material-next/LinearProgress";
 import CircularProgress from "@mui/material-next/CircularProgress";
+import Fade from "react-reveal/Fade";
+import { Box } from "@mui/material";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -91,6 +93,8 @@ export default function DepartArrive(departArrive) {
   const [activeTrainT, setActiveTrainT] = useState("white");
   const [busDisabled, setBusDisabled] = useState(false);
   const [trainDisabled, setTrainDisabled] = useState(false);
+  const [timeButton, setTimeButton] = useState("");
+  const [listOfStations, setListOfStations] = useState("");
 
   useEffect(() => {
     if (currentAzure == "External") {
@@ -204,12 +208,14 @@ export default function DepartArrive(departArrive) {
     setDisplaySecondStation("");
     rememberFirstStation = "";
     rememberSecondStation = "";
+    window.location.reload();
   }
 
   const displayAction = false;
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
     setProcessingState(true);
+    setTimeButton(timeOffset);
     setDepartures(["Loading..."]);
     textInfo = "loading...";
     trainSearch = "loading...";
@@ -680,9 +686,16 @@ export default function DepartArrive(departArrive) {
     }
 
     const display = listOfStations.map((opt) => ({ label: opt, value: opt }));
+    setListOfStations(display);
 
     setTRC(
       <Select
+        defaultValue={[
+          {
+            value: displayFirstStation,
+            label: JSON.stringify(displayFirstStation),
+          },
+        ]}
         options={display}
         className="selectBox"
         onChange={(opt) =>
@@ -905,25 +918,66 @@ export default function DepartArrive(departArrive) {
           {isOpenForm && (
             <text>
               {departArrive == "Departures" ? (
-                <p style={{ textAlign: "left" }}>
-                  Departure station: {displayFirstStation}
-                </p>
+                <p style={{ textAlign: "left" }}>Departure</p>
               ) : (
-                <p style={{ textAlign: "left" }}>
-                  Arrival station: {displayFirstStation}
-                </p>
+                <p style={{ textAlign: "left" }}>Arrival</p>
               )}
-              <text style={{ textAlign: "left" }}>{trcDropDown}</text>
+              {/* <text style={{ textAlign: "left" }}>{trcDropDown}</text> */}
+              <text style={{ textAlign: "left" }}>
+                <Select
+                  defaultValue={[
+                    {
+                      value: rememberFirstStation,
+                      label: rememberFirstStation,
+                    },
+                  ]}
+                  options={listOfStations}
+                  className="selectBox"
+                  onChange={(opt) =>
+                    setDropVal(
+                      opt.value.slice(opt.value.length - 4, -1) +
+                        handleDepartureClick(
+                          current,
+                          opt.value.slice(opt.value.length - 4, -1),
+                          0,
+                          opt.value
+                        )
+                    ) + setStationOne(opt.value)
+                  }
+                />
+              </text>
+
               {departArrive == "Departures" ? (
-                <p style={{ textAlign: "left" }}>
-                  Destination station (optional): {displaySecondStation}
-                </p>
+                <p style={{ textAlign: "left" }}>Destination (optional)</p>
               ) : (
-                <p style={{ textAlign: "left" }}>
-                  Origin station (optional): {displaySecondStation}
-                </p>
+                <p style={{ textAlign: "left" }}>Origin (optional)</p>
               )}
-              <text style={{ textAlign: "left" }}>{trcDropDownD}</text>
+              {/* <text style={{ textAlign: "left" }}>{trcDropDownD}</text> */}
+              <text style={{ textAlign: "left" }}>
+                <Select
+                  defaultValue={[
+                    {
+                      value: rememberSecondStation,
+                      label: rememberSecondStation,
+                    },
+                  ]}
+                  options={listOfStations}
+                  className="selectBox"
+                  onChange={(opt) =>
+                    setDropVal(
+                      opt.value.slice(opt.value.length - 4, -1) +
+                        handleDepartureClick(
+                          current,
+                          opt.value.slice(opt.value.length - 4, -1),
+                          1,
+                          opt.value
+                        )
+                    ) +
+                    setStationTwo(opt.value) +
+                    { stationTwoD: opt.value }
+                  }
+                />
+              </text>
               <br />
               {trcDropDownSP == "Loading..." && <br />}
               <button
@@ -977,51 +1031,63 @@ export default function DepartArrive(departArrive) {
         </>
       )}
 
-      {isOpen && (
+      <Fade duration={1000} when={!processingState}>
         <>
-          <>
-            <button
-              id="useTrains"
-              type="button"
-              disabled={trainDisabled}
-              style={{ color: activeTrainT, background: activeTrain }}
-              onClick={() => (
-                (busDisplayMode = "train"), handleDepartureClick(contextTime)
-              )}
-            >
-              Show Train Services
-            </button>
-            <button
-              id="useTrains"
-              type="button"
-              disabled={busDisabled}
-              style={{ color: activeBusT, background: activeBus }}
-              onClick={() => (
-                (busDisplayMode = "bus"), handleDepartureClick(contextTime)
-              )}
-            >
-              Show Bus Services
-            </button>
-          </>
-          <TrainBus
-            isOpen={isOpen}
-            trainSearch={trainSearch}
-            textInfo={textInfo}
-            handleDepartureClick={handleDepartureClick}
-            earlier={earlier}
-            earlier2={earlier2}
-            Table={Table}
-            stringDepartures={stringDepartures}
-            routeChange={routeChange}
-            later={later}
-            later2={later2}
-          />
-        </>
-      )}
+          {isOpen && (
+            <>
+              <Box sx={{ marginBottom: 2 }}>{trainSearch}</Box>
+              <Box sx={{ marginBottom: 2 }}>
+                <button
+                  id="useTrains"
+                  type="button"
+                  disabled={trainDisabled}
+                  style={{ color: activeTrainT, background: activeTrain }}
+                  onClick={() => (
+                    (busDisplayMode = "train"),
+                    handleDepartureClick(contextTime)
+                  )}
+                >
+                  Show Train Services
+                </button>
+                <button
+                  id="useTrains"
+                  type="button"
+                  disabled={busDisabled}
+                  style={{ color: activeBusT, background: activeBus }}
+                  onClick={() => (
+                    (busDisplayMode = "bus"), handleDepartureClick(contextTime)
+                  )}
+                >
+                  Show Bus Services
+                </button>
+              </Box>
+              <TrainBus
+                isOpen={isOpen}
+                trainSearch={trainSearch}
+                textInfo={textInfo}
+                handleDepartureClick={handleDepartureClick}
+                earlier={earlier}
+                earlier2={earlier2}
+                Table={Table}
+                stringDepartures={stringDepartures}
+                routeChange={routeChange}
+                later={later}
+                later2={later2}
+                current={current}
+                timeButton={timeButton}
+              />
+            </>
+          )}
 
-      <div className="NRLogo">
-        <img src={image} alt="powered by National Rail Enquiries" width="256" />
-      </div>
+          <div className="NRLogo">
+            <img
+              src={image}
+              alt="powered by National Rail Enquiries"
+              width="256"
+            />
+          </div>
+        </>
+      </Fade>
     </div>
   );
 }

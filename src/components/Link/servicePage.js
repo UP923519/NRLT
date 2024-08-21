@@ -135,15 +135,6 @@ export default function ServicePage() {
     infoTrainSet.pop();
     infoTrainSet.pop();
 
-    // console.log("Origin Station is", liveServiceTime.locationName);
-
-    // console.log(
-    //   "Destination station is",
-    //   liveServiceTime.subsequentCallingPoints[0].callingPoint[
-    //     liveServiceTime.subsequentCallingPoints[0].callingPoint.length - 1
-    //   ].locationName
-    // );
-
     setInfoTrain(infoTrainSet);
 
     infoTrainSet = 0;
