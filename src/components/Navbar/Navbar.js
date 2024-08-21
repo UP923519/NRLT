@@ -51,7 +51,7 @@ const Navbar = () => {
           activeClassName="topRow2Active"
           to="/settings"
         >
-          Options
+          Settings
         </NavLink>
       </navbar>
 

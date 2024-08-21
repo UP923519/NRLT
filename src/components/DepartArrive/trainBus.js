@@ -1,4 +1,5 @@
 import { Box, Button, ButtonGroup } from "@mui/material";
+import "./trainBus.css";
 
 export default function TrainBus({
   isOpen,
@@ -93,6 +94,7 @@ export default function TrainBus({
               backgroundColor: timeButton == earlier && "#0080ff",
               color: timeButton == earlier && "white",
               border: "1px solid lightGrey",
+              fontSize: "smaller",
             }}
           >
             -120 min
@@ -105,6 +107,7 @@ export default function TrainBus({
               backgroundColor: timeButton == earlier2 && "#0080ff",
               color: timeButton == earlier2 && "white",
               border: "1px solid lightGrey",
+              fontSize: "smaller",
             }}
           >
             -100 min
@@ -117,6 +120,7 @@ export default function TrainBus({
               backgroundColor: timeButton == "" && "#0080ff",
               color: timeButton == "" && "white",
               border: "1px solid lightGrey",
+              fontSize: "smaller",
             }}
           >
             Now
@@ -129,6 +133,7 @@ export default function TrainBus({
               backgroundColor: timeButton == later && "#0080ff",
               color: timeButton == later && "white",
               border: "1px solid lightGrey",
+              fontSize: "smaller",
             }}
           >
             +100 min
@@ -141,6 +146,7 @@ export default function TrainBus({
               backgroundColor: timeButton == later2 && "#0080ff",
               color: timeButton == later2 && "white",
               border: "1px solid lightGrey",
+              fontSize: "smaller",
             }}
           >
             +120 min

@@ -2,6 +2,10 @@ element.style {
   background-color: rgb(42, 42, 255);
 }
 
+body {
+  overflow: visible !important;
+}
+
 .size {
   height: auto;
   font-size: 17px;
@@ -17,6 +21,12 @@ element.style {
   background: #bcbcbc;
   cursor: pointer;
   border-radius: 9px;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
 }
 
 ul {

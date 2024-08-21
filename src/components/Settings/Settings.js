@@ -162,22 +162,33 @@ export default function Settings() {
 
   return (
     <div style={{ width: "98vw", height: "100vh" }}>
-      <h3 style={{ textAlign: "center" }}>Options</h3>
-      <div className="topBanner1">
-        <h4>
-          <button
-            id="showHide"
-            style={{ fontSize: "medium", padding: "15px" }}
-            className="logOut"
-            onClick={logOut}
-          >
-            ￩ Exit to home page
-          </button>
-        </h4>
+      <h3 style={{ textAlign: "center" }}>Settings</h3>
+      <br />
+      <div
+        className="optionInput"
+        style={{
+          background: "#f0f0f0",
+        }}
+      >
+        <h3>Home</h3>
+
+        <div className="topBanner1" style={{ paddingBottom: 1 }}>
+          <h4>
+            <button
+              id="showHide"
+              style={{ fontSize: "medium", padding: "15px", margin: "0px" }}
+              className="logOut"
+              onClick={logOut}
+            >
+              ￩ Exit to home page
+            </button>
+          </h4>
+        </div>
       </div>
       <br />
+      <br />
       <div className="optionInput" style={{ background: "#b9ebe5" }}>
-        <h3>Data Settings</h3>
+        <h3>Data</h3>
         <div>
           {" "}
           Azure server: {currentAzureDisplay} owner
@@ -209,7 +220,7 @@ export default function Settings() {
       <br />
       <br />
       <div className="optionInput">
-        <h3>Display Settings</h3>
+        <h3>Display</h3>
         <div>
           {" "}
           Theme: {currentTheme}

@@ -476,36 +476,38 @@ export default function ServicePage() {
                                   nested
                                 >
                                   {(close) => (
-                                    <div>
+                                    <Fade top duration={500} distance={"100px"}>
                                       <div>
                                         <div>
-                                          <p style={{ margin: "5px" }}>
-                                            Additional train details
-                                          </p>
-                                          <iframe
-                                            className="transactions"
-                                            style={{
-                                              height: "270px",
-                                              border: "0",
-                                              marginTop: "3px",
-                                              width: "99%",
-                                            }}
-                                            id="iFrameExample"
-                                            // title="iFrame Example"
-                                            src={trainDetailUrl}
-                                          ></iframe>
+                                          <div>
+                                            <p style={{ margin: "5px" }}>
+                                              Additional train details
+                                            </p>
+                                            <iframe
+                                              className="transactions"
+                                              style={{
+                                                height: "270px",
+                                                border: "0",
+                                                marginTop: "3px",
+                                                width: "99%",
+                                              }}
+                                              id="iFrameExample"
+                                              // title="iFrame Example"
+                                              src={trainDetailUrl}
+                                            ></iframe>
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <button
+                                            id="useTrains"
+                                            style={{ margin: "0px" }}
+                                            onClick={() => close()}
+                                          >
+                                            Close
+                                          </button>
                                         </div>
                                       </div>
-                                      <div>
-                                        <button
-                                          id="useTrains"
-                                          style={{ margin: "0px" }}
-                                          onClick={() => close()}
-                                        >
-                                          Close
-                                        </button>
-                                      </div>
-                                    </div>
+                                    </Fade>
                                   )}
                                 </Popup>
 

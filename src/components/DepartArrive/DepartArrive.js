@@ -11,7 +11,8 @@ import TrainBus from "./trainBus.js";
 import LinearProgress from "@mui/material-next/LinearProgress";
 import CircularProgress from "@mui/material-next/CircularProgress";
 import Fade from "react-reveal/Fade";
-import { Box } from "@mui/material";
+import { Box, Button, Menu, MenuItem } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -82,7 +83,7 @@ export default function DepartArrive(departArrive) {
   const [trcDropDownSP, setTRCSP] = useState("");
   const [stationOne, setStationOne] = useState();
   const [stationTwo, setStationTwo] = useState();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [isOpenForm, setIsOpenForm] = useState(true);
   const [displayFirstStation, setDisplayFirstStation] = useState("");
   const [displaySecondStation, setDisplaySecondStation] = useState("");
@@ -94,7 +95,16 @@ export default function DepartArrive(departArrive) {
   const [busDisabled, setBusDisabled] = useState(false);
   const [trainDisabled, setTrainDisabled] = useState(false);
   const [timeButton, setTimeButton] = useState("");
-  const [listOfStations, setListOfStations] = useState("");
+  const [listOfStations, setListOfStations] = useState(null);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     if (currentAzure == "External") {
@@ -173,6 +183,8 @@ export default function DepartArrive(departArrive) {
       setDisplayFirstStation("");
       setDisplaySecondStation("");
     } else {
+      setIsOpen(true);
+
       if (
         trainSearch.includes("departing") &&
         departArrive.includes("Arrival")
@@ -931,7 +943,8 @@ export default function DepartArrive(departArrive) {
                       label: rememberFirstStation,
                     },
                   ]}
-                  options={listOfStations}
+                  options={listOfStations ? listOfStations : []}
+                  isLoading={listOfStations ? false : true}
                   className="selectBox"
                   onChange={(opt) =>
                     setDropVal(
@@ -955,13 +968,19 @@ export default function DepartArrive(departArrive) {
               {/* <text style={{ textAlign: "left" }}>{trcDropDownD}</text> */}
               <text style={{ textAlign: "left" }}>
                 <Select
+                  isDisabled={
+                    rememberFirstStation == "" || !rememberFirstStation
+                      ? true
+                      : false
+                  }
                   defaultValue={[
                     {
                       value: rememberSecondStation,
                       label: rememberSecondStation,
                     },
                   ]}
-                  options={listOfStations}
+                  options={listOfStations ? listOfStations : []}
+                  isLoading={listOfStations ? false : true}
                   className="selectBox"
                   onChange={(opt) =>
                     setDropVal(
@@ -979,8 +998,8 @@ export default function DepartArrive(departArrive) {
                 />
               </text>
               <br />
-              {trcDropDownSP == "Loading..." && <br />}
-              <button
+              {/* {trcDropDownSP == "Loading..." && <br />} */}
+              {/* <button
                 type="button"
                 id="useTrains"
                 style={{ fontSize: "small" }}
@@ -1002,14 +1021,84 @@ export default function DepartArrive(departArrive) {
                 }
               >
                 🗑️ Remove second station
-              </button>
-              <br />
+              </button> */}
+              {/* <br /> */}
+              <div>
+                <Button
+                  type="button"
+                  id="useTrains"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  sx={{
+                    textTransform: "none",
+                    paddingTop: "0.5px !important",
+                    paddingBottom: "0.5px !important",
+                  }}
+                >
+                  ⚙️ Options
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem
+                    type="button"
+                    disabled={
+                      rememberSecondStation == "" || !rememberSecondStation
+                        ? true
+                        : false
+                    } // style={{ fontSize: "small" }}
+                    onClick={() =>
+                      handleClose() +
+                      handleDepartureClick(contextTime, "SWITCH-st")
+                    }
+                  >
+                    🔄 Switch stations
+                  </MenuItem>
+                  <MenuItem
+                    type="button"
+                    disabled={
+                      rememberSecondStation == "" || !rememberSecondStation
+                        ? true
+                        : false
+                    }
+                    // style={{ fontSize: "small" }}
+                    onClick={() =>
+                      handleClose() +
+                      handleDepartureClick(
+                        contextTime,
+                        currentCRSCode,
+                        0,
+                        rememberFirstStation
+                      )
+                    }
+                  >
+                    🗑️ Remove second station
+                  </MenuItem>
+                  <MenuItem
+                    type="reset"
+                    // style={{ fontSize: "small" }}
+                    onClick={clearAll}
+                  >
+                    ❌ Reset
+                  </MenuItem>
+                </Menu>
+              </div>
             </text>
           )}
-
+          {/* 
           <button id="useTrains" type="reset" onClick={clearAll}>
             ❌ Reset
-          </button>
+          </button> */}
+
           <button
             id="useTrains"
             type="button"

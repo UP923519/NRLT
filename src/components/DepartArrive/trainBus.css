@@ -1,0 +1,7 @@
+@media only screen and (max-width: 324px) {
+  .css-11tlgl5-MuiButtonGroup-root {
+    display: flex;
+    flex-direction: column;
+    border: none !important;
+  }
+}
