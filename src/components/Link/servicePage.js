@@ -12,6 +12,8 @@ import "reactjs-popup/dist/index.css";
 import LinearProgress from "@mui/material-next/LinearProgress";
 import { PopupStations } from "./PopupStations";
 import Fade from "react-reveal/Fade";
+import { Button, ButtonBase, Menu, MenuItem } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 let liveService = "";
 let liveService2 = "";
@@ -61,6 +63,15 @@ export default function ServicePage() {
   const staffMonth = staffSDDVal.substring(5, 7);
   const staffYear = staffSDDVal.substring(0, 4);
   const myRef = useRef(null);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const executeScroll = () =>
     myRef.current.scrollIntoView({ behavior: "smooth" });
@@ -332,7 +343,6 @@ export default function ServicePage() {
 
           {isOpenForm && (
             <label>
-              National Rail status page: <br />
               <a href="https://www.nationalrail.co.uk/status-and-disruptions/">
                 <button
                   type="button"
@@ -362,11 +372,44 @@ export default function ServicePage() {
                   onChange={(event) => setFormVal(event.target.value)}
                 />
               </p>
+              <div>
+                <Button
+                  type="button"
+                  id="useTrains"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  sx={{
+                    textTransform: "none",
+                    paddingTop: "0.5px !important",
+                    paddingBottom: "0.5px !important",
+                  }}
+                >
+                  ⚙️ Options
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem
+                    type="reset"
+                    // style={{ fontSize: "small" }}
+                    onClick={() => handleClose() + clearAll()}
+                  >
+                    ❌ Reset
+                  </MenuItem>
+                </Menu>
+              </div>
             </label>
           )}
-          <button id="useTrains" type="reset" onClick={clearAll}>
-            ❌ Reset
-          </button>
+
           <button
             id="useTrains"
             type="button"

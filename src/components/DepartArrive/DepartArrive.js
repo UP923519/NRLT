@@ -998,31 +998,7 @@ export default function DepartArrive(departArrive) {
                 />
               </text>
               <br />
-              {/* {trcDropDownSP == "Loading..." && <br />} */}
-              {/* <button
-                type="button"
-                id="useTrains"
-                style={{ fontSize: "small" }}
-                onClick={() => handleDepartureClick(contextTime, "SWITCH-st")}
-              >
-                🔄 Switch stations
-              </button>
-              <button
-                type="button"
-                id="useTrains"
-                style={{ fontSize: "small" }}
-                onClick={() =>
-                  handleDepartureClick(
-                    contextTime,
-                    currentCRSCode,
-                    0,
-                    rememberFirstStation
-                  )
-                }
-              >
-                🗑️ Remove second station
-              </button> */}
-              {/* <br /> */}
+
               <div>
                 <Button
                   type="button"
@@ -1094,10 +1070,6 @@ export default function DepartArrive(departArrive) {
               </div>
             </text>
           )}
-          {/* 
-          <button id="useTrains" type="reset" onClick={clearAll}>
-            ❌ Reset
-          </button> */}
 
           <button
             id="useTrains"
