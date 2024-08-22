@@ -1,12 +1,18 @@
 import React from "react";
-import { Detector, Online, Offline } from "react-detect-offline";
+import useNetworkStatus from "check-user-network-status";
 
-export function CheckConnection() { 
+export function CheckConnection() {
+  const networkStatus = useNetworkStatus();
+  if (networkStatus === false)
     return (
-        
-            <div>
-              <Online></Online>
-              <Offline><p className = "highlights" style = {{fontSize: "large"}}><br/>No internet connection<br/><br/></p><br/></Offline>
-            </div>
-    )
+      <div>
+        <p className="highlights" style={{ fontSize: "large" }}>
+          <br />
+          No internet connection
+          <br />
+          <br />
+        </p>
+        <br />
+      </div>
+    );
 }
