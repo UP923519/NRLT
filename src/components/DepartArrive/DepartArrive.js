@@ -226,6 +226,22 @@ export default function DepartArrive(departArrive) {
   const displayAction = false;
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
+    //validation
+
+    if (!stationFullName && !rememberFirstStation) {
+      alert(
+        "The departure station is blank. Please select from the drop down menu."
+      );
+      return;
+    }
+
+    if (status == 1) {
+      if (stationFullName === rememberFirstStation) {
+        alert("The destination station cannot be the same as the departure");
+        return;
+      }
+    }
+
     setProcessingState(true);
     setTimeButton(timeOffset);
     setDepartures(["Loading..."]);
@@ -930,9 +946,25 @@ export default function DepartArrive(departArrive) {
           {isOpenForm && (
             <text>
               {departArrive == "Departures" ? (
-                <p style={{ textAlign: "left" }}>Departure</p>
+                <p
+                  style={{
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    color: "grey",
+                  }}
+                >
+                  Departure:
+                </p>
               ) : (
-                <p style={{ textAlign: "left" }}>Arrival</p>
+                <p
+                  style={{
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    color: "grey",
+                  }}
+                >
+                  Arrival:
+                </p>
               )}
               {/* <text style={{ textAlign: "left" }}>{trcDropDown}</text> */}
               <text style={{ textAlign: "left" }}>
@@ -943,6 +975,21 @@ export default function DepartArrive(departArrive) {
                       label: rememberFirstStation,
                     },
                   ]}
+                  value={
+                    rememberFirstStation
+                      ? [
+                          {
+                            value: rememberFirstStation,
+                            label: rememberFirstStation,
+                          },
+                        ]
+                      : [
+                          {
+                            value: "Select...",
+                            label: "Select...",
+                          },
+                        ]
+                  }
                   options={listOfStations ? listOfStations : []}
                   isLoading={listOfStations ? false : true}
                   className="selectBox"
@@ -961,11 +1008,28 @@ export default function DepartArrive(departArrive) {
               </text>
 
               {departArrive == "Departures" ? (
-                <p style={{ textAlign: "left" }}>Destination (optional)</p>
+                <p
+                  style={{
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    color: "grey",
+                  }}
+                >
+                  Destination (optional):
+                </p>
               ) : (
-                <p style={{ textAlign: "left" }}>Origin (optional)</p>
+                <p
+                  style={{
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    color: "grey",
+                  }}
+                >
+                  Origin (optional):
+                </p>
               )}
               {/* <text style={{ textAlign: "left" }}>{trcDropDownD}</text> */}
+
               <text style={{ textAlign: "left" }}>
                 <Select
                   isDisabled={
@@ -979,6 +1043,28 @@ export default function DepartArrive(departArrive) {
                       label: rememberSecondStation,
                     },
                   ]}
+                  value={
+                    rememberSecondStation
+                      ? [
+                          {
+                            value: rememberSecondStation,
+                            label: rememberSecondStation,
+                          },
+                        ]
+                      : rememberFirstStation
+                      ? [
+                          {
+                            value: "Select...",
+                            label: "Select...",
+                          },
+                        ]
+                      : [
+                          {
+                            value: "Select above first",
+                            label: "Select above first",
+                          },
+                        ]
+                  }
                   options={listOfStations ? listOfStations : []}
                   isLoading={listOfStations ? false : true}
                   className="selectBox"
@@ -1037,7 +1123,7 @@ export default function DepartArrive(departArrive) {
                       handleDepartureClick(contextTime, "SWITCH-st")
                     }
                   >
-                    🔄 Switch stations
+                    🔀 Switch stations
                   </MenuItem>
                   <MenuItem
                     type="button"
@@ -1076,7 +1162,7 @@ export default function DepartArrive(departArrive) {
             type="button"
             onClick={() => handleDepartureClick(current)}
           >
-            🔎 View/Refresh results
+            🔄 Refresh
           </button>
         </form>
       </div>

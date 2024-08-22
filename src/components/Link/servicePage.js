@@ -179,9 +179,7 @@ export default function ServicePage() {
         "https://" + serverName + ".azurewebsites.net/service/" + serviceID
       );
     } catch {
-      alert(
-        "Failed to fetch. Please check internet connection / service details."
-      );
+      alert("Failed. Please check internet connection / service details.");
       failedAlert = true;
 
       setIsOpen(false);
@@ -415,7 +413,7 @@ export default function ServicePage() {
             type="button"
             onClick={() => handleServiceClick()}
           >
-            🔎 View/Refresh train service
+            🔄 Refresh
           </button>
         </form>
       </div>
