@@ -24,9 +24,9 @@ body {
 }
 
 .css-6hp17o-MuiList-root-MuiMenu-list {
-  display: inline-flexbox;
-  flex-direction: column;
+  display: block;
   width: 100vw;
+  height: 250px;
 }
 
 ul {
