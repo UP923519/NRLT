@@ -589,13 +589,17 @@ export default function ServicePage() {
         </>
       ) : (
         <>
-          <div className="NRLogo" style={{ marginBottom: "50vh" }}>
+          <div className="NRLogo">
+            {console.log("stl", stringCalling.length)}
             <img
               src={image}
               alt="powered by National Rail Enquiries"
               width="256"
             />
           </div>
+          {stringCalling.length < 10 && (
+            <div style={{ marginBottom: "35vh" }}></div>
+          )}
         </>
       )}
     </div>
