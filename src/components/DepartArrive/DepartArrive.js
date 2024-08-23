@@ -65,6 +65,7 @@ let showServiceCode = false;
 
 let rememberFirstStation;
 let rememberSecondStation;
+let rememberTimeOffset;
 
 let busDisplayMode = "train";
 let showBuses = false;
@@ -226,6 +227,8 @@ export default function DepartArrive(departArrive) {
   const displayAction = false;
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
+    rememberTimeOffset = timeOffset;
+
     //validation
 
     if (!stationFullName && !rememberFirstStation) {
@@ -1160,7 +1163,7 @@ export default function DepartArrive(departArrive) {
           <button
             id="useTrains"
             type="button"
-            onClick={() => handleDepartureClick(current)}
+            onClick={() => handleDepartureClick(contextTime)}
           >
             🔄 Refresh
           </button>
@@ -1222,6 +1225,7 @@ export default function DepartArrive(departArrive) {
                 later2={later2}
                 current={current}
                 timeButton={timeButton}
+                rememberTimeOffset={rememberTimeOffset}
               />
             </>
           )}

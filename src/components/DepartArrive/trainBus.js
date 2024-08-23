@@ -15,6 +15,7 @@ export default function TrainBus({
   later2,
   current,
   timeButton,
+  rememberTimeOffset,
 }) {
   return (
     <div style={{ marginTop: -5 }}>
@@ -91,8 +92,8 @@ export default function TrainBus({
             // style={{ marginBottom: "10px" }}
             onClick={() => handleDepartureClick(earlier)}
             style={{
-              backgroundColor: timeButton == earlier && "#0080ff",
-              color: timeButton == earlier && "white",
+              backgroundColor: rememberTimeOffset == earlier && "#0080ff",
+              color: rememberTimeOffset == earlier && "white",
               border: "1px solid lightGrey",
               fontSize: "smaller",
             }}
@@ -104,8 +105,8 @@ export default function TrainBus({
             // style={{ marginBottom: "10px" }}
             onClick={() => handleDepartureClick(earlier2)}
             style={{
-              backgroundColor: timeButton == earlier2 && "#0080ff",
-              color: timeButton == earlier2 && "white",
+              backgroundColor: rememberTimeOffset == earlier2 && "#0080ff",
+              color: rememberTimeOffset == earlier2 && "white",
               border: "1px solid lightGrey",
               fontSize: "smaller",
             }}
@@ -117,8 +118,8 @@ export default function TrainBus({
             // style={{ marginTop: "10px" }}
             onClick={() => handleDepartureClick(current)}
             style={{
-              backgroundColor: timeButton == "" && "#0080ff",
-              color: timeButton == "" && "white",
+              backgroundColor: rememberTimeOffset == "" && "#0080ff",
+              color: rememberTimeOffset == "" && "white",
               border: "1px solid lightGrey",
               fontSize: "smaller",
             }}
@@ -130,8 +131,8 @@ export default function TrainBus({
             // style={{ marginTop: "10px" }}
             onClick={() => handleDepartureClick(later)}
             style={{
-              backgroundColor: timeButton == later && "#0080ff",
-              color: timeButton == later && "white",
+              backgroundColor: rememberTimeOffset == later && "#0080ff",
+              color: rememberTimeOffset == later && "white",
               border: "1px solid lightGrey",
               fontSize: "smaller",
             }}
@@ -143,8 +144,8 @@ export default function TrainBus({
             // style={{ marginTop: "10px" }}
             onClick={() => handleDepartureClick(later2)}
             style={{
-              backgroundColor: timeButton == later2 && "#0080ff",
-              color: timeButton == later2 && "white",
+              backgroundColor: rememberTimeOffset == later2 && "#0080ff",
+              color: rememberTimeOffset == later2 && "white",
               border: "1px solid lightGrey",
               fontSize: "smaller",
             }}
