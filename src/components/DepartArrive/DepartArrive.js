@@ -11,6 +11,7 @@ import LinearProgress from "@mui/material-next/LinearProgress";
 import Fade from "react-reveal/Fade";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import zIndex from "@mui/material/styles/zIndex.js";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -1001,7 +1002,7 @@ export default function DepartArrive(departArrive) {
             <hr />
           </>
         )}
-        <Fade duration={1000} when={!processingState}>
+        <Fade duration={1999} when={!processingState}>
           <>
             {isOpen && (
               <>

@@ -35,6 +35,10 @@ body {
   width: 100vw;
 }
 
+.react-reveal {
+  animation-fill-mode: unset !important;
+}
+
 ul {
   display: flex;
   padding: 0px;
