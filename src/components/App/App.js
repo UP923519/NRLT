@@ -4,6 +4,7 @@ import Login from "../Login/Login";
 import useToken from "./useToken";
 import Nimage from "../../assets/NationalRailLogo.png";
 import { CheckConnection } from "../CheckConnection/checkConnection.js";
+import Fade from "react-reveal/Fade";
 
 export const theUser = localStorage.getItem("username");
 
@@ -43,36 +44,42 @@ function App() {
   }
 
   return (
-    <div
-      className="wrapper"
-      style={{
-        fontSize: Number(localStorage.getItem("fontSize")),
-        backgroundColor: localStorage.getItem("darkMode"),
-        color: colour,
-      }}
-    >
-      <CheckConnection />
-
-      <p>
-        <img src={Nimage} alt="powered by National Rail Enquiries" width="85" />
-      </p>
-
-      <h2
-        className="titleClass"
+    <Fade top distance={"25px"} duration={1500}>
+      <div
+        className="wrapper"
         style={{
-          color: "#2d9ba1",
-          backgroundColor: backGroundColour,
-          borderRadius: "20px",
+          fontSize: Number(localStorage.getItem("fontSize")),
+          backgroundColor: localStorage.getItem("darkMode"),
+          color: colour,
         }}
       >
-        National Rail Live
-      </h2>
+        <CheckConnection />
 
-      <br />
-      <div>
-        <Navbar />
+        <p>
+          <img
+            src={Nimage}
+            alt="powered by National Rail Enquiries"
+            width="85"
+          />
+        </p>
+
+        <h2
+          className="titleClass"
+          style={{
+            color: "#2d9ba1",
+            backgroundColor: backGroundColour,
+            borderRadius: "20px",
+          }}
+        >
+          National Rail Live
+        </h2>
+
+        <br />
+        <div>
+          <Navbar />
+        </div>
       </div>
-    </div>
+    </Fade>
   );
 }
 

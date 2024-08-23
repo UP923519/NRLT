@@ -4,6 +4,7 @@ import Navbar from "../Navbar/Navbar.js";
 import Login from "../Login/Login";
 import useToken from "../App/useToken";
 import byebye from "../App/App.js";
+import Fade from "react-reveal/Fade";
 
 export let currentFontSize;
 export let currentTheme;
@@ -164,112 +165,116 @@ export default function Settings() {
     <div style={{ width: "98vw", height: "100vh" }}>
       <h3 style={{ textAlign: "center" }}>Settings</h3>
       <br />
-      <div
-        className="optionInput"
-        style={{
-          background: "#f0f0f0",
-        }}
-      >
-        <h3>Home</h3>
-
-        <div className="topBanner1" style={{ paddingBottom: 1 }}>
-          <h4>
-            <button
-              id="showHide"
-              style={{ fontSize: "medium", padding: "15px", margin: "0px" }}
-              className="logOut"
-              onClick={logOut}
-            >
-              ￩ Exit to home page
-            </button>
-          </h4>
-        </div>
-      </div>
-      <br />
-      <br />
-      <div className="optionInput" style={{ background: "#b9ebe5" }}>
-        <h3>Data</h3>
-        <div>
-          {" "}
-          Azure server: {currentAzureDisplay} owner
-          <br />
-          <button id="useCurrentLocation" onClick={changeAzure}>
-            Use Local / External Azure
-          </button>
-        </div>
-        <br />
-        <div>
-          {" "}
-          Show service code in departures/arrivals: {serviceCodeDisplay}
-          <br />
-          <button id="useCurrentLocation" onClick={showServiceCode}>
-            Show/hide
-          </button>
-        </div>
-        <br />
-        <div>
-          {" "}
-          Enable external formation content: {enableWindowDisplay}
-          <br />
-          <button id="useCurrentLocation" onClick={showWindow}>
-            Show/hide
-          </button>
-        </div>
-        <br />
-      </div>
-      <br />
-      <br />
-      <div className="optionInput">
-        <h3>Display</h3>
-        <div>
-          {" "}
-          Theme: {currentTheme}
-          <br />
-          <button id="useCurrentLocation" onClick={darkMode}>
-            Dark mode
-          </button>
-          <button id="useCurrentLocation" onClick={lightMode}>
-            Light mode
-          </button>
-          <br />
-          <button id="useCurrentLocation" onClick={ColourfulMode}>
-            Colourful mode
-          </button>
-        </div>
-        <br />
-
-        <div>
-          {" "}
-          Font size: {currentFontSize}
-          <br />
-          <button id="useCurrentLocation" onClick={fontSizeIncrease}>
-            + Large font size
-          </button>
-          <button id="useCurrentLocation" onClick={fontSizeDecrease}>
-            - Small font size
-          </button>
-          <br />
-          <button id="useCurrentLocation" onClick={fontSizeReset}>
-            Standard font size
-          </button>
-          <br />
-        </div>
-        <p style={{ fontSize: Number(localStorage.getItem("fontSize")) }}>
-          Example text to test font size
-        </p>
-        <button
+      <Fade top distance={"10px"} duration={1500}>
+        <div
+          className="optionInput"
           style={{
-            textDecoration: "none",
-            fontSize: Number(localStorage.getItem("fontSize") - 5),
+            background: "#f0f0f0",
           }}
-          id="manualSubmitButton"
-          onClick={applyFont}
         >
-          ☑ Apply font size
-        </button>
-        <br />
-        <br />
-      </div>
+          <h3>Home</h3>
+          <div className="topBanner1" style={{ paddingBottom: 1 }}>
+            <h4>
+              <button
+                id="showHide"
+                style={{ fontSize: "medium", padding: "15px", margin: "0px" }}
+                className="logOut"
+                onClick={logOut}
+              >
+                ￩ Exit to home page
+              </button>
+            </h4>
+          </div>
+        </div>
+      </Fade>
+      <br />
+      <br />
+      <Fade top distance={"30px"} duration={1500}>
+        <div className="optionInput" style={{ background: "#b9ebe5" }}>
+          <h3>Data</h3>
+          <div>
+            {" "}
+            Azure server: {currentAzureDisplay} owner
+            <br />
+            <button id="useCurrentLocation" onClick={changeAzure}>
+              Use Local / External Azure
+            </button>
+          </div>
+          <br />
+          <div>
+            {" "}
+            Show service code in departures/arrivals: {serviceCodeDisplay}
+            <br />
+            <button id="useCurrentLocation" onClick={showServiceCode}>
+              Show/hide
+            </button>
+          </div>
+          <br />
+          <div>
+            {" "}
+            Enable external formation content: {enableWindowDisplay}
+            <br />
+            <button id="useCurrentLocation" onClick={showWindow}>
+              Show/hide
+            </button>
+          </div>
+          <br />
+        </div>
+      </Fade>
+      <br />
+      <br />
+      <Fade top distance={"50px"} duration={1500}>
+        <div className="optionInput">
+          <h3>Display</h3>
+          <div>
+            {" "}
+            Theme: {currentTheme}
+            <br />
+            <button id="useCurrentLocation" onClick={darkMode}>
+              Dark mode
+            </button>
+            <button id="useCurrentLocation" onClick={lightMode}>
+              Light mode
+            </button>
+            <br />
+            <button id="useCurrentLocation" onClick={ColourfulMode}>
+              Colourful mode
+            </button>
+          </div>
+          <br />
+          <div>
+            {" "}
+            Font size: {currentFontSize}
+            <br />
+            <button id="useCurrentLocation" onClick={fontSizeIncrease}>
+              + Large font size
+            </button>
+            <button id="useCurrentLocation" onClick={fontSizeDecrease}>
+              - Small font size
+            </button>
+            <br />
+            <button id="useCurrentLocation" onClick={fontSizeReset}>
+              Standard font size
+            </button>
+            <br />
+          </div>
+          <p style={{ fontSize: Number(localStorage.getItem("fontSize")) }}>
+            Example text to test font size
+          </p>
+          <button
+            style={{
+              textDecoration: "none",
+              fontSize: Number(localStorage.getItem("fontSize") - 5),
+            }}
+            id="manualSubmitButton"
+            onClick={applyFont}
+          >
+            ☑ Apply font size
+          </button>
+          <br />
+          <br />
+        </div>
+      </Fade>
       <br />
       <br />
     </div>
