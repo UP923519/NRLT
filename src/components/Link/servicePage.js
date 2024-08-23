@@ -597,7 +597,7 @@ export default function ServicePage() {
               width="256"
             />
           </div>
-          {stringCalling.length < 10 && (
+          {stringCalling.length < 6 && (
             <div style={{ marginBottom: "35vh" }}></div>
           )}
         </>
