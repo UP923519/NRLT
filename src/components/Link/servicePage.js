@@ -19,28 +19,20 @@ let liveService = "";
 let liveService2 = "";
 let liveService3 = "";
 let liveServicePrevAdd = "";
-
 let liveServiceTime = "";
 let location = "";
 let operator = "";
 let formation = "";
-
 let locationList = "test";
-
 let myArray;
-let textInfo = "";
-
 let divides = "";
 let divideLocation;
 let divideMerge;
-
 let formJson = "";
 let infoTrain = "";
 let staffUIDVal = "";
 let staffSDDVal = "";
-
 let failedAlert;
-
 let serverName = "trainwebappv2";
 
 export default function ServicePage() {
@@ -56,14 +48,11 @@ export default function ServicePage() {
   const [trainDetailUrl, setTrainDetailUrl] = useState("");
   const [loadedState, setLoadedState] = useState(false);
   const [processingState, setProcessingState] = useState(false);
-  const [data, setData] = useState([]);
-  const [popOpen, setPopOpen] = useState(false);
-
+  const [popOpen] = useState(false);
   const staffDay = staffSDDVal.substring(8, 10);
   const staffMonth = staffSDDVal.substring(5, 7);
   const staffYear = staffSDDVal.substring(0, 4);
   const myRef = useRef(null);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -72,24 +61,18 @@ export default function ServicePage() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const executeScroll = () =>
     myRef.current.scrollIntoView({ behavior: "smooth" });
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-
     if (currentAzure == "External") {
       serverName = "huxley2";
     } else if (currentAzure == "Local") {
       serverName = "trainwebappv2";
     }
-
     setCalling([["Enter a service code above"], []]);
-    textInfo = "";
     myArray = [];
     locationList = [];
-
     if (formJson != "") {
       handleServiceClick();
     }
@@ -97,12 +80,9 @@ export default function ServicePage() {
 
   function clearAll(e) {
     setCalling([""]);
-    textInfo = "";
     setIsOpen(false);
     setProcessingState(false);
   }
-
-  const displayAction = false;
 
   function handleServiceClick(e) {
     setLoadedState(false);
@@ -188,7 +168,6 @@ export default function ServicePage() {
     try {
       const data = await response.json();
       if (data) {
-        setData(data);
       }
       try {
         liveService = data.previousCallingPoints[0].callingPoint;
@@ -279,24 +258,13 @@ export default function ServicePage() {
         location
       );
       let afterStations = calculatePosition(liveService2, liveServiceTime);
-
-      // beforeStations = beforeStations[0];
-      // afterStations = afterStations[0];
-      // middleStation = middleStation[0];
-
       let t = beforeStations[0] + middleStation[0] + afterStations[0];
-
       let u = [];
       u = [...beforeStations[1], ...middleStation[1], ...afterStations[1]];
-
       t = t.replaceAll("*undefined", "");
       t = t.replaceAll("undefined", "");
-
       setPlatformNumber(liveServiceTime.platform);
-
-      // locationList = t;
       locationList = u;
-
       runLast();
     } catch {
       if (!failedAlert)
@@ -428,7 +396,6 @@ export default function ServicePage() {
           <hr />
         </>
       )}
-
       <ref ref={myRef}>
         <div ref={myRef} className="App">
           {isOpen && (
@@ -492,7 +459,6 @@ export default function ServicePage() {
                         </p>
                       </div>
                     )}
-
                     <div>
                       {(enableWindow == "Show" || enableWindow == undefined) &&
                         staffUIDVal != "" && (
@@ -551,7 +517,6 @@ export default function ServicePage() {
                                     </Fade>
                                   )}
                                 </Popup>
-
                                 <PopupStations
                                   calling={
                                     stringCalling[
@@ -579,9 +544,7 @@ export default function ServicePage() {
                           </text>
                         )}
                     </div>
-
                     <br />
-
                     <Table
                       className="transactions"
                       style={{ backgroundColor: "#f0f0f0" }}
@@ -593,7 +556,6 @@ export default function ServicePage() {
                           <br />
                         </th>
                       </tr>
-
                       {stringCalling.map((calling, position) => {
                         return (
                           <tr data-index={position}>
@@ -621,7 +583,6 @@ export default function ServicePage() {
           )}
         </Fade>
       </ref>
-
       {loadedState == false ? (
         <>
           <p style={{ marginBottom: "3000px" }}></p>
@@ -640,7 +601,6 @@ export default function ServicePage() {
     </div>
   );
 }
-
 export function test1(number, trainInfo, staffUID, staffSDD) {
   formJson = number;
 

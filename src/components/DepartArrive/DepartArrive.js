@@ -3,13 +3,11 @@ import "../App/App.css";
 import { Table } from "react-bootstrap";
 import Select from "react-select";
 import image from "../../assets/nre-logo.png";
-import Dashboard1 from "../Link/servicePage.js";
 import { useNavigate } from "react-router-dom";
 import { test1 } from "../Link/servicePage.js";
 import { currentAzure, serviceCode } from "../Settings/Settings";
 import TrainBus from "./trainBus.js";
 import LinearProgress from "@mui/material-next/LinearProgress";
-import CircularProgress from "@mui/material-next/CircularProgress";
 import Fade from "react-reveal/Fade";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -19,31 +17,22 @@ let busDeparture = "";
 let saveLD = "";
 let saveBD = "";
 let staffData = "";
-
 let serviceMessage = "";
 let listStation = "";
-
 let currentCRSCode;
-
 let displayServiceMessage = "";
 let current = "";
 let earlier = "?timeOffset=-120&timeWindow=120";
 let earlier2 = "?timeOffset=-65&timeWindow=120";
 let later = "?timeOffset=82&timeWindow=120";
 let later2 = "?timeOffset=119&timeWindow=120";
-
 let remStatus = "";
 let secondStation;
 let stationOneD = "";
 let stationTwoD = "";
-
 let testFetch;
-
 var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
-
 let departuresList = "test";
-let stationsList = "";
-
 let textInfo = "loading...";
 let trainSearch = "";
 let newsLinkEx = new RegExp(
@@ -51,25 +40,17 @@ let newsLinkEx = new RegExp(
   "g"
 );
 let newsLink = [];
-
 let myArray = [];
-
 let sIdArray = [];
 let failedAlert;
-
 let contextURL = "";
 let contextTime;
-
 let serverName = "trainwebappv2";
-let showServiceCode = false;
-
 let rememberFirstStation;
 let rememberSecondStation;
 let rememberTimeOffset;
-
 let busDisplayMode = "train";
 let showBuses = false;
-let showTrains = true;
 
 const _ = require("lodash");
 
@@ -78,16 +59,8 @@ export default function DepartArrive(departArrive) {
   const [stringDepartures, setDepartures] = useState([]);
   const [formVal, setFormVal] = useState("");
   const [rememberStation, setRememberStation] = useState("");
-  const [dropVal, setDropVal] = useState("");
-  const [trcDropDown, setTRC] = useState("");
-  const [trcDropDownD, setTRCD] = useState("");
-  const [trcDropDownSP, setTRCSP] = useState("");
-  const [stationOne, setStationOne] = useState();
-  const [stationTwo, setStationTwo] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenForm, setIsOpenForm] = useState(true);
-  const [displayFirstStation, setDisplayFirstStation] = useState("");
-  const [displaySecondStation, setDisplaySecondStation] = useState("");
   const [processingState, setProcessingState] = useState(false);
   const [activeBus, setActiveBus] = useState("white");
   const [activeTrain, setActiveTrain] = useState("white");
@@ -97,7 +70,6 @@ export default function DepartArrive(departArrive) {
   const [trainDisabled, setTrainDisabled] = useState(false);
   const [timeButton, setTimeButton] = useState("");
   const [listOfStations, setListOfStations] = useState(null);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -115,7 +87,6 @@ export default function DepartArrive(departArrive) {
     }
 
     if (serviceCode == "Show") {
-      showServiceCode = true;
     }
 
     if (saveLD != null && saveBD != null) {
@@ -138,7 +109,6 @@ export default function DepartArrive(departArrive) {
     }
 
     if (saveLD == null && saveBD != null) {
-      showTrains = false;
       setTrainDisabled(true);
       setBusDisabled(false);
       setActiveTrain("#f5f5f5");
@@ -154,7 +124,6 @@ export default function DepartArrive(departArrive) {
     }
 
     if (saveLD != null && saveBD == null) {
-      showTrains = true;
       setBusDisabled(true);
       setTrainDisabled(false);
       setActiveBus("#f5f5f5");
@@ -172,17 +141,12 @@ export default function DepartArrive(departArrive) {
       setActiveTrainT("#d1d1d1");
     }
 
-    setDisplayFirstStation(rememberFirstStation);
-    setDisplaySecondStation(rememberSecondStation);
-
     setDepartures(myArray);
     getStation();
 
     if (myArray == "" || failedAlert == true) {
       setIsOpen(false);
       setProcessingState(false);
-      setDisplayFirstStation("");
-      setDisplaySecondStation("");
     } else {
       setIsOpen(true);
 
@@ -201,9 +165,6 @@ export default function DepartArrive(departArrive) {
   }, []);
 
   function clearValue() {
-    setTRCSP(null);
-    setTRC(null);
-    setTRCD(null);
     getStation();
   }
 
@@ -217,39 +178,33 @@ export default function DepartArrive(departArrive) {
     setIsOpen(false);
     setProcessingState(false);
     setIsOpenForm(true);
-    setDisplayFirstStation("");
-    setDisplaySecondStation("");
     rememberFirstStation = "";
     rememberSecondStation = "";
     window.location.reload();
   }
 
-  const displayAction = false;
-
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
-    rememberTimeOffset = timeOffset;
-
-    //validation
-
+    //validation on submit of boxes
     if (!stationFullName && !rememberFirstStation) {
       alert(
         "The departure station is blank. Please select from the drop down menu."
       );
       return;
     }
-
     if (status == 1) {
       if (stationFullName === rememberFirstStation) {
         alert("The destination station cannot be the same as the departure");
         return;
       }
     }
+    //validation end
 
     setProcessingState(true);
     setTimeButton(timeOffset);
     setDepartures(["Loading..."]);
     textInfo = "loading...";
     trainSearch = "loading...";
+    rememberTimeOffset = timeOffset;
 
     let switchFlag = false;
     if (code == "SWITCH-st") {
@@ -319,10 +274,8 @@ export default function DepartArrive(departArrive) {
   function runLast(timeOffset) {
     departuresList = departuresList.replaceAll("p.null", "p.N/A");
     myArray = departuresList.split('"');
-
     myArray = myArray.filter((value, index) => !((index + 1) % 2));
     myArray.shift();
-
     if (myArray[myArray.length - 1] != "") {
       newsLink = [myArray[myArray.length - 1].match(newsLinkEx)];
       textInfo = myArray[myArray.length - 1];
@@ -331,7 +284,6 @@ export default function DepartArrive(departArrive) {
         "There are no messages for this station (" + currentCRSCode + ").";
       newsLink = [];
     }
-
     if (busDeparture != null) {
       showBuses = true;
       if (textInfo.includes("no messages for this station")) {
@@ -344,7 +296,6 @@ export default function DepartArrive(departArrive) {
     } else {
       showBuses = false;
     }
-
     textInfo = textInfo.replace(htmlRegexG, " ");
     textInfo = textInfo.replaceAll("News ", "News. ");
     textInfo = textInfo.replaceAll(
@@ -355,17 +306,14 @@ export default function DepartArrive(departArrive) {
     textInfo = textInfo.replaceAll(" .", " ");
     textInfo = textInfo.replaceAll("amp;", " ");
     textInfo = textInfo.trim();
-
     let brokentextInfo = textInfo.split(" ");
     let found = 0;
     let showLinks = false;
-
     try {
       for (let i = 0; i < newsLink[0].length; i++) {
         newsLink[0][i] = newsLink[0][i].substring(1);
       }
     } catch {}
-
     try {
       for (let i = 0; i < brokentextInfo.length; i++) {
         brokentextInfo[i] = brokentextInfo[i] + " ";
@@ -391,7 +339,6 @@ export default function DepartArrive(departArrive) {
           showLinks = true;
         }
       }
-
       if (showLinks) {
         brokentextInfo.push("\n\n");
 
@@ -402,11 +349,8 @@ export default function DepartArrive(departArrive) {
         brokentextInfo.push("\n\n");
       }
     } catch {}
-
     textInfo = brokentextInfo;
-
     myArray = myArray.slice(0, -2);
-
     if (myArray == "") {
       alert("No results found");
       failedAlert = true;
@@ -414,13 +358,11 @@ export default function DepartArrive(departArrive) {
         clearAll();
       }
     }
-
     setDepartures(myArray);
     testFetch = 1;
     contextTime = timeOffset;
     navigator.vibrate(1);
     setProcessingState(false);
-
     if (remStatus == 1) {
       clearValue();
     }
@@ -436,44 +378,34 @@ export default function DepartArrive(departArrive) {
     switchVal
   ) {
     let fromCode = currentCRSCode;
-
     let displayStation = stationOneD;
-
     if (status == 0) {
       remStatus = 0;
     }
-
     if (switchVal == true) {
       let tempVar = fromCode;
       fromCode = secondStation;
       stationName = tempVar;
-
       tempVar = stationFullName;
       stationFullName = displayStation;
       displayStation = stationTwoD;
     }
-
     if (displayStation == stationFullName && remStatus == 1) {
       stationFullName = stationTwoD;
       stationName = secondStation;
       // displayStation = stationTwoD;
     }
-
     if (stationName == "" && remStatus == 1) {
       stationName = secondStation;
       stationFullName = stationTwoD;
     }
-
     if (stationName == "") {
       stationName = currentCRSCode;
       stationFullName = stationOneD;
     }
-
     testFetch = 0;
-
     let response;
     let staffResponse;
-
     if (remStatus == 1) {
       try {
         response = await fetch(
@@ -511,20 +443,14 @@ export default function DepartArrive(departArrive) {
         );
         failedAlert = true;
       }
-
-      // trainSearch = "Services from " + fromCode + " to " + stationName;
       trainSearch =
         "Services departing from " + displayStation + " for " + stationFullName;
       if (departArrive == "arrivals") {
         trainSearch =
           "Services arriving at " + displayStation + " from " + stationFullName;
       }
-
-      setDisplayFirstStation(displayStation);
       rememberFirstStation = displayStation;
-      setDisplaySecondStation(stationFullName);
       rememberSecondStation = stationFullName;
-
       secondStation = stationName;
       stationTwoD = stationFullName;
       if (testFetch == 1) {
@@ -564,43 +490,26 @@ export default function DepartArrive(departArrive) {
       if (departArrive == "arrivals") {
         trainSearch = trainSearch = "Services arriving at " + stationFullName;
       }
-      setDisplayFirstStation(stationFullName);
-      setDisplaySecondStation("");
       rememberFirstStation = stationFullName;
       rememberSecondStation = "";
-
-      setStationTwo("");
       if (testFetch == 1) {
         alert("Network timed out, results may be incorrect.");
       }
     }
-
     let data;
-
     try {
       data = await response.json();
       staffData = await staffResponse.json();
-
       liveDeparture = data.trainServices;
-
       busDeparture = data.busServices;
-
       saveLD = data.trainServices;
       saveBD = data.busServices;
-
       currentCRSCode = data.crs;
       stationOneD = data.locationName + " (" + data.crs + ")";
-
       if (data.trainServices == null) {
-        showTrains = false;
       } else {
-        showTrains = true;
       }
-
       if (data.trainServices != null && data.busServices != null) {
-        // var newDeparture = [];
-        // newDeparture = liveDeparture.concat(busDeparture);
-        // liveDeparture = newDeparture;
         if (busDisplayMode == "bus") {
           liveDeparture = busDeparture;
           setActiveBus("#0080ff");
@@ -612,16 +521,13 @@ export default function DepartArrive(departArrive) {
         } else {
           setTrainDisabled(false);
           setBusDisabled(false);
-
           setActiveTrain("#0080ff");
           setActiveTrainT("white");
           setActiveBus("white");
           setActiveBusT("black");
         }
       }
-
       if (data.trainServices == null && data.busServices != null) {
-        showTrains = false;
         setTrainDisabled(true);
         setBusDisabled(false);
         setActiveTrain("#f5f5f5");
@@ -636,9 +542,7 @@ export default function DepartArrive(departArrive) {
         setActiveBus("#0080ff");
         setActiveBusT("white");
       }
-
       if (data.trainServices != null && data.busServices == null) {
-        showTrains = true;
         setBusDisabled(true);
         setTrainDisabled(false);
         setActiveBus("#f5f5f5");
@@ -647,7 +551,6 @@ export default function DepartArrive(departArrive) {
         setActiveTrainT("white");
         liveDeparture = data.trainServices;
       }
-
       if (data.trainServices == null && data.busServices == null) {
         liveDeparture = [];
         setBusDisabled(true);
@@ -657,12 +560,10 @@ export default function DepartArrive(departArrive) {
         setActiveTrain("#f5f5f5");
         setActiveTrainT("#d1d1d1");
       }
-
       displayServiceMessage = "";
       serviceMessage = data.nrccMessages;
       let t = getTrainDepartures();
       departuresList = JSON.stringify(t);
-
       runLast(timeOffset);
     } catch {
       setIsOpen(false);
@@ -682,30 +583,12 @@ export default function DepartArrive(departArrive) {
   }
 
   async function getStation() {
-    setTRCSP("Loading...");
-    setTRC(
-      <CircularProgress
-        color="tertiary"
-        fourColor
-        variant="indeterminate"
-        style={{ width: "34px", height: "34px" }}
-      />
-    );
-    setTRCD(
-      <CircularProgress
-        color="tertiary"
-        fourColor
-        variant="indeterminate"
-        style={{ width: "34px", height: "34px" }}
-      />
-    );
     const response = await fetch(
       "https://" + serverName + ".azurewebsites.net/crs"
     );
     const data = await response.json();
     listStation = data;
     let t = getStationList();
-    stationsList = JSON.stringify(t);
   }
 
   function getStationList() {
@@ -718,51 +601,6 @@ export default function DepartArrive(departArrive) {
 
     const display = listOfStations.map((opt) => ({ label: opt, value: opt }));
     setListOfStations(display);
-
-    setTRC(
-      <Select
-        defaultValue={[
-          {
-            value: displayFirstStation,
-            label: JSON.stringify(displayFirstStation),
-          },
-        ]}
-        options={display}
-        className="selectBox"
-        onChange={(opt) =>
-          setDropVal(
-            opt.value.slice(opt.value.length - 4, -1) +
-              handleDepartureClick(
-                current,
-                opt.value.slice(opt.value.length - 4, -1),
-                0,
-                opt.value
-              )
-          ) + setStationOne(opt.value)
-        }
-      />
-    );
-
-    setTRCD(
-      <Select
-        options={display}
-        className="selectBox"
-        onChange={(opt) =>
-          setDropVal(
-            opt.value.slice(opt.value.length - 4, -1) +
-              handleDepartureClick(
-                current,
-                opt.value.slice(opt.value.length - 4, -1),
-                1,
-                opt.value
-              )
-          ) +
-          setStationTwo(opt.value) +
-          { stationTwoD: opt.value }
-        }
-      />
-    );
-    setTRCSP(null);
   }
 
   let navigate = useNavigate();
@@ -785,15 +623,11 @@ export default function DepartArrive(departArrive) {
         staffSDD = staffData.busServices[index].sdd;
       }
     }
-
     let trainInfo = row;
-
     row = row.split(" ");
     row = row.pop();
-
     let path = "/linkPage";
     navigate(path);
-
     test1(sIdArray[index], trainInfo, staffUID, staffSDD);
   };
 
@@ -804,13 +638,11 @@ export default function DepartArrive(departArrive) {
     let destination2Depart;
     let destination2Via;
     let destination2Origin;
-
     if (departArrive == "arrivals") {
       for (let i = 0; i < liveDeparture.length; i++) {
         destination2Depart = "";
         destination2Via = "";
         destination2Origin = "";
-
         sIdArray.push(liveDeparture[i].serviceID);
         if (liveDeparture[i].destination[0].via == null)
           liveDeparture[i].destination[0].via = "";
@@ -857,7 +689,6 @@ export default function DepartArrive(departArrive) {
         destination2Depart = "";
         destination2Via = "";
         destination2Origin = "";
-
         sIdArray.push(liveDeparture[i].serviceID);
         if (liveDeparture[i].destination[0].via == null)
           liveDeparture[i].destination[0].via = "";
@@ -904,7 +735,6 @@ export default function DepartArrive(departArrive) {
       for (let i = 0; i < serviceMessage.length; i++) {
         displayServiceMessage += serviceMessage[i].value;
       }
-
       displayServiceMessage = displayServiceMessage.replaceAll('"', " ");
       displayServiceMessage = displayServiceMessage.replaceAll("\n", " ");
     } catch {}
@@ -922,7 +752,6 @@ export default function DepartArrive(departArrive) {
 
   return (
     <div className="Wrapper2">
-      {/* <br/> */}
       <h3 style={{ textAlign: "center" }}>{departArrive}</h3>
       <div className="manualInput">
         <form
@@ -969,7 +798,6 @@ export default function DepartArrive(departArrive) {
                   Arrival:
                 </p>
               )}
-              {/* <text style={{ textAlign: "left" }}>{trcDropDown}</text> */}
               <text style={{ textAlign: "left" }}>
                 <Select
                   defaultValue={[
@@ -997,19 +825,15 @@ export default function DepartArrive(departArrive) {
                   isLoading={listOfStations ? false : true}
                   className="selectBox"
                   onChange={(opt) =>
-                    setDropVal(
-                      opt.value.slice(opt.value.length - 4, -1) +
-                        handleDepartureClick(
-                          current,
-                          opt.value.slice(opt.value.length - 4, -1),
-                          0,
-                          opt.value
-                        )
-                    ) + setStationOne(opt.value)
+                    handleDepartureClick(
+                      current,
+                      opt.value.slice(opt.value.length - 4, -1),
+                      0,
+                      opt.value
+                    )
                   }
                 />
               </text>
-
               {departArrive == "Departures" ? (
                 <p
                   style={{
@@ -1031,8 +855,6 @@ export default function DepartArrive(departArrive) {
                   Origin (optional):
                 </p>
               )}
-              {/* <text style={{ textAlign: "left" }}>{trcDropDownD}</text> */}
-
               <text style={{ textAlign: "left" }}>
                 <Select
                   isDisabled={
@@ -1072,22 +894,16 @@ export default function DepartArrive(departArrive) {
                   isLoading={listOfStations ? false : true}
                   className="selectBox"
                   onChange={(opt) =>
-                    setDropVal(
-                      opt.value.slice(opt.value.length - 4, -1) +
-                        handleDepartureClick(
-                          current,
-                          opt.value.slice(opt.value.length - 4, -1),
-                          1,
-                          opt.value
-                        )
-                    ) +
-                    setStationTwo(opt.value) +
-                    { stationTwoD: opt.value }
+                    handleDepartureClick(
+                      current,
+                      opt.value.slice(opt.value.length - 4, -1),
+                      1,
+                      opt.value
+                    ) + { stationTwoD: opt.value }
                   }
                 />
               </text>
               <br />
-
               <div>
                 <Button
                   type="button"
@@ -1159,7 +975,6 @@ export default function DepartArrive(departArrive) {
               </div>
             </text>
           )}
-
           <button
             id="useTrains"
             type="button"
@@ -1180,7 +995,6 @@ export default function DepartArrive(departArrive) {
           <hr />
         </>
       )}
-
       <Fade duration={1000} when={!processingState}>
         <>
           {isOpen && (
@@ -1229,7 +1043,6 @@ export default function DepartArrive(departArrive) {
               />
             </>
           )}
-
           <div className="NRLogo">
             <img
               src={image}

@@ -2,8 +2,6 @@ import { Box, Button, ButtonGroup } from "@mui/material";
 import "./trainBus.css";
 
 export default function TrainBus({
-  isOpen,
-  trainSearch,
   textInfo,
   handleDepartureClick,
   earlier,
@@ -14,7 +12,6 @@ export default function TrainBus({
   later,
   later2,
   current,
-  timeButton,
   rememberTimeOffset,
 }) {
   return (
@@ -34,53 +31,8 @@ export default function TrainBus({
             </text>
           </pre>
           <br />
-
-          {/* <div>
-                {newsLink[0]?.map((row) => (
-                  <a href={row}>
-                    <br />
-                    <text style={{ wordBreak: "break-word", hyphens: "auto" }}>
-                      {row}
-                    </text>
-                  </a>
-                ))}
-              </div> */}
         </p>
         <br />
-        {/* <Box>
-          <button
-            className="changeTime"
-            style={{ marginBottom: "10px" }}
-            onClick={() => handleDepartureClick(earlier)}
-          >
-            120 - 100 minutes ago
-          </button>
-          <br />
-          <button
-            className="changeTime"
-            style={{ marginBottom: "10px" }}
-            onClick={() => handleDepartureClick(earlier2)}
-          >
-            100 minutes ago - present
-          </button>
-          <br />
-          <button
-            className="changeTime"
-            style={{ marginTop: "10px" }}
-            onClick={() => handleDepartureClick(later)}
-          >
-            100 minutes later
-          </button>
-          <br />
-          <button
-            className="changeTime"
-            style={{ marginTop: "10px" }}
-            onClick={() => handleDepartureClick(later2)}
-          >
-            100 - 120 minutes later
-          </button>
-          <br />
-        </Box> */}
         <ButtonGroup
           sx={{ marginBottom: 0 }}
           disableElevation
@@ -170,7 +122,6 @@ export default function TrainBus({
           ))}
         </Table>
         <br />
-
         <br />
       </div>
     </div>
