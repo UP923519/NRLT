@@ -750,305 +750,309 @@ export default function DepartArrive(departArrive) {
   }
 
   return (
-    <div className="Wrapper2">
-      <h3 style={{ textAlign: "center" }}>{departArrive}</h3>
-      <div className="manualInput">
-        <form
-          style={{ paddingLeft: "10px", paddingRight: "10px" }}
-          method="post"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleDepartureClick(current);
-          }}
-        >
-          <button
-            type="button"
-            style={{
-              textAlign: "center",
-              width: "30px",
-              margin: "10px",
-              paddingBottom: "3px",
+    <Fade top distance={"25px"} duration={1500}>
+      <div className="Wrapper2">
+        <h3 style={{ textAlign: "center" }}>{departArrive}</h3>
+        <div className="manualInput">
+          <form
+            style={{ paddingLeft: "10px", paddingRight: "10px" }}
+            method="post"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleDepartureClick(current);
             }}
-            onClick={toggleForm}
           >
-            {"↨"}
-          </button>
-          <br />
-          {isOpenForm && (
-            <text>
-              {departArrive == "Departures" ? (
-                <p
-                  style={{
-                    textAlign: "left",
-                    fontWeight: "bold",
-                    color: "grey",
-                  }}
-                >
-                  Departure:
-                </p>
-              ) : (
-                <p
-                  style={{
-                    textAlign: "left",
-                    fontWeight: "bold",
-                    color: "grey",
-                  }}
-                >
-                  Arrival:
-                </p>
-              )}
-              <text style={{ textAlign: "left" }}>
-                <Select
-                  defaultValue={[
-                    {
-                      value: rememberFirstStation,
-                      label: rememberFirstStation,
-                    },
-                  ]}
-                  value={
-                    rememberFirstStation
-                      ? [
-                          {
-                            value: rememberFirstStation,
-                            label: rememberFirstStation,
-                          },
-                        ]
-                      : [
-                          {
-                            value: "Select...",
-                            label: "Select...",
-                          },
-                        ]
-                  }
-                  options={listOfStations ? listOfStations : []}
-                  isLoading={listOfStations ? false : true}
-                  className="selectBox"
-                  onChange={(opt) =>
-                    handleDepartureClick(
-                      current,
-                      opt.value.slice(opt.value.length - 4, -1),
-                      0,
-                      opt.value
-                    )
-                  }
-                />
-              </text>
-              {departArrive == "Departures" ? (
-                <p
-                  style={{
-                    textAlign: "left",
-                    fontWeight: "bold",
-                    color: "grey",
-                  }}
-                >
-                  Destination (optional):
-                </p>
-              ) : (
-                <p
-                  style={{
-                    textAlign: "left",
-                    fontWeight: "bold",
-                    color: "grey",
-                  }}
-                >
-                  Origin (optional):
-                </p>
-              )}
-              <text style={{ textAlign: "left" }}>
-                <Select
-                  isDisabled={
-                    rememberFirstStation == "" || !rememberFirstStation
-                      ? true
-                      : false
-                  }
-                  defaultValue={[
-                    {
-                      value: rememberSecondStation,
-                      label: rememberSecondStation,
-                    },
-                  ]}
-                  value={
-                    rememberSecondStation
-                      ? [
-                          {
-                            value: rememberSecondStation,
-                            label: rememberSecondStation,
-                          },
-                        ]
-                      : rememberFirstStation
-                      ? [
-                          {
-                            value: "Select...",
-                            label: "Select...",
-                          },
-                        ]
-                      : [
-                          {
-                            value: "Select above first",
-                            label: "Select above first",
-                          },
-                        ]
-                  }
-                  options={listOfStations ? listOfStations : []}
-                  isLoading={listOfStations ? false : true}
-                  className="selectBox"
-                  onChange={(opt) =>
-                    handleDepartureClick(
-                      current,
-                      opt.value.slice(opt.value.length - 4, -1),
-                      1,
-                      opt.value
-                    ) + { stationTwoD: opt.value }
-                  }
-                />
-              </text>
-              <br />
-              <div>
-                <Button
-                  type="button"
-                  id="useTrains"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  endIcon={<KeyboardArrowDownIcon />}
-                  sx={{
-                    textTransform: "none",
-                    paddingTop: "0.5px !important",
-                    paddingBottom: "0.5px !important",
-                  }}
-                >
-                  ⚙️ Options
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem
-                    type="button"
-                    disabled={
-                      rememberSecondStation == "" || !rememberSecondStation
-                        ? true
-                        : false
-                    }
-                    onClick={() =>
-                      handleClose() +
-                      handleDepartureClick(contextTime, "SWITCH-st")
-                    }
+            <button
+              type="button"
+              style={{
+                textAlign: "center",
+                width: "30px",
+                margin: "10px",
+                paddingBottom: "3px",
+              }}
+              onClick={toggleForm}
+            >
+              {"↨"}
+            </button>
+            <br />
+            {isOpenForm && (
+              <text>
+                {departArrive == "Departures" ? (
+                  <p
+                    style={{
+                      textAlign: "left",
+                      fontWeight: "bold",
+                      color: "grey",
+                    }}
                   >
-                    🔀 Switch stations
-                  </MenuItem>
-                  <MenuItem
-                    type="button"
-                    disabled={
-                      rememberSecondStation == "" || !rememberSecondStation
-                        ? true
-                        : false
+                    Departure:
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      textAlign: "left",
+                      fontWeight: "bold",
+                      color: "grey",
+                    }}
+                  >
+                    Arrival:
+                  </p>
+                )}
+                <text style={{ textAlign: "left" }}>
+                  <Select
+                    defaultValue={[
+                      {
+                        value: rememberFirstStation,
+                        label: rememberFirstStation,
+                      },
+                    ]}
+                    value={
+                      rememberFirstStation
+                        ? [
+                            {
+                              value: rememberFirstStation,
+                              label: rememberFirstStation,
+                            },
+                          ]
+                        : [
+                            {
+                              value: "Select...",
+                              label: "Select...",
+                            },
+                          ]
                     }
-                    onClick={() =>
-                      handleClose() +
+                    options={listOfStations ? listOfStations : []}
+                    isLoading={listOfStations ? false : true}
+                    className="selectBox"
+                    onChange={(opt) =>
                       handleDepartureClick(
-                        contextTime,
-                        currentCRSCode,
+                        current,
+                        opt.value.slice(opt.value.length - 4, -1),
                         0,
-                        rememberFirstStation
+                        opt.value
                       )
                     }
+                  />
+                </text>
+                {departArrive == "Departures" ? (
+                  <p
+                    style={{
+                      textAlign: "left",
+                      fontWeight: "bold",
+                      color: "grey",
+                    }}
                   >
-                    🗑️ Remove second station
-                  </MenuItem>
-                  <MenuItem
-                    type="reset"
-                    onClick={() => handleClose() + clearAll()}
+                    Destination (optional):
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      textAlign: "left",
+                      fontWeight: "bold",
+                      color: "grey",
+                    }}
                   >
-                    ❌ Reset
-                  </MenuItem>
-                </Menu>
-              </div>
-            </text>
-          )}
-          <button
-            id="useTrains"
-            type="button"
-            onClick={() => handleDepartureClick(contextTime)}
-          >
-            🔄 Refresh
-          </button>
-        </form>
-      </div>
-      {processingState ? (
-        <>
-          <div style={{ height: "6.75px" }} />
-          <LinearProgress color="secondary" fourColor />
-          <div style={{ height: "6.75px" }} />
-        </>
-      ) : (
-        <>
-          <hr />
-        </>
-      )}
-      <Fade duration={1000} when={!processingState}>
-        <>
-          {isOpen && (
-            <>
-              <Box sx={{ marginBottom: 2 }}>{trainSearch}</Box>
-              <Box sx={{ marginBottom: 2 }}>
-                <button
-                  id="useTrains"
-                  type="button"
-                  disabled={trainDisabled}
-                  style={{ color: activeTrainT, background: activeTrain }}
-                  onClick={() => (
-                    (busDisplayMode = "train"),
-                    handleDepartureClick(contextTime)
-                  )}
-                >
-                  Show Train Services
-                </button>
-                <button
-                  id="useTrains"
-                  type="button"
-                  disabled={busDisabled}
-                  style={{ color: activeBusT, background: activeBus }}
-                  onClick={() => (
-                    (busDisplayMode = "bus"), handleDepartureClick(contextTime)
-                  )}
-                >
-                  Show Bus Services
-                </button>
-              </Box>
-              <TrainBus
-                isOpen={isOpen}
-                trainSearch={trainSearch}
-                textInfo={textInfo}
-                handleDepartureClick={handleDepartureClick}
-                earlier={earlier}
-                earlier2={earlier2}
-                Table={Table}
-                stringDepartures={stringDepartures}
-                routeChange={routeChange}
-                later={later}
-                later2={later2}
-                current={current}
-                timeButton={timeButton}
-                rememberTimeOffset={rememberTimeOffset}
+                    Origin (optional):
+                  </p>
+                )}
+                <text style={{ textAlign: "left" }}>
+                  <Select
+                    isDisabled={
+                      rememberFirstStation == "" || !rememberFirstStation
+                        ? true
+                        : false
+                    }
+                    defaultValue={[
+                      {
+                        value: rememberSecondStation,
+                        label: rememberSecondStation,
+                      },
+                    ]}
+                    value={
+                      rememberSecondStation
+                        ? [
+                            {
+                              value: rememberSecondStation,
+                              label: rememberSecondStation,
+                            },
+                          ]
+                        : rememberFirstStation
+                        ? [
+                            {
+                              value: "Select...",
+                              label: "Select...",
+                            },
+                          ]
+                        : [
+                            {
+                              value: "Select above first",
+                              label: "Select above first",
+                            },
+                          ]
+                    }
+                    options={listOfStations ? listOfStations : []}
+                    isLoading={listOfStations ? false : true}
+                    className="selectBox"
+                    onChange={(opt) =>
+                      handleDepartureClick(
+                        current,
+                        opt.value.slice(opt.value.length - 4, -1),
+                        1,
+                        opt.value
+                      ) + { stationTwoD: opt.value }
+                    }
+                  />
+                </text>
+                <br />
+                <div>
+                  <Button
+                    type="button"
+                    id="useTrains"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                    endIcon={<KeyboardArrowDownIcon />}
+                    sx={{
+                      textTransform: "none",
+                      paddingTop: "0.5px !important",
+                      paddingBottom: "0.5px !important",
+                    }}
+                  >
+                    ⚙️ Options
+                  </Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem
+                      type="button"
+                      disabled={
+                        rememberSecondStation == "" || !rememberSecondStation
+                          ? true
+                          : false
+                      }
+                      onClick={() =>
+                        handleClose() +
+                        handleDepartureClick(contextTime, "SWITCH-st")
+                      }
+                    >
+                      🔀 Switch stations
+                    </MenuItem>
+                    <MenuItem
+                      type="button"
+                      disabled={
+                        rememberSecondStation == "" || !rememberSecondStation
+                          ? true
+                          : false
+                      }
+                      onClick={() =>
+                        handleClose() +
+                        handleDepartureClick(
+                          contextTime,
+                          currentCRSCode,
+                          0,
+                          rememberFirstStation
+                        )
+                      }
+                    >
+                      🗑️ Remove second station
+                    </MenuItem>
+                    <MenuItem
+                      type="reset"
+                      onClick={() => handleClose() + clearAll()}
+                    >
+                      ❌ Reset
+                    </MenuItem>
+                  </Menu>
+                </div>
+              </text>
+            )}
+            <button
+              id="useTrains"
+              type="button"
+              onClick={() => handleDepartureClick(contextTime)}
+            >
+              🔄 Refresh
+            </button>
+          </form>
+        </div>
+
+        {processingState ? (
+          <>
+            <div style={{ height: "6.75px" }} />
+            <LinearProgress color="secondary" fourColor />
+            <div style={{ height: "6.75px" }} />
+          </>
+        ) : (
+          <>
+            <hr />
+          </>
+        )}
+        <Fade duration={1000} when={!processingState}>
+          <>
+            {isOpen && (
+              <>
+                <Box sx={{ marginBottom: 2 }}>{trainSearch}</Box>
+                <Box sx={{ marginBottom: 2 }}>
+                  <button
+                    id="useTrains"
+                    type="button"
+                    disabled={trainDisabled}
+                    style={{ color: activeTrainT, background: activeTrain }}
+                    onClick={() => (
+                      (busDisplayMode = "train"),
+                      handleDepartureClick(contextTime)
+                    )}
+                  >
+                    Show Train Services
+                  </button>
+                  <button
+                    id="useTrains"
+                    type="button"
+                    disabled={busDisabled}
+                    style={{ color: activeBusT, background: activeBus }}
+                    onClick={() => (
+                      (busDisplayMode = "bus"),
+                      handleDepartureClick(contextTime)
+                    )}
+                  >
+                    Show Bus Services
+                  </button>
+                </Box>
+                <TrainBus
+                  isOpen={isOpen}
+                  trainSearch={trainSearch}
+                  textInfo={textInfo}
+                  handleDepartureClick={handleDepartureClick}
+                  earlier={earlier}
+                  earlier2={earlier2}
+                  Table={Table}
+                  stringDepartures={stringDepartures}
+                  routeChange={routeChange}
+                  later={later}
+                  later2={later2}
+                  current={current}
+                  timeButton={timeButton}
+                  rememberTimeOffset={rememberTimeOffset}
+                />
+              </>
+            )}
+            <div className="NRLogo">
+              <img
+                src={image}
+                alt="powered by National Rail Enquiries"
+                width="256"
               />
-            </>
-          )}
-          <div className="NRLogo">
-            <img
-              src={image}
-              alt="powered by National Rail Enquiries"
-              width="256"
-            />
-          </div>
-        </>
-      </Fade>
-    </div>
+            </div>
+          </>
+        </Fade>
+      </div>
+    </Fade>
   );
 }

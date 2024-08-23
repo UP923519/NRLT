@@ -283,130 +283,132 @@ export default function ServicePage() {
   }
 
   return (
-    <div className="Wrapper2">
-      <h3 style={{ textAlign: "center" }}>Service Details</h3>
-      <div className="manualInput">
-        <form
-          method="post"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleServiceClick();
-          }}
-        >
-          <button
-            type="button"
-            style={{
-              textAlign: "center",
-              width: "30px",
-              margin: "10px",
-              paddingBottom: "3px",
-            }}
-            onClick={toggleForm}
-          >
-            {"↨"}
-          </button>
-          <br />
+    <Fade top distance={"25px"} duration={1500}>
+      <div className="Wrapper2">
+        <h3 style={{ textAlign: "center" }}>Service Details</h3>
+        <Fade top distance={"25px"} duration={1500}>
+          <div className="manualInput">
+            <form
+              method="post"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleServiceClick();
+              }}
+            >
+              <button
+                type="button"
+                style={{
+                  textAlign: "center",
+                  width: "30px",
+                  margin: "10px",
+                  paddingBottom: "3px",
+                }}
+                onClick={toggleForm}
+              >
+                {"↨"}
+              </button>
+              <br />
 
-          {isOpenForm && (
-            <label>
-              <a href="https://www.nationalrail.co.uk/status-and-disruptions/">
-                <button
-                  type="button"
-                  id="showHide"
-                  style={{
-                    fontSize: "medium",
-                    marginTop: "5px",
-                    padding: "9px",
-                    background: "#243a5eAA",
-                    color: "white",
-                  }}
-                  className="logOut"
-                >
-                  🔗 Status and disruptions
-                </button>
-              </a>
-              <p>
-                Service code:&nbsp;{" "}
-                <input
-                  style={{
-                    backgroundColor: "#cfcfcf",
-                    border: "0",
-                    borderRadius: "2px",
-                  }}
-                  name="myInput"
-                  defaultValue=""
-                  onChange={(event) => setFormVal(event.target.value)}
-                />
-              </p>
+              {isOpenForm && (
+                <label>
+                  <a href="https://www.nationalrail.co.uk/status-and-disruptions/">
+                    <button
+                      type="button"
+                      id="showHide"
+                      style={{
+                        fontSize: "medium",
+                        marginTop: "5px",
+                        padding: "9px",
+                        background: "#243a5eAA",
+                        color: "white",
+                      }}
+                      className="logOut"
+                    >
+                      🔗 Status and disruptions
+                    </button>
+                  </a>
+                  <p>
+                    Service code:&nbsp;{" "}
+                    <input
+                      style={{
+                        backgroundColor: "#cfcfcf",
+                        border: "0",
+                        borderRadius: "2px",
+                      }}
+                      name="myInput"
+                      defaultValue=""
+                      onChange={(event) => setFormVal(event.target.value)}
+                    />
+                  </p>
+                  <div>
+                    <Button
+                      type="button"
+                      id="useTrains"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
+                      endIcon={<KeyboardArrowDownIcon />}
+                      sx={{
+                        textTransform: "none",
+                        paddingTop: "0.5px !important",
+                        paddingBottom: "0.5px !important",
+                      }}
+                    >
+                      ⚙️ Options
+                    </Button>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                    >
+                      <MenuItem
+                        type="reset"
+                        // style={{ fontSize: "small" }}
+                        onClick={() => handleClose() + clearAll()}
+                      >
+                        ❌ Reset
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                </label>
+              )}
+
+              <button
+                id="useTrains"
+                type="button"
+                onClick={() => handleServiceClick()}
+              >
+                🔄 Refresh
+              </button>
+            </form>
+          </div>
+        </Fade>
+        {processingState ? (
+          <>
+            <div style={{ height: "6.75px" }} />
+            <LinearProgress color="secondary" fourColor />
+            <div style={{ height: "6.75px" }} />
+          </>
+        ) : (
+          <>
+            <hr />
+          </>
+        )}
+        <ref ref={myRef}>
+          <div ref={myRef} className="App">
+            {isOpen && (
               <div>
-                <Button
-                  type="button"
-                  id="useTrains"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  endIcon={<KeyboardArrowDownIcon />}
-                  sx={{
-                    textTransform: "none",
-                    paddingTop: "0.5px !important",
-                    paddingBottom: "0.5px !important",
-                  }}
-                >
-                  ⚙️ Options
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem
-                    type="reset"
-                    // style={{ fontSize: "small" }}
-                    onClick={() => handleClose() + clearAll()}
-                  >
-                    ❌ Reset
-                  </MenuItem>
-                </Menu>
+                <p className="infoTrain" style={{ margin: "0px" }}>
+                  {infoTrainDisplay}
+                </p>
               </div>
-            </label>
-          )}
-
-          <button
-            id="useTrains"
-            type="button"
-            onClick={() => handleServiceClick()}
-          >
-            🔄 Refresh
-          </button>
-        </form>
-      </div>
-      {processingState ? (
-        <>
-          <div style={{ height: "6.75px" }} />
-          <LinearProgress color="secondary" fourColor />
-          <div style={{ height: "6.75px" }} />
-        </>
-      ) : (
-        <>
-          <hr />
-        </>
-      )}
-      <ref ref={myRef}>
-        <div ref={myRef} className="App">
-          {isOpen && (
-            <div>
-              <p className="infoTrain" style={{ margin: "0px" }}>
-                {infoTrainDisplay}
-              </p>
-            </div>
-          )}
-        </div>
-        <Fade bottom duration={1500} when={loadedState}>
+            )}
+          </div>
           {isOpen && !stringCalling[0][0].includes("Loading") ? (
             <>
               <div className="App">
@@ -581,28 +583,28 @@ export default function ServicePage() {
           ) : (
             <></>
           )}
-        </Fade>
-      </ref>
-      {loadedState == false ? (
-        <>
-          <p style={{ marginBottom: "3000px" }}></p>
-        </>
-      ) : (
-        <>
-          <div className="NRLogo">
-            {console.log("stl", stringCalling.length)}
-            <img
-              src={image}
-              alt="powered by National Rail Enquiries"
-              width="256"
-            />
-          </div>
-          {stringCalling.length < 6 && (
-            <div style={{ marginBottom: "35vh" }}></div>
-          )}
-        </>
-      )}
-    </div>
+        </ref>
+        {loadedState == false ? (
+          <>
+            <p style={{ marginBottom: "3000px" }}></p>
+          </>
+        ) : (
+          <>
+            <div className="NRLogo">
+              {console.log("stl", stringCalling.length)}
+              <img
+                src={image}
+                alt="powered by National Rail Enquiries"
+                width="256"
+              />
+            </div>
+            {stringCalling.length < 6 && (
+              <div style={{ marginBottom: "35vh" }}></div>
+            )}
+          </>
+        )}
+      </div>
+    </Fade>
   );
 }
 export function test1(number, trainInfo, staffUID, staffSDD) {
