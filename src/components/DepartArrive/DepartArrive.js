@@ -180,7 +180,6 @@ export default function DepartArrive(departArrive) {
     setIsOpenForm(true);
     rememberFirstStation = "";
     rememberSecondStation = "";
-    window.location.reload();
   }
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
@@ -936,7 +935,7 @@ export default function DepartArrive(departArrive) {
                       rememberSecondStation == "" || !rememberSecondStation
                         ? true
                         : false
-                    } // style={{ fontSize: "small" }}
+                    }
                     onClick={() =>
                       handleClose() +
                       handleDepartureClick(contextTime, "SWITCH-st")
@@ -951,7 +950,6 @@ export default function DepartArrive(departArrive) {
                         ? true
                         : false
                     }
-                    // style={{ fontSize: "small" }}
                     onClick={() =>
                       handleClose() +
                       handleDepartureClick(
@@ -966,8 +964,7 @@ export default function DepartArrive(departArrive) {
                   </MenuItem>
                   <MenuItem
                     type="reset"
-                    // style={{ fontSize: "small" }}
-                    onClick={clearAll}
+                    onClick={() => handleClose() + clearAll()}
                   >
                     ❌ Reset
                   </MenuItem>
