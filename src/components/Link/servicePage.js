@@ -589,7 +589,7 @@ export default function ServicePage() {
         </>
       ) : (
         <>
-          <div className="NRLogo">
+          <div className="NRLogo" style={{ marginBottom: "50vh" }}>
             <img
               src={image}
               alt="powered by National Rail Enquiries"
