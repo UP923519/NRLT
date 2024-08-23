@@ -162,7 +162,7 @@ export default function Settings() {
   }
 
   return (
-    <Fade top distance={"25px"} duration={1500}>
+    <Fade top distance={"10px"} duration={1500}>
       <div style={{ width: "98vw", height: "100vh" }}>
         <h3 style={{ textAlign: "center" }}>Settings</h3>
         <br />
