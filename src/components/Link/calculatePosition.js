@@ -127,6 +127,10 @@ export function calculatePositionCentral(
       try {
         if (liveService2[0].at != null) {
           trainLocation = liveServiceTime.etd + " ❌";
+          //Prevents any errors in the data from showing On time and also negative symbol simultaneously
+          if (trainLocation == "On time ❌") {
+            trainLocation = "No report ✔️";
+          }
         }
       } catch {}
 
