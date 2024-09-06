@@ -206,7 +206,7 @@ export default function Settings() {
             <h3>Home</h3>
             <div className="topBanner1" style={{ paddingBottom: 1 }}>
               <h4>
-                <a href="/">
+                <a href="/NRLT">
                   <button
                     id="showHide"
                     style={{
