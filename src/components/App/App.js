@@ -29,7 +29,7 @@ if (localStorage.getItem("darkMode") == "#000000") {
 if (localStorage.getItem("darkMode") == "#8297b5") {
   colour = "#ffffff";
   <style name="MyTheme" parent="Theme.AppCompat.Dark.NoActionBar">
-    <item name="android:windowLightStatusBar">false</item>
+    <item name="android:windowDarkStatusBar">true</item>
     <item name="android:statusBarColor">@android:color/black</item>
   </style>;
 }
