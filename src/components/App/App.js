@@ -21,14 +21,18 @@ if (localStorage.getItem("darkMode") == "#000000") {
   colour = "#ffffff";
 }
 
-if (localStorage.getItem("darkMode") == "#8297b5") {
-  colour = "#ffffff";
-}
-
 <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
   <item name="android:windowLightStatusBar">true</item>
   <item name="android:statusBarColor">@android:color/white</item>
 </style>;
+
+if (localStorage.getItem("darkMode") == "#8297b5") {
+  colour = "#ffffff";
+  <style name="MyTheme" parent="Theme.AppCompat.Dark.NoActionBar">
+    <item name="android:windowLightStatusBar">false</item>
+    <item name="android:statusBarColor">@android:color/black</item>
+  </style>;
+}
 
 function App() {
   const { token, setToken, removeToken, getToken } = useToken();
