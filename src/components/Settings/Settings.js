@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar.js";
 import Login from "../Login/Login";
 import useToken from "../App/useToken";
@@ -11,6 +11,7 @@ export let currentTheme;
 export let currentAzure;
 export let serviceCode;
 export let enableWindow;
+export let verticalMenu;
 
 if (localStorage.getItem("fontSize") == null) {
   currentFontSize = "Standard font size";
@@ -49,6 +50,8 @@ export default function Settings() {
   const [currentAzureDisplay, setCurrentAzureDisplay] = useState();
   const [serviceCodeDisplay, setServiceCodeDisplay] = useState();
   const [enableWindowDisplay, setEnableWindowDisplay] = useState();
+  const [enableVerticalMenu, setEnableVerticalMenu] = useState();
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (currentAzureDisplay == undefined) {
@@ -75,6 +78,15 @@ export default function Settings() {
         setEnableWindowDisplay("Show");
       } else {
         setEnableWindowDisplay(enableWindow);
+      }
+    }
+
+    if (enableVerticalMenu == undefined) {
+      if (verticalMenu == undefined) {
+        verticalMenu = "Off";
+        setEnableVerticalMenu("Off");
+      } else {
+        setEnableVerticalMenu(verticalMenu);
       }
     }
   }, []);
@@ -161,6 +173,24 @@ export default function Settings() {
     }
   }
 
+  function showVerticalMenu() {
+    if (localStorage.getItem("menuStyle") == "On") {
+      verticalMenu = "Off";
+      setEnableVerticalMenu("Off");
+      localStorage.setItem("menuStyle", "Off");
+    } else if (localStorage.getItem("menuStyle") == "Off") {
+      verticalMenu = "On";
+      setEnableVerticalMenu("On");
+      localStorage.setItem("menuStyle", "On");
+    }
+    if (localStorage.getItem("menuStyle") == undefined) {
+      verticalMenu = "On";
+      setEnableVerticalMenu("On");
+      localStorage.setItem("menuStyle", "On");
+    }
+    window.location.reload();
+  }
+
   return (
     <Fade top distance={"10px"} duration={1500}>
       <div style={{ width: "98vw", height: "100vh" }}>
@@ -176,14 +206,20 @@ export default function Settings() {
             <h3>Home</h3>
             <div className="topBanner1" style={{ paddingBottom: 1 }}>
               <h4>
-                <button
-                  id="showHide"
-                  style={{ fontSize: "medium", padding: "15px", margin: "0px" }}
-                  className="logOut"
-                  onClick={logOut}
-                >
-                  ￩ Exit to home page
-                </button>
+                <a href="/">
+                  <button
+                    id="showHide"
+                    style={{
+                      fontSize: "medium",
+                      padding: "15px",
+                      margin: "0px",
+                    }}
+                    className="logOut"
+                    onClick={logOut}
+                  >
+                    ￩ Exit to home page
+                  </button>
+                </a>
               </h4>
             </div>
           </div>
@@ -217,6 +253,18 @@ export default function Settings() {
               <br />
               <button id="useCurrentLocation" onClick={showWindow}>
                 Show/hide
+              </button>
+            </div>
+            <br />
+            <div>
+              {" "}
+              Vertical menu style:{" "}
+              {(localStorage.getItem("menuStyle") &&
+                localStorage.getItem("menuStyle")) ||
+                "Off"}
+              <br />
+              <button id="useCurrentLocation" onClick={showVerticalMenu}>
+                On/off
               </button>
             </div>
             <br />

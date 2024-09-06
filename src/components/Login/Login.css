@@ -1,143 +1,137 @@
 .login-wrapper {
-    position: absolute;
-    top: 50px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.main{
-    width: 100vw;
-    height: 100vh;
-}
-  
-video{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.main {
+  width: 100vw;
+  height: 100vh;
 }
 
-.overlay{
-    position: absolute;
-    top: 7px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background-color: rgba(0,0,0,0.2);
-}   
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-.divLoginInput1{
-    position:static;
+.overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.divLoginInput1 {
+  position: static;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: bottom;
+  backdrop-filter: blur(5px);
+  margin-top: 0px;
+  margin-bottom: 300px;
+  width: 100%;
+}
+
+.divLoginInput2 {
+  position: static;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: bottom;
+  backdrop-filter: blur(5px);
+  margin-top: 250px;
+  margin-bottom: 300px;
+  width: 100%;
+}
+
+@media (orientation: landscape) {
+  .divLoginInput1 {
+    width: 500px;
+    position: static;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: bottom;
     backdrop-filter: blur(5px);
-    margin-top: 0px;
-    margin-bottom: 300px;
-    width: 100%;
-}
-
-.divLoginInput2{
-    position:static;
+    margin-bottom: 50vh;
+  }
+  .divLoginInput2 {
+    width: 500px;
+    position: static;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: bottom;
     backdrop-filter: blur(5px);
-    margin-top: 250px;
-    margin-bottom: 300px;
-    width: 100%;
-
-}
-
-@media (orientation: landscape) {
-    .divLoginInput1{
-        width: 500px;
-        position:static;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 20px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: bottom;
-        backdrop-filter: blur(5px);
-        margin-bottom: 50vh;
-    }
-    .divLoginInput2{
-        width: 500px;
-        position:static;
-        background-color: rgba(255, 255, 255, 0.3);
-        border-radius: 20px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: bottom;
-        backdrop-filter: blur(5px);
-        margin-bottom: 30vh;
-        margin-top: 0px;
-    }
+    margin-bottom: 30vh;
+    margin-top: 0px;
+  }
 }
 
 @media (orientation: landscape) and (max-height: 600px) {
-    .divLoginInput1{
-        width: 400px;
-        position:static;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 20px;
-        backdrop-filter: blur(5px);
-        margin-right: 425px;
-        margin-top: 25vh;
-        margin-bottom: 5vh;
-        font-size: 12px;
-    }
-    .divLoginInput2{
-        width: 400px;
-        background-color: rgba(255, 255, 255, 0.3);
-        border-radius: 20px;
-        backdrop-filter: blur(5px);
-        margin-left: 425px;
-        margin-top: -105px;
-        font-size: 15px;
-    }
-}
-
-
-#loginButton{
-    margin-bottom: 10px;
-    margin-top: 15px;
-    background: #caddeb9d;
-    border: none;
-    cursor: pointer;
-    border-radius: 9px;
-    padding-bottom: 7px;
-    padding-top: 7px;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-decoration: inherit;
-    color: rgb(47, 47, 47);
-    font-size: 20px;
+  .divLoginInput1 {
+    width: 400px;
+    position: static;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
     backdrop-filter: blur(5px);
-}
-
-#loginButton:active{
-    background: #59a7ff72;
+    margin-right: 425px;
+    margin-top: 25vh;
+    margin-bottom: 5vh;
+    font-size: 12px;
   }
-
-.titles{
-    text-align: center;
-    
-
+  .divLoginInput2 {
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    margin-left: 425px;
+    margin-top: -105px;
+    font-size: 15px;
+  }
 }
 
-.titles span{
-    background-color: #caddeb9d;
-    border-radius: 9px;
-    padding-left: 30px;
-    padding-right: 30px;
+#loginButton {
+  margin-bottom: 10px;
+  margin-top: 15px;
+  background: #caddeb9d;
+  border: none;
+  cursor: pointer;
+  border-radius: 9px;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: inherit;
+  color: rgb(47, 47, 47);
+  font-size: 20px;
+  backdrop-filter: blur(5px);
+}
 
+#loginButton:active {
+  background: #59a7ff72;
+}
 
+.titles {
+  text-align: center;
+}
+
+.titles span {
+  background-color: #caddeb9d;
+  border-radius: 9px;
+  padding-left: 30px;
+  padding-right: 30px;
 }

@@ -15,15 +15,30 @@ import LinkPage from "../Link/servicePage.js";
 import Dashboard from "../Dashboard/Dashboard";
 import DataFeed from "../DataFeed/DataFeed";
 import DepartArrive from "../DepartArrive/DepartArrive";
+import { verticalMenu } from "../Settings/Settings";
 
 import Settings from "../Settings/Settings.js";
 
 //const navbar = {backgroundColor: '#9edbd3'};
 
+console.log("vm", localStorage.getItem("menuStyle"));
+
 const Navbar = () => {
   return (
     <HashRouter>
-      <navbar className="NavBar1">
+      <navbar
+        className="NavBar1"
+        style={
+          localStorage.getItem("menuStyle") == "On"
+            ? {
+                display: "flex",
+                marginTop: "-50px",
+                marginBottom: "-20px",
+                flexDirection: "column",
+              }
+            : {}
+        }
+      >
         <NavLink
           exact
           className="topRow2"

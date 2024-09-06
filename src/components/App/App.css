@@ -14,6 +14,7 @@ body {
   flex-wrap: wrap;
   /* justify-content: space-evenly; */
   justify-content: center;
+  margin: -10px;
 }
 
 .wrapper button {

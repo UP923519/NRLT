@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import Fade from "react-reveal/Fade";
 
 import "./Login.css";
+import { Link, Navigate } from "react-router-dom";
 
 const db = StartFirebase();
 let records = [];
@@ -59,7 +60,6 @@ export default function Login({ setToken }) {
   let records = [];
   let savedPassword2;
 
-  useEffect(() => {});
   localStorage.setItem("username", username);
 
   const dbref = query(ref(db, username + "Login"));
@@ -81,28 +81,32 @@ export default function Login({ setToken }) {
   };
 
   return (
-    <Fade top distance={"25px"} duration={1500}>
-      <div className="main">
-        <div className="overlay"></div>
-        <video src={videoBg} autoPlay muted>
-          {" "}
-        </video>
-        <div className="login-wrapper">
-          <div className="divLoginInput1">
-            <h1 style={{ color: "#2d9ba1" }}>National Rail Live</h1>
-            <h2>Welcome!</h2>
-          </div>
+    <>
+      <Fade top distance={"25px"} duration={5000}>
+        <div className="main">
+          <video src={videoBg} autoPlay muted></video>
+        </div>
+      </Fade>
+      <>
+        <Fade duration={1000}>
+          <div className="overlay"></div>
+          <div className="login-wrapper">
+            <div className="divLoginInput1">
+              <h1 style={{ color: "#2d9ba1" }}>National Rail Live</h1>
+              <h2>Welcome!</h2>
+            </div>
 
-          <div className="divLoginInput2">
-            <div>
-              <button id="loginButton" type="submit" onClick={handleSubmit}>
-                ￫ Enter {username}
-              </button>
+            <div className="divLoginInput2">
+              <div>
+                <button id="loginButton" type="submit" onClick={handleSubmit}>
+                  ￫ Enter {username}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </Fade>
+        </Fade>
+      </>
+    </>
   );
 }
 
