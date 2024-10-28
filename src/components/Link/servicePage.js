@@ -14,6 +14,7 @@ import { PopupStations } from "./PopupStations";
 import Fade from "react-reveal/Fade";
 import { Button, ButtonBase, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import DisplayStops from "./displayStops";
 
 let liveService = "";
 let liveService2 = "";
@@ -52,9 +53,13 @@ export default function ServicePage() {
   const staffDay = staffSDDVal.substring(8, 10);
   const staffMonth = staffSDDVal.substring(5, 7);
   const staffYear = staffSDDVal.substring(0, 4);
+  const [updateGetStops, setGetStops] = useState();
+  const [allServiceData, setAllServiceData] = useState();
+
   const myRef = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -167,7 +172,18 @@ export default function ServicePage() {
     }
     try {
       const data = await response.json();
+      const dataA = structuredClone(data); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
+
       if (data) {
+        console.log("data", dataA);
+        // let getStops = displayStops(
+        //   data,
+        //   setDetailsOpen,
+        //   detailsOpen,
+        //   isOpenForm
+        // );
+        // setGetStops(getStops);
+        setAllServiceData(dataA);
       }
       try {
         liveService = data.previousCallingPoints[0].callingPoint;
@@ -186,7 +202,7 @@ export default function ServicePage() {
         divideLocation = liveService3[0].locationName;
 
         divides =
-          "This train divides into two portions at " +
+          "This train divides at " +
           divideLocation +
           ". Please check that you are located in the correct part of the train. ";
         divideMerge = "divides";
@@ -555,7 +571,10 @@ export default function ServicePage() {
                           )}
                       </div>
                       <br />
-                      <Table
+
+                      <DisplayStops data={allServiceData} />
+
+                      {/* <Table
                         className="transactions"
                         style={{ backgroundColor: "#f0f0f0" }}
                       >
@@ -581,7 +600,7 @@ export default function ServicePage() {
                             </tr>
                           );
                         })}
-                      </Table>
+                      </Table> */}
                       <br />
                       <br />
                     </div>
@@ -600,7 +619,6 @@ export default function ServicePage() {
         ) : (
           <>
             <div className="NRLogo">
-              {console.log("stl", stringCalling.length)}
               <img
                 src={image}
                 alt="powered by National Rail Enquiries"

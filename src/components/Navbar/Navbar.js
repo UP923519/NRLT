@@ -19,10 +19,6 @@ import { verticalMenu } from "../Settings/Settings";
 
 import Settings from "../Settings/Settings.js";
 
-//const navbar = {backgroundColor: '#9edbd3'};
-
-console.log("vm", localStorage.getItem("menuStyle"));
-
 const Navbar = () => {
   return (
     <HashRouter>
