@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -22,9 +22,16 @@ const style = {
 export default function DisplayStops({ data }) {
   const [station, setStation] = useState();
   const [indicator, setIndicator] = useState();
-
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
+  const [whiteGreen, setWhiteGreen] = useState(false);
+  let dataPreviousCallingPointsReverse;
+
+  if (data.previousCallingPoints) {
+    dataPreviousCallingPointsReverse = [
+      ...data.previousCallingPoints,
+    ].reverse();
+  }
 
   function handleOpen(station, indicator) {
     setOpen(true);
@@ -32,18 +39,27 @@ export default function DisplayStops({ data }) {
     setIndicator(indicator);
   }
 
-  console.log("NEWdata", data);
+  useEffect(() => {
+    if (data.atd !== null) {
+      setWhiteGreen("#a2fbdc");
+    }
+    if (data.atd == null && (data.eta || data.etd) !== "Cancelled") {
+      setWhiteGreen("white");
+    }
+  });
+
   return (
     <>
       {data.previousCallingPoints && (
         <div>
-          {data.previousCallingPoints?.reverse().map((calling, position) => {
+          {dataPreviousCallingPointsReverse.map((calling, position) => {
             return (
               <DisplayStopsPrevSubs
                 calling={calling}
                 position={position}
                 handleOpen={handleOpen}
                 prevOrSub={0}
+                length={data.previousCallingPoints?.length}
               />
             );
           })}
@@ -53,34 +69,44 @@ export default function DisplayStops({ data }) {
       <div style={{ marginBottom: "10px" }}>
         <Table className="transactions" style={{ backgroundColor: "#f0f0f0" }}>
           <tr>
-            <th style={{ fontSize: 15 }}>
-              Selected station
-              <br />
-              <br />
-            </th>
+            <th style={{ fontSize: 15, paddingBottom: "7px" }}>Your station</th>
           </tr>
           <tr>
-            <th style={{ fontSize: 13 }}>
-              Station|Scheduled|Act/Est
-              <br />
-              <br />
-            </th>
+            <th style={{ fontSize: 13 }}>Station|Scheduled|Act/Est</th>
           </tr>
           <tr onClick={() => handleOpen(data, 0)}>
+            <br />
             {data.locationName +
               " " +
               (data.std !== null ? data.std : data.sta) +
               " "}
 
-            {data.atd !== null ? data.atd + " ✔️" : data.etd}
+            <x
+              style={{
+                background: whiteGreen,
+                paddingLeft: whiteGreen && "5px",
+                paddingRight: whiteGreen && "5px",
+                borderRadius: whiteGreen && "20px",
+              }}
+            >
+              {data.atd !== null ? data.atd + " ✔️" : <></>}
+              {data.atd == null &&
+              (data.eta !== null ? (
+                data.eta
+              ) : <></> || data.etd !== null ? (
+                data.etd
+              ) : (
+                <></>
+              )) !== "Cancelled" ? (
+                (data.etd || station.eta) + " 🕰️"
+              ) : (
+                <></>
+              )}
+            </x>
+
             {data.atd !== null && (data.atd !== "On time" ? " ⚠️" : <></>)}
-            {(data.eta || data.etd) == "Cancelled" && " ❌"}
-            {data.atd == null && (data.eta || data.etd) !== "Cancelled" ? (
-              " 🕰️🚂🚃🚃"
-            ) : (
-              <></>
-            )}
-            <br />
+            {(data.eta || data.etd) == "Cancelled" && "Cancelled ❌⚠️"}
+
             <br />
             <br />
           </tr>
@@ -96,6 +122,7 @@ export default function DisplayStops({ data }) {
                 position={position}
                 handleOpen={handleOpen}
                 prevOrSub={1}
+                length={data.subsequentCallingPoints?.length}
               />
             );
           })}
