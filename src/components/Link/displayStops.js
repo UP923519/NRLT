@@ -76,7 +76,7 @@ export default function DisplayStops({ data }) {
             <th style={{ fontSize: 15, paddingBottom: "7px" }}>Your station</th>
           </tr>
           <tr>
-            <th style={{ fontSize: 13 }}>Station|Scheduled|Act/Est</th>
+            <th style={{ fontSize: 13 }}>Station | Scheduled | Act/Est</th>
           </tr>
           <tr onClick={() => handleOpen(data, 0)}>
             <br />

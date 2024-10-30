@@ -54,7 +54,7 @@ export default function DisplayStopsPrevSubs({
           </th>
         </tr>
         <tr>
-          <th style={{ fontSize: 13 }}>Station|Scheduled|Act/Est</th>
+          <th style={{ fontSize: 13 }}>Station | Scheduled | Act/Est</th>
         </tr>
         {calling.callingPoint.map((station, index) => {
           let coloursDeparted;
