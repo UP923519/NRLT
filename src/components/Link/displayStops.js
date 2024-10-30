@@ -105,7 +105,7 @@ export default function DisplayStops({ data }) {
                 }
               >
                 {(data.atd || data.ata) !== null ? (
-                  (data.atd || data.ata) + " ⤿"
+                  (data.atd || data.ata) + " ⬇"
                 ) : (
                   <></>
                 )}

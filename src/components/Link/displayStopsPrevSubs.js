@@ -85,7 +85,7 @@ export default function DisplayStopsPrevSubs({
                     <Tooltip title="Train departed">
                       {station.at !== null &&
                         ((station.et || station.at) !== "Cancelled"
-                          ? station.at + " ⤿"
+                          ? station.at + " ⬇"
                           : station.et)}
                     </Tooltip>
                   </x>
