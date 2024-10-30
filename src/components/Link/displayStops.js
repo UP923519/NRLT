@@ -24,7 +24,7 @@ export default function DisplayStops({ data }) {
   const [indicator, setIndicator] = useState();
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  const [whiteGreen, setWhiteGreen] = useState(false);
+  const [whiteBlue, setWhiteBlue] = useState(false);
   let dataPreviousCallingPointsReverse;
 
   if (data.previousCallingPoints) {
@@ -41,10 +41,10 @@ export default function DisplayStops({ data }) {
 
   useEffect(() => {
     if (data.atd !== null) {
-      setWhiteGreen("#a2fbdc");
+      setWhiteBlue("#0083a3");
     }
     if (data.atd == null && (data.eta || data.etd) !== "Cancelled") {
-      setWhiteGreen("white");
+      setWhiteBlue("white");
     }
   });
 
@@ -83,13 +83,14 @@ export default function DisplayStops({ data }) {
 
             <x
               style={{
-                background: whiteGreen,
-                paddingLeft: whiteGreen && "5px",
-                paddingRight: whiteGreen && "5px",
-                borderRadius: whiteGreen && "20px",
+                background: whiteBlue,
+                color: whiteBlue && "white",
+                paddingLeft: whiteBlue && "5px",
+                paddingRight: whiteBlue && "5px",
+                borderRadius: whiteBlue && "20px",
               }}
             >
-              {data.atd !== null ? data.atd + " ✔️" : <></>}
+              {data.atd !== null ? data.atd + " ⤿" : <></>}
               {data.atd == null &&
               (data.eta !== null ? (
                 data.eta
@@ -98,7 +99,7 @@ export default function DisplayStops({ data }) {
               ) : (
                 <></>
               )) !== "Cancelled" ? (
-                (data.etd || station.eta) + " 🕰️"
+                (data.etd || station.eta) + " ⏱️"
               ) : (
                 <></>
               )}

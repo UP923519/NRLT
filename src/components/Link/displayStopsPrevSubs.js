@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { Tooltip } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -62,7 +63,7 @@ export default function DisplayStopsPrevSubs({
             station.at !== null &&
             (station.et || station.at) !== "Cancelled"
           ) {
-            coloursDeparted = "#a2fbdc";
+            coloursDeparted = "#0083a3";
           } else {
             coloursEstimated = "white";
           }
@@ -75,35 +76,40 @@ export default function DisplayStopsPrevSubs({
                   <x
                     style={{
                       background: coloursDeparted,
+                      color: coloursDeparted && "white",
                       paddingLeft: coloursDeparted && "5px",
                       paddingRight: coloursDeparted && "5px",
                       borderRadius: coloursDeparted && "20px",
                     }}
                   >
-                    {station.at !== null &&
-                      ((station.et || station.at) !== "Cancelled"
-                        ? station.at + " ✔️"
-                        : station.et)}
+                    <Tooltip title="Train departed">
+                      {station.at !== null &&
+                        ((station.et || station.at) !== "Cancelled"
+                          ? station.at + " ⤿"
+                          : station.et)}
+                    </Tooltip>
                   </x>
                 )}
                 {(station.et || station.at) == "Cancelled" &&
                   "Cancelled" + " ❌" + (station.at == null ? " ⚠️" : "")}
                 {station.at !== null && (station.at !== "On time" ? " ⚠️" : "")}
                 {station.at == null && station.et !== "Cancelled" && (
-                  <x
-                    style={{
-                      background: coloursEstimated,
-                      paddingLeft: coloursEstimated && "5px",
-                      paddingRight: coloursEstimated && "5px",
-                      borderRadius: coloursEstimated && "20px",
-                    }}
-                  >
-                    {station.at == null && station.et !== "Cancelled" ? (
-                      station.et + " 🕰️"
-                    ) : (
-                      <></>
-                    )}
-                  </x>
+                  <Tooltip title="Train not yet departed">
+                    <x
+                      style={{
+                        background: coloursEstimated,
+                        paddingLeft: coloursEstimated && "5px",
+                        paddingRight: coloursEstimated && "5px",
+                        borderRadius: coloursEstimated && "20px",
+                      }}
+                    >
+                      {station.at == null && station.et !== "Cancelled" ? (
+                        station.et + " ⏱️"
+                      ) : (
+                        <></>
+                      )}
+                    </x>
+                  </Tooltip>
                 )}
                 <br />
                 <br />

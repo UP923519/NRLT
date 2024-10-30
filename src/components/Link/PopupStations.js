@@ -59,11 +59,7 @@ export function PopupStations({
         {(close) => (
           <Fade top duration={500} distance={"100px"}>
             <>
-              <div
-                onClick={() => {
-                  console.log(calling);
-                }}
-              >
+              <div onClick={() => {}}>
                 {calling[0] && (
                   <>
                     <p style={{ margin: "5px" }}>Service status & timings</p>

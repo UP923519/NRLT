@@ -175,7 +175,6 @@ export default function ServicePage() {
       const dataA = structuredClone(data); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
 
       if (data) {
-        console.log("data", dataA);
         // let getStops = displayStops(
         //   data,
         //   setDetailsOpen,
