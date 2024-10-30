@@ -97,17 +97,15 @@ export default function DisplayStops({ data }) {
             <br />
             <p
               style={{
-                maxWidth: "200px",
+                maxWidth: "165px",
                 overflow: "hidden",
                 whiteSpace: "noWrap",
                 textOverflow: "ellipsis",
               }}
             >
-              {data.locationName +
-                " " +
-                (data.std !== null ? data.std : data.sta) +
-                " "}
+              {data.locationName}
             </p>
+            &nbsp;{data.std !== null ? data.std : data.sta}
             <x
               style={{
                 background: whiteBlue,
@@ -183,6 +181,7 @@ export default function DisplayStops({ data }) {
               }}
             >
               <Box
+                id="mapPositionLine"
                 sx={{
                   width: "10px",
                   background: "black",
@@ -193,6 +192,7 @@ export default function DisplayStops({ data }) {
                 }}
               ></Box>
               <Box
+                id="mapPositionCircle"
                 sx={{
                   width: "30px",
                   background: whiteBlue || "white",

@@ -86,14 +86,15 @@ export default function DisplayStopsPrevSubs({
               >
                 <p
                   style={{
-                    maxWidth: "200px",
+                    maxWidth: "165px",
                     overflow: "hidden",
                     whiteSpace: "noWrap",
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {station.locationName + " " + station.st + " "}
+                  {station.locationName}
                 </p>
+                &nbsp;{" " + station.st + " "}
                 {station.at !== null && (
                   <x
                     style={{
@@ -171,6 +172,7 @@ export default function DisplayStopsPrevSubs({
                   }}
                 >
                   <Box
+                    id="mapPositionLine"
                     sx={{
                       width: "10px",
                       background: "black",
@@ -181,6 +183,7 @@ export default function DisplayStopsPrevSubs({
                     }}
                   ></Box>
                   <Box
+                    id="mapPositionCircle"
                     sx={{
                       width: "30px",
                       background: coloursEstimated || coloursDeparted,

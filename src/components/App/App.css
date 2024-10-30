@@ -580,4 +580,16 @@ a.active-animation:active {
     display: inline-flex;
     margin: -50px;
   }
+
+  #mapPositionLine {
+    right: -300px;
+    margin-left: 50%;
+    margin-right: 50%;
+  }
+
+  #mapPositionCircle {
+    right: -310px;
+    margin-left: 50%;
+    margin-right: 50%;
+  }
 }
