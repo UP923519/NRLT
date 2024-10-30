@@ -217,8 +217,7 @@ export default function ServicePage() {
         divideLocation =
           liveServicePrevAdd[liveServicePrevAdd.length - 1].locationName;
 
-        divides =
-          "This train merges from two portions at " + divideLocation + ".";
+        divides = "This train merges at " + divideLocation + ".";
         divideMerge = "merges";
 
         for (let i = liveServicePrevAdd.length - 1; i > -1; i--) {
