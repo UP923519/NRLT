@@ -203,6 +203,7 @@ export default function DisplayStops({ data }) {
                   color: "white",
                   lineHeight: "32px",
                   fontSize: "15px",
+                  border: "1px dashed grey",
                 }}
               >
                 ✔

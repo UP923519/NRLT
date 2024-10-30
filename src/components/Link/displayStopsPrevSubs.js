@@ -94,7 +94,7 @@ export default function DisplayStopsPrevSubs({
                 >
                   {station.locationName}
                 </p>
-                &nbsp;{" " + station.st + " "}
+                &nbsp;{station.st + " "}
                 {station.at !== null && (
                   <x
                     style={{
@@ -136,6 +136,7 @@ export default function DisplayStopsPrevSubs({
                 </Tooltip> */}
                 <Tooltip title="🟢On time 🟠Warning">
                   {station.at !== null &&
+                    station.at !== "Cancelled" &&
                     (station.at !== "On time" ? (
                       <p>&nbsp;🟠</p>
                     ) : (
@@ -195,6 +196,7 @@ export default function DisplayStopsPrevSubs({
                       lineHeight: "32px",
                       fontSize: "15px",
                       zIndex: 99,
+                      border: "1px dashed grey",
                     }}
                   >
                     ✔
