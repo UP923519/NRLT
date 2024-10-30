@@ -84,7 +84,7 @@ export default function DisplayStops({ data }) {
             <x
               style={{
                 background: whiteBlue,
-                color: whiteBlue && "white",
+                color: whiteBlue !== "white" && "white",
                 paddingLeft: whiteBlue && "5px",
                 paddingRight: whiteBlue && "5px",
                 borderRadius: whiteBlue && "20px",
