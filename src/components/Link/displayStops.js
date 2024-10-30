@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import DisplayStopsPrevSubs from "./displayStopsPrevSubs";
+import { Tooltip } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -90,22 +91,30 @@ export default function DisplayStops({ data }) {
                 borderRadius: whiteBlue && "20px",
               }}
             >
-              {data.atd !== null ? data.atd + " ⤿" : <></>}
-              {data.atd == null &&
-              (data.eta !== null ? (
-                data.eta
-              ) : <></> || data.etd !== null ? (
-                data.etd
-              ) : (
-                <></>
-              )) !== "Cancelled" ? (
-                (data.etd || station.eta) + " ⏱️"
-              ) : (
-                <></>
-              )}
+              <Tooltip
+                title={
+                  whiteBlue !== "white"
+                    ? "Train departed"
+                    : "Train not yet departed"
+                }
+              >
+                {data.atd !== null ? data.atd + " ⤿" : <></>}
+                {data.atd == null &&
+                (data.eta !== null ? (
+                  data.eta
+                ) : <></> || data.etd !== null ? (
+                  data.etd
+                ) : (
+                  <></>
+                )) !== "Cancelled" ? (
+                  (data.etd || station.eta) + " ⏱️"
+                ) : (
+                  <></>
+                )}
+              </Tooltip>
             </x>
 
-            {data.atd !== null && (data.atd !== "On time" ? " ⚠️" : <></>)}
+            {data.atd !== null && (data.atd !== "On time" ? " ⚠️" : " ✔️")}
             {(data.eta || data.etd) == "Cancelled" && "Cancelled ❌⚠️"}
 
             <br />

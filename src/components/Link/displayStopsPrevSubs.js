@@ -92,7 +92,8 @@ export default function DisplayStopsPrevSubs({
                 )}
                 {(station.et || station.at) == "Cancelled" &&
                   "Cancelled" + " ❌" + (station.at == null ? " ⚠️" : "")}
-                {station.at !== null && (station.at !== "On time" ? " ⚠️" : "")}
+                {station.at !== null &&
+                  (station.at !== "On time" ? " ⚠️" : " ✔️")}
                 {station.at == null && station.et !== "Cancelled" && (
                   <Tooltip title="Train not yet departed">
                     <x
@@ -104,7 +105,7 @@ export default function DisplayStopsPrevSubs({
                       }}
                     >
                       {station.at == null && station.et !== "Cancelled" ? (
-                        station.et + " ⏱️"
+                        station.et + " ⏱︎"
                       ) : (
                         <></>
                       )}
