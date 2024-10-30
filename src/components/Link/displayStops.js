@@ -12,12 +12,15 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "96vw",
   bgcolor: "background.paper",
   border: "none",
   borderRadius: "20px",
   boxShadow: 24,
   p: 4,
+  padding: 1,
+  maxWidth: 400,
+  // width: "maxContent",
 };
 
 export default function DisplayStops({ data }) {
@@ -114,8 +117,29 @@ export default function DisplayStops({ data }) {
               </Tooltip>
             </x>
 
-            {data.atd !== null && (data.atd !== "On time" ? " ⚠️" : " ✔️")}
-            {(data.eta || data.etd) == "Cancelled" && "Cancelled ❌⚠️"}
+            <Tooltip title="🟢On time 🟡Warning">
+              {data.atd !== null && (data.atd !== "On time" ? " 🟡" : " 🟢")}
+            </Tooltip>
+
+            <Tooltip title="Train no longer departs from here">
+              {(data.eta || data.etd) == "Cancelled" && (
+                <x
+                  style={{
+                    background: "#000000",
+                    color: "white",
+                    paddingLeft: "5px",
+                    paddingRight: "5px",
+                    borderRadius: "20px",
+                  }}
+                >
+                  Cancelled ❌
+                </x>
+              )}
+            </Tooltip>
+
+            <Tooltip title="🟢On time 🟡Warning">
+              {(data.eta || data.etd) == "Cancelled" && " 🟡"}
+            </Tooltip>
 
             <br />
             <br />
@@ -146,7 +170,6 @@ export default function DisplayStops({ data }) {
         aria-describedby="modal-modal-description"
       >
         <>
-          {" "}
           {station && (
             <Box sx={style}>
               <Typography id="modal-modal-title" variant="h6" component="h2">

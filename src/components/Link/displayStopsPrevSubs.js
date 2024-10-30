@@ -90,10 +90,33 @@ export default function DisplayStopsPrevSubs({
                     </Tooltip>
                   </x>
                 )}
-                {(station.et || station.at) == "Cancelled" &&
-                  "Cancelled" + " ❌" + (station.at == null ? " ⚠️" : "")}
-                {station.at !== null &&
-                  (station.at !== "On time" ? " ⚠️" : " ✔️")}
+
+                <Tooltip title="Train no longer departs from here">
+                  {(station.et || station.at) == "Cancelled" && (
+                    <x
+                      style={{
+                        background: "#000000",
+                        color: "white",
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      Cancelled ❌
+                    </x>
+                  )}
+                </Tooltip>
+
+                <Tooltip title="🟢On time 🟡Warning">
+                  {(station.et || station.at) == "Cancelled" &&
+                    (station.at == null ? " 🟡" : "")}
+                </Tooltip>
+
+                <Tooltip title="🟢On time 🟡Warning">
+                  {station.at !== null &&
+                    (station.at !== "On time" ? " 🟡" : " 🟢")}
+                </Tooltip>
+
                 {station.at == null && station.et !== "Cancelled" && (
                   <Tooltip title="Train not yet departed">
                     <x
@@ -105,7 +128,7 @@ export default function DisplayStopsPrevSubs({
                       }}
                     >
                       {station.at == null && station.et !== "Cancelled" ? (
-                        station.et + " ⏱︎"
+                        station.et + " ⏱"
                       ) : (
                         <></>
                       )}
