@@ -44,10 +44,14 @@ export default function DisplayStops({ data }) {
   }
 
   useEffect(() => {
-    if (data.atd !== null) {
+    if ((data.atd || data.ata) !== null) {
       setWhiteBlue("#0083a3");
     }
-    if (data.atd == null && (data.eta || data.etd) !== "Cancelled") {
+    if (
+      data.atd == null &&
+      data.ata == null &&
+      (data.eta || data.etd) !== "Cancelled"
+    ) {
       setWhiteBlue("white");
     }
   });
@@ -69,7 +73,6 @@ export default function DisplayStops({ data }) {
           })}
         </div>
       )}
-
       <div style={{ marginBottom: "10px" }}>
         <Table className="transactions" style={{ backgroundColor: "#f0f0f0" }}>
           <tr>
@@ -101,8 +104,13 @@ export default function DisplayStops({ data }) {
                     : "Train not yet departed"
                 }
               >
-                {data.atd !== null ? data.atd + " ⤿" : <></>}
+                {(data.atd || data.ata) !== null ? (
+                  (data.atd || data.ata) + " ⤿"
+                ) : (
+                  <></>
+                )}
                 {data.atd == null &&
+                data.ata == null &&
                 (data.eta !== null ? (
                   data.eta
                 ) : <></> || data.etd !== null ? (
@@ -117,8 +125,9 @@ export default function DisplayStops({ data }) {
               </Tooltip>
             </x>
 
-            <Tooltip title="🟢On time 🟡Warning">
-              {data.atd !== null && (data.atd !== "On time" ? " 🟡" : " 🟢")}
+            <Tooltip title="🟢On time 🟠Warning">
+              {(data.atd || data.ata) !== null &&
+                ((data.atd || data.ata) !== "On time" ? " 🟠" : " 🟢")}
             </Tooltip>
 
             <Tooltip title="Train no longer departs from here">
@@ -137,8 +146,8 @@ export default function DisplayStops({ data }) {
               )}
             </Tooltip>
 
-            <Tooltip title="🟢On time 🟡Warning">
-              {(data.eta || data.etd) == "Cancelled" && " 🟡"}
+            <Tooltip title="🟢On time 🟠Warning">
+              {(data.eta || data.etd) == "Cancelled" && " 🟠"}
             </Tooltip>
 
             <br />
@@ -146,7 +155,6 @@ export default function DisplayStops({ data }) {
           </tr>
         </Table>
       </div>
-
       {data.subsequentCallingPoints && (
         <div>
           {data.subsequentCallingPoints?.map((calling, position) => {
@@ -162,7 +170,6 @@ export default function DisplayStops({ data }) {
           })}
         </div>
       )}
-
       <Modal
         open={open}
         onClose={handleClose}

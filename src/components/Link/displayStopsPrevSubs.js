@@ -107,14 +107,14 @@ export default function DisplayStopsPrevSubs({
                   )}
                 </Tooltip>
 
-                <Tooltip title="🟢On time 🟡Warning">
+                <Tooltip title="🟢On time 🟠Warning">
                   {(station.et || station.at) == "Cancelled" &&
-                    (station.at == null ? " 🟡" : "")}
+                    (station.at == null ? " 🟠" : "")}
                 </Tooltip>
 
-                <Tooltip title="🟢On time 🟡Warning">
+                <Tooltip title="🟢On time 🟠Warning">
                   {station.at !== null &&
-                    (station.at !== "On time" ? " 🟡" : " 🟢")}
+                    (station.at !== "On time" ? " 🟠" : " 🟢")}
                 </Tooltip>
 
                 {station.at == null && station.et !== "Cancelled" && (
