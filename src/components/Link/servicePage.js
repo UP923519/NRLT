@@ -297,282 +297,273 @@ export default function ServicePage() {
   }
 
   return (
-    <Fade top distance={"10px"} duration={1500}>
-      <div className="Wrapper2">
-        <h3 style={{ textAlign: "center" }}>Service Details</h3>
-        <Fade top distance={"25px"} duration={1500}>
-          <div className="manualInput">
-            <form
-              method="post"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleServiceClick();
-              }}
-            >
-              <button
-                type="button"
-                style={{
-                  textAlign: "center",
-                  width: "30px",
-                  margin: "10px",
-                  paddingBottom: "3px",
-                }}
-                onClick={toggleForm}
-              >
-                {"↨"}
-              </button>
-              <br />
+    // <Fade top distance={"10px"} duration={1500}>
+    <div className="Wrapper2">
+      <h3 style={{ textAlign: "center" }}>Service Details</h3>
+      {/* <Fade top distance={"25px"} duration={1500}> */}
+      <div className="manualInput">
+        <form
+          method="post"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleServiceClick();
+          }}
+        >
+          <button
+            type="button"
+            style={{
+              textAlign: "center",
+              width: "30px",
+              margin: "10px",
+              paddingBottom: "3px",
+            }}
+            onClick={toggleForm}
+          >
+            {"↨"}
+          </button>
+          <br />
 
-              {isOpenForm && (
-                <label>
-                  <a href="https://www.nationalrail.co.uk/status-and-disruptions/">
-                    <button
-                      type="button"
-                      id="showHide"
-                      style={{
-                        fontSize: "medium",
-                        marginTop: "5px",
-                        padding: "9px",
-                        background: "#243a5eAA",
-                        color: "white",
-                      }}
-                      className="logOut"
-                    >
-                      🔗 Status and disruptions
-                    </button>
-                  </a>
-                  <p>
-                    Service code:&nbsp;{" "}
-                    <input
-                      style={{
-                        backgroundColor: "#cfcfcf",
-                        border: "0",
-                        borderRadius: "2px",
-                      }}
-                      name="myInput"
-                      defaultValue=""
-                      onChange={(event) => setFormVal(event.target.value)}
-                    />
-                  </p>
-                  <div>
-                    <Button
-                      type="button"
-                      id="useTrains"
-                      aria-controls={open ? "basic-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
-                      onClick={handleClick}
-                      endIcon={<KeyboardArrowDownIcon />}
-                      sx={{
-                        textTransform: "none",
-                        paddingTop: "0.5px !important",
-                        paddingBottom: "0.5px !important",
-                      }}
-                    >
-                      ⚙️ Options
-                    </Button>
-                    <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                      }}
-                    >
-                      <MenuItem
-                        type="reset"
-                        // style={{ fontSize: "small" }}
-                        onClick={() => handleClose() + clearAll()}
-                      >
-                        ❌ Reset
-                      </MenuItem>
-                    </Menu>
-                  </div>
-                </label>
-              )}
-
-              <button
-                id="useTrains"
-                type="button"
-                onClick={() => handleServiceClick()}
-              >
-                🔄 Refresh
-              </button>
-            </form>
-          </div>
-        </Fade>
-        {processingState ? (
-          <>
-            <div style={{ height: "6.75px" }} />
-            <LinearProgress color="secondary" fourColor />
-            <div style={{ height: "6.75px" }} />
-          </>
-        ) : (
-          <>
-            <hr />
-          </>
-        )}
-        <ref ref={myRef}>
-          <div ref={myRef} className="App">
-            {isOpen && (
+          {isOpenForm && (
+            <label>
+              <a href="https://www.nationalrail.co.uk/status-and-disruptions/">
+                <button
+                  type="button"
+                  id="showHide"
+                  style={{
+                    fontSize: "medium",
+                    marginTop: "5px",
+                    padding: "9px",
+                    background: "#243a5eAA",
+                    color: "white",
+                  }}
+                  className="logOut"
+                >
+                  🔗 Status and disruptions
+                </button>
+              </a>
+              <p>
+                Service code:&nbsp;{" "}
+                <input
+                  style={{
+                    backgroundColor: "#cfcfcf",
+                    border: "0",
+                    borderRadius: "2px",
+                  }}
+                  name="myInput"
+                  defaultValue=""
+                  onChange={(event) => setFormVal(event.target.value)}
+                />
+              </p>
               <div>
-                <p className="infoTrain" style={{ margin: "0px" }}>
-                  {infoTrainDisplay}
-                </p>
+                <Button
+                  type="button"
+                  id="useTrains"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  sx={{
+                    textTransform: "none",
+                    paddingTop: "0.5px !important",
+                    paddingBottom: "0.5px !important",
+                  }}
+                >
+                  ⚙️ Options
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem
+                    type="reset"
+                    // style={{ fontSize: "small" }}
+                    onClick={() => handleClose() + clearAll()}
+                  >
+                    ❌ Reset
+                  </MenuItem>
+                </Menu>
               </div>
-            )}
-          </div>
-          <Fade bottom duration={1500} when={loadedState}>
-            {isOpen && !stringCalling[0][0].includes("Loading") ? (
-              <>
-                <div className="App">
-                  {isOpen && (
-                    <div>
-                      {/* {!stringCalling[0][0].includes("Loading") ? (
+            </label>
+          )}
+
+          <button
+            id="useTrains"
+            type="button"
+            onClick={() => handleServiceClick()}
+          >
+            🔄 Refresh
+          </button>
+        </form>
+      </div>
+      {/* </Fade> */}
+      {processingState ? (
+        <>
+          <div style={{ height: "6.75px" }} />
+          <LinearProgress color="secondary" fourColor />
+          <div style={{ height: "6.75px" }} />
+        </>
+      ) : (
+        <>
+          <hr />
+        </>
+      )}
+      <ref ref={myRef}>
+        <div ref={myRef} className="App">
+          {isOpen && (
+            <div>
+              <p className="infoTrain" style={{ margin: "0px" }}>
+                {infoTrainDisplay}
+              </p>
+            </div>
+          )}
+        </div>
+        {isOpen && !stringCalling[0][0].includes("Loading") ? (
+          <>
+            <div className="App">
+              {isOpen && (
+                <div>
+                  {/* {!stringCalling[0][0].includes("Loading") ? (
                   <> */}
-                      <p className="highlights">{excuseReason}</p>
+                  <p className="highlights">{excuseReason}</p>
+                  <br />
+                  <div className="trainInfo">
+                    <p className={"platformBox"}>
+                      <text style={{ fontWeight: "500", color: "white" }}>
+                        Platform:&nbsp;{" "}
+                      </text>
+                      <text style={{ color: "white" }}>{platformNumber}</text>
+                    </p>
+                  </div>
+                  <div className="trainInfo">
+                    <p className={"trainInfoBox"}>
+                      <text style={{ fontWeight: "500" }}>
+                        Service operator:
+                      </text>
                       <br />
-                      <div className="trainInfo">
-                        <p className={"platformBox"}>
-                          <text style={{ fontWeight: "500", color: "white" }}>
-                            Platform:&nbsp;{" "}
-                          </text>
-                          <text style={{ color: "white" }}>
-                            {platformNumber}
-                          </text>
-                        </p>
-                      </div>
-                      <div className="trainInfo">
-                        <p className={"trainInfoBox"}>
-                          <text style={{ fontWeight: "500" }}>
-                            Service operator:
-                          </text>
+                      <br />
+                      {operatorName}
+                    </p>
+                    <p className={"trainInfoBox"}>
+                      <text style={{ fontWeight: "500" }}>
+                        Train formation:
+                      </text>
+                      <br />
+                      <br />
+                      {formationCar}
+                    </p>
+                  </div>
+                  {divides != "" && (
+                    <div className="trainInfo">
+                      <p
+                        className={"trainInfoBox"}
+                        style={{
+                          background: "orange",
+                        }}
+                      >
+                        <text style={{ fontWeight: "500" }}>
+                          Train {divideMerge} at:
+                        </text>
+                        <br />
+                        <br />
+                        {divideLocation}
+                      </p>
+                    </div>
+                  )}
+                  <div>
+                    {(enableWindow == "Show" || enableWindow == undefined) &&
+                      staffUIDVal != "" && (
+                        <text>
                           <br />
-                          <br />
-                          {operatorName}
-                        </p>
-                        <p className={"trainInfoBox"}>
-                          <text style={{ fontWeight: "500" }}>
-                            Train formation:
-                          </text>
-                          <br />
-                          <br />
-                          {formationCar}
-                        </p>
-                      </div>
-                      {divides != "" && (
-                        <div className="trainInfo">
-                          <p
-                            className={"trainInfoBox"}
-                            style={{
-                              background: "orange",
-                            }}
-                          >
-                            <text style={{ fontWeight: "500" }}>
-                              Train {divideMerge} at:
-                            </text>
-                            <br />
-                            <br />
-                            {divideLocation}
-                          </p>
-                        </div>
-                      )}
-                      <div>
-                        {(enableWindow == "Show" ||
-                          enableWindow == undefined) &&
-                          staffUIDVal != "" && (
-                            <text>
-                              <br />
 
-                              {!stringCalling[0][0].includes("Loading") ? (
-                                <>
-                                  <Popup
-                                    trigger={
-                                      <button
-                                        id="useTrains"
-                                        type="button"
-                                        // onClick={() =>
-                                        //   window.scrollTo({ top: 99999, behavior: "smooth" })
-                                        // }
-                                      >
-                                        More train details
-                                      </button>
-                                    }
-                                    modal
-                                    nested
+                          {!stringCalling[0][0].includes("Loading") ? (
+                            <>
+                              <Popup
+                                trigger={
+                                  <button
+                                    id="useTrains"
+                                    type="button"
+                                    // onClick={() =>
+                                    //   window.scrollTo({ top: 99999, behavior: "smooth" })
+                                    // }
                                   >
-                                    {(close) => (
-                                      <Fade
-                                        top
-                                        duration={500}
-                                        distance={"100px"}
-                                      >
+                                    More train details
+                                  </button>
+                                }
+                                modal
+                                nested
+                              >
+                                {(close) => (
+                                  <Fade top duration={500} distance={"100px"}>
+                                    <div>
+                                      <div>
                                         <div>
-                                          <div>
-                                            <div>
-                                              <p style={{ margin: "5px" }}>
-                                                Additional train details
-                                              </p>
-                                              <iframe
-                                                className="transactions"
-                                                style={{
-                                                  height: "270px",
-                                                  border: "0",
-                                                  marginTop: "3px",
-                                                  width: "99%",
-                                                }}
-                                                id="iFrameExample"
-                                                // title="iFrame Example"
-                                                src={trainDetailUrl}
-                                              ></iframe>
-                                            </div>
-                                          </div>
-                                          <div>
-                                            <button
-                                              id="useTrains"
-                                              style={{ margin: "0px" }}
-                                              onClick={() => close()}
-                                            >
-                                              Close
-                                            </button>
-                                          </div>
+                                          <p style={{ margin: "5px" }}>
+                                            Additional train details
+                                          </p>
+                                          <iframe
+                                            className="transactions"
+                                            style={{
+                                              height: "270px",
+                                              border: "0",
+                                              marginTop: "3px",
+                                              width: "99%",
+                                            }}
+                                            id="iFrameExample"
+                                            // title="iFrame Example"
+                                            src={trainDetailUrl}
+                                          ></iframe>
                                         </div>
-                                      </Fade>
-                                    )}
-                                  </Popup>
-                                  <PopupStations
-                                    calling={
-                                      stringCalling[
-                                        stringCalling.findIndex((element) =>
-                                          JSON.stringify(element).includes(
-                                            location
-                                          )
-                                        )
-                                      ]
-                                    }
-                                    Popup={Popup}
-                                    platformNumber={platformNumber}
-                                    popOpen={true}
-                                    stringCalling={stringCalling}
-                                  ></PopupStations>
-                                </>
-                              ) : (
-                                <div>
-                                  <br />
-                                  <br />
-                                </div>
-                              )}
-
-                              {/* {!stringCalling[0][0].includes("Loading") && } */}
-                            </text>
+                                      </div>
+                                      <div>
+                                        <button
+                                          id="useTrains"
+                                          style={{ margin: "0px" }}
+                                          onClick={() => close()}
+                                        >
+                                          Close
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </Fade>
+                                )}
+                              </Popup>
+                              <PopupStations
+                                calling={
+                                  stringCalling[
+                                    stringCalling.findIndex((element) =>
+                                      JSON.stringify(element).includes(location)
+                                    )
+                                  ]
+                                }
+                                Popup={Popup}
+                                platformNumber={platformNumber}
+                                popOpen={true}
+                                stringCalling={stringCalling}
+                              ></PopupStations>
+                            </>
+                          ) : (
+                            <div>
+                              <br />
+                              <br />
+                            </div>
                           )}
-                      </div>
-                      <br />
 
-                      <DisplayStops data={allServiceData} />
+                          {/* {!stringCalling[0][0].includes("Loading") && } */}
+                        </text>
+                      )}
+                  </div>
 
-                      {/* <Table
+                  <br />
+
+                  <DisplayStops data={allServiceData} />
+
+                  {/* <Table
                         className="transactions"
                         style={{ backgroundColor: "#f0f0f0" }}
                       >
@@ -599,37 +590,36 @@ export default function ServicePage() {
                           );
                         })}
                       </Table> */}
-                      <br />
-                      <br />
-                    </div>
-                  )}
+                  <br />
+                  <br />
                 </div>
-              </>
-            ) : (
-              <></>
-            )}
-          </Fade>
-        </ref>
-        {loadedState == false ? (
-          <>
-            <p style={{ marginBottom: "3000px" }}></p>
+              )}
+            </div>
           </>
         ) : (
-          <>
-            <div className="NRLogo">
-              <img
-                src={image}
-                alt="powered by National Rail Enquiries"
-                width="256"
-              />
-            </div>
-            {stringCalling.length < 6 && (
-              <div style={{ marginBottom: "35vh" }}></div>
-            )}
-          </>
+          <></>
         )}
-      </div>
-    </Fade>
+      </ref>
+      {loadedState == false ? (
+        <>
+          <p style={{ marginBottom: "3000px" }}></p>
+        </>
+      ) : (
+        <>
+          <div className="NRLogo">
+            <img
+              src={image}
+              alt="powered by National Rail Enquiries"
+              width="256"
+            />
+          </div>
+          {stringCalling.length < 6 && (
+            <div style={{ marginBottom: "35vh" }}></div>
+          )}
+        </>
+      )}
+    </div>
+    // </Fade>
   );
 }
 export function test1(number, trainInfo, staffUID, staffSDD) {

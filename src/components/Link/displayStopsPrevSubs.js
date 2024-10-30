@@ -25,7 +25,13 @@ export default function DisplayStopsPrevSubs({
   handleOpen,
   prevOrSub,
   length,
+  setLS,
 }) {
+  setTimeout(
+    setTimeout(() => {
+      setLS(true);
+    }, 3000)
+  );
   return (
     <>
       <Table
@@ -69,9 +75,25 @@ export default function DisplayStopsPrevSubs({
           }
           return (
             <>
-              <tr onClick={() => handleOpen(station, 1)}>
-                <br />
-                {station.locationName + " " + station.st + " "}
+              <tr
+                onClick={() => handleOpen(station, 1)}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    maxWidth: "200px",
+                    overflow: "hidden",
+                    whiteSpace: "noWrap",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {station.locationName + " " + station.st + " "}
+                </p>
                 {station.at !== null && (
                   <x
                     style={{
@@ -80,17 +102,17 @@ export default function DisplayStopsPrevSubs({
                       paddingLeft: coloursDeparted && "5px",
                       paddingRight: coloursDeparted && "5px",
                       borderRadius: coloursDeparted && "20px",
+                      marginLeft: coloursDeparted && "6px",
                     }}
                   >
                     <Tooltip title="Train departed">
                       {station.at !== null &&
                         ((station.et || station.at) !== "Cancelled"
-                          ? station.at + " ⬇"
+                          ? station.at + " "
                           : station.et)}
                     </Tooltip>
                   </x>
                 )}
-
                 <Tooltip title="Train no longer departs from here">
                   {(station.et || station.at) == "Cancelled" && (
                     <x
@@ -106,17 +128,18 @@ export default function DisplayStopsPrevSubs({
                     </x>
                   )}
                 </Tooltip>
-
                 <Tooltip title="🟢On time 🟠Warning">
                   {(station.et || station.at) == "Cancelled" &&
-                    (station.at == null ? " 🟠" : "")}
+                    (station.at == null ? <p>&nbsp;🟠</p> : "")}
                 </Tooltip>
-
                 <Tooltip title="🟢On time 🟠Warning">
                   {station.at !== null &&
-                    (station.at !== "On time" ? " 🟠" : " 🟢")}
+                    (station.at !== "On time" ? (
+                      <p>&nbsp;🟠</p>
+                    ) : (
+                      <p>&nbsp;🟢</p>
+                    ))}
                 </Tooltip>
-
                 {station.at == null && station.et !== "Cancelled" && (
                   <Tooltip title="Train not yet departed">
                     <x
@@ -125,6 +148,7 @@ export default function DisplayStopsPrevSubs({
                         paddingLeft: coloursEstimated && "5px",
                         paddingRight: coloursEstimated && "5px",
                         borderRadius: coloursEstimated && "20px",
+                        marginLeft: coloursEstimated && "6px",
                       }}
                     >
                       {station.at == null && station.et !== "Cancelled" ? (
@@ -135,8 +159,43 @@ export default function DisplayStopsPrevSubs({
                     </x>
                   </Tooltip>
                 )}
-                <br />
-                <br />
+                {/* <br />
+                <br /> */}
+                <Box
+                  style={{
+                    height: "50px",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "10px",
+                      background: "black",
+                      height: "92px",
+                      marginBottom: "42px",
+                      position: "absolute",
+                      right: "20px",
+                    }}
+                  ></Box>
+                  <Box
+                    sx={{
+                      width: "30px",
+                      background: coloursEstimated || coloursDeparted,
+                      height: "30px",
+                      position: "absolute",
+                      right: "10px",
+                      borderRadius: "100%",
+                      color: "white",
+                      lineHeight: "32px",
+                      fontSize: "15px",
+                      zIndex: 99,
+                    }}
+                  >
+                    ✔
+                  </Box>
+                </Box>
               </tr>
             </>
           );

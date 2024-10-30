@@ -29,6 +29,8 @@ export default function DisplayStops({ data }) {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
+  const [ls, setLS] = useState(false);
+
   let dataPreviousCallingPointsReverse;
 
   if (data.previousCallingPoints) {
@@ -68,6 +70,8 @@ export default function DisplayStops({ data }) {
                 handleOpen={handleOpen}
                 prevOrSub={0}
                 length={data.previousCallingPoints?.length}
+                setLS={setLS}
+                ls={ls}
               />
             );
           })}
@@ -81,13 +85,29 @@ export default function DisplayStops({ data }) {
           <tr>
             <th style={{ fontSize: 13 }}>Station | Scheduled | Act/Est</th>
           </tr>
-          <tr onClick={() => handleOpen(data, 0)}>
+          <tr
+            onClick={() => handleOpen(data, 0)}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <br />
-            {data.locationName +
-              " " +
-              (data.std !== null ? data.std : data.sta) +
-              " "}
-
+            <p
+              style={{
+                maxWidth: "200px",
+                overflow: "hidden",
+                whiteSpace: "noWrap",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {data.locationName +
+                " " +
+                (data.std !== null ? data.std : data.sta) +
+                " "}
+            </p>
             <x
               style={{
                 background: whiteBlue,
@@ -95,6 +115,7 @@ export default function DisplayStops({ data }) {
                 paddingLeft: whiteBlue && "5px",
                 paddingRight: whiteBlue && "5px",
                 borderRadius: whiteBlue && "20px",
+                marginLeft: whiteBlue && "6px",
               }}
             >
               <Tooltip
@@ -105,7 +126,7 @@ export default function DisplayStops({ data }) {
                 }
               >
                 {(data.atd || data.ata) !== null ? (
-                  (data.atd || data.ata) + " ⬇"
+                  (data.atd || data.ata) + " "
                 ) : (
                   <></>
                 )}
@@ -124,12 +145,14 @@ export default function DisplayStops({ data }) {
                 )}
               </Tooltip>
             </x>
-
             <Tooltip title="🟢On time 🟠Warning">
               {(data.atd || data.ata) !== null &&
-                ((data.atd || data.ata) !== "On time" ? " 🟠" : " 🟢")}
+                ((data.atd || data.ata) !== "On time" ? (
+                  <p>&nbsp;🟠</p>
+                ) : (
+                  <p>&nbsp;🟢</p>
+                ))}
             </Tooltip>
-
             <Tooltip title="Train no longer departs from here">
               {(data.eta || data.etd) == "Cancelled" && (
                 <x
@@ -145,13 +168,45 @@ export default function DisplayStops({ data }) {
                 </x>
               )}
             </Tooltip>
-
             <Tooltip title="🟢On time 🟠Warning">
-              {(data.eta || data.etd) == "Cancelled" && " 🟠"}
+              {(data.eta || data.etd) == "Cancelled" && <p>&nbsp;🟠</p>}
             </Tooltip>
-
-            <br />
-            <br />
+            {/* <br />
+            <br /> */}
+            <Box
+              style={{
+                height: "50px",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "10px",
+                  background: "black",
+                  height: "92px",
+                  position: "absolute",
+                  marginBottom: "42px",
+                  right: "20px",
+                }}
+              ></Box>
+              <Box
+                sx={{
+                  width: "30px",
+                  background: whiteBlue,
+                  height: "30px",
+                  position: "absolute",
+                  right: "10px",
+                  borderRadius: "100%",
+                  color: "white",
+                  lineHeight: "32px",
+                  fontSize: "15px",
+                }}
+              >
+                ✔
+              </Box>
+            </Box>
           </tr>
         </Table>
       </div>
@@ -165,6 +220,8 @@ export default function DisplayStops({ data }) {
                 handleOpen={handleOpen}
                 prevOrSub={1}
                 length={data.subsequentCallingPoints?.length}
+                setLS={setLS}
+                ls={ls}
               />
             );
           })}
