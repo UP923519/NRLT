@@ -122,6 +122,7 @@ export default function DisplayStopsPrevSubs({
                         paddingLeft: "5px",
                         paddingRight: "5px",
                         borderRadius: "20px",
+                        marginLeft: "6px",
                       }}
                     >
                       Cancelled ❌

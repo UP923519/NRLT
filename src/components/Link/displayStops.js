@@ -162,6 +162,7 @@ export default function DisplayStops({ data }) {
                     paddingLeft: "5px",
                     paddingRight: "5px",
                     borderRadius: "20px",
+                    marginLeft: "6px",
                   }}
                 >
                   Cancelled ❌
@@ -194,7 +195,7 @@ export default function DisplayStops({ data }) {
               <Box
                 sx={{
                   width: "30px",
-                  background: whiteBlue,
+                  background: whiteBlue || "white",
                   height: "30px",
                   position: "absolute",
                   right: "10px",
