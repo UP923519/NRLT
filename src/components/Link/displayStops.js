@@ -167,9 +167,9 @@ export default function DisplayStops({ data }) {
                 </x>
               )}
             </Tooltip>
-            <Tooltip title="🟢On time 🟠Warning">
+            {/* <Tooltip title="🟢On time 🟠Warning">
               {(data.eta || data.etd) == "Cancelled" && <p>&nbsp;🟠</p>}
-            </Tooltip>
+            </Tooltip> */}
             {/* <br />
             <br /> */}
             <Box
