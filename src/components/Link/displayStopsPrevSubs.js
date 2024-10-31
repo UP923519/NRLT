@@ -90,7 +90,7 @@ export default function DisplayStopsPrevSubs({
                       marginLeft: coloursDeparted && "6px",
                     }}
                   >
-                    <Tooltip title="Train departed">
+                    <Tooltip title="Train has already stopped here">
                       {station.at !== null &&
                         ((station.et || station.at) !== "Cancelled"
                           ? station.at + " "
@@ -128,7 +128,7 @@ export default function DisplayStopsPrevSubs({
                     ))}
                 </Tooltip>
                 {station.at == null && station.et !== "Cancelled" && (
-                  <Tooltip title="Train not yet departed">
+                  <Tooltip title="Train has not stopped here yet">
                     <x
                       style={{
                         background: coloursEstimated,
@@ -173,6 +173,19 @@ export default function DisplayStopsPrevSubs({
                   ></Box>
                   <Box
                     id="mapPositionCircle"
+                    onClick={(e) =>
+                      e.stopPropagation() +
+                      (coloursEstimated &&
+                        alert(
+                          "Train has not stopped at " +
+                            station.locationName +
+                            " yet"
+                        )) +
+                      (coloursDeparted &&
+                        alert(
+                          "Train has already stopped at " + station.locationName
+                        ))
+                    }
                     sx={{
                       width: "30px",
                       background: coloursEstimated || coloursDeparted,

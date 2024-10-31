@@ -117,8 +117,8 @@ export default function DisplayStops({ data }) {
               <Tooltip
                 title={
                   whiteBlue !== "white"
-                    ? "Train departed"
-                    : "Train not yet departed"
+                    ? "Train has already stopped here"
+                    : "Train has not stopped here yet"
                 }
               >
                 {(data.atd || data.ata) !== null ? (
@@ -195,6 +195,15 @@ export default function DisplayStops({ data }) {
               ></Box>
               <Box
                 id="mapPositionCircle"
+                onClick={(e) =>
+                  e.stopPropagation() +
+                  (whiteBlue == "white" &&
+                    alert(
+                      "Train has not stopped at " + data.locationName + " yet"
+                    )) +
+                  (whiteBlue !== "white" &&
+                    alert("Train has already stopped at " + data.locationName))
+                }
                 sx={{
                   width: "30px",
                   background: whiteBlue || "white",
