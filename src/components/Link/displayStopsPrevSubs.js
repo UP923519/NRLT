@@ -160,14 +160,28 @@ export default function DisplayStopsPrevSubs({
                     id="mapPositionLine"
                     onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
                     sx={{
-                      width: "10px",
+                      width: "16px",
                       // background: "black",
                       background:
-                        "repeating-linear-gradient(0deg,  white 5px,  white 12px,  black 0px,  black 15px)",
+                        "repeating-linear-gradient(0deg,  rgba(0,0,0,0) 5px,  rgba(0,0,0,0) 12px,  black 0px,  black 15px)",
                       height: "97px", //Lined up on mobile - slightly off on desktop
                       marginBottom: "47px", //Lined up on mobile - slightly off on desktop
                       position: "absolute",
-                      right: "19px",
+                      right: "18px",
+                      // borderLeft: "solid grey",
+                      // borderRight: "solid grey",
+                    }}
+                  ></Box>
+                  <Box
+                    id="mapPositionLineRail"
+                    onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
+                    sx={{
+                      width: "7px",
+                      // background: "black",
+                      height: "97px", //Lined up on mobile - slightly off on desktop
+                      marginBottom: "47px", //Lined up on mobile - slightly off on desktop
+                      position: "absolute",
+                      right: "21.3px",
                       borderLeft: "solid grey",
                       borderRight: "solid grey",
                     }}

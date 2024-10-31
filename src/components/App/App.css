@@ -582,13 +582,19 @@ a.active-animation:active {
   }
 
   #mapPositionLine {
-    right: -300px;
+    right: -301px;
+    margin-left: 50%;
+    margin-right: 50%;
+  }
+
+  #mapPositionLineRail {
+    right: -298.4px;
     margin-left: 50%;
     margin-right: 50%;
   }
 
   #mapPositionCircle {
-    right: -310px;
+    right: -309px;
     margin-left: 50%;
     margin-right: 50%;
   }
