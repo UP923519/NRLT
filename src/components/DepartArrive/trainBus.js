@@ -16,7 +16,7 @@ export default function TrainBus({
 }) {
   return (
     <div style={{ marginTop: -5 }}>
-      <div>
+      <div style={{ marginBottom: "20px" }}>
         <p className="highlights">
           <pre
             style={{
@@ -121,8 +121,6 @@ export default function TrainBus({
             </tr>
           ))}
         </Table>
-        <br />
-        <br />
       </div>
     </div>
   );

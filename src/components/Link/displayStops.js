@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import DisplayStopsPrevSubs from "./displayStopsPrevSubs";
@@ -20,7 +19,6 @@ const style = {
   p: 4,
   padding: 1,
   maxWidth: 400,
-  // width: "maxContent",
 };
 
 export default function DisplayStops({ data }) {
@@ -392,7 +390,6 @@ export default function DisplayStops({ data }) {
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "center",
-                        // gap: "10px",
                       }}
                     >
                       <p

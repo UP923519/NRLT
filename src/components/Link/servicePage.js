@@ -49,11 +49,9 @@ export default function ServicePage() {
   const [trainDetailUrl, setTrainDetailUrl] = useState("");
   const [loadedState, setLoadedState] = useState(false);
   const [processingState, setProcessingState] = useState(false);
-  const [popOpen] = useState(false);
   const staffDay = staffSDDVal.substring(8, 10);
   const staffMonth = staffSDDVal.substring(5, 7);
   const staffYear = staffSDDVal.substring(0, 4);
-  const [updateGetStops, setGetStops] = useState();
   const [allServiceData, setAllServiceData] = useState();
 
   const myRef = useRef(null);
@@ -119,9 +117,6 @@ export default function ServicePage() {
   function runLast() {
     let infoTrainSet = infoTrain;
 
-    // infoTrainSet = infoTrainSet.replace("Cancelled","");
-    // infoTrainSet = infoTrainSet.replace("Delayed","");
-
     infoTrainSet = infoTrainSet.replace(
       " ",
       " at " + liveServiceTime.locationName + ": "
@@ -175,13 +170,6 @@ export default function ServicePage() {
       const dataA = structuredClone(data); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
 
       if (data) {
-        // let getStops = displayStops(
-        //   data,
-        //   setDetailsOpen,
-        //   detailsOpen,
-        //   isOpenForm
-        // );
-        // setGetStops(getStops);
         setAllServiceData(dataA);
       }
       try {
@@ -382,7 +370,6 @@ export default function ServicePage() {
                 >
                   <MenuItem
                     type="reset"
-                    // style={{ fontSize: "small" }}
                     onClick={() => handleClose() + clearAll()}
                   >
                     ❌ Reset
@@ -427,7 +414,7 @@ export default function ServicePage() {
           <>
             <div className="App">
               {isOpen && (
-                <div>
+                <div style={{ marginBottom: "10px" }}>
                   {/* {!stringCalling[0][0].includes("Loading") ? (
                   <> */}
                   <p className="highlights">{excuseReason}</p>
@@ -485,13 +472,7 @@ export default function ServicePage() {
                             <>
                               <Popup
                                 trigger={
-                                  <button
-                                    id="useTrains"
-                                    type="button"
-                                    // onClick={() =>
-                                    //   window.scrollTo({ top: 99999, behavior: "smooth" })
-                                    // }
-                                  >
+                                  <button id="useTrains" type="button">
                                     More train details
                                   </button>
                                 }
@@ -515,7 +496,6 @@ export default function ServicePage() {
                                               width: "99%",
                                             }}
                                             id="iFrameExample"
-                                            // title="iFrame Example"
                                             src={trainDetailUrl}
                                           ></iframe>
                                         </div>
@@ -553,8 +533,6 @@ export default function ServicePage() {
                               <br />
                             </div>
                           )}
-
-                          {/* {!stringCalling[0][0].includes("Loading") && } */}
                         </text>
                       )}
                   </div>
@@ -562,36 +540,6 @@ export default function ServicePage() {
                   <br />
 
                   <DisplayStops data={allServiceData} />
-
-                  {/* <Table
-                        className="transactions"
-                        style={{ backgroundColor: "#f0f0f0" }}
-                      >
-                        <tr>
-                          <th style={{ fontSize: 13 }}>
-                            Station|Scheduled|Actual|Estimated
-                            <br />
-                            <br />
-                          </th>
-                        </tr>
-                        {stringCalling.map((calling, position) => {
-                          return (
-                            <tr data-index={position}>
-                              <PopupStations
-                                calling={calling}
-                                Popup={Popup}
-                                platformNumber={platformNumber}
-                                popOpen={popOpen}
-                              />
-                              <br />
-                              <br />
-                              <br />
-                            </tr>
-                          );
-                        })}
-                      </Table> */}
-                  <br />
-                  <br />
                 </div>
               )}
             </div>
