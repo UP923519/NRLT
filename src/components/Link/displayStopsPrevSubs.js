@@ -158,6 +158,7 @@ export default function DisplayStopsPrevSubs({
                 >
                   <Box
                     id="mapPositionLine"
+                    onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
                     sx={{
                       width: "10px",
                       // background: "black",
