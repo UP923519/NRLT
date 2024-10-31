@@ -163,12 +163,13 @@ export default function DisplayStopsPrevSubs({
                       // background: "black",
                       background:
                         "repeating-linear-gradient(0deg,  white 5px,  white 12px,  black 0px,  black 15px)",
-                      height: "95px",
-                      marginBottom: "45px",
+                      height: "98px", //Lined up on mobile - slightly off on desktop
+                      marginBottom: "48px", //Lined up on mobile - slightly off on desktop
                       position: "absolute",
                       right: "19px",
                       borderLeft: "solid grey",
                       borderRight: "solid grey",
+                      borderRadius: "2px",
                     }}
                   ></Box>
                   <Box

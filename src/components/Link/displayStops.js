@@ -184,14 +184,14 @@ export default function DisplayStops({ data }) {
                   width: "10px",
                   background:
                     "repeating-linear-gradient(0deg,  white 5px,  white 12px,  black 0px,  black 15px)",
-                  height: "95px",
-                  marginBottom: "45px",
-                  height: "92px",
+                  height: "95px", //Lined up on mobile - slightly off on desktop
+                  marginBottom: "48px", //Lined up on mobile - slightly off on desktop
+                  height: "98px",
                   position: "absolute",
-                  marginBottom: "42px",
                   right: "19px",
                   borderLeft: "solid grey",
                   borderRight: "solid grey",
+                  borderRadius: "2px",
                 }}
               ></Box>
               <Box
