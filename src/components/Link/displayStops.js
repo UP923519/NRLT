@@ -117,8 +117,8 @@ export default function DisplayStops({ data }) {
               <Tooltip
                 title={
                   whiteBlue !== "white"
-                    ? "Train has already stopped here"
-                    : "Train has not stopped here yet"
+                    ? "Train has called at this station"
+                    : "Train has not called here yet"
                 }
               >
                 {(data.atd || data.ata) !== null ? (
@@ -214,10 +214,10 @@ export default function DisplayStops({ data }) {
                   e.stopPropagation() +
                   (whiteBlue == "white" &&
                     alert(
-                      "Train has not stopped at " + data.locationName + " yet"
+                      "Train has not called at " + data.locationName + " yet"
                     )) +
                   (whiteBlue !== "white" &&
-                    alert("Train has already stopped at " + data.locationName))
+                    alert("Train has called at " + data.locationName))
                 }
                 sx={{
                   width: "30px",
