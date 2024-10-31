@@ -198,6 +198,7 @@ export default function DisplayStopsPrevSubs({
                       fontSize: "15px",
                       zIndex: 99,
                       border: "1px dashed grey",
+                      userSelect: "none",
                     }}
                   >
                     ✔

@@ -215,6 +215,7 @@ export default function DisplayStops({ data }) {
                   lineHeight: "32px",
                   fontSize: "15px",
                   border: "1px dashed grey",
+                  userSelect: "none",
                 }}
               >
                 ✔
