@@ -182,11 +182,16 @@ export default function DisplayStops({ data }) {
                 id="mapPositionLine"
                 sx={{
                   width: "10px",
-                  background: "black",
+                  background:
+                    "repeating-linear-gradient(0deg,  white 5px,  white 12px,  black 0px,  black 15px)",
+                  height: "95px",
+                  marginBottom: "45px",
                   height: "92px",
                   position: "absolute",
                   marginBottom: "42px",
-                  right: "20px",
+                  right: "19px",
+                  borderLeft: "solid grey",
+                  borderRight: "solid grey",
                 }}
               ></Box>
               <Box

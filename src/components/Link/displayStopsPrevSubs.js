@@ -160,11 +160,15 @@ export default function DisplayStopsPrevSubs({
                     id="mapPositionLine"
                     sx={{
                       width: "10px",
-                      background: "black",
-                      height: "92px",
-                      marginBottom: "42px",
+                      // background: "black",
+                      background:
+                        "repeating-linear-gradient(0deg,  white 5px,  white 12px,  black 0px,  black 15px)",
+                      height: "95px",
+                      marginBottom: "45px",
                       position: "absolute",
-                      right: "20px",
+                      right: "19px",
+                      borderLeft: "solid grey",
+                      borderRight: "solid grey",
                     }}
                   ></Box>
                   <Box
