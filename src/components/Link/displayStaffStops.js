@@ -16,8 +16,7 @@ const style = {
   padding: 1,
   maxWidth: 400,
   overflow: "scroll",
-  maxHeight: "50vh",
-  top: "50%",
+  maxHeight: "70vh",
   position: " absolute",
 };
 

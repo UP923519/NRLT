@@ -20,7 +20,7 @@ const style = {
   padding: 1,
   maxWidth: 400,
   overflow: "scroll",
-  maxHeight: "50vh",
+  maxHeight: "70vh",
   top: "50%",
   position: " absolute",
 };
@@ -296,224 +296,226 @@ export default function DisplayStops({
       >
         <>
           {station && (
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Service status & times
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <p
+            <>
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Service status & times
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  <div
                     style={{
-                      background: "#b1d1de",
-                      borderRadius: "15px",
-                      padding: "10px",
-                      width: "50%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      gap: "10px",
                     }}
                   >
-                    {station.locationName}
-                  </p>
-                </div>
-                {indicator == 0 && station && (
-                  <>
-                    <div className="trainInfo">
-                      <p className={"platformBox"}>
-                        <text
+                    <p
+                      style={{
+                        background: "#b1d1de",
+                        borderRadius: "15px",
+                        padding: "10px",
+                        width: "50%",
+                      }}
+                    >
+                      {station.locationName}
+                    </p>
+                  </div>
+                  {indicator == 0 && station && (
+                    <>
+                      <div className="trainInfo">
+                        <p className={"platformBox"}>
+                          <text
+                            style={{
+                              fontWeight: "500",
+                              color: "white",
+                            }}
+                          >
+                            Platform:&nbsp;{" "}
+                          </text>
+                          <text style={{ color: "white" }}>
+                            {station.platform ? station.platform : "N/A"}
+                          </text>
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        <p
                           style={{
-                            fontWeight: "500",
-                            color: "white",
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
                           }}
                         >
-                          Platform:&nbsp;{" "}
-                        </text>
-                        <text style={{ color: "white" }}>
-                          {station.platform ? station.platform : "N/A"}
-                        </text>
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                        }}
-                      >
-                        Estimated arrival:
-                        <br />
-                        {station.eta ? <>{station.eta}</> : <>N/A</>}
-                      </p>
-                      <p
-                        style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                        }}
-                      >
-                        Estimated departure:
-                        <br /> {station.etd ? <>{station.etd}</> : <>N/A</>}
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                        }}
-                      >
-                        Scheduled arrival:
-                        <br /> {station.sta ? <>{station.sta}</> : <>N/A</>}
-                      </p>
-                      <p
-                        style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                        }}
-                      >
-                        Scheduled departure:
-                        <br /> {station.std ? <>{station.std}</> : <>N/A</>}
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                        }}
-                      >
-                        Actual arrival: <br />
-                        {station.ata ? <>{station.ata}</> : <>N/A</>}
-                      </p>
-                      <p
-                        style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                        }}
-                      >
-                        Actual departure:
-                        <br />{" "}
-                        {station.atd ? (
-                          <>
-                            {!station.atd.includes("null") ? (
-                              <>{station.atd}</>
-                            ) : (
-                              <>N/A</>
-                            )}
-                          </>
-                        ) : (
-                          <>N/A</>
-                        )}
-                      </p>
-                    </div>
-                  </>
-                )}
-                {indicator == 1 && station && (
-                  <>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          marginBottom: "-5px",
-                        }}
-                      >
-                        <>
+                          Estimated arrival:
+                          <br />
+                          {station.eta ? <>{station.eta}</> : <>N/A</>}
+                        </p>
+                        <p
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                          }}
+                        >
                           Estimated departure:
-                          <br /> {station.et ? <>{station.et}</> : <>N/A</>}
-                        </>
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
+                          <br /> {station.etd ? <>{station.etd}</> : <>N/A</>}
+                        </p>
+                      </div>
+                      <div
                         style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          gap: "10px",
                         }}
                       >
-                        Scheduled departure:
-                        <br /> {station.st ? <>{station.st}</> : <>N/A</>}
-                      </p>
-                      <p
+                        <p
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                          }}
+                        >
+                          Scheduled arrival:
+                          <br /> {station.sta ? <>{station.sta}</> : <>N/A</>}
+                        </p>
+                        <p
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                          }}
+                        >
+                          Scheduled departure:
+                          <br /> {station.std ? <>{station.std}</> : <>N/A</>}
+                        </p>
+                      </div>
+                      <div
                         style={{
-                          background: "#f0f0f0",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          gap: "10px",
                         }}
                       >
-                        Actual departure:
-                        <br />{" "}
-                        {station.at ? (
+                        <p
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                          }}
+                        >
+                          Actual arrival: <br />
+                          {station.ata ? <>{station.ata}</> : <>N/A</>}
+                        </p>
+                        <p
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                          }}
+                        >
+                          Actual departure:
+                          <br />{" "}
+                          {station.atd ? (
+                            <>
+                              {!station.atd.includes("null") ? (
+                                <>{station.atd}</>
+                              ) : (
+                                <>N/A</>
+                              )}
+                            </>
+                          ) : (
+                            <>N/A</>
+                          )}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {indicator == 1 && station && (
+                    <>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <p
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                            marginBottom: "-5px",
+                          }}
+                        >
                           <>
-                            {!station.at.includes("null") ? (
-                              <>{station.at}</>
-                            ) : (
-                              <>N/A</>
-                            )}
+                            Estimated departure:
+                            <br /> {station.et ? <>{station.et}</> : <>N/A</>}
                           </>
-                        ) : (
-                          <>N/A</>
-                        )}
-                      </p>
-                    </div>{" "}
-                  </>
-                )}
-              </Typography>
-            </Box>
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        <p
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                          }}
+                        >
+                          Scheduled departure:
+                          <br /> {station.st ? <>{station.st}</> : <>N/A</>}
+                        </p>
+                        <p
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                          }}
+                        >
+                          Actual departure:
+                          <br />{" "}
+                          {station.at ? (
+                            <>
+                              {!station.at.includes("null") ? (
+                                <>{station.at}</>
+                              ) : (
+                                <>N/A</>
+                              )}
+                            </>
+                          ) : (
+                            <>N/A</>
+                          )}
+                        </p>
+                      </div>{" "}
+                    </>
+                  )}
+                </Typography>
+              </Box>
+            </>
           )}
         </>
       </Modal>

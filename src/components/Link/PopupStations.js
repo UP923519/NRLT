@@ -59,7 +59,13 @@ export function PopupStations({
         {(close) => (
           <Fade top duration={500} distance={"100px"}>
             <>
-              <div onClick={() => {}}>
+              <div
+                onClick={() => {}}
+                style={{
+                  overflow: "scroll",
+                  maxHeight: "75vh",
+                }}
+              >
                 {calling[0] && (
                   <>
                     <p style={{ margin: "5px" }}>Service status & timings</p>
@@ -295,7 +301,7 @@ export function PopupStations({
 
               <button
                 id="useTrains"
-                style={{ margin: "0px" }}
+                style={{ margin: "0px", marginTop: "7px" }}
                 onClick={() => close()}
               >
                 Close

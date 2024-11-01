@@ -71,7 +71,6 @@ export default function ServicePage() {
   const executeScroll = () =>
     myRef.current.scrollIntoView({ behavior: "smooth" });
   useEffect(() => {
-    console.log("ssd", showStaffData);
     window.scrollTo({ top: 0, behavior: "instant" });
     if (currentAzure == "External") {
       serverName = "huxley2";
@@ -542,6 +541,8 @@ export default function ServicePage() {
                                                 border: "0",
                                                 marginTop: "3px",
                                                 width: "99%",
+                                                overflow: "scroll",
+                                                maxHeight: "65vh",
                                               }}
                                               id="iFrameExample"
                                               src={trainDetailUrl}
@@ -551,7 +552,10 @@ export default function ServicePage() {
                                         <div>
                                           <button
                                             id="useTrains"
-                                            style={{ margin: "0px" }}
+                                            style={{
+                                              margin: "0px",
+                                              marginTop: "5px",
+                                            }}
                                             onClick={() => close()}
                                           >
                                             Close
