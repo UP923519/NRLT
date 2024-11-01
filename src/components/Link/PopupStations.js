@@ -19,7 +19,7 @@ export function PopupStations({
             {popOpen ? (
               <>
                 <button id="useTrains" type="button">
-                  Service status & times
+                  Service Status & Times
                 </button>
               </>
             ) : (

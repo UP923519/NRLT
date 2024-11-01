@@ -70,7 +70,7 @@ export default function DisplayStopsPrevSubs({
               >
                 <p
                   style={{
-                    maxWidth: "165px",
+                    maxWidth: "35vw",
                     overflow: "hidden",
                     whiteSpace: "noWrap",
                     textOverflow: "ellipsis",

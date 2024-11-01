@@ -8,7 +8,6 @@ import { Tooltip } from "@mui/material";
 import DisplayStaffStops from "./displayStaffStops";
 
 const style = {
-  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -20,6 +19,10 @@ const style = {
   p: 4,
   padding: 1,
   maxWidth: 400,
+  overflow: "scroll",
+  maxHeight: "50vh",
+  top: "50%",
+  position: " absolute",
 };
 
 export default function DisplayStops({
@@ -27,6 +30,7 @@ export default function DisplayStops({
   allStaffServiceData,
   serverName,
   showStaffData,
+  setUpdateServicePageButton,
 }) {
   const [station, setStation] = useState();
   const [indicator, setIndicator] = useState();
@@ -110,7 +114,7 @@ export default function DisplayStops({
                 <br />
                 <p
                   style={{
-                    maxWidth: "165px",
+                    maxWidth: "35vw",
                     overflow: "hidden",
                     whiteSpace: "noWrap",
                     textOverflow: "ellipsis",
@@ -280,6 +284,7 @@ export default function DisplayStops({
         <DisplayStaffStops
           allStaffServiceData={allStaffServiceData}
           serverName={serverName}
+          setUpdateServicePageButton={setUpdateServicePageButton}
         />
       )}
 
@@ -328,7 +333,7 @@ export default function DisplayStops({
                           Platform:&nbsp;{" "}
                         </text>
                         <text style={{ color: "white" }}>
-                          {station.platform}
+                          {station.platform ? station.platform : "N/A"}
                         </text>
                       </p>
                     </div>

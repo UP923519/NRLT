@@ -56,6 +56,7 @@ export default function ServicePage() {
   const [allServiceData, setAllServiceData] = useState();
   const [allStaffServiceData, setAllStaffServiceData] = useState();
   const [showStaffData, setShowStaffData] = useState(false);
+  const [updateServicePageButton, setUpdateServicePageButton] = useState(false);
 
   const myRef = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -320,7 +321,10 @@ export default function ServicePage() {
     <div className="Wrapper2">
       <h3 style={{ textAlign: "center" }}>Service Details</h3>
       {/* <Fade top distance={"25px"} duration={1500}> */}
-      <div className="manualInput">
+      <div
+        className="manualInput"
+        style={{ background: showStaffData ? "white" : "#fafafa" }}
+      >
         <form
           method="post"
           onSubmit={(e) => {
@@ -328,19 +332,25 @@ export default function ServicePage() {
             handleServiceClick();
           }}
         >
-          <button
-            type="button"
-            style={{
-              textAlign: "center",
-              width: "30px",
-              margin: "10px",
-              paddingBottom: "3px",
-            }}
-            onClick={toggleForm}
-          >
-            {"↨"}
-          </button>
-          <br />
+          {showStaffData ? (
+            <></>
+          ) : (
+            <>
+              <button
+                type="button"
+                style={{
+                  textAlign: "center",
+                  width: "30px",
+                  margin: "10px",
+                  paddingBottom: "3px",
+                }}
+                onClick={toggleForm}
+              >
+                {"↨"}
+              </button>
+              <br />
+            </>
+          )}
 
           {isOpenForm && (
             <label>
@@ -413,9 +423,15 @@ export default function ServicePage() {
           <button
             id="useTrains"
             type="button"
-            onClick={() => handleServiceClick()}
+            onClick={() =>
+              handleServiceClick() + setUpdateServicePageButton(false)
+            }
           >
-            🔄 Refresh
+            {showStaffData
+              ? updateServicePageButton
+                ? "↺ Back To Your Service"
+                : "🔄 Refresh"
+              : "🔄 Refresh"}
           </button>
         </form>
       </div>
@@ -427,9 +443,7 @@ export default function ServicePage() {
           <div style={{ height: "6.75px" }} />
         </>
       ) : (
-        <>
-          <hr />
-        </>
+        <>{showStaffData ? <></> : <hr />}</>
       )}
       <ref ref={myRef}>
         <div ref={myRef} className="App">
@@ -507,7 +521,7 @@ export default function ServicePage() {
                                 <Popup
                                   trigger={
                                     <button id="useTrains" type="button">
-                                      More train details
+                                      More Train Details
                                     </button>
                                   }
                                   modal
@@ -582,20 +596,19 @@ export default function ServicePage() {
         )}
       </ref>
       {loadedState && (
-        <Button
-          style={{
-            backgroundColor: "white",
-            paddingTop: "0px",
-            paddingBottom: "0px",
-          }}
-          sx={{ border: 1 }}
+        <button
+          id="useTrains"
+          type="button"
+          style={{ marginTop: "5px" }}
           onClick={() =>
             (showStaffData ? setShowStaffData(false) : setShowStaffData(true)) +
             executeScroll()
           }
         >
-          {showStaffData ? "Back" : "Show staff data"}
-        </Button>
+          {showStaffData
+            ? "↩ Exit To Service Details Page"
+            : "Show All Waypoints"}
+        </button>
       )}
 
       <br />
@@ -607,6 +620,7 @@ export default function ServicePage() {
           allStaffServiceData={allStaffServiceData}
           serverName={serverName}
           showStaffData={showStaffData}
+          setUpdateServicePageButton={setUpdateServicePageButton}
         />
       )}
       {loadedState == false ? (
