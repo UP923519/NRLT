@@ -588,7 +588,9 @@ export default function DisplayStaffStops({
                                   sx={{ marginLeft: "5px" }}
                                   onClick={() =>
                                     setNewRid(association.rid) +
-                                    setUpdateServicePageButton(true)
+                                    (association.rid == allStaffServiceData.rid
+                                      ? setUpdateServicePageButton(false)
+                                      : setUpdateServicePageButton(true))
                                   }
                                 >
                                   {!loadedState ? (
