@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import DisplayStopsPrevSubs from "./displayStopsPrevSubs";
 import { Tooltip } from "@mui/material";
+import DisplayStaffStops from "./displayStaffStops";
 
 const style = {
   position: "absolute",
@@ -21,13 +22,20 @@ const style = {
   maxWidth: 400,
 };
 
-export default function DisplayStops({ data }) {
+export default function DisplayStops({
+  data,
+  allStaffServiceData,
+  serverName,
+  showStaffData,
+}) {
   const [station, setStation] = useState();
   const [indicator, setIndicator] = useState();
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
   const [ls, setLS] = useState(false);
+
+  console.log("allStaffServiceData", allStaffServiceData);
 
   let dataPreviousCallingPointsReverse;
 
@@ -58,204 +66,223 @@ export default function DisplayStops({ data }) {
 
   return (
     <>
-      {data.previousCallingPoints && (
-        <div>
-          {dataPreviousCallingPointsReverse.map((calling, position) => {
-            return (
-              <DisplayStopsPrevSubs
-                calling={calling}
-                position={position}
-                handleOpen={handleOpen}
-                prevOrSub={0}
-                length={data.previousCallingPoints?.length}
-                setLS={setLS}
-                ls={ls}
-              />
-            );
-          })}
-        </div>
-      )}
-      <div style={{ marginBottom: "10px" }}>
-        <Table className="transactions" style={{ backgroundColor: "#f0f0f0" }}>
-          <tr>
-            <th style={{ fontSize: 15, paddingBottom: "7px" }}>Your station</th>
-          </tr>
-          <tr>
-            <th style={{ fontSize: 13 }}>Station | Scheduled | Act/Est</th>
-          </tr>
-          <tr
-            onClick={() => handleOpen(data, 0)}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <br />
-            <p
-              style={{
-                maxWidth: "165px",
-                overflow: "hidden",
-                whiteSpace: "noWrap",
-                textOverflow: "ellipsis",
-              }}
+      {!showStaffData && (
+        <>
+          {data.previousCallingPoints && (
+            <div>
+              {dataPreviousCallingPointsReverse.map((calling, position) => {
+                return (
+                  <DisplayStopsPrevSubs
+                    calling={calling}
+                    position={position}
+                    handleOpen={handleOpen}
+                    prevOrSub={0}
+                    length={data.previousCallingPoints?.length}
+                    setLS={setLS}
+                    ls={ls}
+                  />
+                );
+              })}
+            </div>
+          )}
+          <div style={{ marginBottom: "10px" }}>
+            <Table
+              className="transactions"
+              style={{ backgroundColor: "#f0f0f0" }}
             >
-              {data.locationName}
-            </p>
-            &nbsp;{data.std !== null ? data.std : data.sta}
-            <x
-              style={{
-                background: whiteBlue,
-                color: whiteBlue !== "white" && "white",
-                paddingLeft: whiteBlue && "5px",
-                paddingRight: whiteBlue && "5px",
-                borderRadius: whiteBlue && "20px",
-                marginLeft: whiteBlue && "6px",
-              }}
-            >
-              <Tooltip
-                title={
-                  whiteBlue !== "white"
-                    ? "Train has called at this station"
-                    : "Train has not called here yet"
-                }
+              <tr>
+                <th style={{ fontSize: 15, paddingBottom: "7px" }}>
+                  Your station
+                </th>
+              </tr>
+              <tr>
+                <th style={{ fontSize: 13 }}>Station | Scheduled | Act/Est</th>
+              </tr>
+              <tr
+                onClick={() => handleOpen(data, 0)}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                {(data.atd || data.ata) !== null ? (
-                  (data.atd || data.ata) + " "
-                ) : (
-                  <></>
-                )}
-                {data.atd == null &&
-                data.ata == null &&
-                (data.eta !== null ? (
-                  data.eta
-                ) : <></> || data.etd !== null ? (
-                  data.etd
-                ) : (
-                  <></>
-                )) !== "Cancelled" ? (
-                  (data.etd || data.eta) + " ⏱️"
-                ) : (
-                  <></>
-                )}
-              </Tooltip>
-            </x>
-            <Tooltip title="🟢On time 🟠Warning">
-              {(data.atd || data.ata) !== null &&
-                ((data.atd || data.ata) !== "On time" ? (
-                  <p>&nbsp;🟠</p>
-                ) : (
-                  <p>&nbsp;🟢</p>
-                ))}
-            </Tooltip>
-            <Tooltip title="Train no longer departs from here">
-              {(data.eta || data.etd) == "Cancelled" && (
-                <x
+                <br />
+                <p
                   style={{
-                    background: "#000000",
-                    color: "white",
-                    paddingLeft: "5px",
-                    paddingRight: "5px",
-                    borderRadius: "20px",
-                    marginLeft: "6px",
+                    maxWidth: "165px",
+                    overflow: "hidden",
+                    whiteSpace: "noWrap",
+                    textOverflow: "ellipsis",
                   }}
                 >
-                  Cancelled ❌
+                  {data.locationName}
+                </p>
+                &nbsp;{data.std !== null ? data.std : data.sta}
+                <x
+                  style={{
+                    background: whiteBlue,
+                    color: whiteBlue !== "white" && "white",
+                    paddingLeft: whiteBlue && "5px",
+                    paddingRight: whiteBlue && "5px",
+                    borderRadius: whiteBlue && "20px",
+                    marginLeft: whiteBlue && "6px",
+                  }}
+                >
+                  <Tooltip
+                    title={
+                      whiteBlue !== "white"
+                        ? "Train has called at this station"
+                        : "Train has not called here yet"
+                    }
+                  >
+                    {(data.atd || data.ata) !== null ? (
+                      (data.atd || data.ata) + " "
+                    ) : (
+                      <></>
+                    )}
+                    {data.atd == null &&
+                    data.ata == null &&
+                    (data.eta !== null ? (
+                      data.eta
+                    ) : <></> || data.etd !== null ? (
+                      data.etd
+                    ) : (
+                      <></>
+                    )) !== "Cancelled" ? (
+                      (data.etd || data.eta) + " ⏱️"
+                    ) : (
+                      <></>
+                    )}
+                  </Tooltip>
                 </x>
-              )}
-            </Tooltip>
-            {/* <Tooltip title="🟢On time 🟠Warning">
+                <Tooltip title="🟢On time 🟠Warning">
+                  {(data.atd || data.ata) !== null &&
+                    ((data.atd || data.ata) !== "On time" ? (
+                      <p>&nbsp;🟠</p>
+                    ) : (
+                      <p>&nbsp;🟢</p>
+                    ))}
+                </Tooltip>
+                <Tooltip title="Train no longer departs from here">
+                  {(data.eta || data.etd) == "Cancelled" && (
+                    <x
+                      style={{
+                        background: "#000000",
+                        color: "white",
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                        borderRadius: "20px",
+                        marginLeft: "6px",
+                      }}
+                    >
+                      Cancelled ❌
+                    </x>
+                  )}
+                </Tooltip>
+                {/* <Tooltip title="🟢On time 🟠Warning">
               {(data.eta || data.etd) == "Cancelled" && <p>&nbsp;🟠</p>}
             </Tooltip> */}
-            {/* <br />
+                {/* <br />
             <br /> */}
-            <Box
-              style={{
-                height: "50px",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
-              <Box
-                id="mapPositionLine"
-                onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
-                sx={{
-                  width: "16px",
-                  // background: "black",
-                  background:
-                    "repeating-linear-gradient(0deg,  rgba(0,0,0,0) 5px,  rgba(0,0,0,0) 12px,  black 0px,  black 15px)",
-                  height: "97px", //Lined up on mobile - slightly off on desktop
-                  marginBottom: "47px", //Lined up on mobile - slightly off on desktop
-                  position: "absolute",
-                  right: "18px",
-                  // borderLeft: "solid grey",
-                  // borderRight: "solid grey",
-                }}
-              ></Box>
-              <Box
-                id="mapPositionLineRail"
-                onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
-                sx={{
-                  width: "7px",
-                  // background: "black",
-                  height: "97px", //Lined up on mobile - slightly off on desktop
-                  marginBottom: "47px", //Lined up on mobile - slightly off on desktop
-                  position: "absolute",
-                  right: "21.3px",
-                  borderLeft: "solid grey",
-                  borderRight: "solid grey",
-                }}
-              ></Box>
-              <Box
-                id="mapPositionCircle"
-                onClick={(e) =>
-                  e.stopPropagation() +
-                  (whiteBlue == "white" &&
-                    alert(
-                      "Train has not called at " + data.locationName + " yet"
-                    )) +
-                  (whiteBlue !== "white" &&
-                    alert("Train has called at " + data.locationName))
-                }
-                sx={{
-                  width: "30px",
-                  background: whiteBlue || "white",
-                  height: "30px",
-                  position: "absolute",
-                  right: "10px",
-                  borderRadius: "100%",
-                  color: "white",
-                  lineHeight: "32px",
-                  fontSize: "15px",
-                  border: "1px dashed grey",
-                  userSelect: "none",
-                }}
-              >
-                ✔
-              </Box>
-            </Box>
-          </tr>
-        </Table>
-      </div>
-      {data.subsequentCallingPoints && (
-        <div>
-          {data.subsequentCallingPoints?.map((calling, position) => {
-            return (
-              <DisplayStopsPrevSubs
-                calling={calling}
-                position={position}
-                handleOpen={handleOpen}
-                prevOrSub={1}
-                length={data.subsequentCallingPoints?.length}
-                setLS={setLS}
-                ls={ls}
-              />
-            );
-          })}
-        </div>
+                <Box
+                  style={{
+                    height: "50px",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    id="mapPositionLine"
+                    onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
+                    sx={{
+                      width: "16px",
+                      // background: "black",
+                      background:
+                        "repeating-linear-gradient(0deg,  rgba(0,0,0,0) 5px,  rgba(0,0,0,0) 12px,  black 0px,  black 15px)",
+                      height: "97px", //Lined up on mobile - slightly off on desktop
+                      marginBottom: "47px", //Lined up on mobile - slightly off on desktop
+                      position: "absolute",
+                      right: "18px",
+                      // borderLeft: "solid grey",
+                      // borderRight: "solid grey",
+                    }}
+                  ></Box>
+                  <Box
+                    id="mapPositionLineRail"
+                    onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
+                    sx={{
+                      width: "7px",
+                      // background: "black",
+                      height: "97px", //Lined up on mobile - slightly off on desktop
+                      marginBottom: "47px", //Lined up on mobile - slightly off on desktop
+                      position: "absolute",
+                      right: "21.3px",
+                      borderLeft: "solid grey",
+                      borderRight: "solid grey",
+                    }}
+                  ></Box>
+                  <Box
+                    id="mapPositionCircle"
+                    onClick={(e) =>
+                      e.stopPropagation() +
+                      (whiteBlue == "white" &&
+                        alert(
+                          "Train has not called at " +
+                            data.locationName +
+                            " yet"
+                        )) +
+                      (whiteBlue !== "white" &&
+                        alert("Train has called at " + data.locationName))
+                    }
+                    sx={{
+                      width: "30px",
+                      background: whiteBlue || "white",
+                      height: "30px",
+                      position: "absolute",
+                      right: "10px",
+                      borderRadius: "100%",
+                      color: "white",
+                      lineHeight: "32px",
+                      fontSize: "15px",
+                      border: "1px dashed grey",
+                      userSelect: "none",
+                    }}
+                  >
+                    ✔
+                  </Box>
+                </Box>
+              </tr>
+            </Table>
+          </div>
+          {data.subsequentCallingPoints && (
+            <div>
+              {data.subsequentCallingPoints?.map((calling, position) => {
+                return (
+                  <DisplayStopsPrevSubs
+                    calling={calling}
+                    position={position}
+                    handleOpen={handleOpen}
+                    prevOrSub={1}
+                    length={data.subsequentCallingPoints?.length}
+                    setLS={setLS}
+                    ls={ls}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
+
+      {allStaffServiceData && showStaffData && (
+        <DisplayStaffStops
+          allStaffServiceData={allStaffServiceData}
+          serverName={serverName}
+        />
+      )}
+
       <Modal
         open={open}
         onClose={handleClose}

@@ -610,15 +610,18 @@ export default function DepartArrive(departArrive) {
 
   let navigate = useNavigate();
   const routeChange = (row, index) => {
-    var staffUID;
-    var staffSDD;
+    let staffUID;
+    let staffSDD;
+    let staffRID;
     try {
       staffUID = staffData.trainServices[index].uid;
       staffSDD = staffData.trainServices[index].sdd;
+      staffRID = staffData.trainServices[index].rid;
     } catch {
       try {
         staffUID = staffData.busServices[index].uid;
         staffSDD = staffData.busServices[index].sdd;
+        staffRID = staffData.busServices[index].rid;
       } catch {}
     }
 
@@ -626,6 +629,7 @@ export default function DepartArrive(departArrive) {
       if (busDisplayMode == "bus") {
         staffUID = staffData.busServices[index].uid;
         staffSDD = staffData.busServices[index].sdd;
+        staffRID = staffData.busServices[index].rid;
       }
     }
     let trainInfo = row;
@@ -633,7 +637,7 @@ export default function DepartArrive(departArrive) {
     row = row.pop();
     let path = "/linkPage";
     navigate(path);
-    test1(sIdArray[index], trainInfo, staffUID, staffSDD);
+    test1(sIdArray[index], trainInfo, staffUID, staffSDD, staffRID);
   };
 
   function getTrainDepartures() {

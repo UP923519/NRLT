@@ -30,6 +30,7 @@ let divides = "";
 let divideLocation;
 let divideMerge;
 let formJson = "";
+let staffRIDVal;
 let infoTrain = "";
 let staffUIDVal = "";
 let staffSDDVal = "";
@@ -53,6 +54,8 @@ export default function ServicePage() {
   const staffMonth = staffSDDVal.substring(5, 7);
   const staffYear = staffSDDVal.substring(0, 4);
   const [allServiceData, setAllServiceData] = useState();
+  const [allStaffServiceData, setAllStaffServiceData] = useState();
+  const [showStaffData, setShowStaffData] = useState(false);
 
   const myRef = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -67,6 +70,7 @@ export default function ServicePage() {
   const executeScroll = () =>
     myRef.current.scrollIntoView({ behavior: "smooth" });
   useEffect(() => {
+    console.log("ssd", showStaffData);
     window.scrollTo({ top: 0, behavior: "instant" });
     if (currentAzure == "External") {
       serverName = "huxley2";
@@ -111,7 +115,13 @@ export default function ServicePage() {
 
     divides = "";
 
-    JSON.stringify(logJSONData(formJson));
+    if (!staffRIDVal) {
+      JSON.stringify(logJSONData(formJson));
+    }
+
+    if (staffRIDVal) {
+      JSON.stringify(logJSONData(formJson, staffRIDVal));
+    }
   }
 
   function runLast() {
@@ -152,8 +162,10 @@ export default function ServicePage() {
     setProcessingState(false);
   }
 
-  async function logJSONData(serviceID) {
+  async function logJSONData(serviceID, staffRIDVal) {
     let response;
+    let responseStaffRID;
+
     try {
       response = await fetch(
         "https://" + serverName + ".azurewebsites.net/service/" + serviceID
@@ -165,12 +177,31 @@ export default function ServicePage() {
       setIsOpen(false);
       setProcessingState(false);
     }
+
+    if (staffRIDVal) {
+      try {
+        responseStaffRID = await fetch(
+          "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal
+        );
+      } catch {
+        alert("Failed. Please check internet connection / service details.");
+        failedAlert = true;
+
+        setIsOpen(false);
+        setProcessingState(false);
+      }
+    }
+
     try {
       const data = await response.json();
       const dataA = structuredClone(data); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
+      const dataStaffService = await responseStaffRID.json(); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
 
       if (data) {
         setAllServiceData(dataA);
+        if (dataStaffService) {
+          setAllStaffServiceData(dataStaffService);
+        }
       }
       try {
         liveService = data.previousCallingPoints[0].callingPoint;
@@ -402,7 +433,7 @@ export default function ServicePage() {
       )}
       <ref ref={myRef}>
         <div ref={myRef} className="App">
-          {isOpen && (
+          {isOpen && !showStaffData && (
             <div>
               <p className="infoTrain" style={{ margin: "0px" }}>
                 {infoTrainDisplay}
@@ -410,7 +441,9 @@ export default function ServicePage() {
             </div>
           )}
         </div>
-        {isOpen && !stringCalling[0][0].includes("Loading") ? (
+        {isOpen &&
+        !showStaffData &&
+        !stringCalling[0][0].includes("Loading") ? (
           <>
             <div className="App">
               {isOpen && (
@@ -463,83 +496,83 @@ export default function ServicePage() {
                     </div>
                   )}
                   <div>
-                    {(enableWindow == "Show" || enableWindow == undefined) &&
-                      staffUIDVal != "" && (
-                        <text>
-                          <br />
+                    <>
+                      {(enableWindow == "Show" || enableWindow == undefined) &&
+                        staffUIDVal != "" && (
+                          <text>
+                            <br />
 
-                          {!stringCalling[0][0].includes("Loading") ? (
-                            <>
-                              <Popup
-                                trigger={
-                                  <button id="useTrains" type="button">
-                                    More train details
-                                  </button>
-                                }
-                                modal
-                                nested
-                              >
-                                {(close) => (
-                                  <Fade top duration={500} distance={"100px"}>
-                                    <div>
+                            {!stringCalling[0][0].includes("Loading") ? (
+                              <>
+                                <Popup
+                                  trigger={
+                                    <button id="useTrains" type="button">
+                                      More train details
+                                    </button>
+                                  }
+                                  modal
+                                  nested
+                                >
+                                  {(close) => (
+                                    <Fade top duration={500} distance={"100px"}>
                                       <div>
                                         <div>
-                                          <p style={{ margin: "5px" }}>
-                                            Additional train details
-                                          </p>
-                                          <iframe
-                                            className="transactions"
-                                            style={{
-                                              height: "270px",
-                                              border: "0",
-                                              marginTop: "3px",
-                                              width: "99%",
-                                            }}
-                                            id="iFrameExample"
-                                            src={trainDetailUrl}
-                                          ></iframe>
+                                          <div>
+                                            <p style={{ margin: "5px" }}>
+                                              Additional train details
+                                            </p>
+                                            <iframe
+                                              className="transactions"
+                                              style={{
+                                                height: "270px",
+                                                border: "0",
+                                                marginTop: "3px",
+                                                width: "99%",
+                                              }}
+                                              id="iFrameExample"
+                                              src={trainDetailUrl}
+                                            ></iframe>
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <button
+                                            id="useTrains"
+                                            style={{ margin: "0px" }}
+                                            onClick={() => close()}
+                                          >
+                                            Close
+                                          </button>
                                         </div>
                                       </div>
-                                      <div>
-                                        <button
-                                          id="useTrains"
-                                          style={{ margin: "0px" }}
-                                          onClick={() => close()}
-                                        >
-                                          Close
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </Fade>
-                                )}
-                              </Popup>
-                              <PopupStations
-                                calling={
-                                  stringCalling[
-                                    stringCalling.findIndex((element) =>
-                                      JSON.stringify(element).includes(location)
-                                    )
-                                  ]
-                                }
-                                Popup={Popup}
-                                platformNumber={platformNumber}
-                                popOpen={true}
-                                stringCalling={stringCalling}
-                              ></PopupStations>
-                            </>
-                          ) : (
-                            <div>
-                              <br />
-                              <br />
-                            </div>
-                          )}
-                        </text>
-                      )}
+                                    </Fade>
+                                  )}
+                                </Popup>
+                                <PopupStations
+                                  calling={
+                                    stringCalling[
+                                      stringCalling.findIndex((element) =>
+                                        JSON.stringify(element).includes(
+                                          location
+                                        )
+                                      )
+                                    ]
+                                  }
+                                  Popup={Popup}
+                                  platformNumber={platformNumber}
+                                  popOpen={true}
+                                  stringCalling={stringCalling}
+                                ></PopupStations>
+                              </>
+                            ) : (
+                              <div>
+                                <br />
+                                <br />
+                              </div>
+                            )}
+                          </text>
+                        )}
+                    </>
                   </div>
-
-                  <br />
-
-                  <DisplayStops data={allServiceData} />
                 </div>
               )}
             </div>
@@ -548,6 +581,34 @@ export default function ServicePage() {
           <></>
         )}
       </ref>
+      {loadedState && (
+        <Button
+          style={{
+            backgroundColor: "white",
+            paddingTop: "0px",
+            paddingBottom: "0px",
+          }}
+          sx={{ border: 1 }}
+          onClick={() =>
+            (showStaffData ? setShowStaffData(false) : setShowStaffData(true)) +
+            executeScroll()
+          }
+        >
+          {showStaffData ? "Back" : "Show staff data"}
+        </Button>
+      )}
+
+      <br />
+      <br />
+
+      {allServiceData && serverName && loadedState && (
+        <DisplayStops
+          data={allServiceData}
+          allStaffServiceData={allStaffServiceData}
+          serverName={serverName}
+          showStaffData={showStaffData}
+        />
+      )}
       {loadedState == false ? (
         <>
           <p style={{ marginBottom: "3000px" }}></p>
@@ -570,8 +631,9 @@ export default function ServicePage() {
     // </Fade>
   );
 }
-export function test1(number, trainInfo, staffUID, staffSDD) {
+export function test1(number, trainInfo, staffUID, staffSDD, staffRID) {
   formJson = number;
+  staffRIDVal = staffRID;
 
   trainInfo = trainInfo.replaceAll(" ", " + ");
   trainInfo = trainInfo.replaceAll("On", " ");
