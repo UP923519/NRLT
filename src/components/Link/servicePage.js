@@ -440,7 +440,7 @@ export default function ServicePage() {
                 style={{
                   position:
                     showStaffData && updateServicePageButton && "relative",
-                  top: showStaffData && updateServicePageButton && "45px",
+                  top: showStaffData && updateServicePageButton && "47px",
                 }}
               >
                 {showStaffData
