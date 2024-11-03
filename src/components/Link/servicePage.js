@@ -15,6 +15,7 @@ import Fade from "react-reveal/Fade";
 import { Button, ButtonBase, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DisplayStops from "./displayStops";
+import { BorderStyle } from "@mui/icons-material";
 
 let liveService = "";
 let liveService2 = "";
@@ -318,7 +319,9 @@ export default function ServicePage() {
   return (
     // <Fade top distance={"10px"} duration={1500}>
     <div className="Wrapper2">
-      <h3 style={{ textAlign: "center" }}>Service Details</h3>
+      <h3 style={{ textAlign: "center" }}>
+        {!showStaffData ? "Service Details" : <>Full Timetable (Staff Data)</>}
+      </h3>
       {/* <Fade top distance={"25px"} duration={1500}> */}
       <div
         className="manualInput"
@@ -419,19 +422,35 @@ export default function ServicePage() {
             </label>
           )}
 
-          <button
-            id="useTrains"
-            type="button"
-            onClick={() =>
-              handleServiceClick() + setUpdateServicePageButton(false)
-            }
-          >
-            {showStaffData
-              ? updateServicePageButton
-                ? "↺ Back To Your Service"
-                : "🔄 Refresh"
-              : "🔄 Refresh"}
-          </button>
+          {showStaffData && !updateServicePageButton ? (
+            <></>
+          ) : (
+            <>
+              {showStaffData && updateServicePageButton && (
+                <p style={{ marginTop: "-5px", color: "#b08a00" }}>
+                  Showing Associated Service
+                </p>
+              )}
+              <button
+                id="useTrains"
+                type="button"
+                onClick={() =>
+                  handleServiceClick() + setUpdateServicePageButton(false)
+                }
+                style={{
+                  position:
+                    showStaffData && updateServicePageButton && "relative",
+                  top: showStaffData && updateServicePageButton && "45px",
+                }}
+              >
+                {showStaffData
+                  ? updateServicePageButton
+                    ? "↺ Back To Your Service"
+                    : "🔄 Refresh"
+                  : "🔄 Refresh"}
+              </button>
+            </>
+          )}
         </form>
       </div>
       {/* </Fade> */}
@@ -600,19 +619,42 @@ export default function ServicePage() {
         )}
       </ref>
       {loadedState && (
-        <button
-          id="useTrains"
-          type="button"
-          style={{ marginTop: "5px" }}
-          onClick={() =>
-            (showStaffData ? setShowStaffData(false) : setShowStaffData(true)) +
-            executeScroll()
-          }
-        >
-          {showStaffData
-            ? "↩ Exit To Service Details Page"
-            : "Show All Waypoints"}
-        </button>
+        <>
+          <button
+            id="useTrains"
+            type="button"
+            style={{
+              marginTop: "5px",
+              position: showStaffData && updateServicePageButton && "relative",
+              top: showStaffData && updateServicePageButton && "-45px",
+              // background: showStaffData && "#f0f0f0",
+              border: " 1px solid orange",
+            }}
+            onClick={() =>
+              (showStaffData
+                ? setShowStaffData(false)
+                : setShowStaffData(true)) + executeScroll()
+            }
+          >
+            {showStaffData
+              ? "↩ Exit To Service Details Page"
+              : "Full Timetable (Staff Data)"}
+          </button>
+          {/* {showStaffData ? (
+            <div
+              style={{
+                position:
+                  showStaffData && updateServicePageButton && "relative",
+                top: showStaffData && updateServicePageButton && "-16px",
+                marginTop: "-40px",
+              }}
+            >
+              <hr />
+            </div>
+          ) : (
+            <></>
+          )} */}
+        </>
       )}
 
       <br />

@@ -39,8 +39,6 @@ export default function DisplayStops({
   const [whiteBlue, setWhiteBlue] = useState(false);
   const [ls, setLS] = useState(false);
 
-  console.log("allStaffServiceData", allStaffServiceData);
-
   let dataPreviousCallingPointsReverse;
 
   if (data.previousCallingPoints) {
