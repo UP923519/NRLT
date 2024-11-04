@@ -3,7 +3,7 @@ import "../App/App.css";
 import { Table } from "react-bootstrap";
 import Select from "react-select";
 import image from "../../assets/nre-logo.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { test1 } from "../Link/servicePage.js";
 import { currentAzure, serviceCode } from "../Settings/Settings";
 import TrainBus from "./trainBus.js";
@@ -57,6 +57,8 @@ const _ = require("lodash");
 
 export default function DepartArrive(departArrive) {
   // const [departArrive, setDepartArrive] = useState();
+  const { state } = useLocation();
+  const location = useLocation();
   const [stringDepartures, setDepartures] = useState([]);
   const [formVal, setFormVal] = useState("");
   const [rememberStation, setRememberStation] = useState("");
@@ -164,11 +166,15 @@ export default function DepartArrive(departArrive) {
       }
     }
 
+    if (state && state.crs) {
+      handleDepartureClick(current, state.crs, 0, state.locationName);
+      navigate(location.pathname, {}); //clears state
+    }
+
     if (textInfo === "cleared") {
-      console.log("ldg");
       setIsOpen(false);
     }
-  }, []);
+  }, [state]);
 
   function clearValue() {
     getStation();
@@ -192,13 +198,19 @@ export default function DepartArrive(departArrive) {
     //validation on submit of boxes
     if (!stationFullName && !rememberFirstStation) {
       alert(
-        "The departure station is blank. Please select from the drop down menu."
+        "The " +
+          departArrive.slice(0, -1) +
+          " station is blank. Please select from the drop down menu."
       );
       return;
     }
     if (status == 1) {
       if (stationFullName === rememberFirstStation) {
-        alert("The destination station cannot be the same as the departure");
+        alert(
+          "The second station cannot be the same as the " +
+            departArrive.slice(0, -1) +
+            " station."
+        );
         return;
       }
     }

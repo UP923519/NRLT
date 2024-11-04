@@ -12,11 +12,6 @@ import {
 export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
   const handleClose = () => setOpenRTT(false);
 
-  useEffect(() => {
-    console.log("openRTT", openRTT);
-    console.log("data", data);
-  }, [openRTT]);
-
   return (
     <>
       {data && (

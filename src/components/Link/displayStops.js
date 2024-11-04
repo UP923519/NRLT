@@ -4,8 +4,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import DisplayStopsPrevSubs from "./displayStopsPrevSubs";
-import { Tooltip } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import DisplayStaffStops from "./displayStaffStops";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   top: "50%",
@@ -38,6 +39,7 @@ export default function DisplayStops({
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
   const [ls, setLS] = useState(false);
+  const navigate = useNavigate();
 
   let dataPreviousCallingPointsReverse;
 
@@ -54,6 +56,7 @@ export default function DisplayStops({
   }
 
   useEffect(() => {
+    console.log("standardData", data);
     if ((data.atd || data.ata) !== null) {
       setWhiteBlue("#0083a3");
     }
@@ -319,6 +322,22 @@ export default function DisplayStops({
                       {station.locationName}
                     </p>
                   </div>
+                  {station.crs && (
+                    <Button
+                      sx={{ marginTop: "-20px" }}
+                      type="button"
+                      onClick={() =>
+                        navigate("/dashboard", {
+                          state: {
+                            crs: station.crs,
+                            locationName: station.locationName,
+                          },
+                        })
+                      }
+                    >
+                      {station.crs && <u>Search departures</u>}
+                    </Button>
+                  )}
                   {indicator == 0 && station && (
                     <>
                       <div className="trainInfo">

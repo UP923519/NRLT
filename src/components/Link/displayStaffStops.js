@@ -9,6 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import ModalRTT from "./modalRTT";
+import DepartArrive from "../DepartArrive/DepartArrive";
+import { useNavigate } from "react-router-dom";
+import Dashboard from "../Dashboard/Dashboard";
 
 const style = {
   top: "50%",
@@ -40,12 +43,12 @@ export default function DisplayStaffStops({
   const [rid, setRid] = useState();
   const [loadedState, setLoadedState] = useState(false);
   const [shiftScroll, setShiftScroll] = useState(false);
+  const navigate = useNavigate();
 
   const myRef = useRef(null);
 
   useEffect(() => {
-    console.log("allStaffServiceData", allStaffServiceData);
-
+    console.log("asd", allStaffServiceData);
     setLoadedState(false);
     if (newRid && newRid !== allStaffServiceData) {
       NewStaffId();
@@ -100,7 +103,7 @@ export default function DisplayStaffStops({
       <div
         style={{
           position: "relative",
-          top: shiftScroll ? "-188px" : "-116px",
+          top: shiftScroll ? "-197px" : "-116px",
         }}
         ref={myRef}
       ></div>
@@ -129,7 +132,7 @@ export default function DisplayStaffStops({
             id="useTrains"
             style={{
               position: "relative",
-              top: "-10px",
+              top: "-11px",
             }}
             type="button"
             onClick={() => handleOpenRTT()}
@@ -197,6 +200,8 @@ export default function DisplayStaffStops({
                         overflow: "hidden",
                         whiteSpace: "noWrap",
                         textOverflow: "ellipsis",
+                        color: waypoint.isPass && "#888888",
+                        textShadow: "5px",
                       }}
                     >
                       {waypoint.locationName}
@@ -417,6 +422,22 @@ export default function DisplayStaffStops({
                     {station.locationName}
                   </p>
                 </div>
+                {station.crs && (
+                  <Button
+                    sx={{ marginTop: "-20px" }}
+                    type="button"
+                    onClick={() =>
+                      navigate("/dashboard", {
+                        state: {
+                          crs: station.crs,
+                          locationName: station.locationName,
+                        },
+                      })
+                    }
+                  >
+                    {station.crs && <u>Search departures</u>}
+                  </Button>
+                )}
                 {
                   <>
                     <div className="trainInfo">
