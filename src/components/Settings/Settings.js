@@ -268,6 +268,20 @@ export default function Settings() {
               </button>
             </div>
             <br />
+            <div>
+              {" "}
+              Clear station history: <br />
+              <button
+                id="useCurrentLocation"
+                onClick={() =>
+                  localStorage.removeItem("stationHistory") +
+                  window.location.reload()
+                }
+              >
+                Clear
+              </button>
+            </div>
+            <br />
           </div>
         </Fade>
         <br />

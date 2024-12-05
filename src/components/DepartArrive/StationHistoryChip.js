@@ -12,7 +12,6 @@ import Fade from "react-reveal/Fade";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import zIndex from "@mui/material/styles/zIndex.js";
-import StationHistoryChip from "./stationHistoryChip.js";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -223,26 +222,6 @@ export default function DepartArrive(departArrive) {
     textInfo = "loading...";
     trainSearch = "loading...";
     rememberTimeOffset = timeOffset;
-
-    //Save History
-    if (stationFullName) {
-      let currentHistory = localStorage.getItem("stationHistory");
-      let historyArray;
-      if (currentHistory) {
-        historyArray = currentHistory.split(",").slice(0, 9);
-        if (!historyArray.includes(stationFullName)) {
-        } else {
-          let existingPosition = historyArray.findIndex(
-            (element) => element == stationFullName
-          );
-          historyArray.splice(existingPosition, 1);
-        }
-        localStorage.setItem("stationHistory", [stationFullName, historyArray]);
-      } else {
-        localStorage.setItem("stationHistory", [stationFullName]);
-      }
-    }
-    //EndSaveHistory
 
     let switchFlag = false;
     if (code == "SWITCH-st") {
@@ -878,11 +857,6 @@ export default function DepartArrive(departArrive) {
                       }
                     />
                   </text>
-                  <StationHistoryChip
-                    position={0}
-                    handleDepartureClick={handleDepartureClick}
-                    current={current}
-                  />
                   {departArrive == "Departures" ? (
                     <p
                       style={{
@@ -952,16 +926,6 @@ export default function DepartArrive(departArrive) {
                       }
                     />
                   </text>
-                  <StationHistoryChip
-                    position={1}
-                    handleDepartureClick={handleDepartureClick}
-                    current={current}
-                    isDisabled={
-                      rememberFirstStation == "" || !rememberFirstStation
-                        ? true
-                        : false
-                    }
-                  />
                   <br />
                   <div>
                     <Button

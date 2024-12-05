@@ -48,7 +48,6 @@ export default function DisplayStaffStops({
   const myRef = useRef(null);
 
   useEffect(() => {
-    console.log("asd", allStaffServiceData);
     setLoadedState(false);
     if (newRid && newRid !== allStaffServiceData) {
       NewStaffId();

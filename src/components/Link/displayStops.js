@@ -56,7 +56,6 @@ export default function DisplayStops({
   }
 
   useEffect(() => {
-    console.log("standardData", data);
     if ((data.atd || data.ata) !== null) {
       setWhiteBlue("#0083a3");
     }
