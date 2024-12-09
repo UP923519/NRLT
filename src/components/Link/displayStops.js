@@ -329,7 +329,8 @@ export default function DisplayStops({
                         navigate("/dashboard", {
                           state: {
                             crs: station.crs,
-                            locationName: station.locationName,
+                            locationName:
+                              station.locationName + " (" + station.crs + ")",
                           },
                         })
                       }

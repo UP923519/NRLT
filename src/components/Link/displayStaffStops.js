@@ -429,7 +429,8 @@ export default function DisplayStaffStops({
                       navigate("/dashboard", {
                         state: {
                           crs: station.crs,
-                          locationName: station.locationName,
+                          locationName:
+                            station.locationName + " (" + station.crs + ")",
                         },
                       })
                     }

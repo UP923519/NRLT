@@ -168,6 +168,7 @@ export default function DepartArrive(departArrive) {
     }
 
     if (state && state.crs) {
+      console.log("state", state);
       handleDepartureClick(current, state.crs, 0, state.locationName);
       navigate(location.pathname, {}); //clears state
     }
@@ -237,7 +238,11 @@ export default function DepartArrive(departArrive) {
           );
           historyArray.splice(existingPosition, 1);
         }
-        localStorage.setItem("stationHistory", [stationFullName, historyArray]);
+        if (historyArray.length > 0)
+          localStorage.setItem("stationHistory", [
+            stationFullName,
+            historyArray,
+          ]);
       } else {
         localStorage.setItem("stationHistory", [stationFullName]);
       }
