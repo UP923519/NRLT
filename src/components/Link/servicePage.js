@@ -169,7 +169,7 @@ export default function ServicePage() {
 
     try {
       response = await fetch(
-        "https://" + serverName + ".azurewebsites.net/service/" + serviceID
+        "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal
       );
     } catch {
       alert("Failed. Please check internet connection / service details.");

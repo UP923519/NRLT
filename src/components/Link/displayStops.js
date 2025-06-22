@@ -154,7 +154,7 @@ export default function DisplayStops({
                     ) : (
                       <></>
                     )) !== "Cancelled" ? (
-                      (data.etd || data.eta) + " ⏱️"
+                      (data.etd || data.eta) + " ⏱"
                     ) : (
                       <></>
                     )}

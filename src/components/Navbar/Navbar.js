@@ -14,6 +14,7 @@ import App from "../App/App.css";
 import LinkPage from "../Link/servicePage.js";
 import Dashboard from "../Dashboard/Dashboard";
 import DataFeed from "../DataFeed/DataFeed";
+import Departures from "../Departures/Departures.js";
 import DepartArrive from "../DepartArrive/DepartArrive";
 import { verticalMenu } from "../Settings/Settings";
 
@@ -64,6 +65,13 @@ const Navbar = () => {
         >
           Settings
         </NavLink>
+        <NavLink
+          className="topRow2"
+          activeClassName="topRow2Active"
+          to="/departures"
+        >
+          New!
+        </NavLink>
       </navbar>
 
       <Routes>
@@ -71,6 +79,8 @@ const Navbar = () => {
         <Route path="/dataFeed" element={<DataFeed />} />
         <Route path="/linkPage" element={<LinkPage />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/Departures" element={<Departures />} />
+
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/" element={<Navigate to="/dashboard" />} />
 

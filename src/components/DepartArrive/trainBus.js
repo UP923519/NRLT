@@ -63,7 +63,7 @@ export default function TrainBus({
               fontSize: "smaller",
             }}
           >
-            -100 min
+            -60 min
           </Button>
           <Button
             className="changeTime"
@@ -89,7 +89,7 @@ export default function TrainBus({
               fontSize: "smaller",
             }}
           >
-            +100 min
+            +60 min
           </Button>
           <Button
             className="changeTime"

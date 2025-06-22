@@ -13,7 +13,6 @@ import { Box, Button, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import zIndex from "@mui/material/styles/zIndex.js";
 import StationHistoryChip from "./stationHistoryChip.js";
-import axios from "axios";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -77,21 +76,6 @@ export default function DepartArrive(departArrive) {
   const [listOfStations, setListOfStations] = useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const today = new Date();
-  const todayModified = new Date();
-  const month = ("0" + (today.getMonth() + 1)).slice(-2);
-  const year = today.getFullYear();
-  const day = ("0" + today.getDate()).slice(-2);
-  const hours = today.getHours();
-  const minutes = today.getMinutes();
-  const seconds = today.getSeconds();
-
-  const earlier = todayModified.getHours() - 2;
-  const earlier2 = todayModified.getHours() - 1;
-  const later = todayModified.getHours() + 1;
-  const later2 = todayModified.getHours() + 2;
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -465,13 +449,6 @@ export default function DepartArrive(departArrive) {
     testFetch = 0;
     let response;
     let staffResponse;
-    let offsetHours;
-
-    console.log("timeOffset", timeOffset);
-
-    offsetHours = timeOffset;
-    if (offsetHours == "") offsetHours = hours;
-
     if (remStatus == 1) {
       try {
         response = await fetch(
@@ -485,61 +462,24 @@ export default function DepartArrive(departArrive) {
             contextURL +
             "/" +
             stationName +
-            "/10" +
+            "/150" +
             timeOffset
         );
-        // staffResponse = await fetch(
-        //   "https://" +
-        //     serverName +
-        //     ".azurewebsites.net/" +
-        //     "staff" +
-        //     departArrive +
-        //     "/" +
-        //     fromCode +
-        //     "/" +
-        //     contextURL +
-        //     "/" +
-        //     stationName +
-        //     "/10" +
-        //     timeOffset
-        // );
-
-        const runSearchFetch = async () => {
-          let response = await axios.request(reqOptions);
-          return response.data;
-        };
-
-        let headersList = {
-          // "User-Agent": "",
-          "x-apikey": "ee4CjRuGqLDyGq1R9bwq9EdhheNIslgdUNi5ZVOwqZMiojLZ",
-        };
-
-        let reqOptions = {
-          url:
-            "https://api1.raildata.org.uk/1010-live-departure-board---staff-version1_0/LDBSVWS/api/20220120/GetDepBoardWithDetails/" +
+        staffResponse = await fetch(
+          "https://" +
+            serverName +
+            ".azurewebsites.net/" +
+            "staff" +
+            departArrive +
+            "/" +
             fromCode +
             "/" +
-            year +
-            month +
-            day +
-            "T" +
-            offsetHours +
-            minutes +
-            seconds +
-            "?" +
-            "timeWindow=" +
-            "120" +
-            "&" +
-            "filterCRS=" +
-            stationName,
-          method: "GET",
-          headers: headersList,
-        };
-
-        let staffResponse1 = await runSearchFetch();
-        console.log("staffResponse is", staffResponse);
-        console.log("staffResponse1 is", staffResponse1);
-        staffResponse = staffResponse1;
+            contextURL +
+            "/" +
+            stationName +
+            "/150" +
+            timeOffset
+        );
       } catch {
         alert(
           "Failed to fetch. Please check internet connection / search criteria."
@@ -568,57 +508,20 @@ export default function DepartArrive(departArrive) {
             departArrive +
             "/" +
             stationName +
-            "/10" +
+            "/150" +
             timeOffset
         );
-        // staffResponse = await fetch(
-        //   "https://" +
-        //     serverName +
-        //     ".azurewebsites.net/" +
-        //     "staff" +
-        //     departArrive +
-        //     "/" +
-        //     stationName +
-        //     "/10" +
-        //     timeOffset
-        // );
-
-        ////////////////////////////////////
-        const runSearchFetch = async () => {
-          let response = await axios.request(reqOptions);
-          return response.data;
-        };
-
-        let headersList = {
-          // "User-Agent": "",
-          "x-apikey": "ee4CjRuGqLDyGq1R9bwq9EdhheNIslgdUNi5ZVOwqZMiojLZ",
-        };
-
-        let reqOptions = {
-          url:
-            "https://api1.raildata.org.uk/1010-live-departure-board---staff-version1_0/LDBSVWS/api/20220120/GetDepBoardWithDetails/" +
-            stationName +
+        staffResponse = await fetch(
+          "https://" +
+            serverName +
+            ".azurewebsites.net/" +
+            "staff" +
+            departArrive +
             "/" +
-            year +
-            month +
-            day +
-            "T" +
-            offsetHours +
-            minutes +
-            seconds +
-            "?" +
-            "timeWindow=" +
-            "120",
-          method: "GET",
-          headers: headersList,
-        };
-
-        let staffResponse1 = await runSearchFetch();
-        console.log("staffResponse is", staffResponse);
-        console.log("staffResponse1 is", staffResponse1);
-        staffResponse = staffResponse1;
-
-        /////////////////////////////////////
+            stationName +
+            "/150" +
+            timeOffset
+        );
       } catch {
         alert(
           "Failed to fetch. Please check internet connection / search criteria."
@@ -639,19 +542,21 @@ export default function DepartArrive(departArrive) {
     let data;
     try {
       data = await response.json();
-      // staffData = await staffResponse.json();
-      staffData = staffResponse;
+      staffData = await staffResponse.json();
 
-      liveDeparture = staffData.trainServices;
-      busDeparture = staffData.busServices;
-      saveLD = staffData.trainServices;
-      saveBD = staffData.busServices;
-      currentCRSCode = staffData.crs;
-      stationOneD = staffData.locationName + " (" + staffData.crs + ")";
-      if (staffData.trainServices == null) {
+      console.log("data ", data);
+      console.log("Sdata ", staffData);
+
+      liveDeparture = data.trainServices;
+      busDeparture = data.busServices;
+      saveLD = data.trainServices;
+      saveBD = data.busServices;
+      currentCRSCode = data.crs;
+      stationOneD = data.locationName + " (" + data.crs + ")";
+      if (data.trainServices == null) {
       } else {
       }
-      if (staffData.trainServices != null && staffData.busServices != null) {
+      if (data.trainServices != null && data.busServices != null) {
         if (busDisplayMode == "bus") {
           liveDeparture = busDeparture;
           setActiveBus("#0080ff");
@@ -669,12 +574,12 @@ export default function DepartArrive(departArrive) {
           setActiveBusT("black");
         }
       }
-      if (staffData.trainServices == null && staffData.busServices != null) {
+      if (data.trainServices == null && data.busServices != null) {
         setTrainDisabled(true);
         setBusDisabled(false);
         setActiveTrain("#f5f5f5");
         setActiveTrainT("#d1d1d1");
-        liveDeparture = staffData.busServices;
+        liveDeparture = data.busServices;
         if (busDisplayMode == "train") {
           alert(
             "No train services available at this time. Bus services are available."
@@ -684,16 +589,16 @@ export default function DepartArrive(departArrive) {
         setActiveBus("#0080ff");
         setActiveBusT("white");
       }
-      if (staffData.trainServices != null && staffData.busServices == null) {
+      if (data.trainServices != null && data.busServices == null) {
         setBusDisabled(true);
         setTrainDisabled(false);
         setActiveBus("#f5f5f5");
         setActiveBusT("#d1d1d1");
         setActiveTrain("#0080ff");
         setActiveTrainT("white");
-        liveDeparture = staffData.trainServices;
+        liveDeparture = data.trainServices;
       }
-      if (staffData.trainServices == null && staffData.busServices == null) {
+      if (data.trainServices == null && data.busServices == null) {
         liveDeparture = [];
         setBusDisabled(true);
         setActiveBus("#f5f5f5");
@@ -703,7 +608,7 @@ export default function DepartArrive(departArrive) {
         setActiveTrainT("#d1d1d1");
       }
       displayServiceMessage = "";
-      serviceMessage = staffData.nrccMessages;
+      serviceMessage = data.nrccMessages;
       let t = getTrainDepartures();
       departuresList = JSON.stringify(t);
       runLast(timeOffset);
