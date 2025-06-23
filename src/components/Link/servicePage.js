@@ -14,8 +14,10 @@ import { PopupStations } from "./PopupStations";
 import Fade from "react-reveal/Fade";
 import { Button, ButtonBase, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import DisplayStops from "./displayStops";
+import DisplayStops, { test2 } from "./displayStops";
 import { BorderStyle } from "@mui/icons-material";
+import { delayReason } from "./delayReasons";
+import { cancelReason } from "./cancelReasons";
 
 let liveService = "";
 let liveService2 = "";
@@ -37,6 +39,8 @@ let staffUIDVal = "";
 let staffSDDVal = "";
 let failedAlert;
 let serverName = "trainwebappv2";
+let rememberFirstStationSave = "---";
+let rememberStaffRID;
 
 export default function ServicePage() {
   const [excuseReason, setExcuseReason] = useState();
@@ -58,6 +62,10 @@ export default function ServicePage() {
   const [allStaffServiceData, setAllStaffServiceData] = useState();
   const [showStaffData, setShowStaffData] = useState(false);
   const [updateServicePageButton, setUpdateServicePageButton] = useState(false);
+  const [ySindex, setYsIndex] = useState();
+  const [openModal, setOpenModal] = useState(false);
+  const [station, setStation] = useState();
+  const [indicator, setIndicator] = useState();
 
   const myRef = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -71,6 +79,13 @@ export default function ServicePage() {
   };
   const executeScroll = () =>
     myRef.current.scrollIntoView({ behavior: "smooth" });
+
+  function handleOpen(station, indicator) {
+    setOpenModal(true);
+    setStation(station);
+    setIndicator(indicator);
+  }
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
     if (currentAzure == "External") {
@@ -130,7 +145,7 @@ export default function ServicePage() {
 
     infoTrainSet = infoTrainSet.replace(
       " ",
-      " at " + liveServiceTime.locationName + ": "
+      " at " + rememberFirstStationSave.slice(0, -6) + ": "
     );
     infoTrainSet = infoTrainSet.split("+");
     infoTrainSet.pop();
@@ -251,13 +266,16 @@ export default function ServicePage() {
       location = data.locationName;
       operator = data.operator + "";
       if (data.length != 0) {
-        formation = data.length + " coaches";
+        formation =
+          data.locations[0].length > 0
+            ? data.locations[0].length + " coaches"
+            : "Info may be available in train details";
       } else {
         formation = "";
       }
 
-      liveServiceTime.cancelReason += ".";
-      liveServiceTime.delayReason += ".";
+      // liveServiceTime.cancelReason += ".";
+      // liveServiceTime.delayReason += ".";
 
       let exr =
         divides +
@@ -482,14 +500,47 @@ export default function ServicePage() {
                 <div style={{ marginBottom: "10px" }}>
                   {/* {!stringCalling[0][0].includes("Loading") ? (
                   <> */}
-                  <p className="highlights">{excuseReason}</p>
+                  <p
+                    className="highlights"
+                    style={{
+                      background:
+                        !liveServiceTime.cancelReason &&
+                        !liveServiceTime.delayReason &&
+                        "#4a6e40",
+                      color:
+                        !liveServiceTime.cancelReason &&
+                        !liveServiceTime.delayReason &&
+                        "white",
+                    }}
+                  >
+                    {liveServiceTime &&
+                      (liveServiceTime.cancelReason
+                        ? cancelReason[
+                            cancelReason.findIndex((element) =>
+                              element.includes(
+                                liveServiceTime.cancelReason.value
+                              )
+                            )
+                          ].slice(4) + "."
+                        : liveServiceTime.delayReason
+                        ? delayReason[
+                            delayReason.findIndex((element) =>
+                              element.includes(
+                                liveServiceTime.delayReason.value
+                              )
+                            )
+                          ].slice(4) + "."
+                        : "No messages for this service")}
+                  </p>
                   <br />
                   <div className="trainInfo">
                     <p className={"platformBox"}>
                       <text style={{ fontWeight: "500", color: "white" }}>
                         Platform:&nbsp;{" "}
                       </text>
-                      <text style={{ color: "white" }}>{platformNumber}</text>
+                      <text style={{ color: "white" }}>
+                        {ySindex && ySindex}
+                      </text>
                     </p>
                   </div>
                   <div className="trainInfo">
@@ -584,21 +635,15 @@ export default function ServicePage() {
                                     </Fade>
                                   )}
                                 </Popup>
-                                <PopupStations
-                                  calling={
-                                    stringCalling[
-                                      stringCalling.findIndex((element) =>
-                                        JSON.stringify(element).includes(
-                                          location
-                                        )
-                                      )
-                                    ]
+                                <button
+                                  id="useTrains"
+                                  type="button"
+                                  onClick={() =>
+                                    test2(1) + handleOpen("KNG", 1)
                                   }
-                                  Popup={Popup}
-                                  platformNumber={platformNumber}
-                                  popOpen={true}
-                                  stringCalling={stringCalling}
-                                ></PopupStations>
+                                >
+                                  Service Status & Times
+                                </button>
                               </>
                             ) : (
                               <div>
@@ -628,7 +673,8 @@ export default function ServicePage() {
               position: showStaffData && updateServicePageButton && "relative",
               top: showStaffData && updateServicePageButton && "-45px",
               // background: showStaffData && "#f0f0f0",
-              border: " 1px solid orange",
+              border: !showStaffData ? "3px solid orange" : "1px solid orange",
+              background: !showStaffData && "orange",
             }}
             onClick={() =>
               (showStaffData
@@ -638,7 +684,7 @@ export default function ServicePage() {
           >
             {showStaffData
               ? "↩ Exit To Service Details Page"
-              : "Full Timetable (Staff Data)"}
+              : "View Full Timetable"}
           </button>
           {/* {showStaffData ? (
             <div
@@ -667,6 +713,14 @@ export default function ServicePage() {
           serverName={serverName}
           showStaffData={showStaffData}
           setUpdateServicePageButton={setUpdateServicePageButton}
+          rememberFirstStation={rememberFirstStationSave}
+          infoTrainDisplay={infoTrainDisplay}
+          setYsIndex={setYsIndex}
+          rememberStaffRID={rememberStaffRID}
+          setOpen={setOpenModal}
+          open={openModal}
+          handleOpen={handleOpen}
+          station={station}
         />
       )}
       {loadedState == false ? (
@@ -691,9 +745,17 @@ export default function ServicePage() {
     // </Fade>
   );
 }
-export function test1(number, trainInfo, staffUID, staffSDD, staffRID) {
+export function test1(
+  number,
+  trainInfo,
+  staffUID,
+  staffSDD,
+  staffRID,
+  rememberFirstStation
+) {
   formJson = number;
   staffRIDVal = staffRID;
+  rememberStaffRID = staffRID;
 
   trainInfo = trainInfo.replaceAll(" ", " + ");
   trainInfo = trainInfo.replaceAll("On", " ");
@@ -705,4 +767,6 @@ export function test1(number, trainInfo, staffUID, staffSDD, staffRID) {
     staffUIDVal = "";
     staffSDDVal = "";
   }
+
+  rememberFirstStationSave = rememberFirstStation;
 }

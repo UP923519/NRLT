@@ -9,11 +9,12 @@ import { currentAzure, serviceCode } from "../Settings/Settings";
 import TrainBus from "./trainBus.js";
 import LinearProgress from "@mui/material-next/LinearProgress";
 import Fade from "react-reveal/Fade";
-import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { Box, Button, Menu, MenuItem, Tooltip, tooltip } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import zIndex from "@mui/material/styles/zIndex.js";
 import StationHistoryChip from "./stationHistoryChip.js";
 import axios from "axios";
+import SelectDate from "./selectDate.js";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -37,6 +38,7 @@ let testFetch;
 var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
 let departuresList = "test";
 let textInfo = "loading...";
+let nrccMessages;
 let trainSearch = "";
 let newsLinkEx = new RegExp(
   "(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))",
@@ -52,10 +54,20 @@ let serverName = "trainwebappv2";
 let rememberFirstStation;
 let rememberSecondStation;
 let rememberTimeOffset;
+let rememberTime;
 let busDisplayMode = "train";
 let showBuses = false;
 
 const _ = require("lodash");
+const headersListDepart = {
+  // "User-Agent": "",
+  "x-apikey": "ee4CjRuGqLDyGq1R9bwq9EdhheNIslgdUNi5ZVOwqZMiojLZ",
+};
+
+const headersListArrive = {
+  // "User-Agent": "",
+  "x-apikey": "aNxkm3kLx1Yp0S6udbhbD8kteo8Z7k8tcS7HNUOf7uLe9OTG",
+};
 
 export default function DepartArrive(departArrive) {
   // const [departArrive, setDepartArrive] = useState();
@@ -75,7 +87,10 @@ export default function DepartArrive(departArrive) {
   const [trainDisabled, setTrainDisabled] = useState(false);
   const [timeButton, setTimeButton] = useState("");
   const [listOfStations, setListOfStations] = useState(null);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [tTSMOpen, setTTSMOpen] = useState(false);
+
   const open = Boolean(anchorEl);
 
   const today = new Date();
@@ -83,9 +98,9 @@ export default function DepartArrive(departArrive) {
   const month = ("0" + (today.getMonth() + 1)).slice(-2);
   const year = today.getFullYear();
   const day = ("0" + today.getDate()).slice(-2);
-  const hours = today.getHours();
-  const minutes = today.getMinutes();
-  const seconds = today.getSeconds();
+  const hours = ("0" + today.getHours()).slice(-2);
+  const minutes = ("0" + today.getMinutes()).slice(-2);
+  const seconds = ("0" + today.getSeconds()).slice(-2);
 
   const earlier = todayModified.getHours() - 2;
   const earlier2 = todayModified.getHours() - 1;
@@ -97,6 +112,14 @@ export default function DepartArrive(departArrive) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleTooltipClose = () => {
+    setTTSMOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setTTSMOpen(true);
   };
 
   useEffect(() => {
@@ -184,7 +207,6 @@ export default function DepartArrive(departArrive) {
     }
 
     if (state && state.crs) {
-      console.log("state", state);
       handleDepartureClick(current, state.crs, 0, state.locationName);
       navigate(location.pathname, {}); //clears state
     }
@@ -206,6 +228,7 @@ export default function DepartArrive(departArrive) {
     trainSearch = "";
     clearValue();
     setIsOpen(false);
+    // setSelectedDate(null);
     setProcessingState(false);
     setIsOpenForm(true);
     rememberFirstStation = "";
@@ -466,13 +489,35 @@ export default function DepartArrive(departArrive) {
     let response;
     let staffResponse;
     let offsetHours;
-
-    console.log("timeOffset", timeOffset);
+    let offsetMinutes;
 
     offsetHours = timeOffset;
-    if (offsetHours == "") offsetHours = hours;
+    if (offsetHours == "") {
+      offsetHours = hours;
+      offsetMinutes = minutes;
+    }
+    if (selectedDate !== null) {
+      offsetHours = selectedDate.split(":")[0];
+      offsetMinutes = selectedDate.split(":")[1];
+    }
 
+    let deparrurl1;
+    let deparrurl2;
+    let deparrurl3;
+
+    if (departArrive == "departures") {
+      deparrurl1 = "departure";
+      deparrurl2 = "Dep";
+      deparrurl3 = "";
+    } else {
+      deparrurl1 = "arrival";
+      deparrurl2 = "Arr";
+      deparrurl3 = "filterType=from";
+    }
+
+    let saveError;
     if (remStatus == 1) {
+      // REQUEST FOR 2 STATIONS
       try {
         response = await fetch(
           "https://" +
@@ -505,18 +550,25 @@ export default function DepartArrive(departArrive) {
         // );
 
         const runSearchFetch = async () => {
-          let response = await axios.request(reqOptions);
+          let response = await axios
+            .request(reqOptions)
+            .catch(function (error) {
+              if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                saveError = error.response.data["Message"];
+              }
+            });
           return response.data;
-        };
-
-        let headersList = {
-          // "User-Agent": "",
-          "x-apikey": "ee4CjRuGqLDyGq1R9bwq9EdhheNIslgdUNi5ZVOwqZMiojLZ",
         };
 
         let reqOptions = {
           url:
-            "https://api1.raildata.org.uk/1010-live-departure-board---staff-version1_0/LDBSVWS/api/20220120/GetDepBoardWithDetails/" +
+            "https://api1.raildata.org.uk/1010-live-" +
+            deparrurl1 +
+            "-board---staff-version1_0/LDBSVWS/api/20220120/Get" +
+            deparrurl2 +
+            "BoardWithDetails/" +
             fromCode +
             "/" +
             year +
@@ -524,25 +576,27 @@ export default function DepartArrive(departArrive) {
             day +
             "T" +
             offsetHours +
-            minutes +
-            seconds +
+            offsetMinutes +
+            "00" +
             "?" +
             "timeWindow=" +
             "120" +
             "&" +
             "filterCRS=" +
-            stationName,
+            stationName +
+            "&filterType=from",
           method: "GET",
-          headers: headersList,
+          headers:
+            (departArrive == "departures" && headersListDepart) ||
+            headersListArrive,
         };
 
         let staffResponse1 = await runSearchFetch();
-        console.log("staffResponse is", staffResponse);
-        console.log("staffResponse1 is", staffResponse1);
         staffResponse = staffResponse1;
       } catch {
         alert(
-          "Failed to fetch. Please check internet connection / search criteria."
+          "Failed to fetch. Please check internet connection / search criteria. Server returned the following error: " +
+            saveError
         );
         failedAlert = true;
       }
@@ -560,6 +614,8 @@ export default function DepartArrive(departArrive) {
         alert("Network timed out, results may be incorrect.");
       }
     } else if (remStatus == 0) {
+      // REQUEST FOR 1 STATION
+
       try {
         response = await fetch(
           "https://" +
@@ -585,18 +641,25 @@ export default function DepartArrive(departArrive) {
 
         ////////////////////////////////////
         const runSearchFetch = async () => {
-          let response = await axios.request(reqOptions);
+          let response = await axios
+            .request(reqOptions)
+            .catch(function (error) {
+              if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                saveError = error.response.data["Message"];
+              }
+            });
           return response.data;
-        };
-
-        let headersList = {
-          // "User-Agent": "",
-          "x-apikey": "ee4CjRuGqLDyGq1R9bwq9EdhheNIslgdUNi5ZVOwqZMiojLZ",
         };
 
         let reqOptions = {
           url:
-            "https://api1.raildata.org.uk/1010-live-departure-board---staff-version1_0/LDBSVWS/api/20220120/GetDepBoardWithDetails/" +
+            "https://api1.raildata.org.uk/1010-live-" +
+            deparrurl1 +
+            "-board---staff-version1_0/LDBSVWS/api/20220120/Get" +
+            deparrurl2 +
+            "BoardWithDetails/" +
             stationName +
             "/" +
             year +
@@ -604,24 +667,25 @@ export default function DepartArrive(departArrive) {
             day +
             "T" +
             offsetHours +
-            minutes +
-            seconds +
+            offsetMinutes +
+            "00" +
             "?" +
             "timeWindow=" +
             "120",
           method: "GET",
-          headers: headersList,
+          headers:
+            (departArrive == "departures" && headersListDepart) ||
+            headersListArrive,
         };
 
         let staffResponse1 = await runSearchFetch();
-        console.log("staffResponse is", staffResponse);
-        console.log("staffResponse1 is", staffResponse1);
         staffResponse = staffResponse1;
 
         /////////////////////////////////////
       } catch {
         alert(
-          "Failed to fetch. Please check internet connection / search criteria."
+          "Failed to fetch. Please check internet connection / search criteria. Server returned the following error: " +
+            saveError
         );
         failedAlert = true;
       }
@@ -642,6 +706,7 @@ export default function DepartArrive(departArrive) {
       // staffData = await staffResponse.json();
       staffData = staffResponse;
 
+      nrccMessages = staffData.nrccMessages;
       liveDeparture = staffData.trainServices;
       busDeparture = staffData.busServices;
       saveLD = staffData.trainServices;
@@ -774,7 +839,14 @@ export default function DepartArrive(departArrive) {
     row = row.pop();
     let path = "/linkPage";
     navigate(path);
-    test1(sIdArray[index], trainInfo, staffUID, staffSDD, staffRID);
+    test1(
+      sIdArray[index],
+      trainInfo,
+      staffUID,
+      staffSDD,
+      staffRID,
+      rememberFirstStation
+    );
   };
 
   function getTrainDepartures() {
@@ -810,7 +882,7 @@ export default function DepartArrive(departArrive) {
           sCode = "";
         }
         stringDepartures.push(
-          liveDeparture[i].sta +
+          liveDeparture[i].sta.slice(11, 16) +
             " " +
             liveDeparture[i].destination[0].locationName +
             " " +
@@ -823,9 +895,15 @@ export default function DepartArrive(departArrive) {
             liveDeparture[i].origin[0].via +
             destination2Origin +
             ")  " +
-            liveDeparture[i].eta +
-            "  p." +
-            liveDeparture[i].platform +
+            (liveDeparture[i].etd
+              ? liveDeparture[i].eta.slice(11, 16)
+              : liveDeparture[i].ata
+              ? liveDeparture[i].ata.slice(11, 16)
+              : liveDeparture[i].isCancelled
+              ? "Cancelled"
+              : "Delayed") +
+            "  P." +
+            (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
             sCode
         );
       }
@@ -856,7 +934,7 @@ export default function DepartArrive(departArrive) {
           sCode = "";
         }
         stringDepartures.push(
-          liveDeparture[i].std +
+          liveDeparture[i].std.slice(11, 16) +
             " " +
             liveDeparture[i].destination[0].locationName +
             " " +
@@ -869,9 +947,15 @@ export default function DepartArrive(departArrive) {
             liveDeparture[i].origin[0].via +
             destination2Origin +
             ")  " +
-            liveDeparture[i].etd +
-            "  p." +
-            liveDeparture[i].platform +
+            (liveDeparture[i].etd
+              ? liveDeparture[i].etd.slice(11, 16)
+              : liveDeparture[i].atd
+              ? liveDeparture[i].atd.slice(11, 16)
+              : liveDeparture[i].isCancelled
+              ? "Cancelled"
+              : "Delayed") +
+            "  P." +
+            (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
             sCode
         );
       }
@@ -925,6 +1009,22 @@ export default function DepartArrive(departArrive) {
               <br />
               {isOpenForm && (
                 <text>
+                  <p
+                    style={{
+                      textAlign: "left",
+                      fontWeight: "bold",
+                      color: "grey",
+                    }}
+                  >
+                    Time:
+                  </p>
+                  {/* //////Date picker */}
+                  <SelectDate
+                    setSelectedDate={setSelectedDate}
+                    selectedDate={selectedDate}
+                    minutes={minutes}
+                    hours={hours}
+                  />
                   {departArrive == "Departures" ? (
                     <p
                       style={{
@@ -1162,7 +1262,28 @@ export default function DepartArrive(departArrive) {
           <>
             {isOpen && (
               <>
-                <Box sx={{ marginBottom: 2 }}>{trainSearch}</Box>
+                <Tooltip
+                  title={"Station managed by: " + staffData.stationManager}
+                  onClose={handleTooltipClose}
+                  open={tTSMOpen}
+                  slotProps={{
+                    popper: {
+                      disablePortal: true,
+                    },
+                  }}
+                >
+                  <Box onClick={handleTooltipOpen} sx={{ marginBottom: 2 }}>
+                    {trainSearch}{" "}
+                    <b
+                      style={{
+                        color: "#0080ff",
+                        fontSize: "larger",
+                      }}
+                    >
+                      ℹ️
+                    </b>
+                  </Box>
+                </Tooltip>
                 <Box sx={{ marginBottom: 2 }}>
                   <button
                     id="useTrains"
@@ -1193,6 +1314,7 @@ export default function DepartArrive(departArrive) {
                   isOpen={isOpen}
                   trainSearch={trainSearch}
                   textInfo={textInfo}
+                  nrccMessages={nrccMessages}
                   handleDepartureClick={handleDepartureClick}
                   earlier={earlier}
                   earlier2={earlier2}
@@ -1204,6 +1326,7 @@ export default function DepartArrive(departArrive) {
                   current={current}
                   timeButton={timeButton}
                   rememberTimeOffset={rememberTimeOffset}
+                  displayStation={stationOneD}
                 />
               </>
             )}

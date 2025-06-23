@@ -318,8 +318,8 @@ export default function DisplayStaffStops({
                           // background: "black",
                           background:
                             "repeating-linear-gradient(0deg,  rgba(0,0,0,0) 5px,  rgba(0,0,0,0) 12px,  black 0px,  black 15px)",
-                          height: "97px", //Lined up on mobile - slightly off on desktop
-                          marginBottom: "47px", //Lined up on mobile - slightly off on desktop
+                          height: "137px", //Lined up on mobile - slightly off on desktop
+                          marginBottom: "74px", //Lined up on mobile - slightly off on desktop
                           position: "absolute",
                           right: "18px",
                           // borderLeft: "solid grey",
@@ -332,8 +332,8 @@ export default function DisplayStaffStops({
                         sx={{
                           width: "7px",
                           // background: "black",
-                          height: "97px", //Lined up on mobile - slightly off on desktop
-                          marginBottom: "47px", //Lined up on mobile - slightly off on desktop
+                          height: "137px", //Lined up on mobile - slightly off on desktop
+                          marginBottom: "74px", //Lined up on mobile - slightly off on desktop
                           position: "absolute",
                           right: "21.3px",
                           borderLeft: "solid grey",

@@ -9,7 +9,6 @@ export default function Departures() {
 
   const runSearchFetch = async () => {
     let response = await axios.request(reqOptions);
-    console.log(response.data);
     setResponse(response.data);
   };
 

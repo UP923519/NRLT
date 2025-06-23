@@ -17,11 +17,7 @@ export function PopupStations({
         trigger={
           <td>
             {popOpen ? (
-              <>
-                <button id="useTrains" type="button">
-                  Service Status & Times
-                </button>
-              </>
+              <></>
             ) : (
               <>
                 {calling[0] && (

@@ -3,6 +3,7 @@ import "./trainBus.css";
 
 export default function TrainBus({
   textInfo,
+  nrccMessages,
   handleDepartureClick,
   earlier,
   earlier2,
@@ -13,11 +14,19 @@ export default function TrainBus({
   later2,
   current,
   rememberTimeOffset,
+  displayStation,
 }) {
   return (
-    <div style={{ marginTop: -5 }}>
+    <div style={{ marginTop: -15 }}>
+      {/* marginTop is -5 with the time selector component */}
       <div style={{ marginBottom: "20px" }}>
-        <p className="highlights">
+        <p
+          className="highlights"
+          style={{
+            background: !nrccMessages && "#4a6e40",
+            color: !nrccMessages && "white",
+          }}
+        >
           <pre
             style={{
               whiteSpace: "pre-wrap",
@@ -27,13 +36,41 @@ export default function TrainBus({
             }}
           >
             <text style={{ wordBreak: "break-word", hyphens: "auto" }}>
-              {textInfo}
+              {/* {textInfo} */}
+              <text style={{ fontSize: "medium" }}>
+                <u>
+                  {nrccMessages &&
+                    nrccMessages.length +
+                      (nrccMessages.length > 1
+                        ? " messages or alerts for "
+                        : " message or alert for ") +
+                      displayStation +
+                      ":\n\n"}
+                  {nrccMessages && (
+                    <hr style={{ border: "1px dashed black", width: "15%" }} />
+                  )}
+                </u>
+              </text>
+              {!nrccMessages && "No messages or alerts for " + displayStation}
+
+              {nrccMessages?.map((message) => (
+                <>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: message["xhtmlMessage"],
+                    }}
+                  />
+
+                  <br />
+                  <hr style={{ border: "1px dashed black", width: "15%" }} />
+                </>
+              ))}
             </text>
           </pre>
           <br />
         </p>
         <br />
-        <ButtonGroup
+        {/* <ButtonGroup
           sx={{ marginBottom: 0 }}
           disableElevation
           variant="contained"
@@ -106,7 +143,7 @@ export default function TrainBus({
           </Button>
         </ButtonGroup>
         <br />
-        <br />
+        <br /> */}
         <Table className="transactions" style={{ backgroundColor: "#f0f0f0" }}>
           {stringDepartures.map((departures, index) => (
             <tr

@@ -26,16 +26,22 @@ const style = {
   position: " absolute",
 };
 
+let openModalNow = false;
+
 export default function DisplayStops({
   data,
   allStaffServiceData,
   serverName,
   showStaffData,
   setUpdateServicePageButton,
+  rememberFirstStation,
+  infoTrainDisplay,
+  setYsIndex,
+  open,
+  setOpen,
+  handleOpen,
+  station,
 }) {
-  const [station, setStation] = useState();
-  const [indicator, setIndicator] = useState();
-  const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
   const [ls, setLS] = useState(false);
@@ -49,11 +55,12 @@ export default function DisplayStops({
     ].reverse();
   }
 
-  function handleOpen(station, indicator) {
-    setOpen(true);
-    setStation(station);
-    setIndicator(indicator);
-  }
+  const yourStationIndex = data.locations.findIndex(
+    (location) =>
+      (location.std.includes(infoTrainDisplay[0].slice(0, 5)) ||
+        location.sta.includes(infoTrainDisplay[0].slice(0, 5))) &&
+      location.locationName.includes(rememberFirstStation.slice(1, -7))
+  );
 
   useEffect(() => {
     if ((data.atd || data.ata) !== null) {
@@ -66,7 +73,26 @@ export default function DisplayStops({
     ) {
       setWhiteBlue("white");
     }
+
+    if (openModalNow == true) {
+      handleOpen(data?.locations[yourStationIndex], 1);
+      openModalNow = false;
+    }
   });
+
+  setYsIndex(data.locations[yourStationIndex].platform);
+
+  let coloursDeparted;
+  let coloursEstimated;
+
+  if (
+    data?.locations[yourStationIndex].atdSpecified !== false ||
+    data?.locations[yourStationIndex].ataSpecified !== false
+  ) {
+    coloursDeparted = "#0083a3";
+  } else {
+    coloursEstimated = "white";
+  }
 
   return (
     <>
@@ -92,194 +118,281 @@ export default function DisplayStops({
           <div style={{ marginBottom: "10px" }}>
             <Table
               className="transactions"
-              style={{ backgroundColor: "#f0f0f0" }}
+              style={{
+                backgroundColor: "#f0f0f0",
+                marginBottom: "10px",
+              }}
             >
               <tr>
-                <th style={{ fontSize: 15, paddingBottom: "7px" }}>
-                  Your station
+                <th
+                  style={{
+                    fontSize: 15,
+                    paddingBottom: "15px",
+                    paddingTop: "5px",
+                  }}
+                >
+                  {data?.locations[0].locationName &&
+                    data.locations[0].std.slice(11)}{" "}
+                  {data?.locations[0].locationName &&
+                    data.locations[0].locationName}
+                  {" —> "}
+                  {data?.locations[0].locationName &&
+                    data.locations[data?.locations.length - 1].locationName}
                 </th>
               </tr>
               <tr>
-                <th style={{ fontSize: 13 }}>Station | Scheduled | Act/Est</th>
+                <th style={{ fontSize: 15, paddingBottom: "15px" }}>
+                  Your Station: {rememberFirstStation}
+                </th>
               </tr>
-              <tr
-                onClick={() => handleOpen(data, 0)}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <br />
-                <p
+              <tr>
+                <th style={{ fontSize: 13 }}>Waypoint | Scheduled | Act/Est</th>
+              </tr>
+              <>
+                <tr
+                  onClick={() =>
+                    handleOpen(data?.locations[yourStationIndex], 1)
+                  }
                   style={{
-                    maxWidth: "35vw",
-                    overflow: "hidden",
-                    whiteSpace: "noWrap",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {data.locationName}
-                </p>
-                &nbsp;{data.std !== null ? data.std : data.sta}
-                <x
-                  style={{
-                    background: whiteBlue,
-                    color: whiteBlue !== "white" && "white",
-                    paddingLeft: whiteBlue && "5px",
-                    paddingRight: whiteBlue && "5px",
-                    borderRadius: whiteBlue && "20px",
-                    marginLeft: whiteBlue && "6px",
-                  }}
-                >
-                  <Tooltip
-                    title={
-                      whiteBlue !== "white"
-                        ? "Train has called at this station"
-                        : "Train has not called here yet"
-                    }
-                  >
-                    {(data.atd || data.ata) !== null ? (
-                      (data.atd || data.ata) + " "
-                    ) : (
-                      <></>
-                    )}
-                    {data.atd == null &&
-                    data.ata == null &&
-                    (data.eta !== null ? (
-                      data.eta
-                    ) : <></> || data.etd !== null ? (
-                      data.etd
-                    ) : (
-                      <></>
-                    )) !== "Cancelled" ? (
-                      (data.etd || data.eta) + " ⏱"
-                    ) : (
-                      <></>
-                    )}
-                  </Tooltip>
-                </x>
-                <Tooltip title="🟢On time 🟠Warning">
-                  {(data.atd || data.ata) !== null &&
-                    ((data.atd || data.ata) !== "On time" ? (
-                      <p>&nbsp;🟠</p>
-                    ) : (
-                      <p>&nbsp;🟢</p>
-                    ))}
-                </Tooltip>
-                <Tooltip title="Train no longer departs from here">
-                  {(data.eta || data.etd) == "Cancelled" && (
-                    <x
-                      style={{
-                        background: "#000000",
-                        color: "white",
-                        paddingLeft: "5px",
-                        paddingRight: "5px",
-                        borderRadius: "20px",
-                        marginLeft: "6px",
-                      }}
-                    >
-                      Cancelled ❌
-                    </x>
-                  )}
-                </Tooltip>
-                {/* <Tooltip title="🟢On time 🟠Warning">
-              {(data.eta || data.etd) == "Cancelled" && <p>&nbsp;🟠</p>}
-            </Tooltip> */}
-                {/* <br />
-            <br /> */}
-                <Box
-                  style={{
-                    height: "50px",
                     display: "flex",
-                    justifyContent: "flex-end",
+                    flexDirection: "row",
+                    justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <Box
-                    id="mapPositionLine"
-                    onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
-                    sx={{
-                      width: "16px",
-                      // background: "black",
-                      background:
-                        "repeating-linear-gradient(0deg,  rgba(0,0,0,0) 5px,  rgba(0,0,0,0) 12px,  black 0px,  black 15px)",
-                      height: "97px", //Lined up on mobile - slightly off on desktop
-                      marginBottom: "47px", //Lined up on mobile - slightly off on desktop
-                      position: "absolute",
-                      right: "18px",
-                      // borderLeft: "solid grey",
-                      // borderRight: "solid grey",
-                    }}
-                  ></Box>
-                  <Box
-                    id="mapPositionLineRail"
-                    onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong station popup appears on click without this
-                    sx={{
-                      width: "7px",
-                      // background: "black",
-                      height: "97px", //Lined up on mobile - slightly off on desktop
-                      marginBottom: "47px", //Lined up on mobile - slightly off on desktop
-                      position: "absolute",
-                      right: "21.3px",
-                      borderLeft: "solid grey",
-                      borderRight: "solid grey",
-                    }}
-                  ></Box>
-                  <Box
-                    id="mapPositionCircle"
-                    onClick={(e) =>
-                      e.stopPropagation() +
-                      (whiteBlue == "white" &&
-                        alert(
-                          "Train has not called at " +
-                            data.locationName +
-                            " yet"
-                        )) +
-                      (whiteBlue !== "white" &&
-                        alert("Train has called at " + data.locationName))
-                    }
-                    sx={{
-                      width: "30px",
-                      background: whiteBlue || "white",
-                      height: "30px",
-                      position: "absolute",
-                      right: "10px",
-                      borderRadius: "100%",
-                      color: "white",
-                      lineHeight: "32px",
-                      fontSize: "15px",
-                      border: "1px dashed grey",
-                      userSelect: "none",
+                  <p
+                    style={{
+                      maxWidth: "35vw",
+                      overflow: "hidden",
+                      whiteSpace: "noWrap",
+                      textOverflow: "ellipsis",
+                      color:
+                        data?.locations[yourStationIndex].isPass && "#888888",
+                      textShadow: "5px",
                     }}
                   >
-                    ✔
+                    {data?.locations[yourStationIndex].locationName}
+                  </p>
+                  {/* Display associations */}
+                  {data?.locations[yourStationIndex].associations?.map(
+                    (association, index) => {
+                      return (
+                        <x
+                          style={{
+                            background: "orange",
+                            paddingLeft: "5px",
+                            paddingRight: "5px",
+                            paddingTop: "1px",
+                            paddingBottom: "1px",
+                            borderRadius: "20px",
+                            marginLeft: "6px",
+                          }}
+                        >
+                          A
+                        </x>
+                      );
+                    }
+                  )}
+                  {/* Display scheduled or actual time */}
+                  &nbsp;
+                  {data?.locations[yourStationIndex].stdSpecified !== false
+                    ? data?.locations[yourStationIndex].std.slice(11, -3) + " "
+                    : data?.locations[yourStationIndex].sta.slice(11, -3) + " "}
+                  {/* Display cancelled message */}
+                  <Tooltip title="Cancelled">
+                    {data?.locations[yourStationIndex].isCancelled && (
+                      <x
+                        style={{
+                          background: "#000000",
+                          color: "white",
+                          paddingLeft: "5px",
+                          paddingRight: "5px",
+                          borderRadius: "20px",
+                          marginLeft: "6px",
+                        }}
+                      >
+                        Cancelled ❌
+                      </x>
+                    )}
+                  </Tooltip>
+                  {(data?.locations[yourStationIndex].atdSpecified !== false ||
+                    data?.locations[yourStationIndex].ataSpecified !==
+                      false) && (
+                    <x
+                      style={{
+                        background: coloursDeparted,
+                        color: coloursDeparted && "white",
+                        paddingLeft: coloursDeparted && "5px",
+                        paddingRight: coloursDeparted && "5px",
+                        borderRadius: coloursDeparted && "20px",
+                        marginLeft: coloursDeparted && "6px",
+                      }}
+                    >
+                      <Tooltip title="Train has completed this waypoint">
+                        {data?.locations[yourStationIndex].atdSpecified
+                          ? data?.locations[yourStationIndex].atd.slice(11, -3)
+                          : data?.locations[yourStationIndex].ataSpecified
+                          ? data?.locations[yourStationIndex].ata.slice(11, -3)
+                          : "No info"}
+                      </Tooltip>
+                    </x>
+                  )}
+                  <Tooltip title="🟢On time 🟠Warning">
+                    {(data?.locations[yourStationIndex].atdSpecified !==
+                      false ||
+                      data?.locations[yourStationIndex].ataSpecified !==
+                        false) &&
+                      (Number(data?.locations[yourStationIndex].lateness) >
+                      60 ? (
+                        <p>&nbsp;🟠</p>
+                      ) : (
+                        <p>&nbsp;🟢</p>
+                      ))}
+                  </Tooltip>
+                  {!data?.locations[yourStationIndex].isCancelled && (
+                    <>
+                      {data?.locations[yourStationIndex].atdSpecified ==
+                        false &&
+                        data?.locations[yourStationIndex].ataSpecified ==
+                          false && (
+                          <Tooltip title="Train has not completed this waypoint">
+                            <x
+                              style={{
+                                background: coloursEstimated,
+                                paddingLeft: coloursEstimated && "5px",
+                                paddingRight: coloursEstimated && "5px",
+                                borderRadius: coloursEstimated && "20px",
+                                marginLeft: coloursEstimated && "6px",
+                              }}
+                            >
+                              {data?.locations[yourStationIndex].etdSpecified ==
+                                false &&
+                              data?.locations[yourStationIndex].etaSpecified ==
+                                false ? (
+                                "No info"
+                              ) : (
+                                <>
+                                  {data?.locations[yourStationIndex]
+                                    .etdSpecified
+                                    ? data?.locations[
+                                        yourStationIndex
+                                      ].etd.slice(11, -3) + " ⏱"
+                                    : data?.locations[
+                                        yourStationIndex
+                                      ].eta.slice(11, -3) + " ⏱"}
+                                </>
+                              )}
+                            </x>
+                          </Tooltip>
+                        )}
+                    </>
+                  )}
+                  {/* <br />
+                            <br /> */}
+                  <Box
+                    style={{
+                      height: "50px",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      id="mapPositionLine"
+                      onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong waypoint popup appears on click without this
+                      sx={{
+                        width: "16px",
+                        // background: "black",
+                        background:
+                          "repeating-linear-gradient(0deg,  rgba(0,0,0,0) 5px,  rgba(0,0,0,0) 12px,  black 0px,  black 15px)",
+                        height: "139px", //Lined up on mobile - slightly off on desktop
+                        marginBottom: "87px", //Lined up on mobile - slightly off on desktop
+                        position: "absolute",
+                        right: "18px",
+                        // borderLeft: "solid grey",
+                        // borderRight: "solid grey",
+                      }}
+                    ></Box>
+                    <Box
+                      id="mapPositionLineRail"
+                      onClick={(e) => e.stopPropagation()} //Due to shift in line upwards, wrong waypoint popup appears on click without this
+                      sx={{
+                        width: "7px",
+                        // background: "black",
+                        height: "139px", //Lined up on mobile - slightly off on desktop
+                        marginBottom: "87px", //Lined up on mobile - slightly off on desktop
+                        position: "absolute",
+                        right: "21.3px",
+                        borderLeft: "solid grey",
+                        borderRight: "solid grey",
+                      }}
+                    ></Box>
+                    <Box
+                      id="mapPositionCircle"
+                      onClick={(e) =>
+                        e.stopPropagation() +
+                        (coloursEstimated &&
+                          alert(
+                            "Train has not completed the waypoint " +
+                              data?.locations[yourStationIndex].locationName +
+                              " yet"
+                          )) +
+                        (coloursDeparted &&
+                          alert(
+                            "Train has completed waypoint " +
+                              data?.locations[yourStationIndex].locationName
+                          ))
+                      }
+                      sx={{
+                        width: "30px",
+                        background: coloursEstimated || coloursDeparted,
+                        height: "30px",
+                        position: "absolute",
+                        right: "10px",
+                        borderRadius: "100%",
+                        color: "white",
+                        lineHeight: "32px",
+                        fontSize: "15px",
+                        zIndex: 99,
+                        border: "1px dashed grey",
+                        userSelect: "none",
+                      }}
+                    >
+                      {data?.locations[yourStationIndex].etdSpecified ==
+                        false &&
+                      data?.locations[yourStationIndex].etaSpecified == false &&
+                      data?.locations[yourStationIndex].atdSpecified == false &&
+                      data?.locations[yourStationIndex].ataSpecified ==
+                        false ? (
+                        <text style={{ color: "black" }}>❓</text>
+                      ) : (
+                        "✔"
+                      )}
+                    </Box>
                   </Box>
-                </Box>
-              </tr>
+                </tr>
+              </>
             </Table>
           </div>
-          {data.subsequentCallingPoints && (
+          {data.locations && (
             <div>
-              {data.subsequentCallingPoints?.map((calling, position) => {
-                return (
-                  <DisplayStopsPrevSubs
-                    calling={calling}
-                    position={position}
-                    handleOpen={handleOpen}
-                    prevOrSub={1}
-                    length={data.subsequentCallingPoints?.length}
-                    setLS={setLS}
-                    ls={ls}
-                  />
-                );
-              })}
+              {/* {data.locations?.map((calling, position) => { */}
+              {/* return ( */}
+              {/* <DisplayStopsPrevSubs
+                calling={data.locations}
+                // position={position}
+                handleOpen={handleOpen}
+                prevOrSub={1}
+                length={data.locations?.length}
+                setLS={setLS}
+                ls={ls}
+              /> */}
+              {/* ); */}
+              {/* })} */}
             </div>
           )}
         </>
       )}
-
       {allStaffServiceData && showStaffData && (
         <DisplayStaffStops
           allStaffServiceData={allStaffServiceData}
@@ -287,7 +400,6 @@ export default function DisplayStops({
           setUpdateServicePageButton={setUpdateServicePageButton}
         />
       )}
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -296,246 +408,261 @@ export default function DisplayStops({
       >
         <>
           {station && (
-            <>
-              <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Service status & times
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  <div
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Service status & times
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <p
                     style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      gap: "10px",
+                      background: "#b1d1de",
+                      borderRadius: "15px",
+                      padding: "10px",
+                      width: "50%",
                     }}
                   >
-                    <p
+                    {station.locationName}
+                  </p>
+                </div>
+                {station.crs && (
+                  <Button
+                    sx={{ marginTop: "-20px" }}
+                    type="button"
+                    onClick={() =>
+                      navigate("/dashboard", {
+                        state: {
+                          crs: station.crs,
+                          locationName:
+                            station.locationName + " (" + station.crs + ")",
+                        },
+                      })
+                    }
+                  >
+                    {station.crs && <u>Search departures</u>}
+                  </Button>
+                )}
+                {
+                  <>
+                    <div className="trainInfo">
+                      <p className={"platformBox"}>
+                        <text
+                          style={{
+                            fontWeight: "500",
+                            color: "white",
+                          }}
+                        >
+                          Platform:&nbsp;{" "}
+                        </text>
+                        <text style={{ color: "white" }}>
+                          {station.platform ? station.platform : "N/A"}
+                        </text>
+                      </p>
+                    </div>
+                    <div
                       style={{
-                        background: "#b1d1de",
-                        borderRadius: "15px",
-                        padding: "10px",
-                        width: "50%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        gap: "10px",
                       }}
                     >
-                      {station.locationName}
-                    </p>
-                  </div>
-                  {station.crs && (
-                    <Button
-                      sx={{ marginTop: "-20px" }}
-                      type="button"
-                      onClick={() =>
-                        navigate("/dashboard", {
-                          state: {
-                            crs: station.crs,
-                            locationName:
-                              station.locationName + " (" + station.crs + ")",
-                          },
-                        })
-                      }
+                      <p
+                        style={{
+                          background: "#f0f0f0",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "100%",
+                        }}
+                      >
+                        {station.isPass ? (
+                          <p>
+                            This train is <b>not scheduled</b> to stop here
+                          </p>
+                        ) : (
+                          <p>
+                            This train <b>is scheduled</b> to stop here
+                          </p>
+                        )}
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
                     >
-                      {station.crs && <u>Search departures</u>}
-                    </Button>
-                  )}
-                  {indicator == 0 && station && (
-                    <>
-                      <div className="trainInfo">
-                        <p className={"platformBox"}>
-                          <text
-                            style={{
-                              fontWeight: "500",
-                              color: "white",
-                            }}
-                          >
-                            Platform:&nbsp;{" "}
-                          </text>
-                          <text style={{ color: "white" }}>
-                            {station.platform ? station.platform : "N/A"}
-                          </text>
-                        </p>
-                      </div>
-                      <div
+                      <p
                         style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          gap: "10px",
+                          background:
+                            station.lateness > 60
+                              ? "orange"
+                              : station.lateness &&
+                                station.lateness.includes("-")
+                              ? "green"
+                              : "#f0f0f0",
+                          color:
+                            station.lateness > 60
+                              ? "white"
+                              : station.lateness &&
+                                station.lateness.includes("-")
+                              ? "white"
+                              : "black",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
                         }}
                       >
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                          }}
-                        >
-                          Estimated arrival:
-                          <br />
-                          {station.eta ? <>{station.eta}</> : <>N/A</>}
-                        </p>
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                          }}
-                        >
-                          Estimated departure:
-                          <br /> {station.etd ? <>{station.etd}</> : <>N/A</>}
-                        </p>
-                      </div>
-                      <div
+                        Delay amount: <br />
+                        {station.lateness ? (
+                          <>{station.lateness + " seconds"}</>
+                        ) : (
+                          <>N/A</>
+                        )}
+                      </p>
+                      <p
                         style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          gap: "10px",
+                          background: station.isCancelled ? "red" : "#f0f0f0",
+                          color: station.isCancelled ? "white" : "black",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
                         }}
                       >
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                          }}
-                        >
-                          Scheduled arrival:
-                          <br /> {station.sta ? <>{station.sta}</> : <>N/A</>}
-                        </p>
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                          }}
-                        >
-                          Scheduled departure:
-                          <br /> {station.std ? <>{station.std}</> : <>N/A</>}
-                        </p>
-                      </div>
-                      <div
+                        Is cancelled?: <br />
+                        {station.isCancelled ? <>True</> : <>N/A</>}
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <p
                         style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          gap: "10px",
+                          background: "#f0f0f0",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
                         }}
                       >
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                          }}
-                        >
-                          Actual arrival: <br />
-                          {station.ata ? <>{station.ata}</> : <>N/A</>}
-                        </p>
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                          }}
-                        >
-                          Actual departure:
-                          <br />{" "}
-                          {station.atd ? (
-                            <>
-                              {!station.atd.includes("null") ? (
-                                <>{station.atd}</>
-                              ) : (
-                                <>N/A</>
-                              )}
-                            </>
-                          ) : (
-                            <>N/A</>
-                          )}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                  {indicator == 1 && station && (
-                    <>
-                      <div
+                        Estimated arrival:
+                        <br />
+                        {station.eta ? <>{station.eta.slice(11)}</> : <>N/A</>}
+                      </p>
+                      <p
                         style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
+                          background: "#f0f0f0",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
                         }}
                       >
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                            marginBottom: "-5px",
-                          }}
-                        >
+                        Estimated departure:
+                        <br />{" "}
+                        {station.etd ? <>{station.etd.slice(11)}</> : <>N/A</>}
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <p
+                        style={{
+                          background: "#f0f0f0",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
+                        }}
+                      >
+                        Scheduled arrival:
+                        <br />{" "}
+                        {station.sta ? <>{station.sta.slice(11)}</> : <>N/A</>}
+                      </p>
+                      <p
+                        style={{
+                          background: "#f0f0f0",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
+                        }}
+                      >
+                        Scheduled departure:
+                        <br />{" "}
+                        {station.std ? <>{station.std.slice(11)}</> : <>N/A</>}
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <p
+                        style={{
+                          background: "#f0f0f0",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
+                        }}
+                      >
+                        Actual arrival: <br />
+                        {station.ata ? <>{station.ata.slice(11)}</> : <>N/A</>}
+                      </p>
+                      <p
+                        style={{
+                          background: "#f0f0f0",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
+                        }}
+                      >
+                        Actual departure:
+                        <br />{" "}
+                        {station.atd ? (
                           <>
-                            Estimated departure:
-                            <br /> {station.et ? <>{station.et}</> : <>N/A</>}
+                            {!station.atd.includes("null") ? (
+                              <>{station.atd.slice(11)}</>
+                            ) : (
+                              <>N/A</>
+                            )}
                           </>
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          gap: "10px",
-                        }}
-                      >
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                          }}
-                        >
-                          Scheduled departure:
-                          <br /> {station.st ? <>{station.st}</> : <>N/A</>}
-                        </p>
-                        <p
-                          style={{
-                            background: "#f0f0f0",
-                            borderRadius: "15px",
-                            padding: "10px",
-                            width: "50%",
-                          }}
-                        >
-                          Actual departure:
-                          <br />{" "}
-                          {station.at ? (
-                            <>
-                              {!station.at.includes("null") ? (
-                                <>{station.at}</>
-                              ) : (
-                                <>N/A</>
-                              )}
-                            </>
-                          ) : (
-                            <>N/A</>
-                          )}
-                        </p>
-                      </div>{" "}
-                    </>
-                  )}
-                </Typography>
-              </Box>
-            </>
+                        ) : (
+                          <>N/A</>
+                        )}
+                      </p>
+                    </div>
+                  </>
+                }
+              </Typography>
+            </Box>
           )}
         </>
-      </Modal>
+      </Modal>{" "}
     </>
   );
+}
+
+export function test2(open) {
+  if (open == 1 && openModalNow == 0) {
+    openModalNow = 1;
+  }
 }

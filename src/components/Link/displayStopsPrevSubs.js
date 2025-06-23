@@ -16,6 +16,7 @@ export default function DisplayStopsPrevSubs({
       setLS(true);
     }, 3000)
   );
+
   return (
     <>
       <Table
@@ -46,7 +47,7 @@ export default function DisplayStopsPrevSubs({
         <tr>
           <th style={{ fontSize: 13 }}>Station | Scheduled | Act/Est</th>
         </tr>
-        {calling.callingPoint.map((station, index) => {
+        {calling.map((station, index) => {
           let coloursDeparted;
           let coloursEstimated;
           if (
