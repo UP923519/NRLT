@@ -79,8 +79,14 @@ export default function ServicePage() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const executeScroll = () =>
+  const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
+    window.scrollTo({
+      top: 360,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
 
   function handleOpen(station, indicator) {
     setOpenModal(true);
@@ -797,7 +803,7 @@ export default function ServicePage() {
             />
           </div>
           {stringCalling.length < 6 && (
-            <div style={{ marginBottom: "35vh" }}></div>
+            <div style={{ marginBottom: "70vh" }}></div>
           )}
         </>
       )}
