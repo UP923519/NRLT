@@ -82,7 +82,7 @@ export default function ServicePage() {
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
     window.scrollTo({
-      top: 360,
+      top: 340,
       left: 0,
       behavior: "smooth",
     });
