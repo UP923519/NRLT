@@ -259,8 +259,8 @@ export default function DepartArrive(departArrive) {
       }
     }
     //validation end
-
     setProcessingState(true);
+    setIsOpen(false);
     setTimeButton(timeOffset);
     setDepartures(["Loading..."]);
     textInfo = "loading...";
@@ -447,10 +447,11 @@ export default function DepartArrive(departArrive) {
     testFetch = 1;
     contextTime = timeOffset;
     navigator.vibrate(1);
-    setProcessingState(false);
     if (remStatus == 1) {
       clearValue();
     }
+    setIsOpen(true);
+    setProcessingState(false);
   }
 
   async function logJSONData(
@@ -1082,7 +1083,7 @@ export default function DepartArrive(departArrive) {
   }
 
   function toggle() {
-    setIsOpen(true);
+    // setIsOpen(true);
     setIsOpenForm(false);
   }
 
