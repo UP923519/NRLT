@@ -1373,6 +1373,7 @@ export default function DepartArrive(departArrive) {
             <hr />
           </>
         )}
+
         <Fade duration={1999} when={!processingState}>
           <>
             {isOpen && (
