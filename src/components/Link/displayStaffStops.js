@@ -12,6 +12,7 @@ import ModalRTT from "./modalRTT";
 import DepartArrive from "../DepartArrive/DepartArrive";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
+import Fade from "react-reveal/Fade";
 
 const style = {
   top: "50%",
@@ -117,31 +118,48 @@ export default function DisplayStaffStops({
           <div style={{ height: "6.75px" }} />
         </>
       )}
+
       {loadedState && (
         <>
-          <button
-            id="useTrains"
-            type="button"
-            style={{
-              position: "relative",
-              top: "-15px",
-            }}
-            onClick={() => NewStaffId(rid.rid) + setLoadedState(false)}
-          >
-            🔄 Refresh
-          </button>
+          {" "}
+          <Fade duration={3000}>
+            <text
+              style={{
+                position: "relative",
+                top: "-23px",
+              }}
+            >
+              <hr></hr>
+            </text>
+          </Fade>
+          <Fade top distance={"20px"} duration={1500}>
+            <button
+              id="useTrains"
+              type="button"
+              style={{
+                position: "relative",
+                top: "-15px",
+              }}
+              onClick={() => NewStaffId(rid.rid) + setLoadedState(false)}
+            >
+              {" "}
+              🔄 Refresh
+            </button>
+          </Fade>
           <br />
-          <button
-            id="useTrains"
-            style={{
-              position: "relative",
-              top: "-11px",
-            }}
-            type="button"
-            onClick={() => handleOpenRTT()}
-          >
-            More Train Details
-          </button>
+          <Fade top distance={"30px"} duration={1500}>
+            <button
+              id="useTrains"
+              style={{
+                position: "relative",
+                top: "-11px",
+              }}
+              type="button"
+              onClick={() => handleOpenRTT()}
+            >
+              More Train Details
+            </button>
+          </Fade>
           <br />
           <Table
             className="transactions"

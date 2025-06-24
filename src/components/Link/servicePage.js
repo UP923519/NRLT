@@ -471,7 +471,6 @@ export default function ServicePage() {
               </div>
             </label>
           )}
-
           {showStaffData && !updateServicePageButton ? (
             <></>
           ) : (
@@ -481,28 +480,37 @@ export default function ServicePage() {
                   Showing Associated Service
                 </p>
               )}
-              <button
-                id="useTrains"
-                type="button"
-                onClick={() =>
-                  handleServiceClick() + setUpdateServicePageButton(false)
+              <Fade
+                top
+                distance={
+                  showStaffData && updateServicePageButton ? "10px" : "30px"
                 }
-                style={{
-                  position:
-                    showStaffData && updateServicePageButton && "relative",
-                  top: showStaffData && updateServicePageButton && "50px",
-                }}
+                duration={1500}
               >
-                {showStaffData
-                  ? updateServicePageButton
-                    ? "↺ Back To Your Service"
-                    : "🔄 Refresh"
-                  : "🔄 Refresh"}
-              </button>
+                <button
+                  id="useTrains"
+                  type="button"
+                  onClick={() =>
+                    handleServiceClick() + setUpdateServicePageButton(false)
+                  }
+                  style={{
+                    position:
+                      showStaffData && updateServicePageButton && "relative",
+                    top: showStaffData && updateServicePageButton && "50px",
+                  }}
+                >
+                  {showStaffData
+                    ? updateServicePageButton
+                      ? "↺ Back To Your Service"
+                      : "🔄 Refresh"
+                    : "🔄 Refresh"}
+                </button>
+              </Fade>
             </>
           )}
         </form>
       </div>
+
       {/* </Fade> */}
       {processingState ? (
         <>
@@ -532,193 +540,244 @@ export default function ServicePage() {
                 <div style={{ marginBottom: "10px" }}>
                   {/* {!stringCalling[0][0].includes("Loading") ? (
                   <> */}
-                  <p
-                    className="highlights"
-                    style={{
-                      background:
-                        !liveServiceTime.cancelReason &&
-                        !liveServiceTime.delayReason &&
-                        "#4a6e40",
-                      color:
-                        !liveServiceTime.cancelReason &&
-                        !liveServiceTime.delayReason &&
-                        "white",
-                    }}
-                  >
-                    {liveServiceTime &&
-                      (liveServiceTime.cancelReason
-                        ? cancelReason[
-                            cancelReason.findIndex((element) =>
-                              element.includes(
-                                liveServiceTime.cancelReason.value
-                              )
-                            )
-                          ].slice(4) + "."
-                        : liveServiceTime.delayReason
-                        ? delayReason[
-                            delayReason.findIndex((element) =>
-                              element.includes(
-                                liveServiceTime.delayReason.value
-                              )
-                            )
-                          ].slice(4) + "."
-                        : "No messages for this service")}
-                  </p>
-                  <br />
-                  <div className="trainInfo">
+                  <Fade top distance={"10px"} duration={1500}>
                     <p
-                      className={"platformBox"}
+                      className="highlights"
                       style={{
-                        background: ySindex ? "revert-layer" : "#e88c79",
+                        background:
+                          !liveServiceTime.cancelReason &&
+                          !liveServiceTime.delayReason &&
+                          "#4a6e40",
+                        color:
+                          !liveServiceTime.cancelReason &&
+                          !liveServiceTime.delayReason &&
+                          "white",
                       }}
                     >
-                      <text style={{ fontWeight: "500", color: "white" }}>
-                        Platform:&nbsp;{" "}
-                      </text>
-                      <text style={{ color: "white" }}>
-                        {ySindex ? ySindex : "N/A"}
-                      </text>
+                      {liveServiceTime &&
+                        (liveServiceTime.cancelReason
+                          ? cancelReason[
+                              cancelReason.findIndex((element) =>
+                                element.includes(
+                                  liveServiceTime.cancelReason.value
+                                )
+                              )
+                            ].slice(4) + "."
+                          : liveServiceTime.delayReason
+                          ? delayReason[
+                              delayReason.findIndex((element) =>
+                                element.includes(
+                                  liveServiceTime.delayReason.value
+                                )
+                              )
+                            ].slice(4) + "."
+                          : "No messages for this service")}
                     </p>
-                  </div>
-                  <div className="trainInfo">
-                    <p className={"trainInfoBox"}>
-                      <text style={{ fontWeight: "500" }}>
-                        Service operator:
-                      </text>
-                      <br />
-                      <br />
-                      {operatorName}
-                    </p>
-                    <p className={"trainInfoBox"}>
-                      <text style={{ fontWeight: "500" }}>
-                        Train formation:
-                      </text>
-                      <br />
-                      <br />
-                      {formationCar}
-                    </p>
-                  </div>
-                  {associations != "" && (
+                  </Fade>
+                  <br />
+                  <Fade top distance={"20px"} duration={1500}>
                     <div className="trainInfo">
                       <p
-                        className={"trainInfoBox"}
+                        className={"platformBox"}
                         style={{
-                          background: "#ffc663",
-                          width: "100%",
-                          maxWidth: "300px",
+                          background: ySindex ? "revert-layer" : "#e88c79",
                         }}
                       >
-                        <text style={{ fontWeight: "500" }}>
-                          Linked Services:
+                        <text style={{ fontWeight: "500", color: "white" }}>
+                          Platform:&nbsp;{" "}
                         </text>
-                        <br />
-                        {associations.map((assoc) => {
-                          ///ASSOC 0 is the Destination
-                          ///ASSOC 1 is the Origin
-                          ///ASSOC 2 is the station with the association
-                          if (
-                            assoc[3] == 1 ||
-                            assoc[3] == 0 ||
-                            assoc[3] == "divides" ||
-                            assoc[3] == "merges"
-                          ) {
-                            return (
-                              <>
-                                <br />
-                                <text style={{ textDecoration: "underline" }}>
-                                  {(assoc[3] == 1 || assoc[3] == "divides") &&
-                                    "Train divides at " + assoc[2]}
-
-                                  {(assoc[3] == 0 || assoc[3] == "merges") &&
-                                    "Train merges at " + assoc[2]}
-                                </text>
-                                <br />
-                                Train to {assoc[0]} from {assoc[1]} <br />
-                                <br />
-                              </>
-                            );
-                          }
-                        })}
+                        <text style={{ color: "white" }}>
+                          {ySindex ? ySindex : "N/A"}
+                        </text>
                       </p>
                     </div>
-                  )}
-                  <div>
-                    <>
-                      {(enableWindow == "Show" || enableWindow == undefined) &&
-                        staffUIDVal != "" && (
-                          <text>
-                            <br />
+                  </Fade>
+                  <Fade top distance={"30px"} duration={1500}>
+                    <div className="trainInfo">
+                      <p className={"trainInfoBox"}>
+                        <text style={{ fontWeight: "500" }}>
+                          Service operator:
+                        </text>
+                        <br />
+                        <br />
+                        {operatorName}
+                      </p>
+                      <p className={"trainInfoBox"}>
+                        <text style={{ fontWeight: "500" }}>
+                          Train formation:
+                        </text>
+                        <br />
+                        <br />
+                        {formationCar}
+                      </p>
+                    </div>
+                  </Fade>
+                  <Fade top distance={"35px"} duration={1500}>
+                    {associations != "" && (
+                      <div className="trainInfo">
+                        <p
+                          className={"trainInfoBox"}
+                          style={{
+                            background: "#ffc663",
+                            width: "100%",
+                            maxWidth: "300px",
+                          }}
+                        >
+                          <text style={{ fontWeight: "500" }}>
+                            Linked Services:
+                          </text>
+                          <br />
+                          {associations.map((assoc) => {
+                            ///ASSOC 0 is the Destination
+                            ///ASSOC 1 is the Origin
+                            ///ASSOC 2 is the station with the association
+                            if (
+                              assoc[3] == 1 ||
+                              assoc[3] == 0 ||
+                              assoc[3] == "divides" ||
+                              assoc[3] == "merges"
+                            ) {
+                              return (
+                                <>
+                                  <br />
+                                  <text style={{ textDecoration: "underline" }}>
+                                    {(assoc[3] == 1 || assoc[3] == "divides") &&
+                                      "Train divides at " + assoc[2]}
 
-                            {!stringCalling[0][0].includes("Loading") ? (
-                              <>
-                                <Popup
-                                  trigger={
-                                    <button id="useTrains" type="button">
-                                      More Train Details
-                                    </button>
-                                  }
-                                  modal
-                                  nested
-                                >
-                                  {(close) => (
-                                    <Fade top duration={500} distance={"100px"}>
-                                      <div>
+                                    {(assoc[3] == 0 || assoc[3] == "merges") &&
+                                      "Train merges at " + assoc[2]}
+                                  </text>
+                                  <br />
+                                  Train to {assoc[0]} from {assoc[1]} <br />
+                                  <br />
+                                </>
+                              );
+                            }
+                          })}
+                        </p>
+                      </div>
+                    )}
+                  </Fade>
+                  <Fade top distance={"40px"} duration={1500}>
+                    <div>
+                      <>
+                        {(enableWindow == "Show" ||
+                          enableWindow == undefined) &&
+                          staffUIDVal != "" && (
+                            <text>
+                              <br />
+
+                              {!stringCalling[0][0].includes("Loading") ? (
+                                <>
+                                  <Popup
+                                    trigger={
+                                      <button id="useTrains" type="button">
+                                        More Train Details
+                                      </button>
+                                    }
+                                    modal
+                                    nested
+                                  >
+                                    {(close) => (
+                                      <Fade
+                                        top
+                                        duration={500}
+                                        distance={"100px"}
+                                      >
                                         <div>
                                           <div>
-                                            <p style={{ margin: "5px" }}>
-                                              Additional train details
-                                            </p>
-                                            <iframe
-                                              className="transactions"
+                                            <div>
+                                              <p style={{ margin: "5px" }}>
+                                                Additional train details
+                                              </p>
+                                              <iframe
+                                                className="transactions"
+                                                style={{
+                                                  height: "270px",
+                                                  border: "0",
+                                                  marginTop: "3px",
+                                                  width: "99%",
+                                                  overflow: "scroll",
+                                                  maxHeight: "65vh",
+                                                }}
+                                                id="iFrameExample"
+                                                src={trainDetailUrl}
+                                              ></iframe>
+                                            </div>
+                                          </div>
+                                          <div>
+                                            <button
+                                              id="useTrains"
                                               style={{
-                                                height: "270px",
-                                                border: "0",
-                                                marginTop: "3px",
-                                                width: "99%",
-                                                overflow: "scroll",
-                                                maxHeight: "65vh",
+                                                margin: "0px",
+                                                marginTop: "5px",
                                               }}
-                                              id="iFrameExample"
-                                              src={trainDetailUrl}
-                                            ></iframe>
+                                              onClick={() => close()}
+                                            >
+                                              Close
+                                            </button>
                                           </div>
                                         </div>
-                                        <div>
-                                          <button
-                                            id="useTrains"
-                                            style={{
-                                              margin: "0px",
-                                              marginTop: "5px",
-                                            }}
-                                            onClick={() => close()}
-                                          >
-                                            Close
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </Fade>
-                                  )}
-                                </Popup>
-                                <button
-                                  id="useTrains"
-                                  type="button"
-                                  onClick={() =>
-                                    test2(1) + handleOpen("KNG", 1)
-                                  }
-                                >
-                                  Service Status & Times
-                                </button>
-                              </>
-                            ) : (
-                              <div>
-                                <br />
-                                <br />
-                              </div>
-                            )}
-                          </text>
-                        )}
-                    </>
-                  </div>
+                                      </Fade>
+                                    )}
+                                  </Popup>
+                                  <button
+                                    id="useTrains"
+                                    type="button"
+                                    onClick={() =>
+                                      test2(1) + handleOpen("KNG", 1)
+                                    }
+                                  >
+                                    Service Status & Times
+                                  </button>
+                                </>
+                              ) : (
+                                <div>
+                                  <br />
+                                  <br />
+                                </div>
+                              )}
+                            </text>
+                          )}
+                      </>
+                    </div>
+                    {loadedState && (
+                      //Fade on to top existing
+                      <Fade top distance={"20px"} duration={2000}>
+                        <button
+                          id="useTrains"
+                          type="button"
+                          style={{
+                            marginTop: "5px",
+                            position:
+                              showStaffData &&
+                              updateServicePageButton &&
+                              "relative",
+                            top:
+                              showStaffData &&
+                              updateServicePageButton &&
+                              "-45px",
+                            // background: showStaffData && "#f0f0f0",
+                            border: !showStaffData
+                              ? "3px solid orange"
+                              : "1px solid orange",
+                            background: !showStaffData && "orange",
+                          }}
+                          onClick={() =>
+                            (showStaffData
+                              ? setShowStaffData(false)
+                              : setShowStaffData(true)) + executeScroll()
+                          }
+                        >
+                          {showStaffData
+                            ? "↩ Exit To Service Details Page"
+                            : "View Full Timetable"}
+                        </button>
+                        <br />
+                        <br />
+                      </Fade>
+                    )}
+                  </Fade>
                 </div>
               )}
             </div>
@@ -727,8 +786,8 @@ export default function ServicePage() {
           <></>
         )}
       </ref>
-      {loadedState && (
-        <>
+      {loadedState && showStaffData && (
+        <Fade top distance={"10px"} duration={1500}>
           <button
             id="useTrains"
             type="button"
@@ -750,25 +809,10 @@ export default function ServicePage() {
               ? "↩ Exit To Service Details Page"
               : "View Full Timetable"}
           </button>
-          {/* {showStaffData ? (
-            <div
-              style={{
-                position:
-                  showStaffData && updateServicePageButton && "relative",
-                top: showStaffData && updateServicePageButton && "-16px",
-                marginTop: "-40px",
-              }}
-            >
-              <hr />
-            </div>
-          ) : (
-            <></>
-          )} */}
-        </>
+          <br />
+          <br />
+        </Fade>
       )}
-
-      <br />
-      <br />
 
       {allServiceData && serverName && loadedState && (
         <DisplayStops
