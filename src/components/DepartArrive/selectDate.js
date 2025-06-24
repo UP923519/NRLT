@@ -44,6 +44,7 @@ export default function SelectDate({
             height: "26.86px",
             width: "100%",
             marginRight: "5px",
+            background: "white",
           }}
           value={selectedDay}
           defaultValue={year + "-" + month + "-" + day}
@@ -61,6 +62,7 @@ export default function SelectDate({
             borderWidth: "thin",
             height: "26.86px",
             width: "100%",
+            background: "white",
           }}
           value={selectedTime}
           defaultValue={hours + ":" + minutes}
