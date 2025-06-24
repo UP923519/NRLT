@@ -65,13 +65,13 @@ const Navbar = () => {
         >
           Settings
         </NavLink>
-        <NavLink
+        {/* <NavLink
           className="topRow2"
           activeClassName="topRow2Active"
           to="/departures"
         >
           New!
-        </NavLink>
+        </NavLink> */}
       </navbar>
 
       <Routes>
