@@ -41,6 +41,7 @@ let failedAlert;
 let serverName = "trainwebappv2";
 let rememberFirstStationSave = "---";
 let rememberStaffRID;
+let rememberStaffData;
 
 export default function ServicePage() {
   const [excuseReason, setExcuseReason] = useState();
@@ -66,6 +67,7 @@ export default function ServicePage() {
   const [openModal, setOpenModal] = useState(false);
   const [station, setStation] = useState();
   const [indicator, setIndicator] = useState();
+  const [associations, setAssociations] = useState([]);
 
   const myRef = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -85,6 +87,8 @@ export default function ServicePage() {
     setStation(station);
     setIndicator(indicator);
   }
+
+  let associationList = [];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -219,6 +223,28 @@ export default function ServicePage() {
           setAllStaffServiceData(dataStaffService);
         }
       }
+
+      //Work out Divide Location
+      dataStaffService?.locations?.forEach((element, index) => {
+        element?.associations?.forEach((association) => {
+          if (
+            association.category == 1 ||
+            association.category == 0 ||
+            association.category == "divides" ||
+            association.category == "merges"
+          ) {
+            associationList.push([
+              association.destination,
+              association.origin,
+              element.locationName,
+              association.category,
+            ]);
+          }
+        });
+      });
+
+      setAssociations(associationList);
+
       try {
         liveService = data.previousCallingPoints[0].callingPoint;
       } catch {
@@ -534,12 +560,17 @@ export default function ServicePage() {
                   </p>
                   <br />
                   <div className="trainInfo">
-                    <p className={"platformBox"}>
+                    <p
+                      className={"platformBox"}
+                      style={{
+                        background: ySindex ? "revert-layer" : "#e88c79",
+                      }}
+                    >
                       <text style={{ fontWeight: "500", color: "white" }}>
                         Platform:&nbsp;{" "}
                       </text>
                       <text style={{ color: "white" }}>
-                        {ySindex && ySindex}
+                        {ySindex ? ySindex : "N/A"}
                       </text>
                     </p>
                   </div>
@@ -561,20 +592,47 @@ export default function ServicePage() {
                       {formationCar}
                     </p>
                   </div>
-                  {divides != "" && (
+                  {associations != "" && (
                     <div className="trainInfo">
                       <p
                         className={"trainInfoBox"}
                         style={{
-                          background: "orange",
+                          background: "#ffc663",
+                          width: "100%",
+                          maxWidth: "300px",
                         }}
                       >
                         <text style={{ fontWeight: "500" }}>
-                          Train {divideMerge} at:
+                          Linked Services:
                         </text>
                         <br />
-                        <br />
-                        {divideLocation}
+                        {associations.map((assoc) => {
+                          ///ASSOC 0 is the Destination
+                          ///ASSOC 1 is the Origin
+                          ///ASSOC 2 is the station with the association
+                          if (
+                            assoc[3] == 1 ||
+                            assoc[3] == 0 ||
+                            assoc[3] == "divides" ||
+                            assoc[3] == "merges"
+                          ) {
+                            return (
+                              <>
+                                <br />
+                                <text style={{ textDecoration: "underline" }}>
+                                  {(assoc[3] == 1 || assoc[3] == "divides") &&
+                                    "Train divides at " + assoc[2]}
+
+                                  {(assoc[3] == 0 || assoc[3] == "merges") &&
+                                    "Train merges at " + assoc[2]}
+                                </text>
+                                <br />
+                                Train to {assoc[0]} from {assoc[1]} <br />
+                                <br />
+                              </>
+                            );
+                          }
+                        })}
                       </p>
                     </div>
                   )}
@@ -721,6 +779,8 @@ export default function ServicePage() {
           open={openModal}
           handleOpen={handleOpen}
           station={station}
+          setAssociations={setAssociations}
+          associations={associations}
         />
       )}
       {loadedState == false ? (
@@ -751,7 +811,8 @@ export function test1(
   staffUID,
   staffSDD,
   staffRID,
-  rememberFirstStation
+  rememberFirstStation,
+  staffData
 ) {
   formJson = number;
   staffRIDVal = staffRID;
@@ -769,4 +830,5 @@ export function test1(
   }
 
   rememberFirstStationSave = rememberFirstStation;
+  rememberStaffData = staffData;
 }

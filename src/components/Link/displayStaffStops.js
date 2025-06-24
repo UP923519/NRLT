@@ -30,10 +30,14 @@ const style = {
   position: " absolute",
 };
 
+let nextId = 0;
+
 export default function DisplayStaffStops({
   allStaffServiceData,
   serverName,
   setUpdateServicePageButton,
+  associations,
+  setAssociations,
 }) {
   const [station, setStation] = useState();
   const [open, setOpen] = useState(false);
@@ -318,8 +322,8 @@ export default function DisplayStaffStops({
                           // background: "black",
                           background:
                             "repeating-linear-gradient(0deg,  rgba(0,0,0,0) 5px,  rgba(0,0,0,0) 12px,  black 0px,  black 15px)",
-                          height: "137px", //Lined up on mobile - slightly off on desktop
-                          marginBottom: "74px", //Lined up on mobile - slightly off on desktop
+                          height: "110px", //Lined up on mobile - slightly off on desktop
+                          marginBottom: "59px", //Lined up on mobile - slightly off on desktop
                           position: "absolute",
                           right: "18px",
                           // borderLeft: "solid grey",
@@ -332,8 +336,8 @@ export default function DisplayStaffStops({
                         sx={{
                           width: "7px",
                           // background: "black",
-                          height: "137px", //Lined up on mobile - slightly off on desktop
-                          marginBottom: "74px", //Lined up on mobile - slightly off on desktop
+                          height: "106px", //Lined up on mobile - slightly off on desktop
+                          marginBottom: "56.5px", //Lined up on mobile - slightly off on desktop
                           position: "absolute",
                           right: "21.3px",
                           borderLeft: "solid grey",
@@ -441,7 +445,14 @@ export default function DisplayStaffStops({
                 {
                   <>
                     <div className="trainInfo">
-                      <p className={"platformBox"}>
+                      <p
+                        className={"platformBox"}
+                        style={{
+                          background: station.platform
+                            ? "revert-layer"
+                            : "#e88c79",
+                        }}
+                      >
                         <text
                           style={{
                             fontWeight: "500",

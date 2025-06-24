@@ -91,7 +91,14 @@ export function PopupStations({
                 {calling.length > 1 ? (
                   <>
                     <div className="trainInfo">
-                      <p className={"platformBox"}>
+                      <p
+                        className={"platformBox"}
+                        style={{
+                          background: platformNumber
+                            ? "revert-layer"
+                            : "#e88c79",
+                        }}
+                      >
                         <text
                           style={{
                             fontWeight: "500",

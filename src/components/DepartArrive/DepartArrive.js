@@ -21,6 +21,7 @@ let busDeparture = "";
 let saveLD = "";
 let saveBD = "";
 let staffData = "";
+let staffDataBus = "";
 let serviceMessage = "";
 let listStation = "";
 let currentCRSCode;
@@ -54,7 +55,6 @@ let serverName = "trainwebappv2";
 let rememberFirstStation;
 let rememberSecondStation;
 let rememberTimeOffset;
-let rememberTime;
 let busDisplayMode = "train";
 let showBuses = false;
 
@@ -88,7 +88,9 @@ export default function DepartArrive(departArrive) {
   const [timeButton, setTimeButton] = useState("");
   const [listOfStations, setListOfStations] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
+
   const [tTSMOpen, setTTSMOpen] = useState(false);
 
   const open = Boolean(anchorEl);
@@ -228,7 +230,6 @@ export default function DepartArrive(departArrive) {
     trainSearch = "";
     clearValue();
     setIsOpen(false);
-    // setSelectedDate(null);
     setProcessingState(false);
     setIsOpenForm(true);
     rememberFirstStation = "";
@@ -488,17 +489,35 @@ export default function DepartArrive(departArrive) {
     testFetch = 0;
     let response;
     let staffResponse;
+    let staffResponseBus;
+
     let offsetHours;
     let offsetMinutes;
 
+    let offsetDays;
+    let offsetMonths;
+    let offsetYears;
+
     offsetHours = timeOffset;
+
     if (offsetHours == "") {
       offsetHours = hours;
       offsetMinutes = minutes;
     }
-    if (selectedDate !== null) {
-      offsetHours = selectedDate.split(":")[0];
-      offsetMinutes = selectedDate.split(":")[1];
+
+    if (selectedTime !== null) {
+      offsetHours = selectedTime.split(":")[0];
+      offsetMinutes = selectedTime.split(":")[1];
+    }
+
+    if (selectedDay !== null) {
+      offsetDays = selectedDay.split("-")[2];
+      offsetMonths = selectedDay.split("-")[1];
+      offsetYears = selectedDay.split("-")[0];
+    } else {
+      offsetDays = day;
+      offsetMonths = month;
+      offsetYears = year;
     }
 
     let deparrurl1;
@@ -549,16 +568,27 @@ export default function DepartArrive(departArrive) {
         //     timeOffset
         // );
 
-        const runSearchFetch = async () => {
-          let response = await axios
-            .request(reqOptions)
-            .catch(function (error) {
+        const runSearchFetch = async (bus) => {
+          let response;
+          if (bus == "bus") {
+            response = await axios
+              .request(reqOptionsBus)
+              .catch(function (error) {
+                if (error.response) {
+                  // The request was made and the server responded with a status code
+                  // that falls out of the range of 2xx
+                  saveError = error.response.data["Message"];
+                }
+              });
+          } else {
+            response = await axios.request(reqOptions).catch(function (error) {
               if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
                 saveError = error.response.data["Message"];
               }
             });
+          }
           return response.data;
         };
 
@@ -584,7 +614,40 @@ export default function DepartArrive(departArrive) {
             "&" +
             "filterCRS=" +
             stationName +
-            "&filterType=from",
+            "&" +
+            deparrurl3,
+          method: "GET",
+          headers:
+            (departArrive == "departures" && headersListDepart) ||
+            headersListArrive,
+        };
+
+        let reqOptionsBus = {
+          url:
+            "https://api1.raildata.org.uk/1010-live-" +
+            deparrurl1 +
+            "-board---staff-version1_0/LDBSVWS/api/20220120/Get" +
+            deparrurl2 +
+            "BoardWithDetails/" +
+            fromCode +
+            "/" +
+            offsetYears +
+            offsetMonths +
+            offsetDays +
+            "T" +
+            offsetHours +
+            offsetMinutes +
+            "00" +
+            "?" +
+            "timeWindow=" +
+            "120" +
+            "&" +
+            "filterCRS=" +
+            stationName +
+            "&" +
+            deparrurl3 +
+            "&" +
+            "services=B",
           method: "GET",
           headers:
             (departArrive == "departures" && headersListDepart) ||
@@ -592,7 +655,9 @@ export default function DepartArrive(departArrive) {
         };
 
         let staffResponse1 = await runSearchFetch();
+        let staffResponse1Bus = await runSearchFetch("bus");
         staffResponse = staffResponse1;
+        staffResponseBus = staffResponse1Bus;
       } catch {
         alert(
           "Failed to fetch. Please check internet connection / search criteria. Server returned the following error: " +
@@ -640,20 +705,56 @@ export default function DepartArrive(departArrive) {
         // );
 
         ////////////////////////////////////
-        const runSearchFetch = async () => {
-          let response = await axios
-            .request(reqOptions)
-            .catch(function (error) {
+        const runSearchFetch = async (bus) => {
+          let response;
+          if (bus == "bus") {
+            response = await axios
+              .request(reqOptionsBus)
+              .catch(function (error) {
+                if (error.response) {
+                  // The request was made and the server responded with a status code
+                  // that falls out of the range of 2xx
+                  saveError = error.response.data["Message"];
+                }
+              });
+          } else {
+            response = await axios.request(reqOptions).catch(function (error) {
               if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
                 saveError = error.response.data["Message"];
               }
             });
+          }
           return response.data;
         };
 
         let reqOptions = {
+          url:
+            "https://api1.raildata.org.uk/1010-live-" +
+            deparrurl1 +
+            "-board---staff-version1_0/LDBSVWS/api/20220120/Get" +
+            deparrurl2 +
+            "BoardWithDetails/" +
+            stationName +
+            "/" +
+            offsetYears +
+            offsetMonths +
+            offsetDays +
+            "T" +
+            offsetHours +
+            offsetMinutes +
+            "00" +
+            "?" +
+            "timeWindow=" +
+            "120",
+          method: "GET",
+          headers:
+            (departArrive == "departures" && headersListDepart) ||
+            headersListArrive,
+        };
+
+        let reqOptionsBus = {
           url:
             "https://api1.raildata.org.uk/1010-live-" +
             deparrurl1 +
@@ -671,7 +772,9 @@ export default function DepartArrive(departArrive) {
             "00" +
             "?" +
             "timeWindow=" +
-            "120",
+            "120" +
+            "&" +
+            "services=B",
           method: "GET",
           headers:
             (departArrive == "departures" && headersListDepart) ||
@@ -679,7 +782,10 @@ export default function DepartArrive(departArrive) {
         };
 
         let staffResponse1 = await runSearchFetch();
+        let staffResponse1Bus = await runSearchFetch("bus");
+
         staffResponse = staffResponse1;
+        staffResponseBus = staffResponse1Bus;
 
         /////////////////////////////////////
       } catch {
@@ -705,18 +811,19 @@ export default function DepartArrive(departArrive) {
       data = await response.json();
       // staffData = await staffResponse.json();
       staffData = staffResponse;
+      staffDataBus = staffResponseBus;
 
       nrccMessages = staffData.nrccMessages;
       liveDeparture = staffData.trainServices;
-      busDeparture = staffData.busServices;
+      busDeparture = staffDataBus.busServices;
       saveLD = staffData.trainServices;
-      saveBD = staffData.busServices;
+      saveBD = staffDataBus.busServices;
       currentCRSCode = staffData.crs;
       stationOneD = staffData.locationName + " (" + staffData.crs + ")";
       if (staffData.trainServices == null) {
       } else {
       }
-      if (staffData.trainServices != null && staffData.busServices != null) {
+      if (staffData.trainServices != null && staffDataBus.busServices != null) {
         if (busDisplayMode == "bus") {
           liveDeparture = busDeparture;
           setActiveBus("#0080ff");
@@ -734,12 +841,12 @@ export default function DepartArrive(departArrive) {
           setActiveBusT("black");
         }
       }
-      if (staffData.trainServices == null && staffData.busServices != null) {
+      if (staffData.trainServices == null && staffDataBus.busServices != null) {
         setTrainDisabled(true);
         setBusDisabled(false);
         setActiveTrain("#f5f5f5");
         setActiveTrainT("#d1d1d1");
-        liveDeparture = staffData.busServices;
+        liveDeparture = staffDataBus.busServices;
         if (busDisplayMode == "train") {
           alert(
             "No train services available at this time. Bus services are available."
@@ -749,7 +856,7 @@ export default function DepartArrive(departArrive) {
         setActiveBus("#0080ff");
         setActiveBusT("white");
       }
-      if (staffData.trainServices != null && staffData.busServices == null) {
+      if (staffData.trainServices != null && staffDataBus.busServices == null) {
         setBusDisabled(true);
         setTrainDisabled(false);
         setActiveBus("#f5f5f5");
@@ -758,7 +865,7 @@ export default function DepartArrive(departArrive) {
         setActiveTrainT("white");
         liveDeparture = staffData.trainServices;
       }
-      if (staffData.trainServices == null && staffData.busServices == null) {
+      if (staffData.trainServices == null && staffDataBus.busServices == null) {
         liveDeparture = [];
         setBusDisabled(true);
         setActiveBus("#f5f5f5");
@@ -821,17 +928,17 @@ export default function DepartArrive(departArrive) {
       staffRID = staffData.trainServices[index].rid;
     } catch {
       try {
-        staffUID = staffData.busServices[index].uid;
-        staffSDD = staffData.busServices[index].sdd;
-        staffRID = staffData.busServices[index].rid;
+        staffUID = staffDataBus.busServices[index].uid;
+        staffSDD = staffDataBus.busServices[index].sdd;
+        staffRID = staffDataBus.busServices[index].rid;
       } catch {}
     }
 
     if (showBuses == true) {
       if (busDisplayMode == "bus") {
-        staffUID = staffData.busServices[index].uid;
-        staffSDD = staffData.busServices[index].sdd;
-        staffRID = staffData.busServices[index].rid;
+        staffUID = staffDataBus.busServices[index].uid;
+        staffSDD = staffDataBus.busServices[index].sdd;
+        staffRID = staffDataBus.busServices[index].rid;
       }
     }
     let trainInfo = row;
@@ -845,7 +952,8 @@ export default function DepartArrive(departArrive) {
       staffUID,
       staffSDD,
       staffRID,
-      rememberFirstStation
+      rememberFirstStation,
+      liveDeparture[index]
     );
   };
 
@@ -895,7 +1003,7 @@ export default function DepartArrive(departArrive) {
             liveDeparture[i].origin[0].via +
             destination2Origin +
             ")  " +
-            (liveDeparture[i].etd
+            (liveDeparture[i].eta
               ? liveDeparture[i].eta.slice(11, 16)
               : liveDeparture[i].ata
               ? liveDeparture[i].ata.slice(11, 16)
@@ -1016,14 +1124,19 @@ export default function DepartArrive(departArrive) {
                       color: "grey",
                     }}
                   >
-                    Time:
+                    Date & Time:
                   </p>
                   {/* //////Date picker */}
                   <SelectDate
-                    setSelectedDate={setSelectedDate}
-                    selectedDate={selectedDate}
+                    setSelectedTime={setSelectedTime}
+                    selectedTime={selectedTime}
+                    setSelectedDay={setSelectedDay}
+                    selectedDay={selectedDay}
                     minutes={minutes}
                     hours={hours}
+                    day={day}
+                    month={month}
+                    year={year}
                   />
                   {departArrive == "Departures" ? (
                     <p
@@ -1241,7 +1354,7 @@ export default function DepartArrive(departArrive) {
                 type="button"
                 onClick={() => handleDepartureClick(contextTime)}
               >
-                🔄 Refresh
+                {isOpenForm && "🔎 Search"} {!isOpenForm && "🔄 Refresh"}
               </button>
             </form>
           </div>
@@ -1263,7 +1376,11 @@ export default function DepartArrive(departArrive) {
             {isOpen && (
               <>
                 <Tooltip
-                  title={"Station managed by: " + staffData.stationManager}
+                  title={
+                    staffData.locationName +
+                    " managed by: " +
+                    staffData.stationManager
+                  }
                   onClose={handleTooltipClose}
                   open={tTSMOpen}
                   slotProps={{
@@ -1273,15 +1390,7 @@ export default function DepartArrive(departArrive) {
                   }}
                 >
                   <Box onClick={handleTooltipOpen} sx={{ marginBottom: 2 }}>
-                    {trainSearch}{" "}
-                    <b
-                      style={{
-                        color: "#0080ff",
-                        fontSize: "larger",
-                      }}
-                    >
-                      ℹ️
-                    </b>
+                    {trainSearch}
                   </Box>
                 </Tooltip>
                 <Box sx={{ marginBottom: 2 }}>

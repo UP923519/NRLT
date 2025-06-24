@@ -6,45 +6,86 @@ import { Padding } from "@mui/icons-material";
 let timeVal;
 
 export default function SelectDate({
-  setSelectedDate,
-  selectedDate,
+  setSelectedTime,
+  selectedTime,
+  setSelectedDay,
+  selectedDay,
   minutes,
   hours,
+  day,
+  month,
+  year,
 }) {
+  const handleTimeChange = (value, event) => {
+    setSelectedTime(value);
+  };
   const handleDateChange = (value, event) => {
-    setSelectedDate(value);
+    setSelectedDay(value);
   };
 
   return (
     <>
-      <form action="/action_page.php" style={{ textAlign: "left" }}>
+      <form
+        action="/action_page.php"
+        style={{
+          textAlign: "left",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
         <input
           style={{
             padding: "5px",
             borderRadius: "5px",
-            borderColor: "#c1c1c1",
+            borderColor: "#cccccc",
             borderStyle: "solid",
             borderWidth: "thin",
+            height: "26.86px",
+            width: "100%",
+            marginRight: "5px",
           }}
-          value={selectedDate}
-          type="time"
+          value={selectedDay}
+          defaultValue={year + "-" + month + "-" + day}
+          type="date"
           id="appt"
           name="appt"
           onChange={(e) => handleDateChange(e.target.value)}
         />
+        <input
+          style={{
+            padding: "5px",
+            borderRadius: "5px",
+            borderColor: "#cccccc",
+            borderStyle: "solid",
+            borderWidth: "thin",
+            height: "26.86px",
+            width: "100%",
+          }}
+          value={selectedTime}
+          defaultValue={hours + ":" + minutes}
+          type="time"
+          id="appt"
+          name="appt"
+          onChange={(e) => handleTimeChange(e.target.value)}
+        />
         <button
           //   id="useTrains"
           type="button"
-          onClick={() => setSelectedDate(hours + ":" + minutes)}
+          onClick={() =>
+            setSelectedTime(hours + ":" + minutes) +
+            setSelectedDay(year + "-" + month + "-" + day)
+          }
           style={{
-            borderColor: "#c1c1c1",
+            borderColor: "#cccccc",
             borderStyle: "solid",
             borderWidth: "thin",
             marginLeft: "5px",
             borderRadius: "5px",
             padding: "7px",
             background: "white",
-            height: "31px",
+            height: "38px",
+            width: "125px",
           }}
         >
           Now

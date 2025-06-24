@@ -41,6 +41,8 @@ export default function DisplayStops({
   setOpen,
   handleOpen,
   station,
+  setAssociations,
+  associations,
 }) {
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
@@ -132,7 +134,7 @@ export default function DisplayStops({
                   }}
                 >
                   {data?.locations[0].locationName &&
-                    data.locations[0].std.slice(11)}{" "}
+                    data.locations[0].std.slice(11, -3)}{" "}
                   {data?.locations[0].locationName &&
                     data.locations[0].locationName}
                   {" —> "}
@@ -173,26 +175,6 @@ export default function DisplayStops({
                   >
                     {data?.locations[yourStationIndex].locationName}
                   </p>
-                  {/* Display associations */}
-                  {data?.locations[yourStationIndex].associations?.map(
-                    (association, index) => {
-                      return (
-                        <x
-                          style={{
-                            background: "orange",
-                            paddingLeft: "5px",
-                            paddingRight: "5px",
-                            paddingTop: "1px",
-                            paddingBottom: "1px",
-                            borderRadius: "20px",
-                            marginLeft: "6px",
-                          }}
-                        >
-                          A
-                        </x>
-                      );
-                    }
-                  )}
                   {/* Display scheduled or actual time */}
                   &nbsp;
                   {data?.locations[yourStationIndex].stdSpecified !== false
@@ -303,10 +285,11 @@ export default function DisplayStops({
                       sx={{
                         width: "16px",
                         // background: "black",
+
                         background:
                           "repeating-linear-gradient(0deg,  rgba(0,0,0,0) 5px,  rgba(0,0,0,0) 12px,  black 0px,  black 15px)",
-                        height: "139px", //Lined up on mobile - slightly off on desktop
-                        marginBottom: "87px", //Lined up on mobile - slightly off on desktop
+                        height: "116px", //Lined up on mobile - slightly off on desktop
+                        marginBottom: "63px", //Lined up on mobile - slightly off on desktop
                         position: "absolute",
                         right: "18px",
                         // borderLeft: "solid grey",
@@ -319,8 +302,8 @@ export default function DisplayStops({
                       sx={{
                         width: "7px",
                         // background: "black",
-                        height: "139px", //Lined up on mobile - slightly off on desktop
-                        marginBottom: "87px", //Lined up on mobile - slightly off on desktop
+                        height: "116px", //Lined up on mobile - slightly off on desktop
+                        marginBottom: "64px", //Lined up on mobile - slightly off on desktop
                         position: "absolute",
                         right: "21.3px",
                         borderLeft: "solid grey",
@@ -398,6 +381,8 @@ export default function DisplayStops({
           allStaffServiceData={allStaffServiceData}
           serverName={serverName}
           setUpdateServicePageButton={setUpdateServicePageButton}
+          setAssociations={setAssociations}
+          associations={associations}
         />
       )}
       <Modal
@@ -452,7 +437,14 @@ export default function DisplayStops({
                 {
                   <>
                     <div className="trainInfo">
-                      <p className={"platformBox"}>
+                      <p
+                        className={"platformBox"}
+                        style={{
+                          background: station.platform
+                            ? "revert-layer"
+                            : "#e88c79",
+                        }}
+                      >
                         <text
                           style={{
                             fontWeight: "500",
