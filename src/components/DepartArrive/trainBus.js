@@ -20,55 +20,61 @@ export default function TrainBus({
     <div style={{ marginTop: -15 }}>
       {/* marginTop is -5 with the time selector component */}
       <div style={{ marginBottom: "20px" }}>
-        <p
-          className="highlights"
-          style={{
-            background: !nrccMessages && "#4a6e40",
-            color: !nrccMessages && "white",
-          }}
-        >
-          <pre
+        {displayStation && (
+          <p
+            className="highlights"
             style={{
-              whiteSpace: "pre-wrap",
-              fontFamily: "unset",
-              marginBottom: "-20px",
-              marginTop: "-1px",
+              background: !nrccMessages && "#4a6e40",
+              color: !nrccMessages && "white",
             }}
           >
-            <text style={{ wordBreak: "break-word", hyphens: "auto" }}>
-              {/* {textInfo} */}
-              <text style={{ fontSize: "medium" }}>
-                <u>
-                  {nrccMessages &&
-                    nrccMessages.length +
-                      (nrccMessages.length > 1
-                        ? " messages or alerts for "
-                        : " message or alert for ") +
-                      displayStation +
-                      ":\n\n"}
-                  {nrccMessages && (
+            <pre
+              style={{
+                whiteSpace: "pre-wrap",
+                fontFamily: "unset",
+                marginBottom: "-20px",
+                marginTop: "-1px",
+              }}
+            >
+              <text style={{ wordBreak: "break-word", hyphens: "auto" }}>
+                {/* {textInfo} */}
+                <text style={{ fontSize: "medium" }}>
+                  <u>
+                    {nrccMessages &&
+                      nrccMessages.length +
+                        (nrccMessages.length > 1
+                          ? " messages or alerts for "
+                          : " message or alert for ") +
+                        displayStation +
+                        ":\n\n"}
+                    {nrccMessages && (
+                      <hr
+                        style={{ border: "1px dashed black", width: "15%" }}
+                      />
+                    )}
+                  </u>
+                </text>
+                {!nrccMessages &&
+                  displayStation &&
+                  "No messages or alerts for " + displayStation}
+
+                {nrccMessages?.map((message) => (
+                  <>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: message["xhtmlMessage"],
+                      }}
+                    />
+
+                    <br />
                     <hr style={{ border: "1px dashed black", width: "15%" }} />
-                  )}
-                </u>
+                  </>
+                ))}
               </text>
-              {!nrccMessages && "No messages or alerts for " + displayStation}
-
-              {nrccMessages?.map((message) => (
-                <>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: message["xhtmlMessage"],
-                    }}
-                  />
-
-                  <br />
-                  <hr style={{ border: "1px dashed black", width: "15%" }} />
-                </>
-              ))}
-            </text>
-          </pre>
-          <br />
-        </p>
+            </pre>
+            <br />
+          </p>
+        )}
         <br />
         {/* <ButtonGroup
           sx={{ marginBottom: 0 }}
