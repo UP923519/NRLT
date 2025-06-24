@@ -234,6 +234,8 @@ export default function DepartArrive(departArrive) {
     setIsOpenForm(true);
     rememberFirstStation = "";
     rememberSecondStation = "";
+    setSelectedTime(hours + ":" + minutes);
+    setSelectedDay(year + "-" + month + "-" + day);
   }
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
