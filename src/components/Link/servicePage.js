@@ -624,7 +624,7 @@ export default function ServicePage() {
                           }}
                         >
                           <text style={{ fontWeight: "500" }}>
-                            Linked Services:
+                            Train divisions/mergers:
                           </text>
                           <br />
                           {associations.map((assoc) => {
@@ -642,13 +642,14 @@ export default function ServicePage() {
                                   <br />
                                   <text style={{ textDecoration: "underline" }}>
                                     {(assoc[3] == 1 || assoc[3] == "divides") &&
-                                      "Train divides at " + assoc[2]}
+                                      "Divides at " + assoc[2]}
 
                                     {(assoc[3] == 0 || assoc[3] == "merges") &&
-                                      "Train merges at " + assoc[2]}
+                                      "Merges at " + assoc[2]}
                                   </text>
                                   <br />
-                                  Train to {assoc[0]} from {assoc[1]} <br />
+                                  Destination: {assoc[0]} <br />
+                                  Origin: {assoc[1]} <br />
                                   <br />
                                 </>
                               );
@@ -801,7 +802,7 @@ export default function ServicePage() {
             }}
             onClick={() =>
               (showStaffData
-                ? setShowStaffData(false)
+                ? setShowStaffData(false) + setUpdateServicePageButton(false)
                 : setShowStaffData(true)) + executeScroll()
             }
           >
