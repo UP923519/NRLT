@@ -57,6 +57,7 @@ let rememberSecondStation;
 let rememberTimeOffset;
 let busDisplayMode = "train";
 let showBuses = false;
+let rememberDateTime = [];
 
 const _ = require("lodash");
 const headersListDepart = {
@@ -503,14 +504,24 @@ export default function DepartArrive(departArrive) {
 
     offsetHours = timeOffset;
 
-    if (offsetHours == "") {
-      offsetHours = hours;
-      offsetMinutes = minutes;
+    console.log("selectedTime", selectedTime);
+
+    if (rememberDateTime) {
+      console.log("rememberTime", rememberDateTime[0]);
+      console.log("rememberDate", rememberDateTime[1]);
     }
 
     if (selectedTime !== null) {
       offsetHours = selectedTime.split(":")[0];
       offsetMinutes = selectedTime.split(":")[1];
+    } else {
+      if (rememberDateTime[0]) {
+        offsetHours = rememberDateTime[0].split(":")[0];
+        offsetMinutes = rememberDateTime[0].split(":")[1];
+      } else {
+        offsetHours = hours;
+        offsetMinutes = minutes;
+      }
     }
 
     if (selectedDay !== null) {
@@ -518,9 +529,15 @@ export default function DepartArrive(departArrive) {
       offsetMonths = selectedDay.split("-")[1];
       offsetYears = selectedDay.split("-")[0];
     } else {
-      offsetDays = day;
-      offsetMonths = month;
-      offsetYears = year;
+      if (rememberDateTime[1]) {
+        offsetDays = rememberDateTime[1].split("-")[2];
+        offsetMonths = rememberDateTime[1].split("-")[1];
+        offsetYears = rememberDateTime[1].split("-")[0];
+      } else {
+        offsetDays = day;
+        offsetMonths = month;
+        offsetYears = year;
+      }
     }
 
     let deparrurl1;
@@ -604,9 +621,9 @@ export default function DepartArrive(departArrive) {
             "BoardWithDetails/" +
             fromCode +
             "/" +
-            year +
-            month +
-            day +
+            offsetYears +
+            offsetMonths +
+            offsetDays +
             "T" +
             offsetHours +
             offsetMinutes +
@@ -766,9 +783,9 @@ export default function DepartArrive(departArrive) {
             "BoardWithDetails/" +
             stationName +
             "/" +
-            year +
-            month +
-            day +
+            offsetYears +
+            offsetMonths +
+            offsetDays +
             "T" +
             offsetHours +
             offsetMinutes +
@@ -1140,6 +1157,7 @@ export default function DepartArrive(departArrive) {
                     day={day}
                     month={month}
                     year={year}
+                    rememberDateTime={rememberDateTime}
                   />
                   {departArrive == "Departures" ? (
                     <p

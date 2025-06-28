@@ -15,12 +15,15 @@ export default function SelectDate({
   day,
   month,
   year,
+  rememberDateTime,
 }) {
   const handleTimeChange = (value, event) => {
     setSelectedTime(value);
+    rememberDateTime[0] = value;
   };
   const handleDateChange = (value, event) => {
     setSelectedDay(value);
+    rememberDateTime[1] = value;
   };
 
   return (
@@ -47,7 +50,11 @@ export default function SelectDate({
             background: "white",
           }}
           value={selectedDay}
-          defaultValue={year + "-" + month + "-" + day}
+          defaultValue={
+            rememberDateTime[1]
+              ? rememberDateTime[1]
+              : year + "-" + month + "-" + day
+          }
           type="date"
           id="appt"
           name="appt"
@@ -65,7 +72,9 @@ export default function SelectDate({
             background: "white",
           }}
           value={selectedTime}
-          defaultValue={hours + ":" + minutes}
+          defaultValue={
+            rememberDateTime[0] ? rememberDateTime[0] : hours + ":" + minutes
+          }
           type="time"
           id="appt"
           name="appt"
@@ -76,7 +85,9 @@ export default function SelectDate({
           type="button"
           onClick={() =>
             setSelectedTime(hours + ":" + minutes) +
-            setSelectedDay(year + "-" + month + "-" + day)
+            setSelectedDay(year + "-" + month + "-" + day) +
+            (rememberDateTime[0] = hours + ":" + minutes) +
+            (rememberDateTime[1] = year + "-" + month + "-" + day)
           }
           style={{
             borderColor: "#cccccc",
