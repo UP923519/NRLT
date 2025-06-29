@@ -1390,13 +1390,14 @@ export default function DepartArrive(departArrive) {
           <>
             {isOpen && (
               <>
-                <text style={{ display: "flex", justifyContent: "center" }}>
+                <div style={{ marginBottom: "10px" }}>
                   {trainSearch}
                   <Tooltip
                     title={
                       <div>
                         {staffData.locationName} Managed By: &nbsp;
-                        {staffData.stationManager} ({staffData.stationManagerCode})
+                        {staffData.stationManager} (
+                        {staffData.stationManagerCode})
                       </div>
                     }
                     onClose={handleTooltipClose}
@@ -1409,12 +1410,12 @@ export default function DepartArrive(departArrive) {
                   >
                     <text
                       onClick={handleTooltipOpen}
-                      sx={{ marginBottom: 2, color: "#0080ff" }}
+                      style={{ marginBottom: 2, color: "#0080ff" }}
                     >
                       &nbsp; ⓘ
                     </text>
                   </Tooltip>
-                </text>
+                </div>
 
                 <Box sx={{ marginBottom: 2 }}>
                   <button
