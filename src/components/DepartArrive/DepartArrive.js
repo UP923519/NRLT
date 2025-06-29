@@ -504,13 +504,6 @@ export default function DepartArrive(departArrive) {
 
     offsetHours = timeOffset;
 
-    console.log("selectedTime", selectedTime);
-
-    if (rememberDateTime) {
-      console.log("rememberTime", rememberDateTime[0]);
-      console.log("rememberDate", rememberDateTime[1]);
-    }
-
     if (selectedTime !== null) {
       offsetHours = selectedTime.split(":")[0];
       offsetMinutes = selectedTime.split(":")[1];
@@ -1397,24 +1390,34 @@ export default function DepartArrive(departArrive) {
           <>
             {isOpen && (
               <>
-                <Tooltip
-                  title={
-                    staffData.locationName +
-                    " managed by: " +
-                    staffData.stationManager
-                  }
-                  onClose={handleTooltipClose}
-                  open={tTSMOpen}
-                  slotProps={{
-                    popper: {
-                      disablePortal: true,
-                    },
-                  }}
-                >
-                  <Box onClick={handleTooltipOpen} sx={{ marginBottom: 2 }}>
-                    {trainSearch}
-                  </Box>
-                </Tooltip>
+                <text style={{ display: "flex", justifyContent: "center" }}>
+                  {trainSearch}
+                  <Tooltip
+                    title={
+                      <div>
+                        {staffData.locationName} Managed By: &nbsp;
+                        {staffData.stationManager} <br />
+                        {staffData.locationName} Manager Code:{" "}
+                        {staffData.stationManagerCode}
+                      </div>
+                    }
+                    onClose={handleTooltipClose}
+                    open={tTSMOpen}
+                    slotProps={{
+                      popper: {
+                        disablePortal: false,
+                      },
+                    }}
+                  >
+                    <Box
+                      onClick={handleTooltipOpen}
+                      sx={{ marginBottom: 2, color: "#0080ff" }}
+                    >
+                      &nbsp; ⓘ
+                    </Box>
+                  </Tooltip>
+                </text>
+
                 <Box sx={{ marginBottom: 2 }}>
                   <button
                     id="useTrains"

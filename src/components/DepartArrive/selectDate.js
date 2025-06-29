@@ -22,10 +22,12 @@ export default function SelectDate({
   const handleTimeChange = (value, event) => {
     setSelectedTime(value);
     rememberDateTime[0] = value;
+    setSync(false);
   };
   const handleDateChange = (value, event) => {
     setSelectedDay(value);
     rememberDateTime[1] = value;
+    setSync(false);
   };
 
   return (
@@ -51,7 +53,7 @@ export default function SelectDate({
             marginRight: "5px",
             background: "white",
           }}
-          value={selectedDay}
+          value={sync ? year + "-" + month + "-" + day : selectedDay}
           defaultValue={
             rememberDateTime[1]
               ? rememberDateTime[1]
@@ -73,7 +75,7 @@ export default function SelectDate({
             width: "100%",
             background: "white",
           }}
-          value={selectedTime}
+          value={sync ? hours + ":" + minutes : selectedTime}
           defaultValue={
             rememberDateTime[0] ? rememberDateTime[0] : hours + ":" + minutes
           }
@@ -89,7 +91,8 @@ export default function SelectDate({
             setSelectedTime(hours + ":" + minutes) +
             setSelectedDay(year + "-" + month + "-" + day) +
             (rememberDateTime[0] = hours + ":" + minutes) +
-            (rememberDateTime[1] = year + "-" + month + "-" + day)
+            (rememberDateTime[1] = year + "-" + month + "-" + day) +
+            setSync(false)
           }
           style={{
             borderColor: "#cccccc",
