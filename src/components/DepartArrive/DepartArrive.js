@@ -1396,9 +1396,7 @@ export default function DepartArrive(departArrive) {
                     title={
                       <div>
                         {staffData.locationName} Managed By: &nbsp;
-                        {staffData.stationManager} <br />
-                        {staffData.locationName} Manager Code:{" "}
-                        {staffData.stationManagerCode}
+                        {staffData.stationManager} ({staffData.stationManagerCode})
                       </div>
                     }
                     onClose={handleTooltipClose}
@@ -1409,12 +1407,12 @@ export default function DepartArrive(departArrive) {
                       },
                     }}
                   >
-                    <Box
+                    <text
                       onClick={handleTooltipOpen}
                       sx={{ marginBottom: 2, color: "#0080ff" }}
                     >
                       &nbsp; ⓘ
-                    </Box>
+                    </text>
                   </Tooltip>
                 </text>
 
