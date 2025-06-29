@@ -17,6 +17,8 @@ export default function SelectDate({
   year,
   rememberDateTime,
 }) {
+  const [sync, setSync] = useState(false);
+
   const handleTimeChange = (value, event) => {
     setSelectedTime(value);
     rememberDateTime[0] = value;
@@ -102,6 +104,45 @@ export default function SelectDate({
           }}
         >
           Now
+        </button>
+        <button
+          //   id="useTrains"
+          type="button"
+          onClick={() =>
+            setSelectedTime(null) +
+            setSelectedDay(null) +
+            (rememberDateTime[0] = null) +
+            (rememberDateTime[1] = null) +
+            setSync(true)
+          }
+          style={{
+            borderColor: "#cccccc",
+            borderStyle: "solid",
+            borderWidth: "thin",
+            marginLeft: "5px",
+            borderRadius: "5px",
+            padding: "7px",
+            background:
+              (selectedDay == null &&
+                selectedTime == null &&
+                rememberDateTime[0] == null &&
+                rememberDateTime[1] == null) ||
+              sync
+                ? "#0080ff"
+                : "white",
+            color:
+              (selectedDay == null &&
+                selectedTime == null &&
+                rememberDateTime[0] == null &&
+                rememberDateTime[1] == null) ||
+              sync
+                ? "white"
+                : "black",
+            height: "38px",
+            width: "125px",
+          }}
+        >
+          Sync
         </button>
       </form>
     </>
