@@ -157,7 +157,13 @@ export default function TrainBus({
               className="tableTR"
               onClick={() => routeChange(departures, index)}
             >
-              <td>{departures}</td>
+              {/* <td>{departures}</td> */}
+
+              <td
+                dangerouslySetInnerHTML={{
+                  __html: departures,
+                }}
+              />
               <br />
               <br />
               <br />

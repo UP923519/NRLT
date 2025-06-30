@@ -825,7 +825,6 @@ export default function DepartArrive(departArrive) {
       // staffData = await staffResponse.json();
       staffData = staffResponse;
       staffDataBus = staffResponseBus;
-
       nrccMessages = staffData.nrccMessages;
       liveDeparture = staffData.trainServices;
       busDeparture = staffDataBus.busServices;
@@ -1017,12 +1016,31 @@ export default function DepartArrive(departArrive) {
             destination2Origin +
             ")  " +
             (liveDeparture[i].eta
-              ? liveDeparture[i].eta.slice(11, 16)
+              ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                liveDeparture[i].eta.slice(11, 16) +
+                "&nbsp;⏱" +
+                "</text>"
               : liveDeparture[i].ata
-              ? liveDeparture[i].ata.slice(11, 16)
+              ? liveDeparture[i].ata.slice(11, 16) ==
+                liveDeparture[i].sta.slice(11, 16)
+                ? "<text style=background:green;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                  liveDeparture[i].ata.slice(11, 16) +
+                  "</text>"
+                : "<text style=background:#969696;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                  liveDeparture[i].ata.slice(11, 16) +
+                  "</text>"
               : liveDeparture[i].isCancelled
-              ? "Cancelled"
-              : "Delayed") +
+              ? "<text style=background:#000000;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                "Cancelled" +
+                "&nbsp;❌" +
+                "</text>"
+              : liveDeparture[i].departureType == "NoLog"
+              ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                "Not Recorded" +
+                "</text>"
+              : "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                "Delayed" +
+                "</text>") +
             "  P." +
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
             sCode
@@ -1069,12 +1087,31 @@ export default function DepartArrive(departArrive) {
             destination2Origin +
             ")  " +
             (liveDeparture[i].etd
-              ? liveDeparture[i].etd.slice(11, 16)
+              ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                liveDeparture[i].etd.slice(11, 16) +
+                "&nbsp;⏱" +
+                "</text>"
               : liveDeparture[i].atd
-              ? liveDeparture[i].atd.slice(11, 16)
+              ? liveDeparture[i].atd.slice(11, 16) ==
+                liveDeparture[i].std.slice(11, 16)
+                ? "<text style=background:green;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                  liveDeparture[i].atd.slice(11, 16) +
+                  "</text>"
+                : "<text style=background:#969696;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                  liveDeparture[i].atd.slice(11, 16) +
+                  "</text>"
               : liveDeparture[i].isCancelled
-              ? "Cancelled"
-              : "Delayed") +
+              ? "<text style=background:#000000;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                "Cancelled" +
+                "&nbsp;❌" +
+                "</text>"
+              : liveDeparture[i].departureType == "NoLog"
+              ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                "Not Recorded" +
+                "</text>"
+              : "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                "Delayed" +
+                "</text>") +
             "  P." +
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
             sCode
@@ -1391,13 +1428,31 @@ export default function DepartArrive(departArrive) {
             {isOpen && (
               <>
                 <div style={{ marginBottom: "10px" }}>
-                  {trainSearch}
+                  {trainSearch} &nbsp;
                   <Tooltip
+                    arrow
+                    componentsProps={{
+                      tooltip: {
+                        sx: {
+                          maxWidth: "none",
+                          background: "white",
+                          borderRadius: "20px",
+                          border: 1,
+                          borderColor: "#c9c9c9",
+                          "& .MuiTooltip-arrow": {
+                            color: "#0080ff",
+                          },
+                        },
+                      },
+                    }}
+                    leaveTouchDelay={5000}
                     title={
-                      <div>
-                        {staffData.locationName} Managed By: &nbsp;
-                        {staffData.stationManager} (
-                        {staffData.stationManagerCode})
+                      <div style={{ color: "black" }}>
+                        {staffData.locationName} Managed By: <br />
+                        <text style={{ color: "green" }}>
+                          {staffData.stationManager} (
+                          {staffData.stationManagerCode})
+                        </text>
                       </div>
                     }
                     onClose={handleTooltipClose}
@@ -1405,6 +1460,14 @@ export default function DepartArrive(departArrive) {
                     slotProps={{
                       popper: {
                         disablePortal: false,
+                        modifiers: [
+                          {
+                            name: "offset",
+                            options: {
+                              offset: [0, -15],
+                            },
+                          },
+                        ],
                       },
                     }}
                   >
@@ -1412,7 +1475,7 @@ export default function DepartArrive(departArrive) {
                       onClick={handleTooltipOpen}
                       style={{ marginBottom: 2, color: "#0080ff" }}
                     >
-                      &nbsp; ⓘ
+                      ⓘ
                     </text>
                   </Tooltip>
                 </div>

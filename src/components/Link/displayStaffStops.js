@@ -311,7 +311,12 @@ export default function DisplayStaffStops({
                           >
                             {waypoint.etdSpecified == false &&
                             waypoint.etaSpecified == false ? (
-                              "No info"
+                              waypoint.departureType == "3" ||
+                              waypoint.arrivalType == "3" ? (
+                                "Delayed"
+                              ) : (
+                                "No info"
+                              )
                             ) : (
                               <>
                                 {waypoint.etdSpecified

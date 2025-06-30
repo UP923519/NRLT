@@ -251,7 +251,14 @@ export default function DisplayStops({
                                 false &&
                               data?.locations[yourStationIndex].etaSpecified ==
                                 false ? (
-                                "No info"
+                                data?.locations[yourStationIndex]
+                                  .departureType == "3" ||
+                                data?.locations[yourStationIndex].arrivalType ==
+                                  "3" ? (
+                                  "Delayed"
+                                ) : (
+                                  "No info"
+                                )
                               ) : (
                                 <>
                                   {data?.locations[yourStationIndex]

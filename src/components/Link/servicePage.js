@@ -161,6 +161,7 @@ export default function ServicePage() {
     infoTrainSet.pop();
     infoTrainSet.pop();
     infoTrainSet.pop();
+    infoTrainSet.pop();
 
     setInfoTrain(infoTrainSet);
 
