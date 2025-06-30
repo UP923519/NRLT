@@ -43,6 +43,7 @@ export default function DisplayStops({
   station,
   setAssociations,
   associations,
+  rememberStaffData,
 }) {
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
@@ -59,8 +60,8 @@ export default function DisplayStops({
 
   const yourStationIndex = data.locations.findIndex(
     (location) =>
-      (location.std.includes(infoTrainDisplay[0].slice(0, 5)) ||
-        location.sta.includes(infoTrainDisplay[0].slice(0, 5))) &&
+      (location.std.includes(infoTrainDisplay[0].slice(3, 8)) ||
+        location.sta.includes(infoTrainDisplay[0].slice(3, 8))) &&
       location.locationName.includes(rememberFirstStation.slice(1, -7))
   );
 

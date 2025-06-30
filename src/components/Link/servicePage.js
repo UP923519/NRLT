@@ -528,7 +528,27 @@ export default function ServicePage() {
           {isOpen && !showStaffData && (
             <div>
               <p className="infoTrain" style={{ margin: "0px" }}>
-                {infoTrainDisplay}
+                {rememberStaffData.std
+                  ? rememberStaffData.std.slice(11, 16)
+                  : rememberStaffData.sta.slice(11, 16)}{" "}
+                at {rememberFirstStationSave.slice(0, -6)}:
+                {rememberStaffData.destination.map((dest, index) => {
+                  return (
+                    <>
+                      {index > 0 && " and"}
+                      {" " + dest.locationName}
+                    </>
+                  );
+                })}{" "}
+                from
+                {rememberStaffData.origin.map((orig, index) => {
+                  return (
+                    <>
+                      {index > 0 && " and"}
+                      {" " + orig.locationName}
+                    </>
+                  );
+                })}
               </p>
             </div>
           )}
@@ -834,6 +854,7 @@ export default function ServicePage() {
           station={station}
           setAssociations={setAssociations}
           associations={associations}
+          rememberStaffData={rememberStaffData}
         />
       )}
       {loadedState == false ? (

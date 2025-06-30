@@ -1002,19 +1002,10 @@ export default function DepartArrive(departArrive) {
           sCode = "";
         }
         stringDepartures.push(
-          liveDeparture[i].sta.slice(11, 16) +
+          "<b>" +
+            liveDeparture[i].sta.slice(11, 16) +
+            "</b>" +
             " " +
-            liveDeparture[i].destination[0].locationName +
-            " " +
-            liveDeparture[i].destination[0].via +
-            destination2Depart +
-            " " +
-            destination2Via +
-            " (from " +
-            liveDeparture[i].origin[0].locationName +
-            liveDeparture[i].origin[0].via +
-            destination2Origin +
-            ")  " +
             (liveDeparture[i].eta
               ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 liveDeparture[i].eta.slice(11, 16) +
@@ -1041,8 +1032,23 @@ export default function DepartArrive(departArrive) {
               : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 "Delayed" +
                 "</text>") +
-            "  P." +
+            "<br/>" +
+            liveDeparture[i].destination[0].locationName +
+            " " +
+            liveDeparture[i].destination[0].via +
+            destination2Depart +
+            " " +
+            destination2Via +
+            " (from " +
+            liveDeparture[i].origin[0].locationName +
+            liveDeparture[i].origin[0].via +
+            destination2Origin +
+            ")  " +
+            "<br/>" +
+            "<text style=position:relative;>" +
+            "  Platform " +
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
+            "</text>" +
             sCode
         );
       }
@@ -1073,19 +1079,10 @@ export default function DepartArrive(departArrive) {
           sCode = "";
         }
         stringDepartures.push(
-          liveDeparture[i].std.slice(11, 16) +
+          "<b>" +
+            liveDeparture[i].std.slice(11, 16) +
+            "</b>" +
             " " +
-            liveDeparture[i].destination[0].locationName +
-            " " +
-            liveDeparture[i].destination[0].via +
-            destination2Depart +
-            " " +
-            destination2Via +
-            " (from " +
-            liveDeparture[i].origin[0].locationName +
-            liveDeparture[i].origin[0].via +
-            destination2Origin +
-            ")  " +
             (liveDeparture[i].etd
               ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 liveDeparture[i].etd.slice(11, 16) +
@@ -1112,8 +1109,23 @@ export default function DepartArrive(departArrive) {
               : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 "Delayed" +
                 "</text>") +
-            "  P." +
+            "<br/>" +
+            liveDeparture[i].destination[0].locationName +
+            " " +
+            liveDeparture[i].destination[0].via +
+            destination2Depart +
+            " " +
+            destination2Via +
+            " (from " +
+            liveDeparture[i].origin[0].locationName +
+            liveDeparture[i].origin[0].via +
+            destination2Origin +
+            ")  " +
+            "<br/>" +
+            "<text style=position:relative;>" +
+            "  Platform " +
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
+            "</text>" +
             sCode
         );
       }
