@@ -150,20 +150,35 @@ export default function TrainBus({
         </ButtonGroup>
         <br />
         <br /> */}
-        <Table className="transactions" style={{ backgroundColor: "#f0f0f0" }}>
+        <Table
+          className="transactions"
+          style={{
+            backgroundColor: "#f0f0f044",
+          }}
+        >
           {stringDepartures.map((departures, index) => (
             <tr
               data-index={index}
               className="tableTR"
+              style={{
+                background: "#f0f0f0",
+                // borderStyle: "solid",
+                borderRadius: "20px",
+                // borderColor: "#f0f0f0",
+                marginBottom: "7.5px",
+                marginTop: "7.5px",
+                display: "flex",
+                alignItems: "flex-start",
+              }}
               onClick={() => routeChange(departures, index)}
             >
               {/* <td>{departures}</td> */}
-
               <td
                 dangerouslySetInnerHTML={{
                   __html: departures,
                 }}
               />
+
               <br />
               <br />
               <br />

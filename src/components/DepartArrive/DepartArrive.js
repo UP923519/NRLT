@@ -1038,7 +1038,7 @@ export default function DepartArrive(departArrive) {
               ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 "Not Recorded" +
                 "</text>"
-              : "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+              : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 "Delayed" +
                 "</text>") +
             "  P." +
@@ -1109,7 +1109,7 @@ export default function DepartArrive(departArrive) {
               ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 "Not Recorded" +
                 "</text>"
-              : "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+              : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 "Delayed" +
                 "</text>") +
             "  P." +
@@ -1436,7 +1436,7 @@ export default function DepartArrive(departArrive) {
                         sx: {
                           maxWidth: "none",
                           background: "white",
-                          borderRadius: "20px",
+                          borderRadius: "10px",
                           border: 1,
                           borderColor: "#c9c9c9",
                           "& .MuiTooltip-arrow": {
