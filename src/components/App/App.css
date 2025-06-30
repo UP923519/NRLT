@@ -377,6 +377,8 @@ a.active-animation:active {
   width: 100%;
   height: 4em;
   display: inline-block;
+  display: "flex";
+  align-items: flex-start;
 }
 
 .trainInfo {

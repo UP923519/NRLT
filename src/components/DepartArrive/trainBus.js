@@ -167,8 +167,6 @@ export default function TrainBus({
                 // borderColor: "#f0f0f0",
                 marginBottom: "7.5px",
                 marginTop: "7.5px",
-                display: "flex",
-                alignItems: "flex-start",
               }}
               onClick={() => routeChange(departures, index)}
             >
