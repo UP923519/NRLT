@@ -1038,7 +1038,7 @@ export default function DepartArrive(departArrive) {
                 "Delayed" +
                 "</text>") +
             "<br/>" +
-            "<text style=display:flex;max-block-size:18px;>" +
+            "<text class=tabletitle >" +
             liveDeparture[i].destination[0].locationName +
             " " +
             liveDeparture[i].destination[0].via +
@@ -1126,7 +1126,7 @@ export default function DepartArrive(departArrive) {
                 "Delayed" +
                 "</text>") +
             "<br/>" +
-            "<text style=display:flex;max-block-size:18px;>" +
+            "<text class=tabletitle >" +
             liveDeparture[i].destination[0].locationName +
             " " +
             liveDeparture[i].destination[0].via +

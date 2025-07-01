@@ -533,6 +533,7 @@ export default function ServicePage() {
                   : rememberStaffData.sta.slice(11, 16)}{" "}
                 at {rememberFirstStationSave.slice(0, -6)}:
                 {rememberStaffData.destination.map((dest, index) => {
+                  console.log("rememberStaffData", rememberStaffData);
                   return (
                     <>
                       {index > 0 && " and"}

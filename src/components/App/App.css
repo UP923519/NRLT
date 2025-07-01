@@ -382,6 +382,11 @@ a.active-animation:active {
   align-items: flex-start;
 }
 
+.tabletitle {
+  display: flex;
+  max-block-size: 18px;
+}
+
 .trainInfo {
   display: flex;
   flex-wrap: wrap;
@@ -452,6 +457,12 @@ a.active-animation:active {
     display: inline-table;
     text-align: center;
     text-align-last: center;
+  }
+
+  .tabletitle {
+    display: flex;
+    justify-content: center;
+    max-block-size: 18px;
   }
 
   .infoTrain {
