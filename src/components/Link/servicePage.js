@@ -13,7 +13,14 @@ import "reactjs-popup/dist/index.css";
 import LinearProgress from "@mui/material-next/LinearProgress";
 import { PopupStations } from "./PopupStations";
 import Fade from "react-reveal/Fade";
-import { Button, ButtonBase, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Button,
+  ButtonBase,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DisplayStops, { test2 } from "./displayStops";
 import { BorderStyle } from "@mui/icons-material";
@@ -673,6 +680,51 @@ export default function ServicePage() {
                       {diffMinutes == 1 && diffMinutes + "Minute "}
                       {diffMinutes > 1 && diffMinutes + " Minutes "}
                     </text>
+                    <Tooltip
+                      disableFocusListener
+                      arrow
+                      componentsProps={{
+                        tooltip: {
+                          sx: {
+                            maxWidth: "none",
+                            background: "white",
+                            borderRadius: "10px",
+                            border: 1,
+                            borderColor: "#c9c9c9",
+                            "& .MuiTooltip-arrow": {
+                              color: "#0080ff",
+                            },
+                          },
+                        },
+                      }}
+                      title={
+                        <div style={{ color: "black" }}>
+                          {"Full journey between " +
+                            allStaffServiceData.locations[0].locationName +
+                            " and " +
+                            allStaffServiceData.locations[
+                              allStaffServiceData.locations.length - 1
+                            ].locationName}
+                        </div>
+                      }
+                      slotProps={{
+                        popper: {
+                          disablePortal: false,
+                          modifiers: [
+                            {
+                              name: "offset",
+                              options: {
+                                offset: [0, -10],
+                              },
+                            },
+                          ],
+                        },
+                      }}
+                    >
+                      <text style={{ marginBottom: 2, color: "#0080ff" }}>
+                        ⓘ
+                      </text>
+                    </Tooltip>
                     <div style={{ marginBottom: "10px" }}>
                       {/* {!stringCalling[0][0].includes("Loading") ? (
                   <> */}
