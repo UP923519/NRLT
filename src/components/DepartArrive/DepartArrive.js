@@ -1037,6 +1037,9 @@ export default function DepartArrive(departArrive) {
               : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 "Delayed" +
                 "</text>") +
+            "&nbsp;<text style=font-size:small;color:#696969>" +
+            liveDeparture[i].operator +
+            "</text>" +
             "<br/>" +
             "<text class=tabletitle >" +
             liveDeparture[i].destination[0].locationName +
@@ -1125,6 +1128,9 @@ export default function DepartArrive(departArrive) {
               : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 "Delayed" +
                 "</text>") +
+            "&nbsp;<text style=font-size:small;color:#696969>" +
+            liveDeparture[i].operator +
+            "</text>" +
             "<br/>" +
             "<text class=tabletitle >" +
             liveDeparture[i].destination[0].locationName +
