@@ -957,7 +957,8 @@ export default function DepartArrive(departArrive) {
     row = row.split(" ");
     row = row.pop();
     let path = "/linkPage";
-    navigate(path);
+
+    navigate("/linkPage");
     test1(
       sIdArray[index],
       trainInfo,

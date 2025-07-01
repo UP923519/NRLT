@@ -13,6 +13,7 @@ import DepartArrive from "../DepartArrive/DepartArrive";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
 import Fade from "react-reveal/Fade";
+import { test1 } from "./servicePage";
 
 const style = {
   top: "50%",
@@ -41,6 +42,7 @@ export default function DisplayStaffStops({
   setAssociations,
   diffHours,
   diffMinutes,
+  setShowStaffData,
 }) {
   const [station, setStation] = useState();
   const [open, setOpen] = useState(false);
@@ -85,7 +87,6 @@ export default function DisplayStaffStops({
         //Work out time difference
         // Convert to Date objects
 
-        console.log("dataStaffService", dataStaffService);
         const dateStart = new Date(dataStaffService.locations[0].std);
         const dateEnd = new Date(
           dataStaffService.locations[dataStaffService.locations.length - 1].sta
@@ -214,7 +215,6 @@ export default function DisplayStaffStops({
                   paddingTop: "0px",
                 }}
               >
-                {console.log("TD", diffHours)}
                 <text style={{ color: "#696969" }}>
                   {timeDiff && timeDiff.length > 0 ? (
                     <>
@@ -754,10 +754,14 @@ export default function DisplayStaffStops({
                                 <br />
                                 Destination: {association.destination}
                                 <br />
-                                RID:
+                                {/* RID: */}
                                 <Button
                                   variant="outlined"
-                                  sx={{ marginLeft: "5px" }}
+                                  sx={{
+                                    marginRight: "2.5px",
+                                    boxShadow: 5,
+                                    borderRadius: "10px",
+                                  }}
                                   onClick={() =>
                                     setNewRid(association.rid) +
                                     (association.rid == allStaffServiceData.rid
@@ -768,10 +772,36 @@ export default function DisplayStaffStops({
                                 >
                                   {!loadedState ? (
                                     <Typography>
-                                      Loading!.. Please wait...
+                                      ⏳Loading, please wait...
                                     </Typography>
                                   ) : (
-                                    association.rid
+                                    "View Timetable"
+                                  )}
+                                </Button>
+                                <Button
+                                  variant="outlined"
+                                  sx={{
+                                    marginLeft: "2.5px",
+                                    boxShadow: 5,
+                                    borderRadius: "10px",
+                                  }}
+                                  onClick={() =>
+                                    setNewRid(association.rid) +
+                                    setShowStaffData(false) +
+                                    setUpdateServicePageButton(false) +
+                                    navigate("/linkPage", {
+                                      state: {
+                                        rid: association.rid,
+                                      },
+                                    })
+                                  }
+                                >
+                                  {!loadedState ? (
+                                    <Typography>
+                                      ⏳Loading, please wait...
+                                    </Typography>
+                                  ) : (
+                                    "View Service Details"
                                   )}
                                 </Button>
                                 <br />

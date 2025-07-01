@@ -46,6 +46,7 @@ export default function DisplayStops({
   rememberStaffData,
   diffHours,
   diffMinutes,
+  setShowStaffData,
 }) {
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
@@ -60,12 +61,16 @@ export default function DisplayStops({
     ].reverse();
   }
 
-  const yourStationIndex = data.locations.findIndex(
+  let yourStationIndex = data.locations.findIndex(
     (location) =>
       (location.std.includes(infoTrainDisplay[0].slice(3, 8)) ||
         location.sta.includes(infoTrainDisplay[0].slice(3, 8))) &&
       location.locationName.includes(rememberFirstStation.slice(1, -7))
   );
+
+  if (yourStationIndex == -1) {
+    yourStationIndex = 0;
+  }
 
   useEffect(() => {
     if ((data.atd || data.ata) !== null) {
@@ -147,7 +152,7 @@ export default function DisplayStops({
               </tr>
               <tr>
                 <th style={{ fontSize: 15, paddingBottom: "15px" }}>
-                  Your Station: {rememberFirstStation}
+                  Your Station: {data?.locations[yourStationIndex].locationName}
                 </th>
               </tr>
               <tr>
@@ -395,6 +400,7 @@ export default function DisplayStops({
           associations={associations}
           diffHours={diffHours}
           diffMinutes={diffMinutes}
+          setShowStaffData={setShowStaffData}
         />
       )}
       <Modal

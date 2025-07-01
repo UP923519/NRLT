@@ -39,35 +39,67 @@ export default function TrainBus({
               <text style={{ wordBreak: "break-word", hyphens: "auto" }}>
                 {/* {textInfo} */}
                 <text style={{ fontSize: "medium" }}>
-                  <u>
-                    {nrccMessages &&
-                      nrccMessages.length +
-                        (nrccMessages.length > 1
-                          ? " messages or alerts for "
-                          : " message or alert for ") +
-                        displayStation +
-                        ":\n\n"}
-                    {nrccMessages && (
-                      <hr
-                        style={{ border: "1px dashed black", width: "15%" }}
-                      />
-                    )}
-                  </u>
+                  {nrccMessages &&
+                    nrccMessages.length +
+                      (nrccMessages.length > 1
+                        ? " alerts for "
+                        : " alert for ") +
+                      displayStation +
+                      "\n"}
+                  {nrccMessages && (
+                    <>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginLeft: "22px",
+                          marginRight: "22px",
+                          fontSize: "small",
+                          marginBottom: "-15px",
+                          marginTop: "7px",
+                          color: "#454545",
+                        }}
+                      >
+                        <text>Type</text>
+                        <text>Severity</text>
+                      </div>
+                    </>
+                  )}
+                  {nrccMessages && (
+                    <hr style={{ border: "0px dashed black", width: "15%" }} />
+                  )}
                 </text>
                 {!nrccMessages &&
                   displayStation &&
-                  "No messages or alerts for " + displayStation}
+                  "No alerts for " + displayStation}
 
                 {nrccMessages?.map((message) => (
                   <>
                     <div
+                      style={{
+                        boxShadow:
+                          "0 6px 20px 0 rgba(96, 96, 96, 0.19), 0 6px 20px 0 rgba(96, 96, 96, 0.19)",
+                        borderRadius: "20px",
+                        padding: "5px",
+                        marginLeft: "-9px",
+                        marginRight: "-9px",
+                        background: "#fafafadd",
+                        paddingBottom: "25px",
+                      }}
                       dangerouslySetInnerHTML={{
-                        __html: message["xhtmlMessage"],
+                        __html:
+                          "<div style=display:flex;justify-content:space-between;margin-left:25px;margin-right:25px;>" +
+                          "<text style=font-size:small;color:#808080;>" +
+                          message["category"] +
+                          "</text>" +
+                          "<text style=font-size:small;color:#808080;>" +
+                          message["severity"] +
+                          "</text>" +
+                          "</div>" +
+                          message["xhtmlMessage"],
                       }}
                     />
-
-                    <br />
-                    <hr style={{ border: "1px dashed black", width: "15%" }} />
+                    <hr style={{ border: "0px dashed black", width: "15%" }} />
                   </>
                 ))}
               </text>
@@ -167,6 +199,8 @@ export default function TrainBus({
                 // borderColor: "#f0f0f0",
                 marginBottom: "7.5px",
                 marginTop: "7.5px",
+                boxShadow:
+                  "0 1px 2px 0 rgba(96, 96, 96, 0.19), 0 0px 4px 0 rgba(96, 96, 96, 0.19)",
               }}
               onClick={() => routeChange(departures, index)}
             >
