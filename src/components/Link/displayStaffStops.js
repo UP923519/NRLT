@@ -39,6 +39,8 @@ export default function DisplayStaffStops({
   setUpdateServicePageButton,
   associations,
   setAssociations,
+  diffHours,
+  diffMinutes,
 }) {
   const [station, setStation] = useState();
   const [open, setOpen] = useState(false);
@@ -48,6 +50,8 @@ export default function DisplayStaffStops({
   const [rid, setRid] = useState();
   const [loadedState, setLoadedState] = useState(false);
   const [shiftScroll, setShiftScroll] = useState(false);
+  const [timeDiff, setTimeDiff] = useState([]);
+
   const navigate = useNavigate();
 
   const myRef = useRef(null);
@@ -78,6 +82,23 @@ export default function DisplayStaffStops({
       const dataStaffService = await responseStaffRID.json();
       if (dataStaffService) {
         setRid(dataStaffService);
+        //Work out time difference
+        // Convert to Date objects
+
+        console.log("dataStaffService", dataStaffService);
+        const dateStart = new Date(dataStaffService.locations[0].std);
+        const dateEnd = new Date(
+          dataStaffService.locations[dataStaffService.locations.length - 1].sta
+        );
+
+        // Difference in milliseconds
+        const diffMs = Math.abs(dateEnd - dateStart);
+
+        // Convert to minutes, hours, etc.
+        const diffSeconds = Math.floor((diffMs % 60000) / 1000);
+        const diffMinutes = Math.floor((diffMs % 3600000) / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        setTimeDiff([diffHours, diffMinutes, diffSeconds]);
       }
       setLoadedState(true);
       handleClose();
@@ -172,7 +193,7 @@ export default function DisplayStaffStops({
               <th
                 style={{
                   fontSize: 15,
-                  paddingBottom: "15px",
+                  paddingBottom: "5px",
                   paddingTop: "5px",
                 }}
               >
@@ -183,6 +204,35 @@ export default function DisplayStaffStops({
                 {" —> "}
                 {rid?.locations[0].locationName &&
                   rid.locations[rid?.locations.length - 1].locationName}
+              </th>
+            </tr>
+            <tr>
+              <th
+                style={{
+                  fontSize: 14,
+                  paddingBottom: "5px",
+                  paddingTop: "0px",
+                }}
+              >
+                {console.log("TD", diffHours)}
+                <text style={{ color: "#696969" }}>
+                  {timeDiff && timeDiff.length > 0 ? (
+                    <>
+                      {timeDiff[0] == 1 && timeDiff[0] + " Hour "}
+                      {timeDiff[0] > 1 && timeDiff[0] + " Hours "}
+                      {timeDiff[1] == 1 && timeDiff[1] + "Minute "}
+                      {timeDiff[1] > 1 && timeDiff[1] + " Minutes "}
+                    </>
+                  ) : (
+                    <>
+                      {diffHours == 1 && diffHours + " Hour "}
+                      {diffHours > 1 && diffHours + " Hours "}
+                      {diffMinutes == 1 && diffMinutes + "Minute "}
+                      {diffMinutes > 1 && diffMinutes + " Minutes "}
+                    </>
+                  )}
+                  <hr style={{ width: "25%", marginTop: "13px" }}></hr>
+                </text>
               </th>
             </tr>
             <tr>

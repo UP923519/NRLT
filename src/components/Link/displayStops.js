@@ -44,6 +44,8 @@ export default function DisplayStops({
   setAssociations,
   associations,
   rememberStaffData,
+  diffHours,
+  diffMinutes,
 }) {
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
@@ -391,6 +393,8 @@ export default function DisplayStops({
           setUpdateServicePageButton={setUpdateServicePageButton}
           setAssociations={setAssociations}
           associations={associations}
+          diffHours={diffHours}
+          diffMinutes={diffMinutes}
         />
       )}
       <Modal
