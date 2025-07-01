@@ -1011,7 +1011,7 @@ export default function DepartArrive(departArrive) {
                 (liveDeparture[i].eta.slice(11, 16) ==
                 liveDeparture[i].sta.slice(11, 16)
                   ? "#008200"
-                  : "#e88c79") +
+                  : "#e36c54") +
                 ";padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 liveDeparture[i].eta.slice(11, 16) +
                 "&nbsp;⏱" +
@@ -1099,7 +1099,7 @@ export default function DepartArrive(departArrive) {
                 (liveDeparture[i].etd.slice(11, 16) ==
                 liveDeparture[i].std.slice(11, 16)
                   ? "#008200"
-                  : "#e88c79") +
+                  : "#e36c54") +
                 ";padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 liveDeparture[i].etd.slice(11, 16) +
                 "&nbsp;⏱" +
