@@ -537,6 +537,7 @@ export default function ServicePage() {
                     <>
                       {index > 0 && " and"}
                       {" " + dest.locationName}
+                      {dest.via && dest.via != "" && " " + dest.via}
                     </>
                   );
                 })}{" "}
@@ -546,6 +547,7 @@ export default function ServicePage() {
                     <>
                       {index > 0 && " and"}
                       {" " + orig.locationName}
+                      {orig.via && orig.via != "" && " " + orig.via}
                     </>
                   );
                 })}

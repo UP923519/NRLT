@@ -1007,7 +1007,12 @@ export default function DepartArrive(departArrive) {
             "</b>" +
             " " +
             (liveDeparture[i].eta
-              ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+              ? "<text style=background:white;color:" +
+                (liveDeparture[i].eta.slice(11, 16) ==
+                liveDeparture[i].sta.slice(11, 16)
+                  ? "#008200"
+                  : "#e88c79") +
+                ";padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 liveDeparture[i].eta.slice(11, 16) +
                 "&nbsp;⏱" +
                 "</text>"
@@ -1033,6 +1038,7 @@ export default function DepartArrive(departArrive) {
                 "Delayed" +
                 "</text>") +
             "<br/>" +
+            "<text style=display:flex;max-block-size:18px;>" +
             liveDeparture[i].destination[0].locationName +
             " " +
             liveDeparture[i].destination[0].via +
@@ -1044,10 +1050,15 @@ export default function DepartArrive(departArrive) {
             liveDeparture[i].origin[0].via +
             destination2Origin +
             ")  " +
+            "</text>" +
             "<br/>" +
             "<text style=position:relative;>" +
             "  Platform " +
+            "<text style=background:" +
+            (!isNaN(liveDeparture[i].platform) ? "green" : "#e88c79") +
+            ";color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
+            "</text>" +
             "</text>" +
             sCode
         );
@@ -1084,7 +1095,12 @@ export default function DepartArrive(departArrive) {
             "</b>" +
             " " +
             (liveDeparture[i].etd
-              ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+              ? "<text style=background:white;color:" +
+                (liveDeparture[i].etd.slice(11, 16) ==
+                liveDeparture[i].std.slice(11, 16)
+                  ? "#008200"
+                  : "#e88c79") +
+                ";padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 liveDeparture[i].etd.slice(11, 16) +
                 "&nbsp;⏱" +
                 "</text>"
@@ -1110,6 +1126,7 @@ export default function DepartArrive(departArrive) {
                 "Delayed" +
                 "</text>") +
             "<br/>" +
+            "<text style=display:flex;max-block-size:18px;>" +
             liveDeparture[i].destination[0].locationName +
             " " +
             liveDeparture[i].destination[0].via +
@@ -1121,10 +1138,15 @@ export default function DepartArrive(departArrive) {
             liveDeparture[i].origin[0].via +
             destination2Origin +
             ")  " +
+            "</text>" +
             "<br/>" +
             "<text style=position:relative;>" +
-            "  Platform " +
+            "  Platform: " +
+            "<text style=background:" +
+            (!isNaN(liveDeparture[i].platform) ? "green" : "#e88c79") +
+            ";color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
+            "</text>" +
             "</text>" +
             sCode
         );
