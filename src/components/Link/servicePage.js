@@ -81,6 +81,7 @@ export default function ServicePage() {
   const [indicator, setIndicator] = useState();
   const [associations, setAssociations] = useState([]);
   const [sPAssociation, setSPAssociation] = useState(false);
+  const [ttopen, setTtOpen] = useState(false);
 
   const { state } = useLocation();
   const locations = useLocation();
@@ -554,56 +555,59 @@ export default function ServicePage() {
                   duration={1500}
                 >
                   <>
-                    <button
-                      id="useTrains"
-                      type="button"
-                      onClick={() =>
-                        handleServiceClick() +
-                        setUpdateServicePageButton(false) +
-                        setSPAssociation(false)
-                      }
-                      style={{
-                        position:
-                          showStaffData &&
-                          updateServicePageButton &&
-                          "relative",
-                        top: showStaffData && updateServicePageButton && "50px",
-                      }}
-                    >
-                      {showStaffData
-                        ? updateServicePageButton
+                    <text style={{ display: "flex", justifyContent: "center" }}>
+                      <button
+                        id="useTrains"
+                        type="button"
+                        onClick={() =>
+                          handleServiceClick() +
+                          setUpdateServicePageButton(false) +
+                          setSPAssociation(false)
+                        }
+                        style={{
+                          position:
+                            showStaffData &&
+                            updateServicePageButton &&
+                            "relative",
+                          top:
+                            showStaffData && updateServicePageButton && "50px",
+                        }}
+                      >
+                        {showStaffData
+                          ? updateServicePageButton
+                            ? "↺ Back To Your Service"
+                            : "🔄 Refresh"
+                          : sPAssociation
                           ? "↺ Back To Your Service"
-                          : "🔄 Refresh"
-                        : sPAssociation
-                        ? "↺ Back To Your Service"
-                        : "🔄 Refresh"}
-                    </button>
+                          : "🔄 Refresh"}
+                      </button>
 
-                    {sPAssociation && (
-                      <>
-                        <button
-                          id="useTrains"
-                          type="button"
-                          onClick={() =>
-                            logJSONData("", state.rid) +
-                            setUpdateServicePageButton(false) +
-                            setProcessingState(true)
-                          }
-                          style={{
-                            position:
-                              showStaffData &&
-                              updateServicePageButton &&
-                              "relative",
-                            top:
-                              showStaffData &&
-                              updateServicePageButton &&
-                              "50px",
-                          }}
-                        >
-                          {"🔄 Refresh"}
-                        </button>
-                      </>
-                    )}
+                      {sPAssociation && (
+                        <>
+                          <button
+                            id="useTrains"
+                            type="button"
+                            onClick={() =>
+                              logJSONData("", state.rid) +
+                              setUpdateServicePageButton(false) +
+                              setProcessingState(true)
+                            }
+                            style={{
+                              position:
+                                showStaffData &&
+                                updateServicePageButton &&
+                                "relative",
+                              top:
+                                showStaffData &&
+                                updateServicePageButton &&
+                                "50px",
+                            }}
+                          >
+                            {"🔄 Refresh"}
+                          </button>
+                        </>
+                      )}
+                    </text>
                   </>
                 </Fade>
               </>
@@ -683,6 +687,9 @@ export default function ServicePage() {
                     <Tooltip
                       disableFocusListener
                       arrow
+                      open={ttopen}
+                      leaveTouchDelay={5000}
+                      onClose={() => setTtOpen(false)}
                       componentsProps={{
                         tooltip: {
                           sx: {
@@ -699,7 +706,7 @@ export default function ServicePage() {
                       }}
                       title={
                         <div style={{ color: "black" }}>
-                          {"Full journey between " +
+                          {"Duration of full journey between " +
                             allStaffServiceData.locations[0].locationName +
                             " and " +
                             allStaffServiceData.locations[
@@ -721,7 +728,11 @@ export default function ServicePage() {
                         },
                       }}
                     >
-                      <text style={{ marginBottom: 2, color: "#0080ff" }}>
+                      {" "}
+                      <text
+                        style={{ marginBottom: 2, color: "#0080ff" }}
+                        onClick={() => setTtOpen(true)}
+                      >
                         ⓘ
                       </text>
                     </Tooltip>
@@ -988,6 +999,7 @@ export default function ServicePage() {
                                   ? "3px solid orange"
                                   : "1px solid orange",
                                 background: !showStaffData && "orange",
+                                color: !showStaffData && "white",
                               }}
                               onClick={() =>
                                 (showStaffData
@@ -1050,7 +1062,8 @@ export default function ServicePage() {
           serverName &&
           loadedState &&
           infoTrainDisplay &&
-          !processingState && (
+          !processingState &&
+          isOpen && (
             <DisplayStops
               data={allServiceData}
               allStaffServiceData={allStaffServiceData}

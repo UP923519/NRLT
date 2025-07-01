@@ -755,55 +755,66 @@ export default function DisplayStaffStops({
                                 Destination: {association.destination}
                                 <br />
                                 {/* RID: */}
-                                <Button
-                                  variant="outlined"
-                                  sx={{
-                                    marginRight: "2.5px",
-                                    boxShadow: 5,
-                                    borderRadius: "10px",
+                                <text
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    marginTop: "5px",
+                                    marginBottom: "-15px",
                                   }}
-                                  onClick={() =>
-                                    setNewRid(association.rid) +
-                                    (association.rid == allStaffServiceData.rid
-                                      ? setUpdateServicePageButton(false)
-                                      : setUpdateServicePageButton(true) +
-                                        setShiftScroll(true))
-                                  }
                                 >
-                                  {!loadedState ? (
-                                    <Typography>
-                                      ⏳Loading, please wait...
-                                    </Typography>
-                                  ) : (
-                                    "View Timetable"
-                                  )}
-                                </Button>
-                                <Button
-                                  variant="outlined"
-                                  sx={{
-                                    marginLeft: "2.5px",
-                                    boxShadow: 5,
-                                    borderRadius: "10px",
-                                  }}
-                                  onClick={() =>
-                                    setNewRid(association.rid) +
-                                    setShowStaffData(false) +
-                                    setUpdateServicePageButton(false) +
-                                    navigate("/linkPage", {
-                                      state: {
-                                        rid: association.rid,
-                                      },
-                                    })
-                                  }
-                                >
-                                  {!loadedState ? (
-                                    <Typography>
-                                      ⏳Loading, please wait...
-                                    </Typography>
-                                  ) : (
-                                    "View Service Details"
-                                  )}
-                                </Button>
+                                  <Button
+                                    variant="outlined"
+                                    sx={{
+                                      marginRight: "2.5px",
+                                      boxShadow: 5,
+                                      borderRadius: "10px",
+                                    }}
+                                    onClick={() =>
+                                      setNewRid(association.rid) +
+                                      (association.rid ==
+                                      allStaffServiceData.rid
+                                        ? setUpdateServicePageButton(false)
+                                        : setUpdateServicePageButton(true) +
+                                          setShiftScroll(true))
+                                    }
+                                  >
+                                    {!loadedState ? (
+                                      <Typography>
+                                        ⏳Loading, please wait...
+                                      </Typography>
+                                    ) : (
+                                      "View Timetable"
+                                    )}
+                                  </Button>
+                                  <Button
+                                    disabled={!loadedState}
+                                    variant="contained"
+                                    sx={{
+                                      marginLeft: "2.5px",
+                                      boxShadow: 5,
+                                      borderRadius: "10px",
+                                    }}
+                                    onClick={() =>
+                                      setNewRid(association.rid) +
+                                      setShowStaffData(false) +
+                                      setUpdateServicePageButton(false) +
+                                      navigate("/linkPage", {
+                                        state: {
+                                          rid: association.rid,
+                                        },
+                                      })
+                                    }
+                                  >
+                                    {!loadedState ? (
+                                      <Typography>
+                                        ⏳Loading, please wait...
+                                      </Typography>
+                                    ) : (
+                                      "View Service Details"
+                                    )}
+                                  </Button>
+                                </text>
                                 <br />
                               </p>
                             </div>
