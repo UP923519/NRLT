@@ -82,6 +82,7 @@ export default function TrainBus({
                         margin: "10px",
                         paddingBottom: "3px",
                         background: "#e3e3e3",
+                        marginBottom: "-20px",
                       }}
                       onClick={() =>
                         showAlerts ? setShowAlerts(false) : setShowAlerts(true)
@@ -101,13 +102,18 @@ export default function TrainBus({
                           marginRight: "22px",
                           fontSize: "small",
                           marginBottom: "-15px",
-                          marginTop: "7px",
+                          marginTop: "-14px",
                           color: "#454545",
                         }}
                       >
                         <text>Type</text>
                         <text>Severity</text>
                       </div>
+                    </>
+                  )}
+                  {!showAlerts && (
+                    <>
+                      <div style={{ marginBottom: "10px" }}></div>
                     </>
                   )}
                   {nrccMessages && showAlerts && (
