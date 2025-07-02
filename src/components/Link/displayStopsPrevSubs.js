@@ -140,7 +140,7 @@ export default function DisplayStopsPrevSubs({
                       }}
                     >
                       {station.at == null && station.et !== "Cancelled" ? (
-                        station.et + " ⏱"
+                        station.et + " "
                       ) : (
                         <></>
                       )}

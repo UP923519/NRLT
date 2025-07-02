@@ -1015,7 +1015,7 @@ export default function DepartArrive(departArrive) {
                   : "#e36c54") +
                 ";padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 liveDeparture[i].eta.slice(11, 16) +
-                "&nbsp;⏱" +
+                // "&nbsp;⏱" +
                 "</text>"
               : liveDeparture[i].ata
               ? liveDeparture[i].ata.slice(11, 16) ==
@@ -1106,7 +1106,7 @@ export default function DepartArrive(departArrive) {
                   : "#e36c54") +
                 ";padding-left:5px;padding-right:5px;border-radius:20px;>" +
                 liveDeparture[i].etd.slice(11, 16) +
-                "&nbsp;⏱" +
+                // "&nbsp;⏱" +
                 "</text>"
               : liveDeparture[i].atd
               ? liveDeparture[i].atd.slice(11, 16) ==

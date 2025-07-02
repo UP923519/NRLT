@@ -94,7 +94,7 @@ export default function TrainBus({
                           "</text>" +
                           "<text style=font-size:small;color:#808080;>" +
                           (message["severity"] == "Major" ? "🔴 " : "") +
-                          (message["severity"] == "Normal" ? "🟢 " : "") +
+                          (message["severity"] == "Normal" ? "🔵 " : "") +
                           (message["severity"] == "Minor" ? "🟡 " : "") +
                           message["severity"] +
                           "</text>" +

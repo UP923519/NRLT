@@ -324,7 +324,7 @@ export default function DisplayStaffStops({
                           background: coloursDeparted,
                           color: coloursDeparted && "white",
                           paddingLeft: coloursDeparted && "5px",
-                          paddingRight: coloursDeparted && "5px",
+                          paddingRight: "6px",
                           borderRadius: coloursDeparted && "20px",
                           marginLeft: coloursDeparted && "6px",
                         }}
@@ -354,7 +354,7 @@ export default function DisplayStaffStops({
                             style={{
                               background: coloursEstimated,
                               paddingLeft: coloursEstimated && "5px",
-                              paddingRight: coloursEstimated && "5px",
+                              paddingRight: "6px",
                               borderRadius: coloursEstimated && "20px",
                               marginLeft: coloursEstimated && "6px",
                             }}
@@ -370,8 +370,8 @@ export default function DisplayStaffStops({
                             ) : (
                               <>
                                 {waypoint.etdSpecified
-                                  ? waypoint.etd.slice(11, -3) + " ⏱"
-                                  : waypoint.eta.slice(11, -3) + " ⏱"}
+                                  ? waypoint.etd.slice(11, -3)
+                                  : waypoint.eta.slice(11, -3)}
                               </>
                             )}
                           </x>
