@@ -82,7 +82,7 @@ export default function TrainBus({
                         margin: "10px",
                         paddingBottom: "3px",
                         background: "#e3e3e3",
-                        marginBottom: "-20px",
+                        marginBottom: "0px",
                       }}
                       onClick={() =>
                         showAlerts ? setShowAlerts(false) : setShowAlerts(true)
@@ -102,7 +102,7 @@ export default function TrainBus({
                           marginRight: "22px",
                           fontSize: "small",
                           marginBottom: "-15px",
-                          marginTop: "-14px",
+                          marginTop: "-13px",
                           color: "#454545",
                         }}
                       >

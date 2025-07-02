@@ -576,6 +576,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "100%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         {station.isPass ? (
@@ -617,6 +618,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "50%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         Delay amount: <br />
@@ -636,6 +638,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "50%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         Is cancelled?: <br />
@@ -657,6 +660,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "50%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         Estimated arrival:
@@ -670,6 +674,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "50%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         Estimated departure:
@@ -692,6 +697,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "50%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         Scheduled arrival:
@@ -705,6 +711,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "50%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         Scheduled departure:
@@ -727,6 +734,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "50%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         Actual arrival: <br />
@@ -739,6 +747,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           width: "50%",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         Actual departure:
@@ -766,6 +775,7 @@ export default function DisplayStaffStops({
                           padding: "10px",
                           marginBottom: "-15px",
                           backdropFilter: "blur(12px)",
+                          border: "1px solid #d9d9d9",
                         }}
                       >
                         {"Associated Services: " +
@@ -781,6 +791,7 @@ export default function DisplayStaffStops({
                                   borderRadius: "15px",
                                   padding: "10px",
                                   backdropFilter: "blur(12px)",
+                                  border: "1px solid #d9d9d9",
                                 }}
                               >
                                 Association {index + 1 + " "}
