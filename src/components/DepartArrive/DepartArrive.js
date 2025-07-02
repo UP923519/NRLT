@@ -224,8 +224,6 @@ export default function DepartArrive(departArrive) {
         setShowScrollButton(true);
       }, 2000);
     }
-
-    console.log("isOpen", isOpen);
   }, [state, isOpen]);
 
   function clearValue() {
@@ -1032,12 +1030,13 @@ export default function DepartArrive(departArrive) {
                 // "&nbsp;⏱" +
                 "</text>"
               : liveDeparture[i].ata
-              ? liveDeparture[i].ata.slice(11, 16) ==
-                liveDeparture[i].sta.slice(11, 16)
+              ? new Date(liveDeparture[i].ata) -
+                  new Date(liveDeparture[i].sta) <=
+                60000
                 ? "<text style=background:green;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                   liveDeparture[i].ata.slice(11, 16) +
                   "</text>"
-                : "<text style=background:#969696;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                : "<text style=background:orange;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                   liveDeparture[i].ata.slice(11, 16) +
                   "</text>"
               : liveDeparture[i].isCancelled
@@ -1123,12 +1122,13 @@ export default function DepartArrive(departArrive) {
                 // "&nbsp;⏱" +
                 "</text>"
               : liveDeparture[i].atd
-              ? liveDeparture[i].atd.slice(11, 16) ==
-                liveDeparture[i].std.slice(11, 16)
+              ? new Date(liveDeparture[i].atd) -
+                  new Date(liveDeparture[i].std) <=
+                60000
                 ? "<text style=background:green;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                   liveDeparture[i].atd.slice(11, 16) +
                   "</text>"
-                : "<text style=background:#969696;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                : "<text style=background:orange;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
                   liveDeparture[i].atd.slice(11, 16) +
                   "</text>"
               : liveDeparture[i].isCancelled
