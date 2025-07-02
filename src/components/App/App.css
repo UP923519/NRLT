@@ -423,7 +423,7 @@ a.active-animation:active {
 }
 
 .popup-overlay {
-  background: #ffffff33 !important;
+  background: #ffffff55 !important;
   backdrop-filter: blur(3px) !important;
 }
 

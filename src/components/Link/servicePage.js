@@ -702,7 +702,8 @@ export default function ServicePage() {
                         tooltip: {
                           sx: {
                             maxWidth: "none",
-                            background: "white",
+                            backgroundColor: "#ffffffCC",
+                            backdropFilter: "blur(12px)",
                             borderRadius: "10px",
                             border: 1,
                             borderColor: "#c9c9c9",

@@ -1493,7 +1493,8 @@ export default function DepartArrive(departArrive) {
                         tooltip: {
                           sx: {
                             maxWidth: "none",
-                            background: "white",
+                            background: "#ffffffCC",
+                            backdropFilter: "blur(12px)",
                             borderRadius: "10px",
                             border: 1,
                             borderColor: "#c9c9c9",

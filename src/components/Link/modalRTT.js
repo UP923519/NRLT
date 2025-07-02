@@ -24,7 +24,7 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
             backdrop: {
               sx: {
                 //Your style here....
-                backgroundColor: "#ffffff33",
+                backgroundColor: "#ffffff55",
                 backdropFilter: "blur(3px)",
               },
             },
