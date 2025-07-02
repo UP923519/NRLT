@@ -22,7 +22,9 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style} className="transactions">
-            <p style={{ margin: "5px" }}>Additional train details</p>
+            <p style={{ margin: "5px", padding: "7px" }}>
+              Additional train details
+            </p>
             <iframe
               className="transactions"
               style={{

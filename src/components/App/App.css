@@ -417,6 +417,18 @@ a.active-animation:active {
 .popup-content {
   width: 97vw !important;
   border-radius: 20px !important;
+  backdrop-filter: blur(12px) !important;
+  background: #ffffffdd !important;
+}
+
+.css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
+  background: #00000022 !important;
+  backdrop-filter: blur(3px);
+}
+
+.popup-overlay {
+  background: #00000022 !important;
+  backdrop-filter: blur(3px) !important;
 }
 
 @media only screen and (max-width: 318px) {

@@ -1,5 +1,8 @@
 import { Box, Button, ButtonGroup } from "@mui/material";
+import React, { useState, useEffect, useRef } from "react";
+
 import "./trainBus.css";
+import ScrollButton from "./scrollButton";
 
 export default function TrainBus({
   textInfo,
@@ -15,17 +18,40 @@ export default function TrainBus({
   current,
   rememberTimeOffset,
   displayStation,
+  showScrollButton,
 }) {
+  const [showAlerts, setShowAlerts] = useState(true);
+
+  const myRef = useRef(null);
+
+  const executeScroll = () => {
+    myRef.current.scrollIntoView({ behavior: "smooth" });
+    window.scrollTo({
+      top: 340,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div style={{ marginTop: -15 }}>
+      <ScrollButton
+        executeScroll={executeScroll}
+        showScrollButton={showScrollButton}
+      />
       {/* marginTop is -5 with the time selector component */}
+      <ref ref={myRef}></ref>
       <div style={{ marginBottom: "20px" }}>
         {displayStation && (
           <p
             className="highlights"
             style={{
+              paddingBottom: nrccMessages && "0px",
+              marginTop: "20px",
               background: !nrccMessages && "#4a6e40",
               color: !nrccMessages && "white",
+              boxShadow:
+                "0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
             <pre
@@ -46,7 +72,26 @@ export default function TrainBus({
                         : " alert for ") +
                       displayStation +
                       "\n"}
+
                   {nrccMessages && (
+                    <button
+                      type="button"
+                      style={{
+                        textAlign: "center",
+                        width: "30px",
+                        margin: "10px",
+                        paddingBottom: "3px",
+                        background: "#e3e3e3",
+                      }}
+                      onClick={() =>
+                        showAlerts ? setShowAlerts(false) : setShowAlerts(true)
+                      }
+                    >
+                      {"↨"}
+                    </button>
+                  )}
+
+                  {nrccMessages && showAlerts && (
                     <>
                       <div
                         style={{
@@ -65,46 +110,59 @@ export default function TrainBus({
                       </div>
                     </>
                   )}
-                  {nrccMessages && (
+                  {nrccMessages && showAlerts && (
                     <hr style={{ border: "0px dashed black", width: "15%" }} />
                   )}
                 </text>
                 {!nrccMessages &&
                   displayStation &&
                   "No alerts for " + displayStation}
-
-                {nrccMessages?.map((message) => (
+                {showAlerts && (
                   <>
-                    <div
-                      style={{
-                        boxShadow:
-                          "0 6px 20px 0 rgba(96, 96, 96, 0.19), 0 6px 20px 0 rgba(96, 96, 96, 0.19)",
-                        borderRadius: "20px",
-                        padding: "5px",
-                        marginLeft: "-9px",
-                        marginRight: "-9px",
-                        background: "#fafafadd",
-                        paddingBottom: "25px",
-                      }}
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          "<div style=display:flex;justify-content:space-between;margin-left:25px;margin-right:25px;>" +
-                          "<text style=font-size:small;color:#808080;>" +
-                          message["category"] +
-                          "</text>" +
-                          "<text style=font-size:small;color:#808080;>" +
-                          (message["severity"] == "Major" ? "🔴 " : "") +
-                          (message["severity"] == "Normal" ? "🔵 " : "") +
-                          (message["severity"] == "Minor" ? "🟡 " : "") +
-                          message["severity"] +
-                          "</text>" +
-                          "</div>" +
-                          message["xhtmlMessage"],
-                      }}
-                    />
-                    <hr style={{ border: "0px dashed black", width: "15%" }} />
+                    {nrccMessages?.map((message) => (
+                      <>
+                        <div
+                          style={{
+                            boxShadow:
+                              "0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                            borderRadius: "20px",
+                            padding: "5px",
+                            marginLeft: "-9px",
+                            marginRight: "-9px",
+                            background: "#fafafadd",
+                            paddingBottom: "25px",
+                            border:
+                              (message["severity"] == "Major" &&
+                                "1px solid red") ||
+                              (message["severity"] == "Minor" &&
+                                "2px solid orange") ||
+                              (message["severity"] == "Normal" &&
+                                "2px solid rgb(196, 228, 255)"),
+                          }}
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              "<div style=display:flex;justify-content:space-between;margin-left:25px;margin-right:25px;margin-bottom:15px;>" +
+                              "<text style=font-size:small;color:#808080;>" +
+                              message["category"] +
+                              "</text>" +
+                              "<text style=font-size:small;color:#808080;>" +
+                              message["severity"] +
+                              "</text>" +
+                              "</div>" +
+                              message["xhtmlMessage"],
+                          }}
+                        />
+                        <hr
+                          style={{
+                            border: "0px dashed black",
+                            width: "15%",
+                            marginBottom: "0px",
+                          }}
+                        />
+                      </>
+                    ))}
                   </>
-                ))}
+                )}
               </text>
             </pre>
             <br />
@@ -185,6 +243,7 @@ export default function TrainBus({
         </ButtonGroup>
         <br />
         <br /> */}
+
         <Table
           className="transactions"
           style={{
@@ -203,7 +262,7 @@ export default function TrainBus({
                 marginBottom: "7.5px",
                 marginTop: "7.5px",
                 boxShadow:
-                  "0 1px 2px 0 rgba(96, 96, 96, 0.19), 0 0px 4px 0 rgba(96, 96, 96, 0.19)",
+                  "0 1px 2px 0 rgba(0, 0, 0, 0.19), 0 5px 5px 0 rgba(0, 0, 0, 0.19)",
               }}
               onClick={() => routeChange(departures, index)}
             >

@@ -27,6 +27,7 @@ import { BorderStyle } from "@mui/icons-material";
 import { delayReason } from "./delayReasons";
 import { cancelReason } from "./cancelReasons";
 import ServicePageAssociation from "./servicePageAssociation";
+import ScrollButton from "../DepartArrive/scrollButton";
 
 let liveService = "";
 let liveService2 = "";
@@ -82,6 +83,7 @@ export default function ServicePage() {
   const [associations, setAssociations] = useState([]);
   const [sPAssociation, setSPAssociation] = useState(false);
   const [ttopen, setTtOpen] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(true);
 
   const { state } = useLocation();
   const locations = useLocation();
@@ -431,6 +433,12 @@ export default function ServicePage() {
     // <Fade top distance={"10px"} duration={1500}>
 
     <>
+      {!showStaffData && (
+        <ScrollButton
+          executeScroll={executeScroll}
+          showScrollButton={showScrollButton}
+        />
+      )}
       <div className="Wrapper2">
         <h3 style={{ textAlign: "center" }}>
           {!showStaffData ? (
@@ -934,6 +942,7 @@ export default function ServicePage() {
                                                       width: "99%",
                                                       overflow: "scroll",
                                                       maxHeight: "65vh",
+                                                      background: "#467083",
                                                     }}
                                                     id="iFrameExample"
                                                     src={trainDetailUrl}
@@ -946,6 +955,7 @@ export default function ServicePage() {
                                                   style={{
                                                     margin: "0px",
                                                     marginTop: "5px",
+                                                    background: "#f0f0f000",
                                                   }}
                                                   onClick={() => close()}
                                                 >

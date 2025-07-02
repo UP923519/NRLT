@@ -24,6 +24,8 @@ const style = {
   maxHeight: "70vh",
   top: "50%",
   position: " absolute",
+  backdropFilter: "blur(12px)",
+  background: "#ffffff99",
 };
 
 let openModalNow = false;
@@ -131,6 +133,8 @@ export default function DisplayStops({
               style={{
                 backgroundColor: "#f0f0f0",
                 marginBottom: "10px",
+                boxShadow:
+                  "0 5px 20px 0 rgba(0, 0, 0, 0.19), 0 5px 10px 0 rgba(0, 0, 0, 0.19)",
               }}
             >
               <tr>
@@ -426,10 +430,11 @@ export default function DisplayStops({
                 >
                   <p
                     style={{
-                      background: "#b1d1de",
+                      background: "#b1d1de44",
                       borderRadius: "15px",
                       padding: "10px",
                       width: "50%",
+                      backdropFilter: "blur(12px)",
                     }}
                   >
                     {station.locationName}
@@ -458,9 +463,10 @@ export default function DisplayStops({
                       <p
                         className={"platformBox"}
                         style={{
+                          backdropFilter: "blur(12px)",
                           background: station.platform
-                            ? "revert-layer"
-                            : "#e88c79",
+                            ? "#7aa379bb"
+                            : "#e88c79bb",
                         }}
                       >
                         <text
@@ -486,10 +492,11 @@ export default function DisplayStops({
                     >
                       <p
                         style={{
-                          background: "#f0f0f0",
+                          background: "#f0f0f044",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "100%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         {station.isPass ? (
@@ -515,11 +522,11 @@ export default function DisplayStops({
                         style={{
                           background:
                             station.lateness > 60
-                              ? "orange"
+                              ? "#FFA50044"
                               : station.lateness &&
                                 station.lateness.includes("-")
-                              ? "green"
-                              : "#f0f0f0",
+                              ? "#00ff0044"
+                              : "#f0f0f044",
                           color:
                             station.lateness > 60
                               ? "white"
@@ -530,6 +537,7 @@ export default function DisplayStops({
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         Delay amount: <br />
@@ -541,11 +549,14 @@ export default function DisplayStops({
                       </p>
                       <p
                         style={{
-                          background: station.isCancelled ? "red" : "#f0f0f0",
+                          background: station.isCancelled
+                            ? "##FF000044"
+                            : "#f0f0f044",
                           color: station.isCancelled ? "white" : "black",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         Is cancelled?: <br />
@@ -562,10 +573,11 @@ export default function DisplayStops({
                     >
                       <p
                         style={{
-                          background: "#f0f0f0",
+                          background: "#f0f0f044",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         Estimated arrival:
@@ -574,10 +586,11 @@ export default function DisplayStops({
                       </p>
                       <p
                         style={{
-                          background: "#f0f0f0",
+                          background: "#f0f0f044",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         Estimated departure:
@@ -595,10 +608,11 @@ export default function DisplayStops({
                     >
                       <p
                         style={{
-                          background: "#f0f0f0",
+                          background: "#f0f0f044",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         Scheduled arrival:
@@ -607,10 +621,11 @@ export default function DisplayStops({
                       </p>
                       <p
                         style={{
-                          background: "#f0f0f0",
+                          background: "#f0f0f044",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         Scheduled departure:
@@ -628,10 +643,11 @@ export default function DisplayStops({
                     >
                       <p
                         style={{
-                          background: "#f0f0f0",
+                          background: "#f0f0f044",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         Actual arrival: <br />
@@ -639,10 +655,11 @@ export default function DisplayStops({
                       </p>
                       <p
                         style={{
-                          background: "#f0f0f0",
+                          background: "#f0f0f044",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
+                          backdropFilter: "blur(12px)",
                         }}
                       >
                         Actual departure:
