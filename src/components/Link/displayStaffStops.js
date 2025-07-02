@@ -482,6 +482,15 @@ export default function DisplayStaffStops({
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        slotProps={{
+          backdrop: {
+            sx: {
+              //Your style here....
+              backgroundColor: "#ffffff33",
+              backdropFilter: "blur(3px)",
+            },
+          },
+        }}
       >
         <>
           {station && (
@@ -500,7 +509,7 @@ export default function DisplayStaffStops({
                 >
                   <p
                     style={{
-                      background: "#b1d1de44",
+                      background: "#b1d1de99",
                       borderRadius: "15px",
                       padding: "10px",
                       width: "50%",
@@ -534,10 +543,9 @@ export default function DisplayStaffStops({
                         className={"platformBox"}
                         style={{
                           backdropFilter: "blur(12px)",
-
                           background: station.platform
-                            ? "#7aa379bb"
-                            : "#e88c79bb",
+                            ? "#7aa379cc"
+                            : "#e88c79cc",
                         }}
                       >
                         <text
@@ -600,10 +608,10 @@ export default function DisplayStaffStops({
                               : "#f0f0f044",
                           color:
                             station.lateness > 60
-                              ? "white"
+                              ? "black"
                               : station.lateness &&
                                 station.lateness.includes("-")
-                              ? "white"
+                              ? "black"
                               : "black",
                           borderRadius: "15px",
                           padding: "10px",
@@ -621,9 +629,9 @@ export default function DisplayStaffStops({
                       <p
                         style={{
                           background: station.isCancelled
-                            ? "##FF000044"
+                            ? "#FF000044"
                             : "#f0f0f044",
-                          color: station.isCancelled ? "white" : "black",
+                          color: station.isCancelled ? "black" : "black",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
@@ -752,7 +760,7 @@ export default function DisplayStaffStops({
                       <p
                         style={{
                           background: station.associations?.length
-                            ? "#FFA50044"
+                            ? "#FFA50099"
                             : "#f0f0f044",
                           borderRadius: "15px",
                           padding: "10px",

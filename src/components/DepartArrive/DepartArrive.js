@@ -218,7 +218,15 @@ export default function DepartArrive(departArrive) {
     if (textInfo === "cleared") {
       setIsOpen(false);
     }
-  }, [state]);
+
+    if (isOpen) {
+      setTimeout(() => {
+        setShowScrollButton(true);
+      }, 2000);
+    }
+
+    console.log("isOpen", isOpen);
+  }, [state, isOpen]);
 
   function clearValue() {
     getStation();

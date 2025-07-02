@@ -20,6 +20,15 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
+          slotProps={{
+            backdrop: {
+              sx: {
+                //Your style here....
+                backgroundColor: "#ffffff33",
+                backdropFilter: "blur(3px)",
+              },
+            },
+          }}
         >
           <Box sx={style} className="transactions">
             <p style={{ margin: "5px", padding: "7px" }}>
