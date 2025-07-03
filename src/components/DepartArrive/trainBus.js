@@ -1,6 +1,6 @@
 import { Box, Button, ButtonGroup } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
-
+import Fade from "react-reveal/Fade";
 import "./trainBus.css";
 import ScrollButton from "./scrollButton";
 
@@ -125,48 +125,57 @@ export default function TrainBus({
                   "No alerts for " + displayStation}
                 {showAlerts && (
                   <>
-                    {nrccMessages?.map((message) => (
-                      <>
-                        <div
-                          style={{
-                            boxShadow:
-                              "0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                            borderRadius: "20px",
-                            padding: "5px",
-                            marginLeft: "-9px",
-                            marginRight: "-9px",
-                            background: "#fafafadd",
-                            paddingBottom: "25px",
-                            border:
-                              (message["severity"] == "Major" &&
-                                "1px solid red") ||
-                              (message["severity"] == "Minor" &&
-                                "2px solid orange") ||
-                              (message["severity"] == "Normal" &&
-                                "2px solid rgb(196, 228, 255)"),
-                          }}
-                          dangerouslySetInnerHTML={{
-                            __html:
-                              "<div style=display:flex;justify-content:space-between;margin-left:25px;margin-right:25px;margin-bottom:15px;>" +
-                              "<text style=font-size:small;color:#808080;>" +
-                              message["category"] +
-                              "</text>" +
-                              "<text style=font-size:small;color:#808080;>" +
-                              message["severity"] +
-                              "</text>" +
-                              "</div>" +
-                              message["xhtmlMessage"],
-                          }}
-                        />
-                        <hr
-                          style={{
-                            border: "0px dashed black",
-                            width: "15%",
-                            marginBottom: "0px",
-                          }}
-                        />
-                      </>
-                    ))}
+                    {nrccMessages?.map((message, index) => {
+                      console.log("yes", (index + 1) * 15 + "px");
+                      return (
+                        <>
+                          <Fade
+                            top
+                            distance={(index + 1) * 15 + "px"}
+                            duration={1500}
+                          >
+                            <div
+                              style={{
+                                boxShadow:
+                                  "0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                                borderRadius: "20px",
+                                padding: "5px",
+                                marginLeft: "-9px",
+                                marginRight: "-9px",
+                                background: "#fafafadd",
+                                paddingBottom: "25px",
+                                border:
+                                  (message["severity"] == "Major" &&
+                                    "1px solid red") ||
+                                  (message["severity"] == "Minor" &&
+                                    "2px solid orange") ||
+                                  (message["severity"] == "Normal" &&
+                                    "2px solid rgb(196, 228, 255)"),
+                              }}
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  "<div style=display:flex;justify-content:space-between;margin-left:25px;margin-right:25px;margin-bottom:15px;>" +
+                                  "<text style=font-size:small;color:#808080;>" +
+                                  message["category"] +
+                                  "</text>" +
+                                  "<text style=font-size:small;color:#808080;>" +
+                                  message["severity"] +
+                                  "</text>" +
+                                  "</div>" +
+                                  message["xhtmlMessage"],
+                              }}
+                            />
+                            <hr
+                              style={{
+                                border: "0px dashed black",
+                                width: "15%",
+                                marginBottom: "0px",
+                              }}
+                            />
+                          </Fade>
+                        </>
+                      );
+                    })}
                   </>
                 )}
               </text>
@@ -257,32 +266,34 @@ export default function TrainBus({
           }}
         >
           {stringDepartures.map((departures, index) => (
-            <tr
-              data-index={index}
-              className="tableTR"
-              style={{
-                background: "#f0f0f0",
-                // borderStyle: "solid",
-                borderRadius: "20px",
-                // borderColor: "#f0f0f0",
-                marginBottom: "7.5px",
-                marginTop: "7.5px",
-                boxShadow:
-                  "0 1px 2px 0 rgba(0, 0, 0, 0.19), 0 5px 5px 0 rgba(0, 0, 0, 0.19)",
-              }}
-              onClick={() => routeChange(departures, index)}
-            >
-              {/* <td>{departures}</td> */}
-              <td
-                dangerouslySetInnerHTML={{
-                  __html: departures,
+            <Fade top distance={(index + 1) * 15 + "px"} duration={1500}>
+              <tr
+                data-index={index}
+                className="tableTR"
+                style={{
+                  background: "#f0f0f0",
+                  // borderStyle: "solid",
+                  borderRadius: "20px",
+                  // borderColor: "#f0f0f0",
+                  marginBottom: "7.5px",
+                  marginTop: "7.5px",
+                  boxShadow:
+                    "0 1px 2px 0 rgba(0, 0, 0, 0.19), 0 5px 5px 0 rgba(0, 0, 0, 0.19)",
                 }}
-              />
+                onClick={() => routeChange(departures, index)}
+              >
+                {/* <td>{departures}</td> */}
+                <td
+                  dangerouslySetInnerHTML={{
+                    __html: departures,
+                  }}
+                />
 
-              <br />
-              <br />
-              <br />
-            </tr>
+                <br />
+                <br />
+                <br />
+              </tr>
+            </Fade>
           ))}
         </Table>
       </div>
