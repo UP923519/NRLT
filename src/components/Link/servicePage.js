@@ -571,31 +571,41 @@ export default function ServicePage() {
                 >
                   <>
                     <text style={{ display: "flex", justifyContent: "center" }}>
-                      <button
-                        id="useTrains"
-                        type="button"
-                        onClick={() =>
-                          handleServiceClick() +
-                          setUpdateServicePageButton(false) +
-                          setSPAssociation(false)
-                        }
-                        style={{
-                          position:
-                            showStaffData &&
-                            updateServicePageButton &&
-                            "relative",
-                          top:
-                            showStaffData && updateServicePageButton && "50px",
-                        }}
-                      >
-                        {showStaffData
-                          ? updateServicePageButton
+                      {/* Don't show if there's a merge/divide, AND viewing the full timetable */}
+                      {/* As this will reset to the service before the divide/merge has been selected */}
+                      {/* The next button below this returns back to the divide/merge service*/}
+
+                      {sPAssociation && showStaffData ? (
+                        <></>
+                      ) : (
+                        <button
+                          id="useTrains"
+                          type="button"
+                          onClick={() =>
+                            handleServiceClick() +
+                            setUpdateServicePageButton(false) +
+                            setSPAssociation(false)
+                          }
+                          style={{
+                            position:
+                              showStaffData &&
+                              updateServicePageButton &&
+                              "relative",
+                            top:
+                              showStaffData &&
+                              updateServicePageButton &&
+                              "50px",
+                          }}
+                        >
+                          {showStaffData
+                            ? updateServicePageButton
+                              ? "↺ Back To Your Service"
+                              : "🔄 Refresh"
+                            : sPAssociation
                             ? "↺ Back To Your Service"
-                            : "🔄 Refresh"
-                          : sPAssociation
-                          ? "↺ Back To Your Service"
-                          : "🔄 Refresh"}
-                      </button>
+                            : "🔄 Refresh"}
+                        </button>
+                      )}
 
                       {sPAssociation && (
                         <>
@@ -618,7 +628,9 @@ export default function ServicePage() {
                                 "50px",
                             }}
                           >
-                            {"🔄 Refresh"}
+                            {!showStaffData
+                              ? "🔄 Refresh"
+                              : "↺ Back to your service"}
                           </button>
                         </>
                       )}
