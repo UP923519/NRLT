@@ -41,6 +41,11 @@ const Navbar = () => {
           className="topRow2"
           activeClassName="topRow2Active"
           to="/dashboard"
+          style={{
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
+          }}
         >
           Departing
         </NavLink>
@@ -48,6 +53,11 @@ const Navbar = () => {
           className="topRow2"
           activeClassName="topRow2Active"
           to="/dataFeed"
+          style={{
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
+          }}
         >
           Arriving
         </NavLink>
@@ -55,6 +65,11 @@ const Navbar = () => {
           className="topRow2"
           activeClassName="topRow2Active"
           to="/linkPage"
+          style={{
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
+          }}
         >
           Service
         </NavLink>
@@ -62,6 +77,11 @@ const Navbar = () => {
           className="topRow2"
           activeClassName="topRow2Active"
           to="/settings"
+          style={{
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
+          }}
         >
           Settings
         </NavLink>

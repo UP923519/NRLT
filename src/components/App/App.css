@@ -198,8 +198,8 @@ button#showHide:active {
 }
 
 a.topRow2.active {
-  background: #0080ff;
-  color: rgb(255, 255, 255);
+  background: #0080ff !important;
+  color: rgb(255, 255, 255) !important;
 }
 
 navbar.NavBar1 {

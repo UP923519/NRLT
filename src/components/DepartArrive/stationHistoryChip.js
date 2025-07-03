@@ -38,6 +38,11 @@ export default function StationHistoryChip({
             p: 0.5,
             m: 0,
             overflow: "scroll",
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff"
+                ? "#475263"
+                : "white",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
           }}
           component="ul"
         >
@@ -47,6 +52,14 @@ export default function StationHistoryChip({
               return (
                 <ListItem key={data.key}>
                   <Chip
+                    style={{
+                      background:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#7788a3",
+                      color:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#ffffff",
+                    }}
                     icon={icon}
                     label={data}
                     onClick={() =>
@@ -65,6 +78,14 @@ export default function StationHistoryChip({
               return (
                 <ListItem key={data.key}>
                   <Chip
+                    style={{
+                      background:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#7788a3",
+                      color:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#ffffff",
+                    }}
                     disabled={isDisabled}
                     icon={icon}
                     label={data}

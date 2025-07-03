@@ -51,7 +51,11 @@ export default function SelectDate({
             height: "26.86px",
             width: "100%",
             marginRight: "5px",
-            background: "white",
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff"
+                ? "#475263"
+                : "white",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
           }}
           value={sync ? year + "-" + month + "-" + day : selectedDay}
           defaultValue={
@@ -73,7 +77,11 @@ export default function SelectDate({
             borderWidth: "thin",
             height: "26.86px",
             width: "100%",
-            background: "white",
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff"
+                ? "#475263"
+                : "white",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
           }}
           value={sync ? hours + ":" + minutes : selectedTime}
           defaultValue={
@@ -101,7 +109,11 @@ export default function SelectDate({
             marginLeft: "5px",
             borderRadius: "5px",
             padding: "7px",
-            background: "white",
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff"
+                ? "#475263"
+                : "white",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
             height: "38px",
             width: "125px",
           }}
@@ -132,6 +144,8 @@ export default function SelectDate({
                 rememberDateTime[1] == null) ||
               sync
                 ? "#0080ff"
+                : localStorage.getItem("darkMode") !== "#ffffff"
+                ? "#475263"
                 : "white",
             color:
               (selectedDay == null &&
@@ -139,6 +153,8 @@ export default function SelectDate({
                 rememberDateTime[0] == null &&
                 rememberDateTime[1] == null) ||
               sync
+                ? "white"
+                : localStorage.getItem("darkMode") !== "#ffffff"
                 ? "white"
                 : "black",
             height: "38px",

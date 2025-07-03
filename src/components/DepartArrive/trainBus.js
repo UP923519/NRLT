@@ -267,7 +267,12 @@ export default function TrainBus({
                 data-index={index}
                 className="tableTR"
                 style={{
-                  background: "#f0f0f0",
+                  background:
+                    localStorage.getItem("darkMode") == "#000000"
+                      ? "#bfbfbf"
+                      : localStorage.getItem("darkMode") == "#8297b5"
+                      ? "#cbd0f2"
+                      : "#f0f0f0",
                   // borderStyle: "solid",
                   borderRadius: "20px",
                   // borderColor: "#f0f0f0",

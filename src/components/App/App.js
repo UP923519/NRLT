@@ -49,6 +49,7 @@ function App() {
 
   return (
     <Fade top distance={"25px"} duration={1500}>
+      <meta name="theme-color" content={localStorage.getItem("darkMode")} />
       <div
         className="wrapper"
         style={{

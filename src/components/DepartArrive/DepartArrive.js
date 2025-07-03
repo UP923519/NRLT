@@ -3,6 +3,7 @@ import "../App/App.css";
 import { Table } from "react-bootstrap";
 import Select from "react-select";
 import image from "../../assets/nre-logo.png";
+import imageDark from "../../assets/nre-logo-dark.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { test1 } from "../Link/servicePage.js";
 import { currentAzure, serviceCode } from "../Settings/Settings";
@@ -153,7 +154,9 @@ export default function DepartArrive(departArrive) {
       if (busDisplayMode == "bus") {
         setActiveBus("#0080ff");
         setActiveBusT("white");
-        setActiveTrain("white");
+        setActiveTrain(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white"
+        );
         setActiveTrainT("black");
         setBusDisabled(false);
         setTrainDisabled(false);
@@ -163,7 +166,9 @@ export default function DepartArrive(departArrive) {
 
         setActiveTrain("#0080ff");
         setActiveTrainT("white");
-        setActiveBus("white");
+        setActiveBus(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white"
+        );
         setActiveBusT("black");
       }
     }
@@ -171,7 +176,9 @@ export default function DepartArrive(departArrive) {
     if (saveLD == null && saveBD != null) {
       setTrainDisabled(true);
       setBusDisabled(false);
-      setActiveTrain("#f5f5f5");
+      setActiveTrain(
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+      );
       setActiveTrainT("#d1d1d1");
       if (busDisplayMode == "train") {
         alert(
@@ -186,7 +193,9 @@ export default function DepartArrive(departArrive) {
     if (saveLD != null && saveBD == null) {
       setBusDisabled(true);
       setTrainDisabled(false);
-      setActiveBus("#f5f5f5");
+      setActiveBus(
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+      );
       setActiveBusT("#d1d1d1");
       setActiveTrain("#0080ff");
       setActiveTrainT("white");
@@ -194,10 +203,14 @@ export default function DepartArrive(departArrive) {
 
     if (saveLD == null && saveBD == null) {
       setBusDisabled(true);
-      setActiveBus("#f5f5f5");
+      setActiveBus(
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+      );
       setActiveBusT("#d1d1d1");
       setTrainDisabled(true);
-      setActiveTrain("#f5f5f5");
+      setActiveTrain(
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+      );
       setActiveTrainT("#d1d1d1");
     }
 
@@ -873,7 +886,9 @@ export default function DepartArrive(departArrive) {
           liveDeparture = busDeparture;
           setActiveBus("#0080ff");
           setActiveBusT("white");
-          setActiveTrain("white");
+          setActiveTrain(
+            localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white"
+          );
           setActiveTrainT("black");
           setBusDisabled(false);
           setTrainDisabled(false);
@@ -882,14 +897,18 @@ export default function DepartArrive(departArrive) {
           setBusDisabled(false);
           setActiveTrain("#0080ff");
           setActiveTrainT("white");
-          setActiveBus("white");
+          setActiveBus(
+            localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white"
+          );
           setActiveBusT("black");
         }
       }
       if (staffData.trainServices == null && staffDataBus.busServices != null) {
         setTrainDisabled(true);
         setBusDisabled(false);
-        setActiveTrain("#f5f5f5");
+        setActiveTrain(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+        );
         setActiveTrainT("#d1d1d1");
         liveDeparture = staffDataBus.busServices;
         if (busDisplayMode == "train") {
@@ -904,7 +923,9 @@ export default function DepartArrive(departArrive) {
       if (staffData.trainServices != null && staffDataBus.busServices == null) {
         setBusDisabled(true);
         setTrainDisabled(false);
-        setActiveBus("#f5f5f5");
+        setActiveBus(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+        );
         setActiveBusT("#d1d1d1");
         setActiveTrain("#0080ff");
         setActiveTrainT("white");
@@ -913,10 +934,14 @@ export default function DepartArrive(departArrive) {
       if (staffData.trainServices == null && staffDataBus.busServices == null) {
         liveDeparture = [];
         setBusDisabled(true);
-        setActiveBus("#f5f5f5");
+        setActiveBus(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+        );
         setActiveBusT("#d1d1d1");
         setTrainDisabled(true);
-        setActiveTrain("#f5f5f5");
+        setActiveTrain(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+        );
         setActiveTrainT("#d1d1d1");
       }
       displayServiceMessage = "";
@@ -1220,7 +1245,16 @@ export default function DepartArrive(departArrive) {
         <div className="Wrapper2">
           <h3 style={{ textAlign: "center" }}>{departArrive}</h3>
           <Fade top distance={"25px"} duration={1500}>
-            <div className="manualInput">
+            <div
+              className="manualInput"
+              style={{
+                background:
+                  localStorage.getItem("darkMode") == "#000000"
+                    ? "#000e2b"
+                    : localStorage.getItem("darkMode") == "#8297b5" &&
+                      "#4f2609",
+              }}
+            >
               <form
                 style={{ paddingLeft: "10px", paddingRight: "10px" }}
                 method="post"
@@ -1297,6 +1331,13 @@ export default function DepartArrive(departArrive) {
                               backdropFilter: "blur(10px)",
                             };
                           },
+                          control: (provided, state) => ({
+                            ...provided,
+                            background:
+                              localStorage.getItem("darkMode") !== "#ffffff"
+                                ? "#475263"
+                                : "white",
+                          }),
                         }}
                         defaultValue={[
                           {
@@ -1368,6 +1409,13 @@ export default function DepartArrive(departArrive) {
                               backdropFilter: "blur(10px)",
                             };
                           },
+                          control: (provided, state) => ({
+                            ...provided,
+                            background:
+                              localStorage.getItem("darkMode") !== "#ffffff"
+                                ? "#475263"
+                                : "white",
+                          }),
                         }}
                         isDisabled={
                           rememberFirstStation == "" || !rememberFirstStation
@@ -1440,6 +1488,15 @@ export default function DepartArrive(departArrive) {
                           paddingTop: "0.5px !important",
                           paddingBottom: "0.5px !important",
                         }}
+                        style={{
+                          background:
+                            localStorage.getItem("darkMode") !== "#ffffff"
+                              ? "#7788a3"
+                              : "white",
+                          color:
+                            localStorage.getItem("darkMode") !== "#ffffff" &&
+                            "#ffffff",
+                        }}
                       >
                         ⚙️ Options
                       </Button>
@@ -1510,6 +1567,15 @@ export default function DepartArrive(departArrive) {
                   onClick={() =>
                     handleDepartureClick(contextTime) + setIsOpen(false)
                   }
+                  style={{
+                    background:
+                      localStorage.getItem("darkMode") !== "#ffffff"
+                        ? "#7788a3"
+                        : "white",
+                    color:
+                      localStorage.getItem("darkMode") !== "#ffffff" &&
+                      "#ffffff",
+                  }}
                 >
                   {isOpenForm && "🔎 Search"} {!isOpenForm && "🔄 Refresh"}
                 </button>
@@ -1641,9 +1707,20 @@ export default function DepartArrive(departArrive) {
                       />
                     </>
                   )}
-                  <div className="NRLogo">
+                  <div
+                    className="NRLogo"
+                    style={{
+                      background:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#1d3360",
+                    }}
+                  >
                     <img
-                      src={image}
+                      src={
+                        localStorage.getItem("darkMode") == "#ffffff"
+                          ? image
+                          : imageDark
+                      }
                       alt="powered by National Rail Enquiries"
                       width="256"
                     />
