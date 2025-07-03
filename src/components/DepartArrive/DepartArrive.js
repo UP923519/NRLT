@@ -211,7 +211,6 @@ export default function DepartArrive(departArrive) {
     // console.log("rememberFirstStation", rememberFirstStation);
 
     if ((myArray == "" && rememberFirstStation == "") || failedAlert == true) {
-      console.log("CLOSING");
       setIsOpen(false);
       setProcessingState(false);
     } else {
