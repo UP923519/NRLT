@@ -2,15 +2,16 @@ element.style {
   background-color: rgb(42, 42, 255);
 }
 
-/* //Stop pull to refresh attempt */
+/* //Stop pull to refresh attempt + tap to search */
 body {
   overflow: visible !important;
   overscroll-behavior-y: contain;
 }
-/* //Stop pull to refresh attempt */
+/* //Stop pull to refresh attempt + tap to search */
 html,
 body {
   overscroll-behavior: none;
+  user-select: none;
 }
 
 .size {

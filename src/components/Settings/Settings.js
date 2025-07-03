@@ -258,9 +258,13 @@ export default function Settings() {
                 Azure Server: {currentAzureDisplay} Owner
                 <br /> <br />
                 <button id="useCurrentLocation" onClick={changeAzure}>
-                  {currentAzureDisplay == "External" && "Change to Local"}
-                  {currentAzureDisplay == "Local" && "Change to External"}
+                  {currentAzureDisplay == "External" && "Change To Local"}
+                  {currentAzureDisplay == "Local" && "Change To External"}
                 </button>
+                <br />
+                <a href="https://trainwebappv2.azurewebsites.net/">
+                  <button id="useCurrentLocation">Visit Local Server</button>
+                </a>
               </div>
             </text>
             <br />
