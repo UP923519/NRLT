@@ -142,7 +142,7 @@ export default function TrainBus({
                                 paddingBottom: "25px",
                                 border:
                                   (message["severity"] == "Major" &&
-                                    "1px solid red") ||
+                                    "2px solid red") ||
                                   (message["severity"] == "Minor" &&
                                     "2px solid orange") ||
                                   (message["severity"] == "Normal" &&
