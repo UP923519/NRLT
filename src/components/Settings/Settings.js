@@ -203,7 +203,7 @@ export default function Settings() {
               background: "#f0f0f0",
             }}
           >
-            <h3>Home</h3>
+            <h3>System</h3>
             <div className="topBanner1" style={{ paddingBottom: 1 }}>
               <h4>
                 <a href="/NRLT">
@@ -217,7 +217,23 @@ export default function Settings() {
                     className="logOut"
                     onClick={logOut}
                   >
-                    ￩ Exit to home page
+                    ￩ Exit To Home Page
+                  </button>
+                </a>
+              </h4>
+              <h4>
+                <a href="/NRLT">
+                  <button
+                    id="showHide"
+                    style={{
+                      fontSize: "medium",
+                      padding: "15px",
+                      margin: "0px",
+                    }}
+                    className="logOut"
+                    onClick={() => window.location.reload()}
+                  >
+                    ↺ Reload App
                   </button>
                 </a>
               </h4>
@@ -229,58 +245,70 @@ export default function Settings() {
         <Fade top distance={"30px"} duration={1500}>
           <div className="optionInput" style={{ background: "#b9ebe5" }}>
             <h3>Data</h3>
-            <div>
-              {" "}
-              Azure server: {currentAzureDisplay} owner
-              <br />
-              <button id="useCurrentLocation" onClick={changeAzure}>
-                Use Local / External Azure
-              </button>
-            </div>
-            <br />
-            <div>
-              {" "}
-              Show service code in departures/arrivals: {serviceCodeDisplay}
-              <br />
-              <button id="useCurrentLocation" onClick={showServiceCode}>
-                Show/hide
-              </button>
-            </div>
-            <br />
-            <div>
-              {" "}
-              Enable external formation content: {enableWindowDisplay}
-              <br />
-              <button id="useCurrentLocation" onClick={showWindow}>
-                Show/hide
-              </button>
-            </div>
-            <br />
-            <div>
-              {" "}
-              Vertical menu style:{" "}
-              {(localStorage.getItem("menuStyle") &&
-                localStorage.getItem("menuStyle")) ||
-                "Off"}
-              <br />
-              <button id="useCurrentLocation" onClick={showVerticalMenu}>
-                On/off
-              </button>
-            </div>
-            <br />
-            <div>
-              {" "}
-              Clear station history: <br />
-              <button
-                id="useCurrentLocation"
-                onClick={() =>
-                  localStorage.removeItem("stationHistory") +
-                  window.location.reload()
-                }
+            <text style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "#ffffff77",
+                  borderRadius: "20px",
+                  width: "80%",
+                  padding: "10px",
+                }}
               >
-                Clear
-              </button>
-            </div>
+                {" "}
+                Azure Server: {currentAzureDisplay} Owner
+                <br /> <br />
+                <button id="useCurrentLocation" onClick={changeAzure}>
+                  {currentAzureDisplay == "External" && "Change to Local"}
+                  {currentAzureDisplay == "Local" && "Change to External"}
+                </button>
+              </div>
+            </text>
+            <br />
+            <text style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "#ffffff77",
+                  borderRadius: "20px",
+                  width: "80%",
+                  padding: "10px",
+                }}
+              >
+                Station History:{" "}
+                {localStorage.getItem("stationHistory")?.length
+                  ? "Not Cleared"
+                  : "Cleared"}
+                <br /> <br />
+                <button
+                  id="useCurrentLocation"
+                  onClick={() =>
+                    alert(
+                      "Station History: " +
+                        localStorage
+                          .getItem("stationHistory")
+                          .replaceAll(",", ", ")
+                    )
+                  }
+                  disabled={!localStorage.getItem("stationHistory")?.length}
+                  style={{
+                    background:
+                      !localStorage.getItem("stationHistory")?.length &&
+                      "#cccccc",
+                  }}
+                >
+                  Show History
+                </button>
+                <br />
+                <button
+                  id="useCurrentLocation"
+                  onClick={() =>
+                    localStorage.removeItem("stationHistory") +
+                    window.location.reload()
+                  }
+                >
+                  Clear
+                </button>
+              </div>
+            </text>
             <br />
           </div>
         </Fade>
@@ -289,52 +317,145 @@ export default function Settings() {
         <Fade top distance={"50px"} duration={1500}>
           <div className="optionInput">
             <h3>Display</h3>
-            <div>
-              {" "}
-              Theme: {currentTheme}
-              <br />
-              <button id="useCurrentLocation" onClick={darkMode}>
-                Dark mode
-              </button>
-              <button id="useCurrentLocation" onClick={lightMode}>
-                Light mode
-              </button>
-              <br />
-              <button id="useCurrentLocation" onClick={ColourfulMode}>
-                Colourful mode
-              </button>
-            </div>
+            <text style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "#ffffff77",
+                  borderRadius: "20px",
+                  width: "80%",
+                  padding: "10px",
+                }}
+              >
+                {" "}
+                Vertical Menu:{" "}
+                {(localStorage.getItem("menuStyle") &&
+                  localStorage.getItem("menuStyle")) ||
+                  "Off"}
+                <br /> <br />
+                <button id="useCurrentLocation" onClick={showVerticalMenu}>
+                  {(localStorage.getItem("menuStyle") &&
+                    localStorage.getItem("menuStyle") == "Off" &&
+                    "Turn On") ||
+                    "Turn Off"}
+                </button>
+              </div>
+            </text>
             <br />
-            <div>
-              {" "}
-              Font size: {currentFontSize}
-              <br />
-              <button id="useCurrentLocation" onClick={fontSizeIncrease}>
-                + Large font size
-              </button>
-              <button id="useCurrentLocation" onClick={fontSizeDecrease}>
-                - Small font size
-              </button>
-              <br />
-              <button id="useCurrentLocation" onClick={fontSizeReset}>
-                Standard font size
-              </button>
-              <br />
-            </div>
-            <p style={{ fontSize: Number(localStorage.getItem("fontSize")) }}>
-              Example text to test font size
-            </p>
-            <button
-              style={{
-                textDecoration: "none",
-                fontSize: Number(localStorage.getItem("fontSize") - 5),
-              }}
-              id="manualSubmitButton"
-              onClick={applyFont}
-            >
-              ☑ Apply font size
-            </button>
+            <text style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "#ffffff77",
+                  borderRadius: "20px",
+                  width: "80%",
+                  padding: "10px",
+                }}
+              >
+                {" "}
+                Theme: {currentTheme}
+                <br /> <br />
+                <button
+                  id="useCurrentLocation"
+                  onClick={darkMode}
+                  disabled={currentTheme == "Dark"}
+                  style={{ background: currentTheme == "Dark" && "#cccccc" }}
+                >
+                  Dark Mode
+                </button>
+                <button
+                  id="useCurrentLocation"
+                  onClick={lightMode}
+                  disabled={currentTheme == "Light"}
+                  style={{ background: currentTheme == "Light" && "#cccccc" }}
+                >
+                  Light Mode
+                </button>
+                <br />
+                <button
+                  id="useCurrentLocation"
+                  onClick={ColourfulMode}
+                  disabled={currentTheme == "Colourful"}
+                  style={{
+                    background: currentTheme == "Colourful" && "#cccccc",
+                  }}
+                >
+                  Colourful Mode
+                </button>
+              </div>
+            </text>
             <br />
+            <text style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "#ffffff77",
+                  borderRadius: "20px",
+                  width: "80%",
+                  padding: "10px",
+                }}
+              >
+                <div>
+                  {" "}
+                  Font Size:
+                  {currentFontSize.slice(0, 2) == "La" && " Large"}
+                  {currentFontSize.slice(0, 2) == "Sm" && " Small"}
+                  {currentFontSize.slice(0, 2) == "St" && " Medium"}
+                  <br /> <br />
+                  <button
+                    id="useCurrentLocation"
+                    onClick={fontSizeIncrease}
+                    style={{
+                      background: "white",
+                      color: "black",
+                      border: "1px solid grey",
+                    }}
+                  >
+                    ︽ Large
+                  </button>
+                  <button
+                    id="useCurrentLocation"
+                    onClick={fontSizeDecrease}
+                    style={{
+                      background: "white",
+                      color: "black",
+                      border: "1px solid grey",
+                    }}
+                  >
+                    ︾ Small
+                  </button>
+                  <br />
+                  <button
+                    id="useCurrentLocation"
+                    onClick={fontSizeReset}
+                    style={{
+                      background: "white",
+                      color: "black",
+                      border: "1px solid grey",
+                    }}
+                  >
+                    ━ Medium
+                  </button>
+                  <br />
+                </div>
+                <text style={{ display: "flex", justifyContent: "center" }}>
+                  <p
+                    style={{
+                      fontSize: Number(localStorage.getItem("fontSize")),
+                      background: "white",
+                      borderRadius: "15px",
+                      width: "50%",
+                      padding: "10px",
+                      minHeight: "55px",
+                      margin: "16px",
+                      marginBottom: "35px",
+                    }}
+                  >
+                    Example text to test font size
+                  </p>
+                </text>
+                <button id="useCurrentLocation" onClick={applyFont}>
+                  ☑ Apply Font Size
+                </button>
+              </div>
+            </text>
             <br />
           </div>
         </Fade>

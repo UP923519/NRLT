@@ -91,15 +91,26 @@ export default function Login({ setToken }) {
         <Fade duration={1000}>
           <div className="overlay"></div>
           <div className="login-wrapper">
-            <div className="divLoginInput1">
-              <h1 style={{ color: "#2d9ba1" }}>National Rail Live</h1>
+            <div
+              className="divLoginInput1"
+              style={{ paddingTop: "25px", paddingBottom: "25px" }}
+            >
+              <h1 style={{ color: "#2d9ba1" }}>Train Times Live</h1>
               <h2>Welcome!</h2>
             </div>
 
             <div className="divLoginInput2">
               <div>
-                <button id="loginButton" type="submit" onClick={handleSubmit}>
-                  ￫ Enter {username}
+                <button
+                  id="loginButton"
+                  type="submit"
+                  onClick={handleSubmit}
+                  style={{
+                    backdropFilter: "blur(12px)",
+                    background: "#ffffff33",
+                  }}
+                >
+                  ￫ Start {username}
                 </button>
               </div>
             </div>

@@ -75,7 +75,7 @@ function App() {
             borderRadius: "20px",
           }}
         >
-          National Rail Live
+          Train Times Live
         </h2>
 
         <br />

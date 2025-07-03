@@ -2,8 +2,15 @@ element.style {
   background-color: rgb(42, 42, 255);
 }
 
+/* //Stop pull to refresh attempt */
 body {
   overflow: visible !important;
+  overscroll-behavior-y: contain;
+}
+/* //Stop pull to refresh attempt */
+html,
+body {
+  overscroll-behavior: none;
 }
 
 .size {
