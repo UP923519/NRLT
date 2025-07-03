@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../App/App.css";
 import { Table } from "react-bootstrap";
 import Select from "react-select";
@@ -15,6 +15,7 @@ import zIndex from "@mui/material/styles/zIndex.js";
 import StationHistoryChip from "./stationHistoryChip.js";
 import axios from "axios";
 import SelectDate from "./selectDate.js";
+import ScrollButton from "./scrollButton.js";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -52,7 +53,7 @@ let failedAlert;
 let contextURL = "";
 let contextTime;
 let serverName = "trainwebappv2";
-let rememberFirstStation;
+let rememberFirstStation = "";
 let rememberSecondStation;
 let rememberTimeOffset;
 let busDisplayMode = "train";
@@ -126,6 +127,18 @@ export default function DepartArrive(departArrive) {
     setTTSMOpen(true);
   };
 
+  const [showAlerts, setShowAlerts] = useState(true);
+  const myRef = useRef(null);
+
+  const executeScroll = () => {
+    myRef.current.scrollIntoView({ behavior: "smooth" });
+    window.scrollTo({
+      top: 340,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   useEffect(() => {
     if (currentAzure == "External") {
       serverName = "huxley2";
@@ -191,7 +204,14 @@ export default function DepartArrive(departArrive) {
     setDepartures(myArray);
     getStation();
 
-    if (myArray == "" || failedAlert == true) {
+    //Monitor
+    // console.log("myArray", myArray);
+    // console.log("rememberStation", rememberStation);
+    // console.log("failedAlert", failedAlert);
+    // console.log("rememberFirstStation", rememberFirstStation);
+
+    if ((myArray == "" && rememberFirstStation == "") || failedAlert == true) {
+      console.log("CLOSING");
       setIsOpen(false);
       setProcessingState(false);
     } else {
@@ -247,6 +267,8 @@ export default function DepartArrive(departArrive) {
   }
 
   function handleDepartureClick(timeOffset, code, status, stationFullName) {
+    setShowScrollButton(false);
+
     //validation on submit of boxes
     if (!stationFullName && !rememberFirstStation) {
       alert(
@@ -446,7 +468,7 @@ export default function DepartArrive(departArrive) {
     myArray = myArray.slice(0, -2);
     if (myArray == "") {
       alert("No results found");
-      failedAlert = true;
+      // failedAlert = true;
       if (currentCRSCode == undefined) {
         clearAll();
       }
@@ -1268,6 +1290,15 @@ export default function DepartArrive(departArrive) {
                     )}
                     <text style={{ textAlign: "left" }}>
                       <Select
+                        styles={{
+                          menu: (styles, { data }) => {
+                            return {
+                              ...styles,
+                              backgroundColor: "#ffffff88",
+                              backdropFilter: "blur(10px)",
+                            };
+                          },
+                        }}
                         defaultValue={[
                           {
                             value: rememberFirstStation,
@@ -1330,6 +1361,15 @@ export default function DepartArrive(departArrive) {
                     )}
                     <text style={{ textAlign: "left" }}>
                       <Select
+                        styles={{
+                          menu: (styles, { data }) => {
+                            return {
+                              ...styles,
+                              backgroundColor: "#ffffff88",
+                              backdropFilter: "blur(10px)",
+                            };
+                          },
+                        }}
                         isDisabled={
                           rememberFirstStation == "" || !rememberFirstStation
                             ? true
@@ -1412,6 +1452,13 @@ export default function DepartArrive(departArrive) {
                         MenuListProps={{
                           "aria-labelledby": "basic-button",
                         }}
+                        sx={{
+                          mt: "1px",
+                          "& .MuiMenu-paper": {
+                            backgroundColor: "#ffffff88",
+                            backdropFilter: "blur(10px)",
+                          },
+                        }}
                       >
                         <MenuItem
                           type="button"
@@ -1461,7 +1508,9 @@ export default function DepartArrive(departArrive) {
                 <button
                   id="useTrains"
                   type="button"
-                  onClick={() => handleDepartureClick(contextTime)}
+                  onClick={() =>
+                    handleDepartureClick(contextTime) + setIsOpen(false)
+                  }
                 >
                   {isOpenForm && "🔎 Search"} {!isOpenForm && "🔄 Refresh"}
                 </button>
@@ -1481,122 +1530,135 @@ export default function DepartArrive(departArrive) {
             </>
           )}
 
-          <Fade duration={1999} when={!processingState}>
+          <ref ref={myRef}></ref>
+          {!processingState && (
             <>
-              {isOpen && (
+              <Fade duration={1999}>
                 <>
-                  <div style={{ marginBottom: "10px" }}>
-                    {trainSearch} &nbsp;
-                    <Tooltip
-                      arrow
-                      componentsProps={{
-                        tooltip: {
-                          sx: {
-                            maxWidth: "none",
-                            background: "#ffffffCC",
-                            backdropFilter: "blur(12px)",
-                            borderRadius: "10px",
-                            border: 1,
-                            borderColor: "#c9c9c9",
-                            "& .MuiTooltip-arrow": {
-                              color: "#0080ff",
-                            },
-                          },
-                        },
-                      }}
-                      leaveTouchDelay={5000}
-                      title={
-                        <div style={{ color: "black" }}>
-                          {staffData.locationName} Managed By: <br />
-                          <text style={{ color: "green" }}>
-                            {staffData.stationManager} (
-                            {staffData.stationManagerCode})
-                          </text>
-                        </div>
-                      }
-                      onClose={handleTooltipClose}
-                      open={tTSMOpen}
-                      slotProps={{
-                        popper: {
-                          disablePortal: false,
-                          modifiers: [
-                            {
-                              name: "offset",
-                              options: {
-                                offset: [0, -15],
+                  {isOpen && (
+                    <>
+                      <div style={{ marginBottom: "10px" }}>
+                        {trainSearch} &nbsp;
+                        <Tooltip
+                          arrow
+                          componentsProps={{
+                            tooltip: {
+                              sx: {
+                                maxWidth: "none",
+                                background: "#ffffffCC",
+                                backdropFilter: "blur(12px)",
+                                borderRadius: "10px",
+                                border: 1,
+                                borderColor: "#c9c9c9",
+                                "& .MuiTooltip-arrow": {
+                                  color: "#0080ff",
+                                },
                               },
                             },
-                          ],
-                        },
-                      }}
-                    >
-                      <text
-                        onClick={handleTooltipOpen}
-                        style={{ marginBottom: 2, color: "#0080ff" }}
-                      >
-                        ⓘ
-                      </text>
-                    </Tooltip>
-                  </div>
+                          }}
+                          leaveTouchDelay={5000}
+                          title={
+                            <div style={{ color: "black" }}>
+                              {staffData.locationName} Managed By: <br />
+                              <text style={{ color: "green" }}>
+                                {staffData.stationManager} (
+                                {staffData.stationManagerCode})
+                              </text>
+                            </div>
+                          }
+                          onClose={handleTooltipClose}
+                          open={tTSMOpen}
+                          slotProps={{
+                            popper: {
+                              disablePortal: false,
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, -15],
+                                  },
+                                },
+                              ],
+                            },
+                          }}
+                        >
+                          <text
+                            onClick={handleTooltipOpen}
+                            style={{ marginBottom: 2, color: "#0080ff" }}
+                          >
+                            ⓘ
+                          </text>
+                        </Tooltip>
+                      </div>
 
-                  <Box sx={{ marginBottom: 2 }}>
-                    <button
-                      id="useTrains"
-                      type="button"
-                      disabled={trainDisabled}
-                      style={{ color: activeTrainT, background: activeTrain }}
-                      onClick={() => (
-                        (busDisplayMode = "train"),
-                        handleDepartureClick(contextTime)
-                      )}
-                    >
-                      Show Train Services
-                    </button>
-                    <button
-                      id="useTrains"
-                      type="button"
-                      disabled={busDisabled}
-                      style={{ color: activeBusT, background: activeBus }}
-                      onClick={() => (
-                        (busDisplayMode = "bus"),
-                        handleDepartureClick(contextTime)
-                      )}
-                    >
-                      Show Bus Services
-                    </button>
-                  </Box>
-                  <TrainBus
-                    isOpen={isOpen}
-                    trainSearch={trainSearch}
-                    textInfo={textInfo}
-                    nrccMessages={nrccMessages}
-                    handleDepartureClick={handleDepartureClick}
-                    earlier={earlier}
-                    earlier2={earlier2}
-                    Table={Table}
-                    stringDepartures={stringDepartures}
-                    routeChange={routeChange}
-                    later={later}
-                    later2={later2}
-                    current={current}
-                    timeButton={timeButton}
-                    rememberTimeOffset={rememberTimeOffset}
-                    displayStation={stationOneD}
-                    showScrollButton={showScrollButton}
-                  />
+                      <Box sx={{ marginBottom: 2 }}>
+                        <button
+                          id="useTrains"
+                          type="button"
+                          disabled={trainDisabled}
+                          style={{
+                            color: activeTrainT,
+                            background: activeTrain,
+                          }}
+                          onClick={() => (
+                            (busDisplayMode = "train"),
+                            handleDepartureClick(contextTime)
+                          )}
+                        >
+                          Show Train Services
+                        </button>
+                        <button
+                          id="useTrains"
+                          type="button"
+                          disabled={busDisabled}
+                          style={{ color: activeBusT, background: activeBus }}
+                          onClick={() => (
+                            (busDisplayMode = "bus"),
+                            handleDepartureClick(contextTime)
+                          )}
+                        >
+                          Show Bus Services
+                        </button>
+                      </Box>
+                      <TrainBus
+                        isOpen={isOpen}
+                        trainSearch={trainSearch}
+                        textInfo={textInfo}
+                        nrccMessages={nrccMessages}
+                        handleDepartureClick={handleDepartureClick}
+                        earlier={earlier}
+                        earlier2={earlier2}
+                        Table={Table}
+                        stringDepartures={stringDepartures}
+                        routeChange={routeChange}
+                        later={later}
+                        later2={later2}
+                        current={current}
+                        timeButton={timeButton}
+                        rememberTimeOffset={rememberTimeOffset}
+                        displayStation={stationOneD}
+                        showScrollButton={showScrollButton}
+                        processingState={processingState}
+                      />
+                    </>
+                  )}
+                  <div className="NRLogo">
+                    <img
+                      src={image}
+                      alt="powered by National Rail Enquiries"
+                      width="256"
+                    />
+                  </div>
                 </>
-              )}
-              <div className="NRLogo">
-                <img
-                  src={image}
-                  alt="powered by National Rail Enquiries"
-                  width="256"
-                />
-              </div>
+              </Fade>
             </>
-          </Fade>
+          )}
         </div>
       </Fade>
+      <ScrollButton
+        executeScroll={executeScroll}
+        showScrollButton={showScrollButton}
+      />
     </>
   );
 }

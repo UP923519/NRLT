@@ -535,6 +535,13 @@ export default function ServicePage() {
                     MenuListProps={{
                       "aria-labelledby": "basic-button",
                     }}
+                    sx={{
+                      mt: "1px",
+                      "& .MuiMenu-paper": {
+                        backgroundColor: "#ffffff88",
+                        backdropFilter: "blur(10px)",
+                      },
+                    }}
                   >
                     <MenuItem
                       type="reset"

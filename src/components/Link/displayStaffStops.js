@@ -201,59 +201,63 @@ export default function DisplayStaffStops({
                 "0 5px 20px 0 rgba(0, 0, 0, 0.19), 0 5px 10px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <tr>
-              <th
-                style={{
-                  fontSize: 15,
-                  paddingBottom: "5px",
-                  paddingTop: "5px",
-                }}
-              >
-                {rid?.locations[0].locationName &&
-                  rid.locations[0].std.slice(11)}{" "}
-                {rid?.locations[0].locationName &&
-                  rid.locations[0].locationName}
-                {" —> "}
-                {rid?.locations[0].locationName &&
-                  rid.locations[rid?.locations.length - 1].locationName}
-              </th>
-            </tr>
-            <tr>
-              <th
-                style={{
-                  fontSize: 14,
-                  paddingBottom: "5px",
-                  paddingTop: "0px",
-                }}
-              >
-                <text style={{ color: "#696969" }}>
-                  {timeDiff && timeDiff.length > 0 ? (
-                    <>
-                      {timeDiff[0] == 1 && timeDiff[0] + " Hour "}
-                      {timeDiff[0] > 1 && timeDiff[0] + " Hours "}
-                      {timeDiff[1] == 1 && timeDiff[1] + "Minute "}
-                      {timeDiff[1] > 1 && timeDiff[1] + " Minutes "}
-                    </>
-                  ) : (
-                    <>
-                      {diffHours == 1 && diffHours + " Hour "}
-                      {diffHours > 1 && diffHours + " Hours "}
-                      {diffMinutes == 1 && diffMinutes + "Minute "}
-                      {diffMinutes > 1 && diffMinutes + " Minutes "}
-                    </>
-                  )}
-                  <hr style={{ width: "25%", marginTop: "13px" }}></hr>
-                </text>
-              </th>
-            </tr>
-            <tr>
-              <th style={{ fontSize: 15, paddingBottom: "7px" }}>
-                All waypoints
-              </th>
-            </tr>
-            <tr>
-              <th style={{ fontSize: 13 }}>Waypoint | Scheduled | Act/Est</th>
-            </tr>
+            <Fade top distance={"35px"} duration={1500}>
+              <tr>
+                <th
+                  style={{
+                    fontSize: 15,
+                    paddingBottom: "5px",
+                    paddingTop: "5px",
+                  }}
+                >
+                  {rid?.locations[0].locationName &&
+                    rid.locations[0].std.slice(11)}{" "}
+                  {rid?.locations[0].locationName &&
+                    rid.locations[0].locationName}
+                  {" —> "}
+                  {rid?.locations[0].locationName &&
+                    rid.locations[rid?.locations.length - 1].locationName}
+                </th>
+              </tr>
+              <tr>
+                <th
+                  style={{
+                    fontSize: 14,
+                    paddingBottom: "5px",
+                    paddingTop: "0px",
+                  }}
+                >
+                  <text style={{ color: "#696969" }}>
+                    {timeDiff && timeDiff.length > 0 ? (
+                      <>
+                        {timeDiff[0] == 1 && timeDiff[0] + " Hour "}
+                        {timeDiff[0] > 1 && timeDiff[0] + " Hours "}
+                        {timeDiff[1] == 1 && timeDiff[1] + "Minute "}
+                        {timeDiff[1] > 1 && timeDiff[1] + " Minutes "}
+                      </>
+                    ) : (
+                      <>
+                        {diffHours == 1 && diffHours + " Hour "}
+                        {diffHours > 1 && diffHours + " Hours "}
+                        {diffMinutes == 1 && diffMinutes + "Minute "}
+                        {diffMinutes > 1 && diffMinutes + " Minutes "}
+                      </>
+                    )}
+                    <hr style={{ width: "25%", marginTop: "13px" }}></hr>
+                  </text>
+                </th>
+              </tr>
+            </Fade>
+            <Fade top distance={"40px"} duration={1500}>
+              <tr>
+                <th style={{ fontSize: 15, paddingBottom: "7px" }}>
+                  All waypoints
+                </th>
+              </tr>
+              <tr>
+                <th style={{ fontSize: 13 }}>Waypoint | Scheduled | Act/Est</th>
+              </tr>
+            </Fade>
             {rid?.locations?.map((waypoint, index) => {
               let coloursDeparted;
               let coloursEstimated;
@@ -276,120 +280,122 @@ export default function DisplayStaffStops({
                       alignItems: "center",
                     }}
                   >
-                    <p
-                      style={{
-                        maxWidth: "35vw",
-                        overflow: "hidden",
-                        whiteSpace: "noWrap",
-                        textOverflow: "ellipsis",
-                        color: waypoint.isPass && "#888888",
-                        textShadow: "5px",
-                      }}
-                    >
-                      {waypoint.locationName}
-                    </p>
-                    {/* Display associations */}
-                    {waypoint.associations?.map((association, index) => {
-                      return (
-                        <x
+                    <Fade top distance={index * 2 + 50 + "px"} duration={1500}>
+                      <text style={{ display: "flex", alignItems: "center" }}>
+                        <p
                           style={{
-                            background: "orange",
-                            paddingLeft: "5px",
-                            paddingRight: "5px",
-                            paddingTop: "1px",
-                            paddingBottom: "1px",
-                            borderRadius: "20px",
-                            marginLeft: "6px",
+                            maxWidth: "35vw",
+                            overflow: "hidden",
+                            whiteSpace: "noWrap",
+                            textOverflow: "ellipsis",
+                            color: waypoint.isPass && "#888888",
+                            textShadow: "5px",
                           }}
                         >
-                          A
-                        </x>
-                      );
-                    })}
-                    {/* Display scheduled or actual time */}
-                    &nbsp;
-                    {waypoint.stdSpecified !== false
-                      ? waypoint.std.slice(11, -3) + " "
-                      : waypoint.sta.slice(11, -3) + " "}
-                    {/* Display cancelled message */}
-                    <Tooltip title="Cancelled">
-                      {waypoint.isCancelled && (
-                        <x
-                          style={{
-                            background: "#000000",
-                            color: "white",
-                            paddingLeft: "5px",
-                            paddingRight: "5px",
-                            borderRadius: "20px",
-                            marginLeft: "6px",
-                          }}
-                        >
-                          ❌
-                        </x>
-                      )}
-                    </Tooltip>
-                    {(waypoint.atdSpecified !== false ||
-                      waypoint.ataSpecified !== false) && (
-                      <x
-                        style={{
-                          background: coloursDeparted,
-                          color: coloursDeparted && "white",
-                          paddingLeft: coloursDeparted && "5px",
-                          paddingRight: "6px",
-                          borderRadius: coloursDeparted && "20px",
-                          marginLeft: coloursDeparted && "6px",
-                        }}
-                      >
-                        <Tooltip title="Train has completed this waypoint">
-                          {waypoint.atdSpecified
-                            ? waypoint.atd.slice(11, -3)
-                            : waypoint.ataSpecified
-                            ? waypoint.ata.slice(11, -3)
-                            : "No info"}
+                          {waypoint.locationName}
+                        </p>
+                        {/* Display associations */}
+                        {waypoint.associations?.map((association, index) => {
+                          return (
+                            <x
+                              style={{
+                                background: "orange",
+                                paddingLeft: "5px",
+                                paddingRight: "5px",
+                                paddingTop: "1px",
+                                paddingBottom: "1px",
+                                borderRadius: "20px",
+                                marginLeft: "6px",
+                              }}
+                            >
+                              A
+                            </x>
+                          );
+                        })}
+                        {/* Display scheduled or actual time */}
+                        &nbsp;
+                        {waypoint.stdSpecified !== false
+                          ? waypoint.std.slice(11, -3) + " "
+                          : waypoint.sta.slice(11, -3) + " "}
+                        {/* Display cancelled message */}
+                        <Tooltip title="Cancelled">
+                          {waypoint.isCancelled && (
+                            <x
+                              style={{
+                                background: "#000000",
+                                color: "white",
+                                paddingLeft: "5px",
+                                paddingRight: "5px",
+                                borderRadius: "20px",
+                                marginLeft: "6px",
+                              }}
+                            >
+                              ❌
+                            </x>
+                          )}
                         </Tooltip>
-                      </x>
-                    )}
-                    <Tooltip title="🟢On time 🟠Warning">
-                      {(waypoint.atdSpecified !== false ||
-                        waypoint.ataSpecified !== false) &&
-                        (Number(waypoint.lateness) > 60 ? (
-                          <p>&nbsp;🟠</p>
-                        ) : (
-                          <p>&nbsp;🟢</p>
-                        ))}
-                    </Tooltip>
-                    {waypoint.atdSpecified == false &&
-                      waypoint.ataSpecified == false && (
-                        <Tooltip title="Train has not completed this waypoint">
+                        {(waypoint.atdSpecified !== false ||
+                          waypoint.ataSpecified !== false) && (
                           <x
                             style={{
-                              background: coloursEstimated,
-                              paddingLeft: coloursEstimated && "5px",
+                              background: coloursDeparted,
+                              color: coloursDeparted && "white",
+                              paddingLeft: coloursDeparted && "5px",
                               paddingRight: "6px",
-                              borderRadius: coloursEstimated && "20px",
-                              marginLeft: coloursEstimated && "6px",
+                              borderRadius: coloursDeparted && "20px",
+                              marginLeft: coloursDeparted && "6px",
                             }}
                           >
-                            {waypoint.etdSpecified == false &&
-                            waypoint.etaSpecified == false ? (
-                              waypoint.departureType == "3" ||
-                              waypoint.arrivalType == "3" ? (
-                                "Delayed"
-                              ) : (
-                                "No info"
-                              )
-                            ) : (
-                              <>
-                                {waypoint.etdSpecified
-                                  ? waypoint.etd.slice(11, -3)
-                                  : waypoint.eta.slice(11, -3)}
-                              </>
-                            )}
+                            <Tooltip title="Train has completed this waypoint">
+                              {waypoint.atdSpecified
+                                ? waypoint.atd.slice(11, -3)
+                                : waypoint.ataSpecified
+                                ? waypoint.ata.slice(11, -3)
+                                : "No info"}
+                            </Tooltip>
                           </x>
+                        )}
+                        <Tooltip title="🟢On time 🟠Warning">
+                          {(waypoint.atdSpecified !== false ||
+                            waypoint.ataSpecified !== false) &&
+                            (Number(waypoint.lateness) > 60 ? (
+                              <p>&nbsp;🟠</p>
+                            ) : (
+                              <p>&nbsp;🟢</p>
+                            ))}
                         </Tooltip>
-                      )}
-                    {/* <br />
-                <br /> */}
+                        {waypoint.atdSpecified == false &&
+                          waypoint.ataSpecified == false && (
+                            <Tooltip title="Train has not completed this waypoint">
+                              <x
+                                style={{
+                                  background: coloursEstimated,
+                                  paddingLeft: coloursEstimated && "5px",
+                                  paddingRight: "6px",
+                                  borderRadius: coloursEstimated && "20px",
+                                  marginLeft: coloursEstimated && "6px",
+                                }}
+                              >
+                                {waypoint.etdSpecified == false &&
+                                waypoint.etaSpecified == false ? (
+                                  waypoint.departureType == "3" ||
+                                  waypoint.arrivalType == "3" ? (
+                                    "Delayed"
+                                  ) : (
+                                    "No info"
+                                  )
+                                ) : (
+                                  <>
+                                    {waypoint.etdSpecified
+                                      ? waypoint.etd.slice(11, -3)
+                                      : waypoint.eta.slice(11, -3)}
+                                  </>
+                                )}
+                              </x>
+                            </Tooltip>
+                          )}
+                      </text>
+                    </Fade>
                     <Box
                       style={{
                         height: "50px",

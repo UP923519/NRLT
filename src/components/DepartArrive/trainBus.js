@@ -19,9 +19,10 @@ export default function TrainBus({
   rememberTimeOffset,
   displayStation,
   showScrollButton,
+  processingState,
+  isOpen,
 }) {
   const [showAlerts, setShowAlerts] = useState(true);
-
   const myRef = useRef(null);
 
   const executeScroll = () => {
@@ -35,10 +36,6 @@ export default function TrainBus({
 
   return (
     <div style={{ marginTop: -15 }}>
-      <ScrollButton
-        executeScroll={executeScroll}
-        showScrollButton={showScrollButton}
-      />
       {/* marginTop is -5 with the time selector component */}
       <ref ref={myRef}></ref>
       <div style={{ marginBottom: "20px" }}>
@@ -126,7 +123,6 @@ export default function TrainBus({
                 {showAlerts && (
                   <>
                     {nrccMessages?.map((message, index) => {
-                      console.log("yes", (index + 1) * 15 + "px");
                       return (
                         <>
                           <Fade
