@@ -34,7 +34,7 @@ const style = {
   position: " absolute",
   backdropFilter: "blur(12px)",
   background:
-    localStorage.getItem("darkMode") == "#000000" ? "#bfbfbf99" : "#ffffff99",
+    localStorage.getItem("darkMode") !== "#ffffff" ? "#91919199" : "#ffffff99",
 };
 
 let nextId = 0;
@@ -545,7 +545,12 @@ export default function DisplayStaffStops({
                 </div>
                 {station.crs && (
                   <Button
-                    sx={{ marginTop: "-20px" }}
+                    sx={{
+                      marginTop: "-20px",
+                      color:
+                        localStorage.getItem("darkMode") == "#000000" &&
+                        "#003159",
+                    }}
                     type="button"
                     onClick={() =>
                       navigate("/dashboard", {

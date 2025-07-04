@@ -26,7 +26,7 @@ const style = {
   position: " absolute",
   backdropFilter: "blur(12px)",
   background:
-    localStorage.getItem("darkMode") == "#000000" ? "#bfbfbf99" : "#ffffff99",
+    localStorage.getItem("darkMode") == "#000000" ? "#91919199" : "#ffffff99",
 };
 
 let openModalNow = false;
@@ -457,7 +457,12 @@ export default function DisplayStops({
                 </div>
                 {station.crs && (
                   <Button
-                    sx={{ marginTop: "-20px" }}
+                    sx={{
+                      marginTop: "-20px",
+                      color:
+                        localStorage.getItem("darkMode") == "#000000" &&
+                        "#003159",
+                    }}
                     type="button"
                     onClick={() =>
                       navigate("/dashboard", {
