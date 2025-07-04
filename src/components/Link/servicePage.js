@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../App/App.css";
 import { Table } from "react-bootstrap";
 import image from "../../assets/nre-logo.png";
-import imageDark from "../../assets/nre-logo-dark.jpg";
+import imageDark from "../../assets/nre-logo-dark.png";
 import {
   calculatePosition,
   calculatePositionCentral,
@@ -739,7 +739,7 @@ export default function ServicePage() {
                         color:
                           localStorage.getItem("darkMode") == "#8297b5"
                             ? "#e6e6e6"
-                            : "#696969",
+                            : "#818181",
                       }}
                     >
                       {diffHours == 1 && diffHours + " Hour "}
@@ -1200,7 +1200,7 @@ export default function ServicePage() {
                   style={{
                     background:
                       localStorage.getItem("darkMode") !== "#ffffff" &&
-                      "#1d3360",
+                      "#00383c77",
                   }}
                 >
                   <img

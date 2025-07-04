@@ -3,7 +3,7 @@ import "../App/App.css";
 import { Table } from "react-bootstrap";
 import Select from "react-select";
 import image from "../../assets/nre-logo.png";
-import imageDark from "../../assets/nre-logo-dark.jpg";
+import imagedark from "../../assets/nre-logo-dark.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { test1 } from "../Link/servicePage.js";
 import { currentAzure, serviceCode } from "../Settings/Settings";
@@ -1742,14 +1742,14 @@ export default function DepartArrive(departArrive) {
                     style={{
                       background:
                         localStorage.getItem("darkMode") !== "#ffffff" &&
-                        "#1d3360",
+                        "#00383c77",
                     }}
                   >
                     <img
                       src={
                         localStorage.getItem("darkMode") == "#ffffff"
                           ? image
-                          : imageDark
+                          : imagedark
                       }
                       alt="powered by National Rail Enquiries"
                       width="256"

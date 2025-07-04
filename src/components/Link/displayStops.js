@@ -135,9 +135,9 @@ export default function DisplayStops({
               style={{
                 background:
                   localStorage.getItem("darkMode") == "#000000"
-                    ? "#a5a3b5"
+                    ? "#a3a3a3"
                     : localStorage.getItem("darkMode") == "#8297b5"
-                    ? "#cbd0f2"
+                    ? "#cbe0f2"
                     : "#f0f0f0",
                 marginBottom: "10px",
                 boxShadow:
