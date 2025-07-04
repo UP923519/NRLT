@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/NRLT/static/css/main.fbf39a11.css",
-    "main.js": "/NRLT/static/js/main.94c5bb62.js",
+    "main.js": "/NRLT/static/js/main.837f78ca.js",
     "static/js/988.f592f33e.chunk.js": "/NRLT/static/js/988.f592f33e.chunk.js",
     "static/media/videoBg.mp4": "/NRLT/static/media/videoBg.6da7c6e8152e0018930b.mp4",
-    "static/media/nre-logo-dark.png": "/NRLT/static/media/nre-logo-dark.3b397ba574d01c23676d.png",
     "static/media/nre-logo.png": "/NRLT/static/media/nre-logo.90684478251ed67ddfa8.png",
+    "static/media/nre-logo-dark.png": "/NRLT/static/media/nre-logo-dark.37ff6e66c1a97c0f6f5d.png",
     "index.html": "/NRLT/index.html",
     "main.fbf39a11.css.map": "/NRLT/static/css/main.fbf39a11.css.map",
-    "main.94c5bb62.js.map": "/NRLT/static/js/main.94c5bb62.js.map",
+    "main.837f78ca.js.map": "/NRLT/static/js/main.837f78ca.js.map",
     "988.f592f33e.chunk.js.map": "/NRLT/static/js/988.f592f33e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fbf39a11.css",
-    "static/js/main.94c5bb62.js"
+    "static/js/main.837f78ca.js"
   ]
 }
