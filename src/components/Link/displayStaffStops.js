@@ -32,7 +32,7 @@ const style = {
   maxHeight: "70vh",
   top: "50%",
   position: " absolute",
-  backdropFilter: "blur(12px)",
+  backdropFilter: "blur(0px)",
   background:
     localStorage.getItem("darkMode") !== "#ffffff" ? "#00000099" : "#ffffff99",
   color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
