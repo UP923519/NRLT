@@ -34,7 +34,8 @@ const style = {
   position: " absolute",
   backdropFilter: "blur(12px)",
   background:
-    localStorage.getItem("darkMode") !== "#ffffff" ? "#91919199" : "#ffffff99",
+    localStorage.getItem("darkMode") !== "#ffffff" ? "#00000099" : "#ffffff99",
+  color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
 };
 
 let nextId = 0;
@@ -210,7 +211,7 @@ export default function DisplayStaffStops({
             style={{
               background:
                 localStorage.getItem("darkMode") == "#000000"
-                  ? "#bfbfbf"
+                  ? "#a5a3b5"
                   : localStorage.getItem("darkMode") == "#8297b5"
                   ? "#cbd0f2"
                   : "#f0f0f0",
@@ -306,7 +307,14 @@ export default function DisplayStaffStops({
                             overflow: "hidden",
                             whiteSpace: "noWrap",
                             textOverflow: "ellipsis",
-                            color: waypoint.isPass && "#888888",
+                            color:
+                              waypoint.isPass &&
+                              localStorage.getItem("darkMode") == "#000000"
+                                ? "#825656"
+                                : waypoint.isPass &&
+                                  localStorage.getItem("darkMode") !==
+                                    "#000000" &&
+                                  "#888888",
                             textShadow: "5px",
                           }}
                         >
@@ -511,7 +519,7 @@ export default function DisplayStaffStops({
             sx: {
               //Your style here....
               backgroundColor: "#ffffff55",
-              backdropFilter: "blur(3px)",
+              backdropFilter: "blur(12px)",
             },
           },
         }}
@@ -549,7 +557,7 @@ export default function DisplayStaffStops({
                       marginTop: "-20px",
                       color:
                         localStorage.getItem("darkMode") == "#000000" &&
-                        "#003159",
+                        "#008cff",
                     }}
                     type="button"
                     onClick={() =>
@@ -637,12 +645,8 @@ export default function DisplayStaffStops({
                               ? "#00ff0044"
                               : "#f0f0f044",
                           color:
-                            station.lateness > 60
-                              ? "black"
-                              : station.lateness &&
-                                station.lateness.includes("-")
-                              ? "black"
-                              : "black",
+                            localStorage.getItem("darkMode") == "#000000" &&
+                            "white",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
@@ -662,7 +666,9 @@ export default function DisplayStaffStops({
                           background: station.isCancelled
                             ? "#FF000044"
                             : "#f0f0f044",
-                          color: station.isCancelled ? "black" : "black",
+                          color:
+                            localStorage.getItem("darkMode") == "#000000" &&
+                            "white",
                           borderRadius: "15px",
                           padding: "10px",
                           width: "50%",
@@ -845,7 +851,11 @@ export default function DisplayStaffStops({
                                       boxShadow: 5,
                                       borderRadius: "10px",
                                       backdropFilter: "blur(12px)",
-                                      background: "#ffffff00",
+                                      background:
+                                        localStorage.getItem("darkMode") !==
+                                        "#ffffff"
+                                          ? "#ffffff99"
+                                          : "#ffffff00",
                                     }}
                                     onClick={() =>
                                       setNewRid(association.rid) +

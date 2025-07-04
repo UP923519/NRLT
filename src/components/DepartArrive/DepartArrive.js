@@ -1327,8 +1327,14 @@ export default function DepartArrive(departArrive) {
                           menu: (styles, { data }) => {
                             return {
                               ...styles,
-                              backgroundColor: "#ffffff88",
+                              backgroundColor:
+                                localStorage.getItem("darkMode") !== "#ffffff"
+                                  ? "#00000088"
+                                  : "#ffffff88",
                               backdropFilter: "blur(10px)",
+                              color:
+                                localStorage.getItem("darkMode") !==
+                                  "#ffffff" && "#a3a3a3",
                             };
                           },
                           control: (provided, state) => ({
@@ -1337,6 +1343,12 @@ export default function DepartArrive(departArrive) {
                               localStorage.getItem("darkMode") !== "#ffffff"
                                 ? "#475263"
                                 : "white",
+                          }),
+                          singleValue: (provided, state) => ({
+                            ...provided,
+                            color:
+                              localStorage.getItem("darkMode") !== "#ffffff" &&
+                              "white",
                           }),
                         }}
                         defaultValue={[
@@ -1405,16 +1417,34 @@ export default function DepartArrive(departArrive) {
                           menu: (styles, { data }) => {
                             return {
                               ...styles,
-                              backgroundColor: "#ffffff88",
+                              backgroundColor:
+                                localStorage.getItem("darkMode") !== "#ffffff"
+                                  ? "#00000088"
+                                  : "#ffffff88",
                               backdropFilter: "blur(10px)",
+                              color:
+                                localStorage.getItem("darkMode") !==
+                                  "#ffffff" && "#a3a3a3",
                             };
                           },
                           control: (provided, state) => ({
                             ...provided,
                             background:
                               localStorage.getItem("darkMode") !== "#ffffff"
-                                ? "#475263"
+                                ? rememberFirstStation == "" ||
+                                  !rememberFirstStation
+                                  ? "grey"
+                                  : "#475263"
                                 : "white",
+                          }),
+                          singleValue: (provided, state) => ({
+                            ...provided,
+                            color:
+                              rememberFirstStation == "" ||
+                              !rememberFirstStation
+                                ? "#bfbfbf"
+                                : localStorage.getItem("darkMode") !==
+                                    "#ffffff" && "white",
                           }),
                         }}
                         isDisabled={
