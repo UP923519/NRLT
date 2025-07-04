@@ -45,7 +45,12 @@ export default function TrainBus({
             style={{
               paddingBottom: nrccMessages && "0px",
               marginTop: "20px",
-              background: !nrccMessages && "#4a6e40",
+              background: !nrccMessages
+                ? "#4a6e40"
+                : localStorage.getItem("darkMode") !== "#ffffff"
+                ? "#ff8454"
+                : "#ffaeae",
+
               color: !nrccMessages && "white",
               boxShadow:
                 "0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -138,7 +143,10 @@ export default function TrainBus({
                                 padding: "5px",
                                 marginLeft: "-9px",
                                 marginRight: "-9px",
-                                background: "#fafafadd",
+                                background:
+                                  localStorage.getItem("darkMode") !== "#ffffff"
+                                    ? "#fafafa88"
+                                    : "#fafafadd",
                                 paddingBottom: "25px",
                                 border:
                                   (message["severity"] == "Major" &&

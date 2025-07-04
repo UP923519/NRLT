@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../App/App.css";
 import { Table } from "react-bootstrap";
 import image from "../../assets/nre-logo.png";
+import imageDark from "../../assets/nre-logo-dark.jpg";
 import {
   calculatePosition,
   calculatePositionCentral,
@@ -450,7 +451,19 @@ export default function ServicePage() {
         {/* <Fade top distance={"25px"} duration={1500}> */}
         <div
           className="manualInput"
-          style={{ background: showStaffData ? "white" : "#fafafa" }}
+          style={{
+            background: showStaffData
+              ? localStorage.getItem("darkMode") == "#000000"
+                ? "#000000"
+                : localStorage.getItem("darkMode") == "#8297b5"
+                ? "#8297b5"
+                : "#ffffff"
+              : localStorage.getItem("darkMode") == "#000000"
+              ? "#000e2b"
+              : localStorage.getItem("darkMode") == "#8297b5"
+              ? "#4f2609"
+              : "#fafafa",
+          }}
         >
           <form
             method="post"
@@ -497,19 +510,7 @@ export default function ServicePage() {
                     🔗 Status and disruptions
                   </button>
                 </a>
-                <p>
-                  Service code:&nbsp;{" "}
-                  <input
-                    style={{
-                      backgroundColor: "#cfcfcf",
-                      border: "0",
-                      borderRadius: "2px",
-                    }}
-                    name="myInput"
-                    defaultValue=""
-                    onChange={(event) => setFormVal(event.target.value)}
-                  />
-                </p>
+                <p></p>
                 <div>
                   <Button
                     type="button"
@@ -523,6 +524,15 @@ export default function ServicePage() {
                       textTransform: "none",
                       paddingTop: "0.5px !important",
                       paddingBottom: "0.5px !important",
+                    }}
+                    style={{
+                      background:
+                        localStorage.getItem("darkMode") !== "#ffffff"
+                          ? "#7788a3"
+                          : "white",
+                      color:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#ffffff",
                     }}
                   >
                     ⚙️ Options
@@ -595,6 +605,13 @@ export default function ServicePage() {
                               showStaffData &&
                               updateServicePageButton &&
                               "50px",
+                            background:
+                              localStorage.getItem("darkMode") !== "#ffffff"
+                                ? "#7788a3"
+                                : "white",
+                            color:
+                              localStorage.getItem("darkMode") !== "#ffffff" &&
+                              "#ffffff",
                           }}
                         >
                           {showStaffData
@@ -626,6 +643,13 @@ export default function ServicePage() {
                                 showStaffData &&
                                 updateServicePageButton &&
                                 "50px",
+                              background:
+                                localStorage.getItem("darkMode") !== "#ffffff"
+                                  ? "#7788a3"
+                                  : "white",
+                              color:
+                                localStorage.getItem("darkMode") !==
+                                  "#ffffff" && "#ffffff",
                             }}
                           >
                             {!showStaffData
@@ -710,7 +734,14 @@ export default function ServicePage() {
               <div className="App">
                 {isOpen && (
                   <>
-                    <text style={{ color: "#696969" }}>
+                    <text
+                      style={{
+                        color:
+                          localStorage.getItem("darkMode") == "#8297b5"
+                            ? "#e6e6e6"
+                            : "#696969",
+                      }}
+                    >
                       {diffHours == 1 && diffHours + " Hour "}
                       {diffHours > 1 && diffHours + " Hours "}
                       {diffMinutes == 1 && diffMinutes + "Minute "}
@@ -939,7 +970,22 @@ export default function ServicePage() {
                                     <>
                                       <Popup
                                         trigger={
-                                          <button id="useTrains" type="button">
+                                          <button
+                                            id="useTrains"
+                                            type="button"
+                                            style={{
+                                              background:
+                                                localStorage.getItem(
+                                                  "darkMode"
+                                                ) !== "#ffffff"
+                                                  ? "#7788a3"
+                                                  : "white",
+                                              color:
+                                                localStorage.getItem(
+                                                  "darkMode"
+                                                ) !== "#ffffff" && "#ffffff",
+                                            }}
+                                          >
                                             More Train Details
                                           </button>
                                         }
@@ -997,6 +1043,16 @@ export default function ServicePage() {
                                         onClick={() =>
                                           test2(1) + handleOpen("KNG", 1)
                                         }
+                                        style={{
+                                          background:
+                                            localStorage.getItem("darkMode") !==
+                                            "#ffffff"
+                                              ? "#7788a3"
+                                              : "white",
+                                          color:
+                                            localStorage.getItem("darkMode") !==
+                                              "#ffffff" && "#ffffff",
+                                        }}
                                       >
                                         Service Status & Times
                                       </button>
@@ -1033,7 +1089,10 @@ export default function ServicePage() {
                                 border: !showStaffData
                                   ? "3px solid orange"
                                   : "1px solid orange",
-                                background: !showStaffData && "orange",
+                                background: !showStaffData
+                                  ? "orange"
+                                  : localStorage.getItem("darkMode") !==
+                                      "#ffffff" && "#7788a3",
                                 color: !showStaffData && "white",
                               }}
                               onClick={() =>
@@ -1076,7 +1135,13 @@ export default function ServicePage() {
                 border: !showStaffData
                   ? "3px solid orange"
                   : "1px solid orange",
-                background: !showStaffData && "orange",
+                background: !showStaffData
+                  ? "orange"
+                  : localStorage.getItem("darkMode") !== "#ffffff" && "#7788a3",
+                color:
+                  showStaffData &&
+                  localStorage.getItem("darkMode") !== "#ffffff" &&
+                  "white",
               }}
               onClick={() =>
                 (showStaffData
@@ -1130,9 +1195,20 @@ export default function ServicePage() {
             {" "}
             {!processingState ? (
               <>
-                <div className="NRLogo">
+                <div
+                  className="NRLogo"
+                  style={{
+                    background:
+                      localStorage.getItem("darkMode") !== "#ffffff" &&
+                      "#1d3360",
+                  }}
+                >
                   <img
-                    src={image}
+                    src={
+                      localStorage.getItem("darkMode") == "#ffffff"
+                        ? image
+                        : imageDark
+                    }
                     alt="powered by National Rail Enquiries"
                     width="256"
                   />

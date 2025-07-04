@@ -33,7 +33,8 @@ const style = {
   top: "50%",
   position: " absolute",
   backdropFilter: "blur(12px)",
-  background: "#ffffff99",
+  background:
+    localStorage.getItem("darkMode") == "#000000" ? "#bfbfbf99" : "#ffffff99",
 };
 
 let nextId = 0;
@@ -170,6 +171,12 @@ export default function DisplayStaffStops({
               style={{
                 position: "relative",
                 top: "-15px",
+                background:
+                  localStorage.getItem("darkMode") !== "#ffffff"
+                    ? "#7788a3"
+                    : "white",
+                color:
+                  localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
               }}
               onClick={() => NewStaffId(rid.rid) + setLoadedState(false)}
             >
@@ -184,6 +191,12 @@ export default function DisplayStaffStops({
               style={{
                 position: "relative",
                 top: "-11px",
+                background:
+                  localStorage.getItem("darkMode") !== "#ffffff"
+                    ? "#7788a3"
+                    : "white",
+                color:
+                  localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
               }}
               type="button"
               onClick={() => handleOpenRTT()}
@@ -195,7 +208,12 @@ export default function DisplayStaffStops({
           <Table
             className="transactions"
             style={{
-              backgroundColor: "#f0f0f0",
+              background:
+                localStorage.getItem("darkMode") == "#000000"
+                  ? "#bfbfbf"
+                  : localStorage.getItem("darkMode") == "#8297b5"
+                  ? "#cbd0f2"
+                  : "#f0f0f0",
               marginBottom: "20px",
               boxShadow:
                 "0 5px 20px 0 rgba(0, 0, 0, 0.19), 0 5px 10px 0 rgba(0, 0, 0, 0.19)",
