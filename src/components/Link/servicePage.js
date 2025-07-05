@@ -432,7 +432,6 @@ export default function ServicePage() {
 
   return (
     // <Fade top distance={"10px"} duration={1500}>
-
     <>
       {!showStaffData && (
         <ScrollButton

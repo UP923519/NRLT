@@ -243,6 +243,12 @@ export default function DepartArrive(departArrive) {
     }
 
     if (state && state.crs) {
+      setSelectedTime(state.locationTime);
+      rememberDateTime[0] = state.locationTime;
+
+      setSelectedDay(state.locationDate);
+      rememberDateTime[1] = state.locationDate;
+
       handleDepartureClick(current, state.crs, 0, state.locationName);
       navigate(location.pathname, {}); //clears state
     }
@@ -725,10 +731,24 @@ export default function DepartArrive(departArrive) {
         failedAlert = true;
       }
       trainSearch =
-        "Services departing from " + displayStation + " for " + stationFullName;
+        "Departures from " +
+        displayStation +
+        " for " +
+        stationFullName +
+        " at " +
+        offsetHours +
+        ":" +
+        offsetMinutes;
       if (departArrive == "arrivals") {
         trainSearch =
-          "Services arriving at " + displayStation + " from " + stationFullName;
+          "Arrivals at " +
+          displayStation +
+          " from " +
+          stationFullName +
+          " at " +
+          offsetHours +
+          ":" +
+          offsetMinutes;
       }
       rememberFirstStation = displayStation;
       rememberSecondStation = stationFullName;
@@ -855,9 +875,21 @@ export default function DepartArrive(departArrive) {
         failedAlert = true;
       }
       // trainSearch = "Services from " + stationName;
-      trainSearch = "Services departing from " + stationFullName;
+      trainSearch =
+        "Departures from " +
+        stationFullName +
+        " at " +
+        offsetHours +
+        ":" +
+        offsetMinutes;
       if (departArrive == "arrivals") {
-        trainSearch = trainSearch = "Services arriving at " + stationFullName;
+        trainSearch = trainSearch =
+          "Arrivals at " +
+          stationFullName +
+          " at " +
+          offsetHours +
+          ":" +
+          offsetMinutes;
       }
       rememberFirstStation = stationFullName;
       rememberSecondStation = "";

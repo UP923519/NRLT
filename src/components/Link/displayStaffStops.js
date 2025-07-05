@@ -151,7 +151,6 @@ export default function DisplayStaffStops({
           <div style={{ height: "6.75px" }} />
         </>
       )}
-
       {loadedState && (
         <>
           {" "}
@@ -527,7 +526,36 @@ export default function DisplayStaffStops({
         <>
           {station && (
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
+              <button
+                onClick={handleClose}
+                style={{
+                  border: "none",
+                  background:
+                    localStorage.getItem("darkMode") == "#000000"
+                      ? "#00000033"
+                      : "#ffffff00",
+                  backdropFilter: "blur(12px)",
+                  paddingBottom: "3px",
+                  position: "sticky",
+                  top: "0px",
+                  left: "92%",
+                  fontSize: "larger",
+                  color:
+                    localStorage.getItem("darkMode") == "#000000"
+                      ? "grey"
+                      : "#8f8f8f",
+                  borderRadius: "100%",
+                  zIndex: "1",
+                }}
+              >
+                (x)
+              </button>
+              <Typography
+                style={{ marginTop: "-15px" }}
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+              >
                 Service status & times
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -566,11 +594,24 @@ export default function DisplayStaffStops({
                           crs: station.crs,
                           locationName:
                             station.locationName + " (" + station.crs + ")",
+                          locationDate: station.stdSpecified
+                            ? station.std.slice(0, 10)
+                            : station.sta.slice(0, 10),
+                          locationTime: station.stdSpecified
+                            ? station.std.slice(11, 16)
+                            : station.sta.slice(11, 16),
                         },
                       })
                     }
                   >
-                    {station.crs && <u>Search departures</u>}
+                    {station.crs && (
+                      <u>
+                        Search departures at{" "}
+                        {station.stdSpecified
+                          ? station.std.slice(11, 16)
+                          : station.sta.slice(11, 16)}
+                      </u>
+                    )}
                   </Button>
                 )}
                 {
