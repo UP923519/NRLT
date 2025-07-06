@@ -84,7 +84,7 @@ export default function ServicePage() {
   const [associations, setAssociations] = useState([]);
   const [sPAssociation, setSPAssociation] = useState(false);
   const [ttopen, setTtOpen] = useState(false);
-  const [showScrollButton, setShowScrollButton] = useState(true);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   const { state } = useLocation();
   const locations = useLocation();
@@ -131,6 +131,10 @@ export default function ServicePage() {
     if (formJson != "") {
       handleServiceClick();
     }
+
+    setTimeout(() => {
+      setShowScrollButton(true);
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -743,7 +747,7 @@ export default function ServicePage() {
                     >
                       {diffHours == 1 && diffHours + " Hour "}
                       {diffHours > 1 && diffHours + " Hours "}
-                      {diffMinutes == 1 && diffMinutes + "Minute "}
+                      {diffMinutes == 1 && diffMinutes + " Minute "}
                       {diffMinutes > 1 && diffMinutes + " Minutes "}
                     </text>
                     <Tooltip

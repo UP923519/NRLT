@@ -7,6 +7,7 @@ import DisplayStopsPrevSubs from "./displayStopsPrevSubs";
 import { Button, Tooltip } from "@mui/material";
 import DisplayStaffStops from "./displayStaffStops";
 import { useNavigate } from "react-router-dom";
+import Fade from "react-reveal/Fade";
 
 const style = {
   top: "50%",
@@ -24,7 +25,7 @@ const style = {
   maxHeight: "70vh",
   top: "50%",
   position: " absolute",
-  backdropFilter: "blur(0px)",
+  // backdropFilter: "blur(0px)",
   background:
     localStorage.getItem("darkMode") !== "#ffffff" ? "#00000099" : "#ffffff99",
   color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
@@ -432,318 +433,357 @@ export default function DisplayStops({
         <>
           {station && (
             <Box sx={style}>
-              <button
-                onClick={handleClose}
-                style={{
-                  border: "none",
-                  background:
-                    localStorage.getItem("darkMode") == "#000000"
-                      ? "#00000033"
-                      : "#ffffff00",
-                  backdropFilter: "blur(12px)",
-                  paddingBottom: "3px",
-                  position: "sticky",
-                  top: "0px",
-                  left: "92%",
-                  fontSize: "larger",
-                  color:
-                    localStorage.getItem("darkMode") == "#000000"
-                      ? "grey"
-                      : "#8f8f8f",
-                  borderRadius: "100%",
-                  zIndex: "1",
-                }}
-              >
-                (x)
-              </button>
-              <Typography
-                style={{ marginTop: "-15px" }}
-                id="modal-modal-title"
-                variant="h6"
-                component="h2"
-              >
-                Service status & times
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                <div
+              <Fade top distance={"100px"} duration={500}>
+                <button
+                  onClick={handleClose}
                   style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    gap: "10px",
+                    border: "none",
+                    background:
+                      localStorage.getItem("darkMode") == "#000000"
+                        ? "#33333333"
+                        : "#ffffffdd",
+                    // backdropFilter: "blur(12px)",
+                    paddingBottom: "3px",
+                    position: "sticky",
+                    top: "0px",
+                    left: "92%",
+                    fontSize: "larger",
+                    color:
+                      localStorage.getItem("darkMode") == "#000000"
+                        ? "grey"
+                        : "#8f8f8f",
+                    borderRadius: "100%",
+                    zIndex: "1",
                   }}
                 >
-                  <p
-                    style={{
-                      background: "#b1d1de99",
-                      borderRadius: "15px",
-                      padding: "10px",
-                      width: "50%",
-                      backdropFilter: "blur(12px)",
-                    }}
+                  (x)
+                </button>
+                <Fade top distance={"100px"} duration={500}>
+                  <Typography
+                    style={{ marginTop: "-15px" }}
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
                   >
-                    {station.locationName}
-                  </p>
-                </div>
-                {station.crs && (
-                  <Button
-                    sx={{
-                      marginTop: "-20px",
-                      color:
-                        localStorage.getItem("darkMode") == "#000000" &&
-                        "#008cff",
-                    }}
-                    type="button"
-                    onClick={() =>
-                      navigate("/dashboard", {
-                        state: {
-                          crs: station.crs,
-                          locationName:
-                            station.locationName + " (" + station.crs + ")",
-                          locationDate: station.stdSpecified
-                            ? station.std.slice(0, 10)
-                            : station.sta.slice(0, 10),
-                          locationTime: station.stdSpecified
-                            ? station.std.slice(11, 16)
-                            : station.sta.slice(11, 16),
-                        },
-                      })
-                    }
-                  >
-                    {station.crs && <u>Search departures</u>}
-                  </Button>
-                )}
-                {
-                  <>
-                    <div className="trainInfo">
+                    Service status & times
+                  </Typography>
+                </Fade>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  <Fade top distance={"10px"} duration={2000}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
+                    >
                       <p
-                        className={"platformBox"}
                         style={{
-                          backdropFilter: "blur(12px)",
-                          background: station.platform
-                            ? "#7aa379cc"
-                            : "#e88c79cc",
+                          background: "#b1d1de99",
+                          borderRadius: "15px",
+                          padding: "10px",
+                          width: "50%",
+                          // backdropFilter: "blur(12px)",
                         }}
                       >
-                        <text
+                        {station.locationName}
+                      </p>
+                    </div>
+                    {station.crs && (
+                      <Button
+                        sx={{
+                          marginTop: "-20px",
+                          color:
+                            localStorage.getItem("darkMode") == "#000000" &&
+                            "#008cff",
+                        }}
+                        type="button"
+                        onClick={() =>
+                          navigate("/dashboard", {
+                            state: {
+                              crs: station.crs,
+                              locationName:
+                                station.locationName + " (" + station.crs + ")",
+                              locationDate: station.stdSpecified
+                                ? station.std.slice(0, 10)
+                                : station.sta.slice(0, 10),
+                              locationTime: station.stdSpecified
+                                ? station.std.slice(11, 16)
+                                : station.sta.slice(11, 16),
+                            },
+                          })
+                        }
+                      >
+                        {station.crs && <u>Search departures</u>}
+                      </Button>
+                    )}
+                  </Fade>
+                  {
+                    <>
+                      <div className="trainInfo">
+                        <Fade top distance={"20px"} duration={2000}>
+                          <p
+                            className={"platformBox"}
+                            style={{
+                              // backdropFilter: "blur(12px)",
+                              background: station.platform
+                                ? "#7aa379cc"
+                                : "#e88c79cc",
+                            }}
+                          >
+                            <text
+                              style={{
+                                fontWeight: "500",
+                                color: "white",
+                              }}
+                            >
+                              Platform:&nbsp;{" "}
+                            </text>
+                            <text style={{ color: "white" }}>
+                              {station.platform ? station.platform : "N/A"}
+                            </text>
+                          </p>
+                        </Fade>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        {" "}
+                        <Fade top distance={"30px"} duration={2000}>
+                          <p
+                            style={{
+                              background: "#f0f0f044",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "100%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            {station.isPass ? (
+                              <p>
+                                This train is <b>not scheduled</b> to stop here
+                              </p>
+                            ) : (
+                              <p>
+                                This train <b>is scheduled</b> to stop here
+                              </p>
+                            )}
+                          </p>
+                        </Fade>
+                      </div>
+                      <Fade top distance={"40px"} duration={2000}>
+                        <div
                           style={{
-                            fontWeight: "500",
-                            color: "white",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            gap: "10px",
                           }}
                         >
-                          Platform:&nbsp;{" "}
-                        </text>
-                        <text style={{ color: "white" }}>
-                          {station.platform ? station.platform : "N/A"}
-                        </text>
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background: "#f0f0f044",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "100%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        {station.isPass ? (
-                          <p>
-                            This train is <b>not scheduled</b> to stop here
-                          </p>
-                        ) : (
-                          <p>
-                            This train <b>is scheduled</b> to stop here
-                          </p>
-                        )}
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background:
-                            station.lateness > 60
-                              ? "#FFA50044"
-                              : station.lateness &&
-                                station.lateness.includes("-")
-                              ? "#00ff0044"
-                              : "#f0f0f044",
+                          <p
+                            style={{
+                              background:
+                                station.lateness > 60
+                                  ? "#FFA50044"
+                                  : station.lateness &&
+                                    station.lateness.includes("-")
+                                  ? "#00ff0044"
+                                  : "#f0f0f044",
 
-                          color:
-                            localStorage.getItem("darkMode") == "#000000" &&
-                            "white",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        Delay amount: <br />
-                        {station.lateness ? (
-                          <>{station.lateness + " seconds"}</>
-                        ) : (
-                          <>N/A</>
-                        )}
-                      </p>
-                      <p
-                        style={{
-                          background: station.isCancelled
-                            ? "#FF000044"
-                            : "#f0f0f044",
-                          color:
-                            localStorage.getItem("darkMode") == "#000000" &&
-                            "white",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        Is cancelled?: <br />
-                        {station.isCancelled ? <>True</> : <>N/A</>}
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background: "#f0f0f044",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        Estimated arrival:
-                        <br />
-                        {station.eta ? <>{station.eta.slice(11)}</> : <>N/A</>}
-                      </p>
-                      <p
-                        style={{
-                          background: "#f0f0f044",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        Estimated departure:
-                        <br />{" "}
-                        {station.etd ? <>{station.etd.slice(11)}</> : <>N/A</>}
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background: "#f0f0f044",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        Scheduled arrival:
-                        <br />{" "}
-                        {station.sta ? <>{station.sta.slice(11)}</> : <>N/A</>}
-                      </p>
-                      <p
-                        style={{
-                          background: "#f0f0f044",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        Scheduled departure:
-                        <br />{" "}
-                        {station.std ? <>{station.std.slice(11)}</> : <>N/A</>}
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          background: "#f0f0f044",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        Actual arrival: <br />
-                        {station.ata ? <>{station.ata.slice(11)}</> : <>N/A</>}
-                      </p>
-                      <p
-                        style={{
-                          background: "#f0f0f044",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid #d9d9d9",
-                        }}
-                      >
-                        Actual departure:
-                        <br />{" "}
-                        {station.atd ? (
-                          <>
-                            {!station.atd.includes("null") ? (
-                              <>{station.atd.slice(11)}</>
+                              color:
+                                localStorage.getItem("darkMode") == "#000000" &&
+                                "white",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "50%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            Delay amount: <br />
+                            {station.lateness ? (
+                              <>{station.lateness + " seconds"}</>
                             ) : (
                               <>N/A</>
                             )}
-                          </>
-                        ) : (
-                          <>N/A</>
-                        )}
-                      </p>
-                    </div>
-                  </>
-                }
-              </Typography>
+                          </p>
+                          <p
+                            style={{
+                              background: station.isCancelled
+                                ? "#FF000044"
+                                : "#f0f0f044",
+                              color:
+                                localStorage.getItem("darkMode") == "#000000" &&
+                                "white",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "50%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            Is cancelled?: <br />
+                            {station.isCancelled ? <>True</> : <>N/A</>}
+                          </p>
+                        </div>
+                      </Fade>
+                      <Fade top distance={"50px"} duration={2000}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            gap: "10px",
+                          }}
+                        >
+                          <p
+                            style={{
+                              background: "#f0f0f044",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "50%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            Estimated arrival:
+                            <br />
+                            {station.eta ? (
+                              <>{station.eta.slice(11)}</>
+                            ) : (
+                              <>N/A</>
+                            )}
+                          </p>
+                          <p
+                            style={{
+                              background: "#f0f0f044",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "50%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            Estimated departure:
+                            <br />{" "}
+                            {station.etd ? (
+                              <>{station.etd.slice(11)}</>
+                            ) : (
+                              <>N/A</>
+                            )}
+                          </p>
+                        </div>
+                      </Fade>
+                      <Fade top distance={"60px"} duration={2000}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            gap: "10px",
+                          }}
+                        >
+                          <p
+                            style={{
+                              background: "#f0f0f044",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "50%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            Scheduled arrival:
+                            <br />{" "}
+                            {station.sta ? (
+                              <>{station.sta.slice(11)}</>
+                            ) : (
+                              <>N/A</>
+                            )}
+                          </p>
+                          <p
+                            style={{
+                              background: "#f0f0f044",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "50%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            Scheduled departure:
+                            <br />{" "}
+                            {station.std ? (
+                              <>{station.std.slice(11)}</>
+                            ) : (
+                              <>N/A</>
+                            )}
+                          </p>
+                        </div>
+                      </Fade>
+                      <Fade top distance={"70px"} duration={2000}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            gap: "10px",
+                          }}
+                        >
+                          <p
+                            style={{
+                              background: "#f0f0f044",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "50%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            Actual arrival: <br />
+                            {station.ata ? (
+                              <>{station.ata.slice(11)}</>
+                            ) : (
+                              <>N/A</>
+                            )}
+                          </p>
+                          <p
+                            style={{
+                              background: "#f0f0f044",
+                              borderRadius: "15px",
+                              padding: "10px",
+                              width: "50%",
+                              // backdropFilter: "blur(12px)",
+                              border: "1px solid #d9d9d9",
+                            }}
+                          >
+                            Actual departure:
+                            <br />{" "}
+                            {station.atd ? (
+                              <>
+                                {!station.atd.includes("null") ? (
+                                  <>{station.atd.slice(11)}</>
+                                ) : (
+                                  <>N/A</>
+                                )}
+                              </>
+                            ) : (
+                              <>N/A</>
+                            )}
+                          </p>
+                        </div>
+                      </Fade>
+                    </>
+                  }
+                </Typography>
+              </Fade>
             </Box>
           )}
         </>
