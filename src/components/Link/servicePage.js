@@ -1206,15 +1206,29 @@ export default function ServicePage() {
                       "#00383c77",
                   }}
                 >
-                  <img
-                    src={
-                      localStorage.getItem("darkMode") == "#ffffff"
-                        ? image
-                        : imageDark
-                    }
-                    alt="powered by National Rail Enquiries"
-                    width="256"
-                  />
+                  {!showStaffData && (
+                    <img
+                      src={
+                        localStorage.getItem("darkMode") == "#ffffff"
+                          ? image
+                          : imageDark
+                      }
+                      alt="powered by National Rail Enquiries"
+                      width="256"
+                      style={{ position: "absolute" }}
+                    />
+                  )}
+                  <Fade duration={5000} when={showStaffData}>
+                    <img
+                      src={
+                        localStorage.getItem("darkMode") == "#ffffff"
+                          ? image
+                          : imageDark
+                      }
+                      alt="powered by National Rail Enquiries"
+                      width="256"
+                    />
+                  </Fade>
                 </div>
                 {stringCalling.length < 6 && (
                   <div style={{ marginBottom: "70vh" }}></div>
