@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Table } from "react-bootstrap";
+import Fade from "react-reveal/Fade";
 import Box from "@mui/material/Box";
 import {
   Button,
@@ -30,34 +31,39 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
             },
           }}
         >
-          <Box sx={style} className="transactions">
-            <p style={{ margin: "5px", padding: "7px" }}>
-              Additional train details
-            </p>
-            <iframe
-              className="transactions"
-              style={{
-                height: "270px",
-                border: "0",
-                marginTop: "3px",
-                width: "99%",
-                overflow: "scroll",
-                maxHeight: "65vh",
-              }}
-              id="iFrameExample"
-              src={
-                "https://www.realtimetrains.co.uk/service/gb-nr:" +
-                data.uid +
-                "/" +
-                data.rid.slice(0, 4) +
-                "-" +
-                data.rid.slice(4, 6) +
-                "-" +
-                data.rid.slice(6, 8) +
-                "/detailed"
-              }
-            ></iframe>
-          </Box>
+          <div>
+            <Box sx={style} className="transactions">
+              <Fade top duration={500} distance={"100px"} duration={500}>
+                <p style={{ margin: "5px", padding: "7px" }}>
+                  Additional train details
+                </p>
+                <iframe
+                  className="transactions"
+                  style={{
+                    height: "270px",
+                    border: "0",
+                    marginTop: "3px",
+                    width: "99%",
+                    overflow: "scroll",
+                    maxHeight: "65vh",
+                    background: "#467083",
+                  }}
+                  id="iFrameExample"
+                  src={
+                    "https://www.realtimetrains.co.uk/service/gb-nr:" +
+                    data.uid +
+                    "/" +
+                    data.rid.slice(0, 4) +
+                    "-" +
+                    data.rid.slice(4, 6) +
+                    "-" +
+                    data.rid.slice(6, 8) +
+                    "/detailed"
+                  }
+                ></iframe>
+              </Fade>
+            </Box>
+          </div>
         </Modal>
       )}
     </>

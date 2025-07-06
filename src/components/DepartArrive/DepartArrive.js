@@ -230,12 +230,12 @@ export default function DepartArrive(departArrive) {
       setIsOpen(true);
 
       if (
-        trainSearch.includes("departing") &&
+        trainSearch.includes("Departures") &&
         departArrive.includes("Arrival")
       ) {
         handleDepartureClick(contextTime);
       } else if (
-        trainSearch.includes("arriving") &&
+        trainSearch.includes("Arrivals") &&
         departArrive.includes("Departure")
       ) {
         handleDepartureClick(contextTime);
@@ -243,6 +243,7 @@ export default function DepartArrive(departArrive) {
     }
 
     if (state && state.crs) {
+      console.log("DARRIVE", departArrive);
       setSelectedTime(state.locationTime);
       rememberDateTime[0] = state.locationTime;
 

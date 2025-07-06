@@ -4,8 +4,7 @@ element.style {
 
 /* //Stop pull to refresh attempt + tap to search */
 body {
-  /* overflow: visible !important; */
-  overscroll-behavior-y: contain;
+  overflow: visible !important;
 }
 /* //Stop pull to refresh attempt + tap to search */
 html,
