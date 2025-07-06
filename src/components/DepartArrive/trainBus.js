@@ -21,6 +21,10 @@ export default function TrainBus({
   showScrollButton,
   processingState,
   isOpen,
+  liveDeparture,
+  setSelectedDay,
+  setSelectedTime,
+  rememberDateTime,
 }) {
   const [showAlerts, setShowAlerts] = useState(true);
   const myRef = useRef(null);
@@ -33,6 +37,16 @@ export default function TrainBus({
       behavior: "smooth",
     });
   };
+
+  function handleLaterButton(date, time) {
+    setSelectedDay(date);
+    rememberDateTime[1] = date;
+
+    setSelectedTime(time);
+    rememberDateTime[0] = time;
+
+    handleDepartureClick("", "", 0, "");
+  }
 
   return (
     <div style={{ marginTop: -15 }}>
@@ -188,81 +202,6 @@ export default function TrainBus({
           </p>
         )}
         <br />
-        {/* <ButtonGroup
-          sx={{ marginBottom: 0 }}
-          disableElevation
-          variant="contained"
-          aria-label="Basic button group"
-        >
-          <Button
-            className="changeTime"
-            // style={{ marginBottom: "10px" }}
-            onClick={() => handleDepartureClick(earlier)}
-            style={{
-              backgroundColor: rememberTimeOffset == earlier && "#0080ff",
-              color: rememberTimeOffset == earlier && "white",
-              border: "1px solid lightGrey",
-              fontSize: "smaller",
-            }}
-          >
-            -120 min
-          </Button>
-          <Button
-            className="changeTime"
-            // style={{ marginBottom: "10px" }}
-            onClick={() => handleDepartureClick(earlier2)}
-            style={{
-              backgroundColor: rememberTimeOffset == earlier2 && "#0080ff",
-              color: rememberTimeOffset == earlier2 && "white",
-              border: "1px solid lightGrey",
-              fontSize: "smaller",
-            }}
-          >
-            -60 min
-          </Button>
-          <Button
-            className="changeTime"
-            // style={{ marginTop: "10px" }}
-            onClick={() => handleDepartureClick(current)}
-            style={{
-              backgroundColor: rememberTimeOffset == "" && "#0080ff",
-              color: rememberTimeOffset == "" && "white",
-              border: "1px solid lightGrey",
-              fontSize: "smaller",
-            }}
-          >
-            Now
-          </Button>
-          <Button
-            className="changeTime"
-            // style={{ marginTop: "10px" }}
-            onClick={() => handleDepartureClick(later)}
-            style={{
-              backgroundColor: rememberTimeOffset == later && "#0080ff",
-              color: rememberTimeOffset == later && "white",
-              border: "1px solid lightGrey",
-              fontSize: "smaller",
-            }}
-          >
-            +60 min
-          </Button>
-          <Button
-            className="changeTime"
-            // style={{ marginTop: "10px" }}
-            onClick={() => handleDepartureClick(later2)}
-            style={{
-              backgroundColor: rememberTimeOffset == later2 && "#0080ff",
-              color: rememberTimeOffset == later2 && "white",
-              border: "1px solid lightGrey",
-              fontSize: "smaller",
-            }}
-          >
-            +120 min
-          </Button>
-        </ButtonGroup>
-        <br />
-        <br /> */}
-
         <Table
           className="transactions"
           style={{
@@ -305,6 +244,53 @@ export default function TrainBus({
             </Fade>
           ))}
         </Table>
+
+        {liveDeparture.length == 0 && (
+          <p style={{ marginBottom: "50px", fontWeight: 500 }}>
+            No services at this date and time
+          </p>
+        )}
+
+        {liveDeparture.length > 0 && (
+          <Button
+            className="changeTime"
+            onClick={() =>
+              handleLaterButton(
+                liveDeparture[liveDeparture.length - 1].stdSpecified
+                  ? liveDeparture[liveDeparture.length - 1].std.slice(0, 10)
+                  : liveDeparture[liveDeparture.length - 1].sta.slice(0, 10),
+                liveDeparture[liveDeparture.length - 1].stdSpecified
+                  ? liveDeparture[liveDeparture.length - 1].std.slice(11, 16)
+                  : liveDeparture[liveDeparture.length - 1].sta.slice(11, 16)
+              )
+            }
+            style={{
+              background:
+                liveDeparture.length > 1
+                  ? localStorage.getItem("darkMode") !== "#ffffff"
+                    ? "#7788a3"
+                    : "white"
+                  : localStorage.getItem("darkMode") !== "#ffffff"
+                  ? "#616161"
+                  : "#f5f5f5",
+              color:
+                liveDeparture.length > 1
+                  ? localStorage.getItem("darkMode") !== "#ffffff"
+                    ? "#ffffff"
+                    : "#000000"
+                  : localStorage.getItem("darkMode") !== "#ffffff"
+                  ? "#888888"
+                  : "#d1d1d1",
+              border: "1px solid lightGrey",
+            }}
+            disabled={liveDeparture.length <= 1}
+          >
+            Search Later:{" "}
+            {liveDeparture[liveDeparture.length - 1]?.stdSpecified
+              ? liveDeparture[liveDeparture.length - 1].std?.slice(11, 16)
+              : liveDeparture[liveDeparture.length - 1].sta?.slice(11, 16)}
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -179,7 +179,9 @@ export default function DepartArrive(departArrive) {
       setActiveTrain(
         localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
       );
-      setActiveTrainT("#d1d1d1");
+      setActiveTrainT(
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+      );
       if (busDisplayMode == "train") {
         alert(
           "No train services available at this time. Bus services are available."
@@ -196,7 +198,9 @@ export default function DepartArrive(departArrive) {
       setActiveBus(
         localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
       );
-      setActiveBusT("#d1d1d1");
+      setActiveBusT(
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+      );
       setActiveTrain("#0080ff");
       setActiveTrainT("white");
     }
@@ -206,12 +210,16 @@ export default function DepartArrive(departArrive) {
       setActiveBus(
         localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
       );
-      setActiveBusT("#d1d1d1");
+      setActiveBusT(
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+      );
       setTrainDisabled(true);
       setActiveTrain(
         localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
       );
-      setActiveTrainT("#d1d1d1");
+      setActiveTrainT(
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+      );
     }
 
     setDepartures(myArray);
@@ -243,7 +251,6 @@ export default function DepartArrive(departArrive) {
     }
 
     if (state && state.crs) {
-      console.log("DARRIVE", departArrive);
       setSelectedTime(state.locationTime);
       rememberDateTime[0] = state.locationTime;
 
@@ -505,6 +512,8 @@ export default function DepartArrive(departArrive) {
       setShowScrollButton(true);
     }, 2000);
 
+    setSelectedDay(null);
+    setSelectedTime(null);
     setProcessingState(false);
   }
 
@@ -942,7 +951,9 @@ export default function DepartArrive(departArrive) {
         setActiveTrain(
           localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
         );
-        setActiveTrainT("#d1d1d1");
+        setActiveTrainT(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+        );
         liveDeparture = staffDataBus.busServices;
         if (busDisplayMode == "train") {
           alert(
@@ -959,7 +970,9 @@ export default function DepartArrive(departArrive) {
         setActiveBus(
           localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
         );
-        setActiveBusT("#d1d1d1");
+        setActiveBusT(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+        );
         setActiveTrain("#0080ff");
         setActiveTrainT("white");
         liveDeparture = staffData.trainServices;
@@ -970,12 +983,16 @@ export default function DepartArrive(departArrive) {
         setActiveBus(
           localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
         );
-        setActiveBusT("#d1d1d1");
+        setActiveBusT(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+        );
         setTrainDisabled(true);
         setActiveTrain(
           localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
         );
-        setActiveTrainT("#d1d1d1");
+        setActiveTrainT(
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+        );
       }
       displayServiceMessage = "";
       serviceMessage = staffData.nrccMessages;
@@ -1592,7 +1609,7 @@ export default function DepartArrive(departArrive) {
                             handleDepartureClick(contextTime, "SWITCH-st")
                           }
                         >
-                          🔀 Switch stations
+                          🔀 Switch Stations
                         </MenuItem>
                         <MenuItem
                           type="button"
@@ -1612,7 +1629,7 @@ export default function DepartArrive(departArrive) {
                             )
                           }
                         >
-                          🗑️ Remove second station
+                          🗑️ Remove Second Station
                         </MenuItem>
                         <MenuItem
                           type="reset"
@@ -1767,6 +1784,10 @@ export default function DepartArrive(departArrive) {
                         displayStation={stationOneD}
                         showScrollButton={showScrollButton}
                         processingState={processingState}
+                        liveDeparture={liveDeparture}
+                        setSelectedDay={setSelectedDay}
+                        setSelectedTime={setSelectedTime}
+                        rememberDateTime={rememberDateTime}
                       />
                     </>
                   )}

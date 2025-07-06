@@ -72,7 +72,7 @@ export default function ServicePageForm(handleServiceClick, clearAll) {
                   }}
                   className="logOut"
                 >
-                  🔗 Status and disruptions
+                  🔗 Status and Disruptions
                 </button>
               </a>
               <div>

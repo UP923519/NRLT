@@ -510,7 +510,7 @@ export default function ServicePage() {
                     }}
                     className="logOut"
                   >
-                    🔗 Status and disruptions
+                    🔗 Status and Disruptions
                   </button>
                 </a>
                 <p></p>

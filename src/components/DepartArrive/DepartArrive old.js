@@ -1010,7 +1010,7 @@ export default function DepartArrive(departArrive) {
                           handleDepartureClick(contextTime, "SWITCH-st")
                         }
                       >
-                        🔀 Switch stations
+                        🔀 Switch Stations
                       </MenuItem>
                       <MenuItem
                         type="button"
@@ -1029,7 +1029,7 @@ export default function DepartArrive(departArrive) {
                           )
                         }
                       >
-                        🗑️ Remove second station
+                        🗑️ Remove Second Station
                       </MenuItem>
                       <MenuItem
                         type="reset"
