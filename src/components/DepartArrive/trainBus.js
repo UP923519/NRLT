@@ -45,7 +45,7 @@ export default function TrainBus({
     setSelectedTime(time);
     rememberDateTime[0] = time;
 
-    handleDepartureClick("", "", 0, "");
+    handleDepartureClick();
   }
 
   return (
