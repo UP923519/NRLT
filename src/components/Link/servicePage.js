@@ -101,8 +101,6 @@ export default function ServicePage() {
     setAnchorEl(null);
   };
   const executeScroll = () => {
-    console.log("SCR");
-    console.log("SSD", showStaffData);
     switchScreen && myRef.current.scrollIntoView({ behavior: "smooth" });
     !switchScreen &&
       window.scrollTo({

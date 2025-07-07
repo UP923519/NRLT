@@ -569,61 +569,66 @@ export default function DisplayStaffStops({
                 </Fade>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   <Fade top distance={"10px"} duration={2000}>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <p
+                    <>
+                      <div
                         style={{
-                          background: "#b1d1de99",
-                          borderRadius: "15px",
-                          padding: "10px",
-                          width: "50%",
-                          // backdropFilter: "blur(12px)",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          gap: "10px",
                         }}
                       >
-                        {station.locationName}
-                      </p>
-                    </div>
-                    {station.crs && (
-                      <Button
-                        sx={{
-                          marginTop: "-20px",
-                          color:
-                            localStorage.getItem("darkMode") == "#000000" &&
-                            "#008cff",
-                        }}
-                        type="button"
-                        onClick={() =>
-                          navigate("/dashboard", {
-                            state: {
-                              crs: station.crs,
-                              locationName:
-                                station.locationName + " (" + station.crs + ")",
-                              locationDate: station.stdSpecified
-                                ? station.std.slice(0, 10)
-                                : station.sta.slice(0, 10),
-                              locationTime: station.stdSpecified
+                        <p
+                          style={{
+                            background: "#b1d1de99",
+                            borderRadius: "15px",
+                            padding: "10px",
+                            width: "50%",
+                            // backdropFilter: "blur(12px)",
+                          }}
+                        >
+                          {station.locationName}
+                        </p>
+                      </div>
+                      {station.crs && (
+                        <Button
+                          sx={{
+                            marginTop: "-20px",
+                            color:
+                              localStorage.getItem("darkMode") == "#000000" &&
+                              "#008cff",
+                          }}
+                          type="button"
+                          onClick={() =>
+                            navigate("/dashboard", {
+                              state: {
+                                crs: station.crs,
+                                locationName:
+                                  station.locationName +
+                                  " (" +
+                                  station.crs +
+                                  ")",
+                                locationDate: station.stdSpecified
+                                  ? station.std.slice(0, 10)
+                                  : station.sta.slice(0, 10),
+                                locationTime: station.stdSpecified
+                                  ? station.std.slice(11, 16)
+                                  : station.sta.slice(11, 16),
+                              },
+                            })
+                          }
+                        >
+                          {station.crs && (
+                            <u>
+                              Search departures at{" "}
+                              {station.stdSpecified
                                 ? station.std.slice(11, 16)
-                                : station.sta.slice(11, 16),
-                            },
-                          })
-                        }
-                      >
-                        {station.crs && (
-                          <u>
-                            Search departures at{" "}
-                            {station.stdSpecified
-                              ? station.std.slice(11, 16)
-                              : station.sta.slice(11, 16)}
-                          </u>
-                        )}
-                      </Button>
-                    )}
+                                : station.sta.slice(11, 16)}
+                            </u>
+                          )}
+                        </Button>
+                      )}
+                    </>
                   </Fade>
                   {
                     <>
