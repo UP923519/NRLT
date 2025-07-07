@@ -100,7 +100,7 @@ export default function ServicePage() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const executeScroll = () => {
+  const executeScroll = (state) => {
     switchScreen && myRef.current.scrollIntoView({ behavior: "smooth" });
     !switchScreen &&
       window.scrollTo({
@@ -108,6 +108,17 @@ export default function ServicePage() {
         left: 0,
         behavior: "smooth",
       });
+
+    if (state) {
+      console.log("TROO");
+      setTimeout(() => {
+        window.scrollTo({
+          top: 340,
+          left: 0,
+          behavior: "smooth",
+        });
+      }, 500);
+    }
   };
 
   const navigate = useNavigate();
@@ -143,7 +154,8 @@ export default function ServicePage() {
     if (state) {
       setSPAssociation(state);
       logJSONData("", state.rid);
-      executeScroll();
+      setSwitchScreen(false);
+      executeScroll(true);
     }
   }, [state]);
 
@@ -1203,6 +1215,7 @@ export default function ServicePage() {
               diffHours={diffHours}
               diffMinutes={diffMinutes}
               setShowStaffData={setShowStaffData}
+              setSwitchScreen={setSwitchScreen}
             />
           )}
         {loadedState == false ? (
@@ -1269,6 +1282,7 @@ export default function ServicePage() {
           )}
 
         {!switchScreen && <p style={{ marginBottom: "18vh" }}></p>}
+        {processingState && <p style={{ marginBottom: "100vh" }}></p>}
       </div>
     </>
 

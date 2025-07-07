@@ -49,6 +49,7 @@ export default function DisplayStaffStops({
   diffHours,
   diffMinutes,
   setShowStaffData,
+  setSwitchScreen,
 }) {
   const [station, setStation] = useState();
   const [open, setOpen] = useState(false);
@@ -979,6 +980,7 @@ export default function DisplayStaffStops({
                                           setNewRid(association.rid) +
                                           setShowStaffData(false) +
                                           setUpdateServicePageButton(false) +
+                                          setSwitchScreen(false) +
                                           navigate("/linkPage", {
                                             state: {
                                               rid: association.rid,

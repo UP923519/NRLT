@@ -52,6 +52,7 @@ export default function DisplayStops({
   diffHours,
   diffMinutes,
   setShowStaffData,
+  setSwitchScreen,
 }) {
   const handleClose = () => setOpen(false);
   const [whiteBlue, setWhiteBlue] = useState(false);
@@ -413,6 +414,7 @@ export default function DisplayStops({
           diffHours={diffHours}
           diffMinutes={diffMinutes}
           setShowStaffData={setShowStaffData}
+          setSwitchScreen={setSwitchScreen}
         />
       )}
       <Modal
