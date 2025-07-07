@@ -49,44 +49,53 @@ function App() {
 
   return (
     <Fade top distance={"25px"} duration={1500}>
-      <meta name="theme-color" content={localStorage.getItem("darkMode")} />
-      {localStorage.getItem("darkMode") == "BONUS" && (
-        <meta name="theme-color" content={localStorage.getItem("#ffffff")} />
-      )}
-      <div
-        className="wrapper"
-        style={{
-          fontSize: Number(localStorage.getItem("fontSize")),
-          backgroundColor: localStorage.getItem("darkMode"),
-          color: colour,
-        }}
-      >
-        <CheckConnection />
-
-        <p>
-          <img
-            src={Nimage}
-            alt="powered by National Rail Enquiries"
-            width="85"
-          />
-        </p>
-
-        <h2
-          className="titleClass"
+      <>
+        <>
+          <meta name="theme-color" content={localStorage.getItem("darkMode")} />
+        </>
+        {localStorage.getItem("darkMode") == "BONUS" && (
+          <>
+            <meta
+              name="theme-color"
+              content={localStorage.getItem("#ffffff")}
+            />
+          </>
+        )}
+        <div
+          className="wrapper"
           style={{
-            color: "#2d9ba1",
-            backgroundColor: backGroundColour,
-            borderRadius: "20px",
+            fontSize: Number(localStorage.getItem("fontSize")),
+            backgroundColor: localStorage.getItem("darkMode"),
+            color: colour,
           }}
         >
-          Train Times Live
-        </h2>
+          <CheckConnection />
 
-        <br />
-        <div>
-          <Navbar />
+          <p>
+            <img
+              src={Nimage}
+              alt="powered by National Rail Enquiries"
+              width="85"
+            />
+          </p>
+
+          <h2
+            className="titleClass"
+            style={{
+              color: "#2d9ba1",
+              backgroundColor: backGroundColour,
+              borderRadius: "20px",
+            }}
+          >
+            Train Times Live
+          </h2>
+
+          <br />
+          <div>
+            <Navbar />
+          </div>
         </div>
-      </div>
+      </>
     </Fade>
   );
 }
