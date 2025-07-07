@@ -60,6 +60,7 @@ let rememberTimeOffset;
 let busDisplayMode = "train";
 let showBuses = false;
 let rememberDateTime = [];
+let rememberSearchedDateTime;
 
 const _ = require("lodash");
 const headersListDepart = {
@@ -94,6 +95,7 @@ export default function DepartArrive(departArrive) {
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [searchedDateTime, setSearchedDateTime] = useState(false);
 
   const [tTSMOpen, setTTSMOpen] = useState(false);
 
@@ -264,6 +266,8 @@ export default function DepartArrive(departArrive) {
     if (textInfo === "cleared") {
       setIsOpen(false);
     }
+
+    if (rememberSearchedDateTime) setSearchedDateTime(rememberSearchedDateTime);
 
     if (isOpen) {
       setTimeout(() => {
@@ -493,7 +497,7 @@ export default function DepartArrive(departArrive) {
     textInfo = brokentextInfo;
     myArray = myArray.slice(0, -2);
     if (myArray == "") {
-      alert("No results found");
+      // alert("No results found");
       // failedAlert = true;
       if (currentCRSCode == undefined) {
         clearAll();
@@ -594,6 +598,34 @@ export default function DepartArrive(departArrive) {
         offsetYears = year;
       }
     }
+
+    //Used for the later button
+    setSearchedDateTime(
+      offsetYears +
+        "-" +
+        offsetMonths +
+        "-" +
+        offsetDays +
+        "T" +
+        offsetHours +
+        ":" +
+        offsetMinutes +
+        ":" +
+        "00"
+    );
+
+    rememberSearchedDateTime =
+      offsetYears +
+      "-" +
+      offsetMonths +
+      "-" +
+      offsetDays +
+      "T" +
+      offsetHours +
+      ":" +
+      offsetMinutes +
+      ":" +
+      "00";
 
     let deparrurl1;
     let deparrurl2;
@@ -1788,6 +1820,7 @@ export default function DepartArrive(departArrive) {
                         setSelectedDay={setSelectedDay}
                         setSelectedTime={setSelectedTime}
                         rememberDateTime={rememberDateTime}
+                        searchedDateTime={searchedDateTime}
                       />
                     </>
                   )}

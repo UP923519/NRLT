@@ -369,7 +369,7 @@ export default function DepartArrive(departArrive) {
     textInfo = brokentextInfo;
     myArray = myArray.slice(0, -2);
     if (myArray == "") {
-      alert("No results found");
+      // alert("No results found");
       failedAlert = true;
       if (currentCRSCode == undefined) {
         clearAll();

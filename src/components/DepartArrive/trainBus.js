@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup } from "@mui/material";
+import { Box, Button, ButtonGroup, Tooltip } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import Fade from "react-reveal/Fade";
 import "./trainBus.css";
@@ -25,9 +25,19 @@ export default function TrainBus({
   setSelectedDay,
   setSelectedTime,
   rememberDateTime,
+  searchedDateTime,
 }) {
   const [showAlerts, setShowAlerts] = useState(true);
   const myRef = useRef(null);
+  const [tTSMOpen, setTTSMOpen] = useState(false);
+
+  const handleTooltipClose = () => {
+    setTTSMOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setTTSMOpen(true);
+  };
 
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
@@ -39,6 +49,57 @@ export default function TrainBus({
   };
 
   function handleLaterButton(date, time) {
+    console.log("DATE", date);
+    console.log("TIME", time);
+
+    console.log("SDT", searchedDateTime);
+
+    if (
+      (liveDeparture[liveDeparture.length - 1]?.stdSpecified &&
+        new Date(liveDeparture[liveDeparture.length - 1].std) <=
+          new Date(searchedDateTime)) ||
+      (liveDeparture[liveDeparture.length - 1]?.staSpecified &&
+        new Date(liveDeparture[liveDeparture.length - 1].sta) <=
+          new Date(searchedDateTime))
+    ) {
+      date = new Date(
+        new Date(searchedDateTime).setMinutes(
+          new Date(searchedDateTime).getMinutes() + 1
+        )
+      )
+        .toLocaleString("sv", { timeZone: "Europe/London" })
+        .replace(" ", "T");
+
+      time = new Date(
+        new Date(searchedDateTime).setMinutes(
+          new Date(searchedDateTime).getMinutes() + 1
+        )
+      )
+        .toLocaleString("sv", { timeZone: "Europe/London" })
+        .replace(" ", "T");
+    }
+
+    if (liveDeparture.length == 0) {
+      date = new Date(
+        new Date(searchedDateTime).setMinutes(
+          new Date(searchedDateTime).getMinutes() + 1
+        )
+      )
+        .toLocaleString("sv", { timeZone: "Europe/London" })
+        .replace(" ", "T");
+
+      time = new Date(
+        new Date(searchedDateTime).setMinutes(
+          new Date(searchedDateTime).getMinutes() + 1
+        )
+      )
+        .toLocaleString("sv", { timeZone: "Europe/London" })
+        .replace(" ", "T");
+    }
+
+    date = date.slice(0, 10);
+    time = time.slice(11, 16);
+
     setSelectedDay(date);
     rememberDateTime[1] = date;
 
@@ -236,10 +297,6 @@ export default function TrainBus({
                     __html: departures,
                   }}
                 />
-
-                <br />
-                <br />
-                <br />
               </tr>
             </Fade>
           ))}
@@ -251,46 +308,48 @@ export default function TrainBus({
           </p>
         )}
 
-        {liveDeparture.length > 0 && (
-          <Button
-            className="changeTime"
-            onClick={() =>
-              handleLaterButton(
-                liveDeparture[liveDeparture.length - 1].stdSpecified
-                  ? liveDeparture[liveDeparture.length - 1].std.slice(0, 10)
-                  : liveDeparture[liveDeparture.length - 1].sta.slice(0, 10),
-                liveDeparture[liveDeparture.length - 1].stdSpecified
-                  ? liveDeparture[liveDeparture.length - 1].std.slice(11, 16)
-                  : liveDeparture[liveDeparture.length - 1].sta.slice(11, 16)
-              )
-            }
+        <>
+          <div
             style={{
-              background:
-                liveDeparture.length > 1
-                  ? localStorage.getItem("darkMode") !== "#ffffff"
-                    ? "#7788a3"
-                    : "white"
-                  : localStorage.getItem("darkMode") !== "#ffffff"
-                  ? "#616161"
-                  : "#f5f5f5",
-              color:
-                liveDeparture.length > 1
-                  ? localStorage.getItem("darkMode") !== "#ffffff"
-                    ? "#ffffff"
-                    : "#000000"
-                  : localStorage.getItem("darkMode") !== "#ffffff"
-                  ? "#888888"
-                  : "#d1d1d1",
-              border: "1px solid lightGrey",
+              marginTop: "20px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-            disabled={liveDeparture.length <= 1}
           >
-            Search Later:{" "}
-            {liveDeparture[liveDeparture.length - 1]?.stdSpecified
-              ? liveDeparture[liveDeparture.length - 1].std?.slice(11, 16)
-              : liveDeparture[liveDeparture.length - 1].sta?.slice(11, 16)}
-          </Button>
-        )}
+            <Button
+              className="changeTime"
+              onClick={() =>
+                handleLaterButton(
+                  liveDeparture[liveDeparture.length - 1]?.stdSpecified
+                    ? liveDeparture[liveDeparture.length - 1]?.std
+                    : liveDeparture[liveDeparture.length - 1]?.sta,
+                  liveDeparture[liveDeparture.length - 1]?.stdSpecified
+                    ? liveDeparture[liveDeparture.length - 1]?.std
+                    : liveDeparture[liveDeparture.length - 1]?.sta
+                )
+              }
+              style={{
+                boxShadow:
+                  "0 4px 8px 0 rgba(96, 96, 96, 0.19), 0 6px 20px 0 rgba(96, 96, 96, 0.19)",
+                background:
+                  localStorage.getItem("darkMode") !== "#ffffff"
+                    ? "#7788a3"
+                    : "white",
+
+                color:
+                  localStorage.getItem("darkMode") !== "#ffffff"
+                    ? "#ffffff"
+                    : "#000000",
+
+                border: "1px solid lightGrey",
+                margin: "0px",
+              }}
+            >
+              🔎 Search Later
+            </Button>
+          </div>
+        </>
       </div>
     </div>
   );
