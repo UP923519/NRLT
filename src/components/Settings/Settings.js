@@ -368,7 +368,7 @@ export default function Settings() {
                 {" "}
                 Theme: {currentTheme}{" "}
                 {!currentTheme && localStorage.getItem("darkMode") == "BONUS"
-                  ? "Light/Dark"
+                  ? "Hybrid"
                   : !currentTheme &&
                     "Random (" + localStorage.getItem("darkMode") + ")"}
                 <br /> <br />
@@ -411,7 +411,7 @@ export default function Settings() {
                       localStorage.getItem("darkMode") == "BONUS" && "#cccccc",
                   }}
                 >
-                  Light/Dark Mode
+                  Hybrid Mode
                 </button>
                 <br />
                 <br />
