@@ -148,7 +148,6 @@ export default function ServicePage() {
   }, [state]);
 
   useEffect(() => {
-    console.log("switchScreen", switchScreen);
     if (!switchScreen) {
       window.scrollTo({
         top: 340,
@@ -1257,7 +1256,18 @@ export default function ServicePage() {
             )}
           </>
         )}
-        {switchScreen && <p style={{ marginBottom: "50vh" }}></p>}
+
+        {switchScreen &&
+          allServiceData &&
+          allServiceData.locations.length > 10 && (
+            <p style={{ marginBottom: "0vh" }}></p>
+          )}
+        {switchScreen &&
+          allServiceData &&
+          allServiceData.locations.length <= 10 && (
+            <p style={{ marginBottom: "50vh" }}></p>
+          )}
+
         {!switchScreen && <p style={{ marginBottom: "18vh" }}></p>}
       </div>
     </>
