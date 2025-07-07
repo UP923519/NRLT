@@ -85,6 +85,7 @@ export default function ServicePage() {
   const [sPAssociation, setSPAssociation] = useState(false);
   const [ttopen, setTtOpen] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [switchScreen, setSwitchScreen] = useState(false);
 
   const { state } = useLocation();
   const locations = useLocation();
@@ -100,12 +101,15 @@ export default function ServicePage() {
     setAnchorEl(null);
   };
   const executeScroll = () => {
-    myRef.current.scrollIntoView({ behavior: "smooth" });
-    window.scrollTo({
-      top: 340,
-      left: 0,
-      behavior: "smooth",
-    });
+    console.log("SCR");
+    console.log("SSD", showStaffData);
+    switchScreen && myRef.current.scrollIntoView({ behavior: "smooth" });
+    !switchScreen &&
+      window.scrollTo({
+        top: 340,
+        left: 0,
+        behavior: "smooth",
+      });
   };
 
   const navigate = useNavigate();
@@ -144,6 +148,17 @@ export default function ServicePage() {
       executeScroll();
     }
   }, [state]);
+
+  useEffect(() => {
+    console.log("switchScreen", switchScreen);
+    if (!switchScreen) {
+      window.scrollTo({
+        top: 340,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [switchScreen, setSwitchScreen]);
 
   function clearAll(e) {
     setCalling([""]);
@@ -1099,9 +1114,11 @@ export default function ServicePage() {
                                 color: !showStaffData && "white",
                               }}
                               onClick={() =>
-                                (showStaffData
-                                  ? setShowStaffData(false)
-                                  : setShowStaffData(true)) + executeScroll()
+                                showStaffData
+                                  ? setShowStaffData(false) +
+                                    setSwitchScreen(false)
+                                  : setShowStaffData(true) +
+                                    setSwitchScreen(true)
                               }
                             >
                               {showStaffData
@@ -1147,9 +1164,11 @@ export default function ServicePage() {
                   "white",
               }}
               onClick={() =>
-                (showStaffData
-                  ? setShowStaffData(false) + setUpdateServicePageButton(false)
-                  : setShowStaffData(true)) + executeScroll()
+                showStaffData
+                  ? setShowStaffData(false) +
+                    setUpdateServicePageButton(false) +
+                    setSwitchScreen(false)
+                  : setShowStaffData(true) + setSwitchScreen(true)
               }
             >
               {showStaffData
@@ -1190,9 +1209,7 @@ export default function ServicePage() {
             />
           )}
         {loadedState == false ? (
-          <>
-            <p style={{ marginBottom: "3000px" }}></p>
-          </>
+          <>{processingState && <p style={{ marginBottom: "100vh" }}></p>}</>
         ) : (
           <>
             {" "}
@@ -1231,15 +1248,19 @@ export default function ServicePage() {
                   </Fade>
                 </div>
                 {stringCalling.length < 6 && (
-                  <div style={{ marginBottom: "70vh" }}></div>
+                  <>
+                    {" "}
+                    {/* {switchScreen && <p style={{ marginBottom: "100vh" }}></p>} */}
+                  </>
                 )}
               </>
             ) : (
               <></>
             )}
-            <p style={{ marginBottom: "3000px" }}></p>
           </>
         )}
+        {switchScreen && <p style={{ marginBottom: "50vh" }}></p>}
+        {!switchScreen && <p style={{ marginBottom: "18vh" }}></p>}
       </div>
     </>
 

@@ -119,8 +119,14 @@ export default function DisplayStaffStops({
     }
   }
 
-  const executeScroll = () =>
+  const executeScroll = () => {
+    window.scrollTo({
+      top: 400,
+      left: 0,
+      behavior: "instant",
+    });
     myRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   function handleOpen(station, indicator) {
     setOpen(true);
