@@ -192,6 +192,16 @@ export default function Settings() {
     window.location.reload();
   }
 
+  function getRandomColor() {
+    var letters = "7DCBA98789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    console.log("color", color);
+    return color;
+  }
+
   return (
     <Fade top distance={"10px"} duration={1500}>
       <div style={{ width: "98vw", height: "100vh" }}>
@@ -357,9 +367,10 @@ export default function Settings() {
               >
                 {" "}
                 Theme: {currentTheme}{" "}
-                {!currentTheme &&
-                  localStorage.getItem("darkMode") == "BONUS" &&
-                  "Light/Dark"}
+                {!currentTheme && localStorage.getItem("darkMode") == "BONUS"
+                  ? "Light/Dark"
+                  : !currentTheme &&
+                    "Random (" + localStorage.getItem("darkMode") + ")"}
                 <br /> <br />
                 <button
                   id="useCurrentLocation"
@@ -401,6 +412,23 @@ export default function Settings() {
                   }}
                 >
                   Light/Dark Mode
+                </button>
+                <br />
+                <br />
+                <button
+                  id="useCurrentLocation"
+                  onClick={() =>
+                    localStorage.setItem("darkMode", getRandomColor()) +
+                    window.location.reload()
+                  }
+                  disabled={localStorage.getItem("darkMode") == "RANDOM"}
+                  style={{
+                    background:
+                      localStorage.getItem("darkMode") == "RANDOM" &&
+                      getRandomColor(),
+                  }}
+                >
+                  Generate Random
                 </button>
               </div>
             </text>
