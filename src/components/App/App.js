@@ -55,10 +55,7 @@ function App() {
         </>
         {localStorage.getItem("darkMode") == "BONUS" && (
           <>
-            <meta
-              name="theme-color"
-              content={localStorage.getItem("#ffffff")}
-            />
+            <meta name="theme-color" content={"#d4d4d4"} />
           </>
         )}
         <div
