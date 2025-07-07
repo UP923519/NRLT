@@ -80,8 +80,10 @@ export default function Login({ setToken }) {
     setToken({ token: "User" });
   };
 
+  document.body.style.overflow = "hidden";
+
   return (
-    <>
+    <text>
       <meta name="theme-color" content={"#b2b6be"} />
       <Fade top distance={"25px"} duration={5000}>
         <div className="main">
@@ -118,7 +120,7 @@ export default function Login({ setToken }) {
           </div>
         </Fade>
       </>
-    </>
+    </text>
   );
 }
 

@@ -4,13 +4,16 @@ element.style {
 
 /* //Stop pull to refresh attempt + tap to search */
 body {
-  overflow: visible !important;
+  /* overflow: visible !important; */
 }
 /* //Stop pull to refresh attempt + tap to search */
 html,
 body {
   overscroll-behavior: none;
   user-select: none;
+  /* width: 150vw; */
+  display: flex;
+  justify-content: center;
 }
 
 .size {
