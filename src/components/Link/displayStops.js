@@ -498,8 +498,8 @@ export default function DisplayStops({
                           sx={{
                             marginTop: "-20px",
                             color:
-                              localStorage.getItem("darkMode") == "#000000" &&
-                              "#008cff",
+                              localStorage.getItem("darkMode") !== "#ffffff" &&
+                              "#2ea1ff",
                           }}
                           type="button"
                           onClick={() =>

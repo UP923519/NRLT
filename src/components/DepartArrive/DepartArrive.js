@@ -1198,9 +1198,9 @@ export default function DepartArrive(departArrive) {
             "</text>" +
             "<br/>" +
             "<text style=position:relative;>" +
-            "  Platform " +
+            "  Platform: " +
             "<text style=background:" +
-            (!isNaN(liveDeparture[i].platform) ? "green" : "#e88c79") +
+            (liveDeparture[i].platform ? "green" : "#e88c79") +
             ";color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
             "</text>" +
@@ -1292,7 +1292,7 @@ export default function DepartArrive(departArrive) {
             "<text style=position:relative;>" +
             "  Platform: " +
             "<text style=background:" +
-            (!isNaN(liveDeparture[i].platform) ? "green" : "#e88c79") +
+            (liveDeparture[i].platform ? "green" : "#e88c79") +
             ";color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
             "</text>" +

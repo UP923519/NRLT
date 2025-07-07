@@ -252,7 +252,11 @@ export default function DisplayStaffStops({
                     paddingTop: "0px",
                   }}
                 >
-                  <text style={{ color: "#696969" }}>
+                  <text
+                    style={{
+                      color: "#696969",
+                    }}
+                  >
                     {timeDiff && timeDiff.length > 0 ? (
                       <>
                         {timeDiff[0] == 1 && timeDiff[0] + " Hour "}
@@ -596,8 +600,8 @@ export default function DisplayStaffStops({
                           sx={{
                             marginTop: "-20px",
                             color:
-                              localStorage.getItem("darkMode") == "#000000" &&
-                              "#008cff",
+                              localStorage.getItem("darkMode") !== "#ffffff" &&
+                              "#2ea1ff",
                           }}
                           type="button"
                           onClick={() =>

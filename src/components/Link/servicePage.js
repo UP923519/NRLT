@@ -763,70 +763,82 @@ export default function ServicePage() {
                   <>
                     <text
                       style={{
-                        color:
-                          localStorage.getItem("darkMode") == "#8297b5"
-                            ? "#e6e6e6"
-                            : "#818181",
+                        background:
+                          localStorage.getItem("darkMode") !== "#ffffff" &&
+                          localStorage.getItem("darkMode") !== "BONUS" &&
+                          "#000000dd",
+                        borderRadius: "15px",
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
                       }}
                     >
-                      {diffHours == 1 && diffHours + " Hour "}
-                      {diffHours > 1 && diffHours + " Hours "}
-                      {diffMinutes == 1 && diffMinutes + " Minute "}
-                      {diffMinutes > 1 && diffMinutes + " Minutes "}
-                    </text>
-                    <Tooltip
-                      disableFocusListener
-                      arrow
-                      open={ttopen}
-                      leaveTouchDelay={5000}
-                      onClose={() => setTtOpen(false)}
-                      componentsProps={{
-                        tooltip: {
-                          sx: {
-                            maxWidth: "none",
-                            backgroundColor: "#ffffffCC",
-                            backdropFilter: "blur(12px)",
-                            borderRadius: "10px",
-                            border: 1,
-                            borderColor: "#c9c9c9",
-                            "& .MuiTooltip-arrow": {
-                              color: "#0080ff",
-                            },
-                          },
-                        },
-                      }}
-                      title={
-                        <div style={{ color: "black" }}>
-                          {"Duration of full journey between " +
-                            allStaffServiceData.locations[0].locationName +
-                            " and " +
-                            allStaffServiceData.locations[
-                              allStaffServiceData.locations.length - 1
-                            ].locationName}
-                        </div>
-                      }
-                      slotProps={{
-                        popper: {
-                          disablePortal: false,
-                          modifiers: [
-                            {
-                              name: "offset",
-                              options: {
-                                offset: [0, -10],
+                      <text
+                        style={{
+                          color:
+                            localStorage.getItem("darkMode") == "#8297b5"
+                              ? "#e6e6e6"
+                              : "#818181",
+                        }}
+                      >
+                        {diffHours == 1 && diffHours + " Hour "}
+                        {diffHours > 1 && diffHours + " Hours "}
+                        {diffMinutes == 1 && diffMinutes + " Minute "}
+                        {diffMinutes > 1 && diffMinutes + " Minutes "}
+                      </text>
+                      <Tooltip
+                        disableFocusListener
+                        arrow
+                        open={ttopen}
+                        leaveTouchDelay={5000}
+                        onClose={() => setTtOpen(false)}
+                        componentsProps={{
+                          tooltip: {
+                            sx: {
+                              maxWidth: "none",
+                              backgroundColor: "#ffffffCC",
+                              backdropFilter: "blur(12px)",
+                              borderRadius: "10px",
+                              border: 1,
+                              borderColor: "#c9c9c9",
+                              "& .MuiTooltip-arrow": {
+                                color: "#0080ff",
                               },
                             },
-                          ],
-                        },
-                      }}
-                    >
-                      {" "}
-                      <text
-                        style={{ marginBottom: 2, color: "#0080ff" }}
-                        onClick={() => setTtOpen(true)}
+                          },
+                        }}
+                        title={
+                          <div style={{ color: "black" }}>
+                            {"Duration of full journey between " +
+                              allStaffServiceData.locations[0].locationName +
+                              " and " +
+                              allStaffServiceData.locations[
+                                allStaffServiceData.locations.length - 1
+                              ].locationName}
+                          </div>
+                        }
+                        slotProps={{
+                          popper: {
+                            disablePortal: false,
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [0, -10],
+                                },
+                              },
+                            ],
+                          },
+                        }}
                       >
-                        ⓘ
-                      </text>
-                    </Tooltip>
+                        {" "}
+                        <text
+                          style={{ marginBottom: 2, color: "#0080ff" }}
+                          onClick={() => setTtOpen(true)}
+                        >
+                          ⓘ
+                        </text>
+                      </Tooltip>
+                    </text>
                     <div style={{ marginBottom: "10px" }}>
                       {/* {!stringCalling[0][0].includes("Loading") ? (
                   <> */}
