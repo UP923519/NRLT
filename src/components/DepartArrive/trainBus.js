@@ -344,6 +344,7 @@ export default function TrainBus({
 
                 border: "1px solid lightGrey",
                 margin: "0px",
+                fontWeight: "normal",
               }}
             >
               🔎 Search Later

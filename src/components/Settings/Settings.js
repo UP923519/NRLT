@@ -28,6 +28,7 @@ if (localStorage.getItem("fontSize") == 11) {
 }
 
 if (localStorage.getItem("darkMode") == null) {
+  localStorage.setItem("darkMode", "#ffffff");
   currentTheme = "Light";
 }
 if (localStorage.getItem("darkMode") == "#ffffff") {
@@ -355,7 +356,10 @@ export default function Settings() {
                 }}
               >
                 {" "}
-                Theme: {currentTheme}
+                Theme: {currentTheme}{" "}
+                {!currentTheme &&
+                  localStorage.getItem("darkMode") == "BONUS" &&
+                  "Light/Dark"}
                 <br /> <br />
                 <button
                   id="useCurrentLocation"
@@ -383,6 +387,20 @@ export default function Settings() {
                   }}
                 >
                   Colourful Mode
+                </button>
+                <button
+                  id="useCurrentLocation"
+                  onClick={() =>
+                    localStorage.setItem("darkMode", "BONUS") +
+                    window.location.reload()
+                  }
+                  disabled={localStorage.getItem("darkMode") == "BONUS"}
+                  style={{
+                    background:
+                      localStorage.getItem("darkMode") == "BONUS" && "#cccccc",
+                  }}
+                >
+                  Light/Dark Mode
                 </button>
               </div>
             </text>

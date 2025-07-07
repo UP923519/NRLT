@@ -82,6 +82,7 @@ export default function Login({ setToken }) {
 
   return (
     <>
+      <meta name="theme-color" content={"#b2b6be"} />
       <Fade top distance={"25px"} duration={5000}>
         <div className="main">
           <video src={videoBg} autoPlay muted></video>
