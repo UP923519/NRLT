@@ -766,10 +766,12 @@ export default function ServicePage() {
                         background:
                           localStorage.getItem("darkMode") !== "#ffffff" &&
                           localStorage.getItem("darkMode") !== "BONUS" &&
-                          "#000000dd",
+                          localStorage.getItem("darkMode") !== "#8297b5" &&
+                          localStorage.getItem("darkMode") !== "#000000" &&
+                          "white",
                         borderRadius: "15px",
-                        paddingLeft: "5px",
-                        paddingRight: "5px",
+                        paddingLeft: "10px",
+                        paddingRight: "10px",
                       }}
                     >
                       <text
