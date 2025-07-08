@@ -64,7 +64,7 @@ export default function TrainBus({
     ) {
       date = new Date(
         new Date(searchedDateTime).setMinutes(
-          new Date(searchedDateTime).getMinutes() + 1
+          new Date(searchedDateTime).getMinutes() + 15
         )
       )
         .toLocaleString("sv", { timeZone: "Europe/London" })
@@ -72,7 +72,7 @@ export default function TrainBus({
 
       time = new Date(
         new Date(searchedDateTime).setMinutes(
-          new Date(searchedDateTime).getMinutes() + 1
+          new Date(searchedDateTime).getMinutes() + 15
         )
       )
         .toLocaleString("sv", { timeZone: "Europe/London" })
@@ -82,7 +82,7 @@ export default function TrainBus({
     if (liveDeparture.length == 0) {
       date = new Date(
         new Date(searchedDateTime).setMinutes(
-          new Date(searchedDateTime).getMinutes() + 1
+          new Date(searchedDateTime).getMinutes() + 15
         )
       )
         .toLocaleString("sv", { timeZone: "Europe/London" })
@@ -90,7 +90,7 @@ export default function TrainBus({
 
       time = new Date(
         new Date(searchedDateTime).setMinutes(
-          new Date(searchedDateTime).getMinutes() + 1
+          new Date(searchedDateTime).getMinutes() + 15
         )
       )
         .toLocaleString("sv", { timeZone: "Europe/London" })
