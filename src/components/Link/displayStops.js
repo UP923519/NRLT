@@ -440,10 +440,7 @@ export default function DisplayStops({
                   onClick={handleClose}
                   style={{
                     border: "none",
-                    background:
-                      localStorage.getItem("darkMode") == "#000000"
-                        ? "#33333333"
-                        : "#ffffffdd",
+                    background: "none",
                     // backdropFilter: "blur(12px)",
                     paddingBottom: "3px",
                     position: "sticky",

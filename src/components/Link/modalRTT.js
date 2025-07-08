@@ -33,10 +33,40 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
         >
           <div>
             <Box sx={style} className="transactions">
-              <Fade top duration={500} distance={"100px"} duration={500}>
-                <p style={{ margin: "5px", padding: "7px" }}>
-                  Additional train details
-                </p>
+              <Fade top duration={500} distance={"100px"}>
+                <button
+                  onClick={handleClose}
+                  style={{
+                    position: "absolute",
+                    border: "none",
+                    background: "none",
+                    // backdropFilter: "blur(12px)",
+                    paddingBottom: "3px",
+                    // position: "sticky",
+                    top: "5px",
+                    left: "91%",
+                    fontSize: "larger",
+                    color:
+                      localStorage.getItem("darkMode") == "#000000"
+                        ? "grey"
+                        : "#8f8f8f",
+                    borderRadius: "100%",
+                    zIndex: "1",
+                  }}
+                >
+                  (x)
+                </button>
+                <Fade top distance={"100px"} duration={500}>
+                  <Typography
+                    style={{ marginTop: "-15px" }}
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                    sx={{ paddingTop: "25px", paddingBottom: "5px" }}
+                  >
+                    Additional train details
+                  </Typography>
+                </Fade>
                 <iframe
                   className="transactions"
                   style={{
