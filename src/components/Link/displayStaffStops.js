@@ -299,14 +299,14 @@ export default function DisplayStaffStops({
                 coloursEstimated = "white";
               }
 
-              //Change delayed colour to red
-              if (waypoint.etaSpecified == false) {
-                if (
-                  waypoint.departureType == "3" ||
-                  waypoint.arrivalType == "3"
-                )
-                  coloursEstimated = "#ffcccf";
-              }
+              // //Change delayed question mark colour to red
+              // if (waypoint.etaSpecified == false) {
+              //   if (
+              //     waypoint.departureType == "3" ||
+              //     waypoint.arrivalType == "3"
+              //   )
+              //     coloursEstimated = "#000000";
+              // }
 
               return (
                 <>
@@ -426,7 +426,19 @@ export default function DisplayStaffStops({
                                 waypoint.etaSpecified == false ? (
                                   waypoint.departureType == "3" ||
                                   waypoint.arrivalType == "3" ? (
-                                    "Delayed"
+                                    <x
+                                      style={{
+                                        background: "red",
+                                        color: "white",
+                                        paddingLeft: "5px",
+                                        paddingRight: "5px",
+                                        borderRadius: "20px",
+                                        marginLeft: "-5px",
+                                        marginRight: "-6px",
+                                      }}
+                                    >
+                                      Delayed
+                                    </x>
                                   ) : (
                                     "No info"
                                   )

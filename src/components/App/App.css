@@ -209,7 +209,12 @@ a.topRow2.active {
 navbar.NavBar1 {
   padding-bottom: 0.85pc;
   padding-top: 0.9pc;
-  border-radius: 9px;
+  /* border-radius: 9px; */
+  position: sticky;
+  top: -25px;
+  padding: 25px;
+  z-index: 999;
+  backdrop-filter: blur(12px);
 }
 
 .backHome {

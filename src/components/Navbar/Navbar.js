@@ -32,8 +32,9 @@ const Navbar = () => {
                 marginTop: "-50px",
                 marginBottom: "-20px",
                 flexDirection: "column",
+                zIndex: 999,
               }
-            : {}
+            : { zIndex: 999 }
         }
       >
         <NavLink

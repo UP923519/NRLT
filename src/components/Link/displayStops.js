@@ -110,14 +110,14 @@ export default function DisplayStops({
     coloursEstimated = "white";
   }
 
-  //Change delayed colour to red
-  if (data?.locations[yourStationIndex].etaSpecified == false) {
-    if (
-      data?.locations[yourStationIndex].departureType == "3" ||
-      data?.locations[yourStationIndex].arrivalType == "3"
-    )
-      coloursEstimated = "#ffcccf";
-  }
+  // //Change delayed question mark colour to red
+  // if (data?.locations[yourStationIndex].etaSpecified == false) {
+  //   if (
+  //     data?.locations[yourStationIndex].departureType == "3" ||
+  //     data?.locations[yourStationIndex].arrivalType == "3"
+  //   )
+  //     coloursEstimated = "#000000";
+  // }
 
   return (
     <>
@@ -285,7 +285,19 @@ export default function DisplayStops({
                                   .departureType == "3" ||
                                 data?.locations[yourStationIndex].arrivalType ==
                                   "3" ? (
-                                  "Delayed"
+                                  <x
+                                    style={{
+                                      background: "red",
+                                      color: "white",
+                                      paddingLeft: "5px",
+                                      paddingRight: "5px",
+                                      borderRadius: "20px",
+                                      marginLeft: "-5px",
+                                      marginRight: "-6px",
+                                    }}
+                                  >
+                                    Delayed
+                                  </x>
                                 ) : (
                                   "No info"
                                 )
