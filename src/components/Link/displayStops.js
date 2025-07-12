@@ -110,6 +110,15 @@ export default function DisplayStops({
     coloursEstimated = "white";
   }
 
+  //Change delayed colour to red
+  if (data?.locations[yourStationIndex].etaSpecified == false) {
+    if (
+      data?.locations[yourStationIndex].departureType == "3" ||
+      data?.locations[yourStationIndex].arrivalType == "3"
+    )
+      coloursEstimated = "#ffcccf";
+  }
+
   return (
     <>
       {!showStaffData && (

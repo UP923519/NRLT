@@ -62,7 +62,11 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
                     id="modal-modal-title"
                     variant="h6"
                     component="h2"
-                    sx={{ paddingTop: "25px", paddingBottom: "5px" }}
+                    sx={{
+                      paddingTop: "25px",
+                      paddingBottom: "5px",
+                      fontSize: "19px",
+                    }}
                   >
                     Additional train details
                   </Typography>

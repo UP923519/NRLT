@@ -298,6 +298,16 @@ export default function DisplayStaffStops({
               } else {
                 coloursEstimated = "white";
               }
+
+              //Change delayed colour to red
+              if (waypoint.etaSpecified == false) {
+                if (
+                  waypoint.departureType == "3" ||
+                  waypoint.arrivalType == "3"
+                )
+                  coloursEstimated = "#ffcccf";
+              }
+
               return (
                 <>
                   <tr

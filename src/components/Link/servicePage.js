@@ -29,6 +29,7 @@ import { delayReason } from "./delayReasons";
 import { cancelReason } from "./cancelReasons";
 import ServicePageAssociation from "./servicePageAssociation";
 import ScrollButton from "../DepartArrive/scrollButton";
+import ModalRTT from "./modalRTT";
 
 let liveService = "";
 let liveService2 = "";
@@ -86,6 +87,7 @@ export default function ServicePage() {
   const [ttopen, setTtOpen] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [switchScreen, setSwitchScreen] = useState(false);
+  const [modalRTTOpen, setModalRTTOpen] = useState(false);
 
   const { state } = useLocation();
   const locations = useLocation();
@@ -1009,7 +1011,24 @@ export default function ServicePage() {
 
                                   {!stringCalling[0][0].includes("Loading") ? (
                                     <>
-                                      <Popup
+                                      <button
+                                        id="useTrains"
+                                        type="button"
+                                        style={{
+                                          background:
+                                            localStorage.getItem("darkMode") !==
+                                            "#ffffff"
+                                              ? "#7788a3"
+                                              : "white",
+                                          color:
+                                            localStorage.getItem("darkMode") !==
+                                              "#ffffff" && "#ffffff",
+                                        }}
+                                        onClick={() => setModalRTTOpen(true)}
+                                      >
+                                        More Train Details
+                                      </button>
+                                      {/* <Popup
                                         trigger={
                                           <button
                                             id="useTrains"
@@ -1077,7 +1096,7 @@ export default function ServicePage() {
                                             </div>
                                           </Fade>
                                         )}
-                                      </Popup>
+                                      </Popup> */}
                                       <button
                                         id="useTrains"
                                         type="button"
@@ -1283,6 +1302,36 @@ export default function ServicePage() {
             )}
           </>
         )}
+
+        <ModalRTT
+          url={null}
+          openRTT={modalRTTOpen}
+          setOpenRTT={setModalRTTOpen}
+          style={{
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "96vw",
+            bgcolor: "background.paper",
+            border: "none",
+            borderRadius: "20px",
+            boxShadow: 24,
+            p: 4,
+            padding: 1,
+            maxWidth: 400,
+            overflow: "scroll",
+            maxHeight: "70vh",
+            top: "50%",
+            position: " absolute",
+            // backdropFilter: "blur(0px)",
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff"
+                ? "#00000099"
+                : "#ffffff99",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
+          }}
+          data={allStaffServiceData}
+        />
 
         {switchScreen &&
           allServiceData &&
