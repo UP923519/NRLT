@@ -189,7 +189,7 @@ export default function ServicePage() {
           left: 0,
           behavior: "smooth",
         });
-      }, 100);
+      }, 250);
     }
   }, [switchScreen, setSwitchScreen]);
 
