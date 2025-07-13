@@ -32,12 +32,11 @@ export default function Navbar() {
       // Get the new Value
       currentScrollPosition = window.pageYOffset;
 
-      // console.log("psp", previousScrollPosition - currentScrollPosition);
-
-      if (
-        currentScrollPosition > 200 &&
-        (previousScrollPosition - currentScrollPosition > 20 ||
-          previousScrollPosition - currentScrollPosition < 20)
+      if (currentScrollPosition < 150) {
+        setShow(true);
+      } else if (
+        previousScrollPosition - currentScrollPosition > 10 ||
+        previousScrollPosition - currentScrollPosition < -10
       ) {
         //Subtract the two and conclude
         if (previousScrollPosition - currentScrollPosition < -10) {
@@ -45,8 +44,6 @@ export default function Navbar() {
         } else if (previousScrollPosition - currentScrollPosition > 20) {
           setShow(true);
         }
-      } else {
-        setShow(true);
       }
 
       // Update the previous value
@@ -72,8 +69,8 @@ export default function Navbar() {
                     }
                   : {
                       zIndex: 999,
-                      marginTop: "-42px",
-                      marginBottom: "-23px",
+                      marginTop: "-40px",
+                      marginBottom: "-40px",
                     }
               }
             >
@@ -140,6 +137,7 @@ export default function Navbar() {
             </navbar>
           )}
         </Fade>
+        <br />
       </>
 
       <Routes>
