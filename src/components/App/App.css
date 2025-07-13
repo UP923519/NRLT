@@ -215,7 +215,7 @@ navbar.NavBar1 {
   padding-right: 25px;
   padding-left: 25px;
   z-index: 999;
-  backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px);
   background: #ffffff00;
   filter: blur(0);
   display: flex;
@@ -622,8 +622,9 @@ a.active-animation:active {
   }
 
   navbar.NavBar1 {
-    display: inline-flex;
-    margin: -50px;
+    background: #ffffff00;
+    backdrop-filter: none;
+    position: relative;
   }
 
   #mapPositionLine {

@@ -42,7 +42,7 @@ export default function Navbar() {
         //Subtract the two and conclude
         if (previousScrollPosition - currentScrollPosition < -10) {
           setShow(false);
-        } else if (previousScrollPosition - currentScrollPosition > 30) {
+        } else if (previousScrollPosition - currentScrollPosition > 20) {
           setShow(true);
         }
       } else {

@@ -106,13 +106,27 @@ export default function ServicePage() {
     switchScreen && myRef.current.scrollIntoView({ behavior: "smooth" });
     !switchScreen &&
       window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant",
+      });
+
+    setTimeout(() => {
+      window.scrollTo({
         top: 340,
         left: 0,
         behavior: "smooth",
       });
+    }, 100);
 
     if (state) {
-      console.log("TROO");
+      !switchScreen &&
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "instant",
+        });
+
       setTimeout(() => {
         window.scrollTo({
           top: 340,
@@ -164,10 +178,18 @@ export default function ServicePage() {
   useEffect(() => {
     if (!switchScreen) {
       window.scrollTo({
-        top: 340,
+        top: 0,
         left: 0,
-        behavior: "smooth",
+        behavior: "instant",
       });
+
+      setTimeout(() => {
+        window.scrollTo({
+          top: 340,
+          left: 0,
+          behavior: "smooth",
+        });
+      }, 100);
     }
   }, [switchScreen, setSwitchScreen]);
 
