@@ -72,8 +72,8 @@ export default function Navbar() {
                     }
                   : {
                       zIndex: 999,
-                      marginTop: "-45px",
-                      marginBottom: "-20px",
+                      marginTop: "-42px",
+                      marginBottom: "-23px",
                     }
               }
             >
