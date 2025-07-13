@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter,
   Route,
@@ -17,83 +17,130 @@ import DataFeed from "../DataFeed/DataFeed";
 import Departures from "../Departures/Departures.js";
 import DepartArrive from "../DepartArrive/DepartArrive";
 import { verticalMenu } from "../Settings/Settings";
+import Fade from "react-reveal/Fade";
 
 import Settings from "../Settings/Settings.js";
 
-const Navbar = () => {
+export default function Navbar() {
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    let previousScrollPosition = 0;
+    let currentScrollPosition = 0;
+
+    window.addEventListener("scroll", function (e) {
+      // Get the new Value
+      currentScrollPosition = window.pageYOffset;
+
+      console.log("psp", previousScrollPosition - currentScrollPosition);
+
+      if (
+        currentScrollPosition > 200 &&
+        (previousScrollPosition - currentScrollPosition > 20 ||
+          previousScrollPosition - currentScrollPosition < 20)
+      ) {
+        //Subtract the two and conclude
+        if (previousScrollPosition - currentScrollPosition < -10) {
+          setShow(false);
+        } else if (previousScrollPosition - currentScrollPosition > 30) {
+          setShow(true);
+        }
+      } else {
+        setShow(true);
+      }
+
+      // Update the previous value
+      previousScrollPosition = currentScrollPosition;
+    });
+  }, []);
+
   return (
     <HashRouter>
-      <navbar
-        className="NavBar1"
-        style={
-          localStorage.getItem("menuStyle") == "On"
-            ? {
-                display: "flex",
-                marginTop: "-50px",
-                marginBottom: "-20px",
-                flexDirection: "column",
-                zIndex: 999,
+      <>
+        <Fade top distance={"50px"} duration={1500} when={show}>
+          {show && (
+            <navbar
+              className="NavBar1"
+              style={
+                localStorage.getItem("menuStyle") == "On"
+                  ? {
+                      display: "flex",
+                      marginTop: "-50px",
+                      marginBottom: "-20px",
+                      flexDirection: "column",
+                      zIndex: 999,
+                    }
+                  : {
+                      zIndex: 999,
+                      marginTop: "-45px",
+                      marginBottom: "-20px",
+                    }
               }
-            : { zIndex: 999 }
-        }
-      >
-        <NavLink
-          exact
-          className="topRow2"
-          activeClassName="topRow2Active"
-          to="/dashboard"
-          style={{
-            background:
-              localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
-            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
-          }}
-        >
-          Departing
-        </NavLink>
-        <NavLink
-          className="topRow2"
-          activeClassName="topRow2Active"
-          to="/dataFeed"
-          style={{
-            background:
-              localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
-            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
-          }}
-        >
-          Arriving
-        </NavLink>
-        <NavLink
-          className="topRow2"
-          activeClassName="topRow2Active"
-          to="/linkPage"
-          style={{
-            background:
-              localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
-            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
-          }}
-        >
-          Service
-        </NavLink>
-        <NavLink
-          className="topRow2"
-          activeClassName="topRow2Active"
-          to="/settings"
-          style={{
-            background:
-              localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
-            color: localStorage.getItem("darkMode") !== "#ffffff" && "white",
-          }}
-        >
-          Settings
-        </NavLink>
-        {/* <NavLink
-          className="topRow2"
-          activeClassName="topRow2Active"
-          to="/departures"
-        >
-          New!
-        </NavLink> */}
-      </navbar>
+            >
+              <NavLink
+                exact
+                className="topRow2"
+                activeClassName="topRow2Active"
+                to="/dashboard"
+                style={{
+                  background:
+                    localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+                  color:
+                    localStorage.getItem("darkMode") !== "#ffffff" && "white",
+                }}
+              >
+                Departing
+              </NavLink>
+              <NavLink
+                className="topRow2"
+                activeClassName="topRow2Active"
+                to="/dataFeed"
+                style={{
+                  background:
+                    localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+                  color:
+                    localStorage.getItem("darkMode") !== "#ffffff" && "white",
+                }}
+              >
+                Arriving
+              </NavLink>
+              <NavLink
+                className="topRow2"
+                activeClassName="topRow2Active"
+                to="/linkPage"
+                style={{
+                  background:
+                    localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+                  color:
+                    localStorage.getItem("darkMode") !== "#ffffff" && "white",
+                }}
+              >
+                Service
+              </NavLink>
+              <NavLink
+                className="topRow2"
+                activeClassName="topRow2Active"
+                to="/settings"
+                style={{
+                  background:
+                    localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+                  color:
+                    localStorage.getItem("darkMode") !== "#ffffff" && "white",
+                }}
+              >
+                Settings
+              </NavLink>
+              {/* <NavLink
+                className="topRow2"
+                activeClassName="topRow2Active"
+                to="/departures"
+              >
+                New!
+              </NavLink> */}
+            </navbar>
+          )}
+        </Fade>
+      </>
 
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
@@ -125,6 +172,4 @@ const Navbar = () => {
       </Routes>
     </HashRouter>
   );
-};
-
-export default Navbar;
+}

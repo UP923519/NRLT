@@ -126,7 +126,16 @@ export default function DisplayStaffStops({
       left: 0,
       behavior: "instant",
     });
-    myRef.current.scrollIntoView({ behavior: "smooth" });
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: 120,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 250);
+
+    // myRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   function handleOpen(station, indicator) {

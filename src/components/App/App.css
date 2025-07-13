@@ -211,10 +211,16 @@ navbar.NavBar1 {
   padding-top: 0.9pc;
   /* border-radius: 9px; */
   position: sticky;
-  top: -25px;
-  padding: 25px;
+  top: 10px;
+  padding-right: 25px;
+  padding-left: 25px;
   z-index: 999;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) !important;
+  background: #ffffff00;
+  filter: blur(0);
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
 }
 
 .backHome {
