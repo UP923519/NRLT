@@ -32,7 +32,7 @@ export default function Navbar() {
       // Get the new Value
       currentScrollPosition = window.pageYOffset;
 
-      console.log("psp", previousScrollPosition - currentScrollPosition);
+      // console.log("psp", previousScrollPosition - currentScrollPosition);
 
       if (
         currentScrollPosition > 200 &&

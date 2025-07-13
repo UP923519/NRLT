@@ -268,7 +268,14 @@ export default function ServicePage() {
         "/detailed"
     );
 
-    executeScroll();
+    // Get the new Value
+    let currentScrollPosition = window.pageYOffset;
+
+    console.log("currentScrollPosition", currentScrollPosition);
+    if (currentScrollPosition <= 310) {
+      executeScroll();
+    }
+
     setLoadedState(true);
     navigator.vibrate(1);
     setProcessingState(false);
