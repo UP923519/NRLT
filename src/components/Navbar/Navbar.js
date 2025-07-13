@@ -32,19 +32,27 @@ export default function Navbar() {
       // Get the new Value
       currentScrollPosition = window.pageYOffset;
 
-      if (currentScrollPosition < 150) {
-        setShow(true);
-      } else if (
-        previousScrollPosition - currentScrollPosition > 10 ||
-        previousScrollPosition - currentScrollPosition < -10
-      ) {
-        //Subtract the two and conclude
-        if (previousScrollPosition - currentScrollPosition < -10) {
-          setShow(false);
-        } else if (previousScrollPosition - currentScrollPosition > 20) {
+      console.log(
+        "previousScrollPosition - currentScrollPosition",
+        previousScrollPosition - currentScrollPosition
+      );
+
+      console.log("currentScrollPosition", currentScrollPosition);
+
+      if (localStorage.getItem("menuStyle") !== "On")
+        if (currentScrollPosition < 150) {
           setShow(true);
+        } else if (
+          previousScrollPosition - currentScrollPosition > 10 ||
+          previousScrollPosition - currentScrollPosition < -10
+        ) {
+          //Subtract the two and conclude
+          if (previousScrollPosition - currentScrollPosition < -10) {
+            setShow(false);
+          } else if (previousScrollPosition - currentScrollPosition > 20) {
+            setShow(true);
+          }
         }
-      }
 
       // Update the previous value
       previousScrollPosition = currentScrollPosition;
@@ -62,10 +70,11 @@ export default function Navbar() {
                 localStorage.getItem("menuStyle") == "On"
                   ? {
                       display: "flex",
-                      marginTop: "-50px",
-                      marginBottom: "-20px",
+                      marginTop: "-40px",
+                      marginBottom: "-40px",
                       flexDirection: "column",
                       zIndex: 999,
+                      position: "relative",
                     }
                   : {
                       zIndex: 999,
