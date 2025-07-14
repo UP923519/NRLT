@@ -66,15 +66,26 @@ export default function Navbar() {
                   ? {
                       display: "flex",
                       marginTop: "-40px",
-                      marginBottom: "-40px",
+                      marginBottom: "-30px",
                       flexDirection: "column",
                       zIndex: 999,
                       position: "relative",
+                      background:
+                        localStorage.getItem("darkMode") == "BONUS" &&
+                        "#7788a344",
                     }
                   : {
                       zIndex: 999,
                       marginTop: "-40px",
                       marginBottom: "-40px",
+                      border: localStorage.getItem("darkMode")
+                        ? localStorage.getItem("darkMode") == "BONUS"
+                          ? "2px solid white"
+                          : "1px solid " + localStorage.getItem("darkMode")
+                        : "1px solid white",
+                      background:
+                        localStorage.getItem("darkMode") == "BONUS" &&
+                        "#7788a344",
                     }
               }
             >
