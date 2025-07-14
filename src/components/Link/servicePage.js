@@ -514,7 +514,7 @@ export default function ServicePage() {
         />
       )}
       <div className="Wrapper2">
-        <h3 style={{ textAlign: "center" }}>
+        <h3 style={{ textAlign: "center", marginTop: "1.5em" }}>
           {!showStaffData ? (
             "Service Details"
           ) : (

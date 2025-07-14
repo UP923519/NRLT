@@ -76,6 +76,7 @@ export default function Navbar() {
 
   return (
     <HashRouter>
+      <div style={{ marginTop: "2px" }}></div>
       <>
         <Fade top distance={"50px"} duration={1500} when={show}>
           {show && (
@@ -188,6 +189,7 @@ export default function Navbar() {
         </Fade>
         <br />
       </>
+      <div style={{ marginTop: "2px" }}></div>
 
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
