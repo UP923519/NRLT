@@ -96,7 +96,8 @@ export default function Navbar() {
                 to="/dashboard"
                 style={{
                   background:
-                    localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+                    localStorage.getItem("darkMode") !== "#ffffff" &&
+                    "#4f4f4fcc",
                   color:
                     localStorage.getItem("darkMode") !== "#ffffff" && "white",
                 }}
@@ -109,7 +110,8 @@ export default function Navbar() {
                 to="/dataFeed"
                 style={{
                   background:
-                    localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+                    localStorage.getItem("darkMode") !== "#ffffff" &&
+                    "#4f4f4fcc",
                   color:
                     localStorage.getItem("darkMode") !== "#ffffff" && "white",
                 }}
@@ -122,7 +124,8 @@ export default function Navbar() {
                 to="/linkPage"
                 style={{
                   background:
-                    localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+                    localStorage.getItem("darkMode") !== "#ffffff" &&
+                    "#4f4f4fcc",
                   color:
                     localStorage.getItem("darkMode") !== "#ffffff" && "white",
                 }}
@@ -135,7 +138,8 @@ export default function Navbar() {
                 to="/settings"
                 style={{
                   background:
-                    localStorage.getItem("darkMode") !== "#ffffff" && "#4f4f4f",
+                    localStorage.getItem("darkMode") !== "#ffffff" &&
+                    "#4f4f4fcc",
                   color:
                     localStorage.getItem("darkMode") !== "#ffffff" && "white",
                 }}

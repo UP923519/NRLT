@@ -78,7 +78,7 @@ li {
 .topRow2 {
   display: flexbox;
   margin: 1vw;
-  background: #f3f3f3;
+  background: #f3f3f3cc;
   cursor: pointer;
   border-radius: 9px;
   padding-bottom: 11px;
