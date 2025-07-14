@@ -23,10 +23,28 @@ import Settings from "../Settings/Settings.js";
 
 export default function Navbar() {
   const [show, setShow] = useState(true);
+  const [showBG, setShowBG] = useState("none");
 
   useEffect(() => {
     let previousScrollPosition = 0;
     let currentScrollPosition = 0;
+
+    localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a344");
+
+    window.addEventListener("scroll", function (e) {
+      currentScrollPosition = window.pageYOffset;
+      if (currentScrollPosition > 115) {
+        localStorage.getItem("darkMode") == "BONUS" && setShowBG("#445b8044");
+        localStorage.getItem("darkMode") == "#000000" && setShowBG("#8c8c8c44");
+        localStorage.getItem("darkMode") !== "BONUS" &&
+          localStorage.getItem("darkMode") !== "#000000" &&
+          setShowBG("#f0f0f044");
+      } else if (localStorage.getItem("darkMode") !== "BONUS") {
+        setShowBG("none");
+      } else {
+        localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a344");
+      }
+    });
 
     if (localStorage.getItem("menuHide") == "TRUE") {
       window.addEventListener("scroll", function (e) {
@@ -78,14 +96,11 @@ export default function Navbar() {
                       zIndex: 999,
                       marginTop: "-40px",
                       marginBottom: "-40px",
-                      border: localStorage.getItem("darkMode")
-                        ? localStorage.getItem("darkMode") == "BONUS"
-                          ? "2px solid white"
-                          : "1px solid " + localStorage.getItem("darkMode")
-                        : "1px solid white",
-                      background:
+                      border:
                         localStorage.getItem("darkMode") == "BONUS" &&
-                        "#7788a344",
+                        "2px solid white",
+
+                      background: showBG,
                     }
               }
             >
@@ -100,6 +115,7 @@ export default function Navbar() {
                     "#4f4f4fcc",
                   color:
                     localStorage.getItem("darkMode") !== "#ffffff" && "white",
+                  boxShadow: "0px 0px 0px 0.5px #00000022 inset",
                 }}
               >
                 Departing
@@ -114,6 +130,7 @@ export default function Navbar() {
                     "#4f4f4fcc",
                   color:
                     localStorage.getItem("darkMode") !== "#ffffff" && "white",
+                  boxShadow: "0px 0px 0px 0.5px #00000022 inset",
                 }}
               >
                 Arriving
@@ -128,6 +145,7 @@ export default function Navbar() {
                     "#4f4f4fcc",
                   color:
                     localStorage.getItem("darkMode") !== "#ffffff" && "white",
+                  boxShadow: "0px 0px 0px 0.5px #00000022 inset",
                 }}
               >
                 Service
@@ -142,6 +160,7 @@ export default function Navbar() {
                     "#4f4f4fcc",
                   color:
                     localStorage.getItem("darkMode") !== "#ffffff" && "white",
+                  boxShadow: "0px 0px 0px 0.5px #00000022 inset",
                 }}
               >
                 Settings
