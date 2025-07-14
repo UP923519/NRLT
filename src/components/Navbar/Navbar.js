@@ -106,7 +106,7 @@ export default function Navbar() {
                       boxShadow:
                         localStorage.getItem("darkMode") == "BONUS" &&
                         localStorage.getItem("menuBorder") == "TRUE"
-                          ? "0px 0px 0px 2px white"
+                          ? "0px 0px 0px 0.5px white"
                           : localStorage.getItem("darkMode") !== "BONUS" &&
                             localStorage.getItem("menuBorder") == "TRUE" &&
                             showBG !== "none" &&
