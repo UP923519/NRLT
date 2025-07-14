@@ -120,12 +120,13 @@ export default function DisplayStaffStops({
     }
   }
 
-  const executeScroll = () => {
-    window.scrollTo({
-      top: 400,
-      left: 0,
-      behavior: "instant",
-    });
+  const executeScroll = (state, buttonPress) => {
+    !buttonPress &&
+      window.scrollTo({
+        top: 400,
+        left: 0,
+        behavior: "instant",
+      });
 
     setTimeout(() => {
       window.scrollTo({

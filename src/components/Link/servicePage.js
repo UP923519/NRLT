@@ -110,9 +110,10 @@ export default function ServicePage() {
     scrollVal = 340;
   }
 
-  const executeScroll = (state) => {
+  const executeScroll = (state, buttonPress) => {
     switchScreen && myRef.current.scrollIntoView({ behavior: "smooth" });
-    !switchScreen &&
+    !buttonPress &&
+      !switchScreen &&
       window.scrollTo({
         top: 0,
         left: 0,

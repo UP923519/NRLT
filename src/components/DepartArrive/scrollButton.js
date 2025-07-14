@@ -21,7 +21,7 @@ export default function ScrollButton({ executeScroll, showScrollButton }) {
               backdropFilter: "blur(5px)",
               zIndex: 999,
             }}
-            onClick={() => executeScroll()}
+            onClick={() => executeScroll(null, true)}
           >
             ⇅
           </button>
