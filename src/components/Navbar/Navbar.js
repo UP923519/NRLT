@@ -33,7 +33,7 @@ export default function Navbar() {
       localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a32c");
       window.addEventListener("scroll", function (e) {
         currentScrollPosition = window.pageYOffset;
-        if (currentScrollPosition > 115) {
+        if (currentScrollPosition > 130) {
           localStorage.getItem("darkMode") == "BONUS" && setShowBG("#00225944");
           localStorage.getItem("darkMode") == "#000000" &&
             setShowBG("#00000022");
@@ -103,14 +103,14 @@ export default function Navbar() {
                       zIndex: 999,
                       marginTop: "-40px",
                       marginBottom: "-40px",
-                      border:
+                      boxShadow:
                         localStorage.getItem("darkMode") == "BONUS" &&
                         localStorage.getItem("menuBorder") == "TRUE"
-                          ? "2px solid white"
+                          ? "0px 0px 0px 2px white"
                           : localStorage.getItem("darkMode") !== "BONUS" &&
                             localStorage.getItem("menuBorder") == "TRUE" &&
                             showBG !== "none" &&
-                            "1px solid #b5b5b5",
+                            "0px 0px 0px 0.5px #b5b5b5",
                       background: showBG,
                     }
               }
