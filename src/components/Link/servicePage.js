@@ -276,12 +276,19 @@ export default function ServicePage() {
         "/detailed"
     );
 
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant",
-    });
-    executeScroll();
+    // window.scrollTo({
+    //   top: 0,
+    //   left: 0,
+    //   behavior: "instant",
+    // });
+
+    // Get the new Value
+    setTimeout(() => {
+      let currentScrollPosition = window.pageYOffset;
+      if (currentScrollPosition == 0) {
+        executeScroll();
+      }
+    }, 250);
 
     setLoadedState(true);
     navigator.vibrate(1);
