@@ -34,6 +34,9 @@ if (localStorage.getItem("darkMode") == "#8297b5") {
   </style>;
 }
 
+if (localStorage.getItem("menuHide") == null)
+  localStorage.setItem("menuHide", "TRUE");
+
 function App() {
   const { token, setToken, removeToken, getToken } = useToken();
   const greeting = "greeting";

@@ -276,13 +276,12 @@ export default function ServicePage() {
         "/detailed"
     );
 
-    // Get the new Value
-    let currentScrollPosition = window.pageYOffset;
-
-    console.log("currentScrollPosition", currentScrollPosition);
-    if (currentScrollPosition <= 239) {
-      executeScroll();
-    }
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+    executeScroll();
 
     setLoadedState(true);
     navigator.vibrate(1);
