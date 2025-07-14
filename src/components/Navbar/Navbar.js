@@ -29,22 +29,24 @@ export default function Navbar() {
     let previousScrollPosition = 0;
     let currentScrollPosition = 0;
 
-    localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a32c");
-
-    window.addEventListener("scroll", function (e) {
-      currentScrollPosition = window.pageYOffset;
-      if (currentScrollPosition > 115) {
-        localStorage.getItem("darkMode") == "BONUS" && setShowBG("#445b8044");
-        localStorage.getItem("darkMode") == "#000000" && setShowBG("#bababa44");
-        localStorage.getItem("darkMode") !== "BONUS" &&
-          localStorage.getItem("darkMode") !== "#000000" &&
-          setShowBG("#dfdfdf44");
-      } else if (localStorage.getItem("darkMode") !== "BONUS") {
-        setShowBG("none");
-      } else {
-        localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a32c");
-      }
-    });
+    if (localStorage.getItem("menuBorder") == "TRUE") {
+      localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a32c");
+      window.addEventListener("scroll", function (e) {
+        currentScrollPosition = window.pageYOffset;
+        if (currentScrollPosition > 115) {
+          localStorage.getItem("darkMode") == "BONUS" && setShowBG("#445b8044");
+          localStorage.getItem("darkMode") == "#000000" &&
+            setShowBG("#bababa44");
+          localStorage.getItem("darkMode") !== "BONUS" &&
+            localStorage.getItem("darkMode") !== "#000000" &&
+            setShowBG("#dfdfdf44");
+        } else if (localStorage.getItem("darkMode") !== "BONUS") {
+          setShowBG("none");
+        } else {
+          localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a32c");
+        }
+      });
+    }
 
     if (localStorage.getItem("menuHide") == "TRUE") {
       window.addEventListener("scroll", function (e) {
@@ -98,8 +100,8 @@ export default function Navbar() {
                       marginBottom: "-40px",
                       border:
                         localStorage.getItem("darkMode") == "BONUS" &&
+                        localStorage.getItem("menuBorder") == "TRUE" &&
                         "2px solid white",
-
                       background: showBG,
                     }
               }

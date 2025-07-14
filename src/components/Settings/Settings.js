@@ -202,6 +202,16 @@ export default function Settings() {
     window.location.reload();
   }
 
+  function handleMenuBorder() {
+    if (localStorage.getItem("menuBorder") == "TRUE") {
+      localStorage.setItem("menuBorder", "FALSE");
+    } else {
+      localStorage.setItem("menuBorder", "TRUE");
+    }
+
+    window.location.reload();
+  }
+
   function getRandomColor() {
     var letters = "7DCBA98789ABCDEF";
     var color = "#";
@@ -384,6 +394,29 @@ export default function Settings() {
                 >
                   {localStorage.getItem("menuHide") !== "TRUE" && "Turn On"}
                   {localStorage.getItem("menuHide") == "TRUE" && "Turn Off"}
+                </button>
+              </div>
+            </text>
+            <br />
+            <text style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "#ffffff77",
+                  borderRadius: "20px",
+                  width: "80%",
+                  padding: "10px",
+                }}
+              >
+                Show Menu Background:{" "}
+                {localStorage.getItem("menuBorder") !== "TRUE" && "Off"}
+                {localStorage.getItem("menuBorder") == "TRUE" && "On"}
+                <br /> <br />
+                <button
+                  id="useCurrentLocation"
+                  onClick={() => handleMenuBorder()}
+                >
+                  {localStorage.getItem("menuBorder") !== "TRUE" && "Turn On"}
+                  {localStorage.getItem("menuBorder") == "TRUE" && "Turn Off"}
                 </button>
               </div>
             </text>
