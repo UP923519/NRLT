@@ -34,12 +34,12 @@ export default function Navbar() {
       window.addEventListener("scroll", function (e) {
         currentScrollPosition = window.pageYOffset;
         if (currentScrollPosition > 115) {
-          localStorage.getItem("darkMode") == "BONUS" && setShowBG("#445b8044");
+          localStorage.getItem("darkMode") == "BONUS" && setShowBG("#00225944");
           localStorage.getItem("darkMode") == "#000000" &&
-            setShowBG("#bababa44");
+            setShowBG("#00000022");
           localStorage.getItem("darkMode") !== "BONUS" &&
             localStorage.getItem("darkMode") !== "#000000" &&
-            setShowBG("#dfdfdf44");
+            setShowBG(localStorage.getItem("darkMode") + "44");
         } else if (localStorage.getItem("darkMode") !== "BONUS") {
           setShowBG("none");
         } else {
@@ -91,8 +91,13 @@ export default function Navbar() {
                       zIndex: 999,
                       position: "relative",
                       background:
+                        localStorage.getItem("menuBorder") == "TRUE" &&
                         localStorage.getItem("darkMode") == "BONUS" &&
-                        "#7788a344",
+                        "#7788a32c",
+                      backdropFilter:
+                        localStorage.getItem("menuBorder") == "TRUE" &&
+                        localStorage.getItem("darkMode") !== "BONUS" &&
+                        "invert(0.2)",
                     }
                   : {
                       zIndex: 999,
@@ -100,8 +105,12 @@ export default function Navbar() {
                       marginBottom: "-40px",
                       border:
                         localStorage.getItem("darkMode") == "BONUS" &&
-                        localStorage.getItem("menuBorder") == "TRUE" &&
-                        "2px solid white",
+                        localStorage.getItem("menuBorder") == "TRUE"
+                          ? "2px solid white"
+                          : localStorage.getItem("darkMode") !== "BONUS" &&
+                            localStorage.getItem("menuBorder") == "TRUE" &&
+                            showBG !== "none" &&
+                            "1px solid #b5b5b5",
                       background: showBG,
                     }
               }
