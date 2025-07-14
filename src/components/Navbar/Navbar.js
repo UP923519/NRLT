@@ -112,6 +112,7 @@ export default function Navbar() {
                             showBG !== "none" &&
                             "0px 0px 0px 0.5px #b5b5b5",
                       background: showBG,
+                      border: showBG == "#7788a32c" && "2px solid white",
                     }
               }
             >
