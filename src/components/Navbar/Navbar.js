@@ -28,35 +28,30 @@ export default function Navbar() {
     let previousScrollPosition = 0;
     let currentScrollPosition = 0;
 
-    window.addEventListener("scroll", function (e) {
-      // Get the new Value
-      currentScrollPosition = window.pageYOffset;
+    if (localStorage.getItem("menuHide") == "TRUE") {
+      window.addEventListener("scroll", function (e) {
+        // Get the new Value
+        currentScrollPosition = window.pageYOffset;
 
-      console.log(
-        "previousScrollPosition - currentScrollPosition",
-        previousScrollPosition - currentScrollPosition
-      );
-
-      console.log("currentScrollPosition", currentScrollPosition);
-
-      if (localStorage.getItem("menuStyle") !== "On")
-        if (currentScrollPosition < 150) {
-          setShow(true);
-        } else if (
-          previousScrollPosition - currentScrollPosition > 10 ||
-          previousScrollPosition - currentScrollPosition < -10
-        ) {
-          //Subtract the two and conclude
-          if (previousScrollPosition - currentScrollPosition < -10) {
-            setShow(false);
-          } else if (previousScrollPosition - currentScrollPosition > 20) {
+        if (localStorage.getItem("menuStyle") !== "On")
+          if (currentScrollPosition < 150) {
             setShow(true);
+          } else if (
+            previousScrollPosition - currentScrollPosition > 10 ||
+            previousScrollPosition - currentScrollPosition < -10
+          ) {
+            //Subtract the two and conclude
+            if (previousScrollPosition - currentScrollPosition < -10) {
+              setShow(false);
+            } else if (previousScrollPosition - currentScrollPosition > 20) {
+              setShow(true);
+            }
           }
-        }
 
-      // Update the previous value
-      previousScrollPosition = currentScrollPosition;
-    });
+        // Update the previous value
+        previousScrollPosition = currentScrollPosition;
+      });
+    }
   }, []);
 
   return (

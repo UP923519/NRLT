@@ -192,6 +192,16 @@ export default function Settings() {
     window.location.reload();
   }
 
+  function handleHideMenu() {
+    if (localStorage.getItem("menuHide") == "TRUE") {
+      localStorage.setItem("menuHide", "FALSE");
+    } else {
+      localStorage.setItem("menuHide", "TRUE");
+    }
+
+    window.location.reload();
+  }
+
   function getRandomColor() {
     var letters = "7DCBA98789ABCDEF";
     var color = "#";
@@ -352,6 +362,29 @@ export default function Settings() {
                     localStorage.getItem("menuStyle") == "Off" &&
                     "Turn On") ||
                     "Turn Off"}
+                </button>
+              </div>
+            </text>
+            <br />
+            <text style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  background: "#ffffff77",
+                  borderRadius: "20px",
+                  width: "80%",
+                  padding: "10px",
+                }}
+              >
+                Hide Menu On Scroll:{" "}
+                {localStorage.getItem("menuHide") !== "TRUE" && "Off"}
+                {localStorage.getItem("menuHide") == "TRUE" && "On"}
+                <br /> <br />
+                <button
+                  id="useCurrentLocation"
+                  onClick={() => handleHideMenu()}
+                >
+                  {localStorage.getItem("menuHide") !== "TRUE" && "Turn On"}
+                  {localStorage.getItem("menuHide") == "TRUE" && "Turn Off"}
                 </button>
               </div>
             </text>

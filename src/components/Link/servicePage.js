@@ -102,6 +102,14 @@ export default function ServicePage() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  let scrollVal = 340;
+  if (localStorage.getItem("menuHide") !== "TRUE") {
+    scrollVal = 240;
+  } else {
+    scrollVal = 340;
+  }
+
   const executeScroll = (state) => {
     switchScreen && myRef.current.scrollIntoView({ behavior: "smooth" });
     !switchScreen &&
@@ -113,7 +121,7 @@ export default function ServicePage() {
 
     setTimeout(() => {
       window.scrollTo({
-        top: 340,
+        top: scrollVal,
         left: 0,
         behavior: "smooth",
       });
@@ -129,7 +137,7 @@ export default function ServicePage() {
 
       setTimeout(() => {
         window.scrollTo({
-          top: 340,
+          top: scrollVal,
           left: 0,
           behavior: "smooth",
         });
@@ -185,7 +193,7 @@ export default function ServicePage() {
 
       setTimeout(() => {
         window.scrollTo({
-          top: 340,
+          top: scrollVal,
           left: 0,
           behavior: "smooth",
         });
@@ -272,7 +280,7 @@ export default function ServicePage() {
     let currentScrollPosition = window.pageYOffset;
 
     console.log("currentScrollPosition", currentScrollPosition);
-    if (currentScrollPosition <= 310) {
+    if (currentScrollPosition <= 239) {
       executeScroll();
     }
 

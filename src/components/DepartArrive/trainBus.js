@@ -49,11 +49,6 @@ export default function TrainBus({
   };
 
   function handleLaterButton(date, time) {
-    console.log("DATE", date);
-    console.log("TIME", time);
-
-    console.log("SDT", searchedDateTime);
-
     if (
       (liveDeparture[liveDeparture.length - 1]?.stdSpecified &&
         new Date(liveDeparture[liveDeparture.length - 1].std) <=
@@ -96,6 +91,35 @@ export default function TrainBus({
         .toLocaleString("sv", { timeZone: "Europe/London" })
         .replace(" ", "T");
     }
+
+    date = date.slice(0, 10);
+    time = time.slice(11, 16);
+
+    setSelectedDay(date);
+    rememberDateTime[1] = date;
+
+    setSelectedTime(time);
+    rememberDateTime[0] = time;
+
+    handleDepartureClick();
+  }
+
+  function handleEarlierButton(date, time) {
+    date = new Date(
+      new Date(searchedDateTime).setMinutes(
+        new Date(searchedDateTime).getMinutes() - 15
+      )
+    )
+      .toLocaleString("sv", { timeZone: "Europe/London" })
+      .replace(" ", "T");
+
+    time = new Date(
+      new Date(searchedDateTime).setMinutes(
+        new Date(searchedDateTime).getMinutes() - 15
+      )
+    )
+      .toLocaleString("sv", { timeZone: "Europe/London" })
+      .replace(" ", "T");
 
     date = date.slice(0, 10);
     time = time.slice(11, 16);
@@ -262,7 +286,48 @@ export default function TrainBus({
             <br />
           </p>
         )}
-        <br />
+        <div
+          style={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            className="changeTime"
+            onClick={() =>
+              handleEarlierButton(
+                liveDeparture[0]?.stdSpecified
+                  ? liveDeparture[0]?.std
+                  : liveDeparture[0]?.sta,
+                liveDeparture[0]?.stdSpecified
+                  ? liveDeparture[0]?.std
+                  : liveDeparture[0]?.sta
+              )
+            }
+            style={{
+              boxShadow:
+                "0 4px 8px 0 rgba(96, 96, 96, 0.19), 0 6px 20px 0 rgba(96, 96, 96, 0.19)",
+              background:
+                localStorage.getItem("darkMode") !== "#ffffff"
+                  ? "#7788a3"
+                  : "white",
+
+              color:
+                localStorage.getItem("darkMode") !== "#ffffff"
+                  ? "#ffffff"
+                  : "#000000",
+
+              border: "1px solid lightGrey",
+              margin: "0px",
+              fontWeight: "normal",
+            }}
+          >
+            🔎 Search Earlier
+          </Button>
+        </div>
         <Table
           className="transactions"
           style={{

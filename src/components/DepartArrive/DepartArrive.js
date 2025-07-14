@@ -135,11 +135,20 @@ export default function DepartArrive(departArrive) {
 
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
-    window.scrollTo({
-      top: 340,
-      left: 0,
-      behavior: "smooth",
-    });
+
+    if (localStorage.getItem("menuHide") !== "TRUE") {
+      window.scrollTo({
+        top: 240,
+        left: 0,
+        behavior: "smooth",
+      });
+    } else {
+      window.scrollTo({
+        top: 340,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   useEffect(() => {
