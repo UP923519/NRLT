@@ -29,20 +29,20 @@ export default function Navbar() {
     let previousScrollPosition = 0;
     let currentScrollPosition = 0;
 
-    localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a344");
+    localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a32c");
 
     window.addEventListener("scroll", function (e) {
       currentScrollPosition = window.pageYOffset;
       if (currentScrollPosition > 115) {
         localStorage.getItem("darkMode") == "BONUS" && setShowBG("#445b8044");
-        localStorage.getItem("darkMode") == "#000000" && setShowBG("#8c8c8c44");
+        localStorage.getItem("darkMode") == "#000000" && setShowBG("#bababa44");
         localStorage.getItem("darkMode") !== "BONUS" &&
           localStorage.getItem("darkMode") !== "#000000" &&
-          setShowBG("#f0f0f044");
+          setShowBG("#dfdfdf44");
       } else if (localStorage.getItem("darkMode") !== "BONUS") {
         setShowBG("none");
       } else {
-        localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a344");
+        localStorage.getItem("darkMode") == "BONUS" && setShowBG("#7788a32c");
       }
     });
 
