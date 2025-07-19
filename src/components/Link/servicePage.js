@@ -103,12 +103,15 @@ export default function ServicePage() {
     setAnchorEl(null);
   };
 
-  let scrollVal = 340;
+  let scrollVal = 315;
   if (localStorage.getItem("menuHide") !== "TRUE") {
-    scrollVal = 240;
+    scrollVal = 215;
+    if (localStorage.getItem("menuBorder") !== "TRUE") scrollVal = 217;
   } else {
-    scrollVal = 340;
+    scrollVal = 315;
   }
+
+  console.log("SV", scrollVal);
 
   const executeScroll = (state, buttonPress) => {
     switchScreen && myRef.current.scrollIntoView({ behavior: "smooth" });

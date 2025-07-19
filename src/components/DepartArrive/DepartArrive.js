@@ -17,6 +17,7 @@ import StationHistoryChip from "./stationHistoryChip.js";
 import axios from "axios";
 import SelectDate from "./selectDate.js";
 import ScrollButton from "./scrollButton.js";
+import TimeHistoryChip from "./timeHistoryChip.js";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -96,6 +97,7 @@ export default function DepartArrive(departArrive) {
   const [selectedDay, setSelectedDay] = useState(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [searchedDateTime, setSearchedDateTime] = useState(false);
+  const [sync, setSync] = useState(false);
 
   const [tTSMOpen, setTTSMOpen] = useState(false);
 
@@ -136,19 +138,19 @@ export default function DepartArrive(departArrive) {
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
 
+    let scrollVal = 313;
     if (localStorage.getItem("menuHide") !== "TRUE") {
-      window.scrollTo({
-        top: 240,
-        left: 0,
-        behavior: "smooth",
-      });
+      scrollVal = 215;
+      if (localStorage.getItem("menuBorder") !== "TRUE") scrollVal = 217;
     } else {
-      window.scrollTo({
-        top: 340,
-        left: 0,
-        behavior: "smooth",
-      });
+      scrollVal = 313;
     }
+
+    window.scrollTo({
+      top: scrollVal,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   useEffect(() => {
@@ -635,6 +637,30 @@ export default function DepartArrive(departArrive) {
       offsetMinutes +
       ":" +
       "00";
+
+    //Save DateTime History
+    if (rememberSearchedDateTime) {
+      let currentHistory = localStorage.getItem("dateTimeHistory");
+      let historyArray;
+      if (currentHistory) {
+        historyArray = currentHistory.split(",").slice(0, 9);
+        if (!historyArray.includes(rememberSearchedDateTime)) {
+        } else {
+          let existingPosition = historyArray.findIndex(
+            (element) => element == rememberSearchedDateTime
+          );
+          historyArray.splice(existingPosition, 1);
+        }
+        if (historyArray.length > 0)
+          localStorage.setItem("dateTimeHistory", [
+            rememberSearchedDateTime,
+            historyArray,
+          ]);
+      } else {
+        localStorage.setItem("dateTimeHistory", [rememberSearchedDateTime]);
+      }
+    }
+    //EndSave DateTime History
 
     let deparrurl1;
     let deparrurl2;
@@ -1334,7 +1360,9 @@ export default function DepartArrive(departArrive) {
     <>
       <Fade top distance={"10px"} duration={1500}>
         <div className="Wrapper2">
-          <h3 style={{ textAlign: "center" }}>{departArrive}</h3>
+          <h3 style={{ textAlign: "center", marginTop: "1.5em" }}>
+            {departArrive}
+          </h3>
           <Fade top distance={"25px"} duration={1500}>
             <div
               className="manualInput"
@@ -1390,6 +1418,22 @@ export default function DepartArrive(departArrive) {
                       month={month}
                       year={year}
                       rememberDateTime={rememberDateTime}
+                      sync={sync}
+                      setSync={setSync}
+                    />
+                    <TimeHistoryChip
+                      setSelectedTime={setSelectedTime}
+                      selectedTime={selectedTime}
+                      setSelectedDay={setSelectedDay}
+                      selectedDay={selectedDay}
+                      minutes={minutes}
+                      hours={hours}
+                      day={day}
+                      month={month}
+                      year={year}
+                      rememberDateTime={rememberDateTime}
+                      sync={sync}
+                      setSync={setSync}
                     />
                     {departArrive == "Departures" ? (
                       <p

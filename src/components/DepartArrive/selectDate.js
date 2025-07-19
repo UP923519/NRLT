@@ -16,9 +16,9 @@ export default function SelectDate({
   month,
   year,
   rememberDateTime,
+  sync,
+  setSync,
 }) {
-  const [sync, setSync] = useState(false);
-
   const handleTimeChange = (value, event) => {
     setSelectedTime(value);
     rememberDateTime[0] = value;

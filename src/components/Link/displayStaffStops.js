@@ -130,7 +130,7 @@ export default function DisplayStaffStops({
 
     setTimeout(() => {
       window.scrollTo({
-        top: 127,
+        top: 131,
         left: 0,
         behavior: "smooth",
       });

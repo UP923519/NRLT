@@ -224,7 +224,7 @@ export default function Settings() {
   return (
     <Fade top distance={"10px"} duration={1500}>
       <div style={{ width: "98vw", height: "100vh" }}>
-        <h3 style={{ textAlign: "center" }}>Settings</h3>
+        <h3 style={{ textAlign: "center", marginTop: "1.5em" }}>Settings</h3>
         <br />
         <Fade top distance={"10px"} duration={1500}>
           <div
@@ -307,7 +307,7 @@ export default function Settings() {
                   padding: "10px",
                 }}
               >
-                Station History:{" "}
+                Station & Time History:{" "}
                 {localStorage.getItem("stationHistory")?.length
                   ? "Not Cleared"
                   : "Cleared"}
@@ -319,6 +319,10 @@ export default function Settings() {
                       "Station History: " +
                         localStorage
                           .getItem("stationHistory")
+                          .replaceAll(",", ", ") +
+                        "\n\nTime History: " +
+                        localStorage
+                          .getItem("dateTimeHistory")
                           .replaceAll(",", ", ")
                     )
                   }
@@ -336,6 +340,7 @@ export default function Settings() {
                   id="useCurrentLocation"
                   onClick={() =>
                     localStorage.removeItem("stationHistory") +
+                    localStorage.removeItem("dateTimeHistory") +
                     window.location.reload()
                   }
                 >
