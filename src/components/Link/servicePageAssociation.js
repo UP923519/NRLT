@@ -19,6 +19,11 @@ export default function ServicePageAssociation({ allStaffServiceData }) {
     <>
       {true && (
         <div>
+          <p
+            style={{ marginTop: "5px", marginBottom: "5px", color: "#b08a00" }}
+          >
+            Showing Associated Service
+          </p>
           {rememberStaffData && rememberStaffData.locations && (
             <p className="infoTrain" style={{ margin: "0px" }}>
               {rememberStaffData.locations
