@@ -111,8 +111,6 @@ export default function ServicePage() {
     scrollVal = 315;
   }
 
-  console.log("SV", scrollVal);
-
   const executeScroll = (state, buttonPress) => {
     switchScreen && myRef.current.scrollIntoView({ behavior: "smooth" });
     !buttonPress &&
@@ -169,9 +167,7 @@ export default function ServicePage() {
     setCalling([["Enter a service code above"], []]);
     myArray = [];
     locationList = [];
-    if (formJson != "") {
-      handleServiceClick();
-    }
+    handleServiceClick();
 
     setTimeout(() => {
       setShowScrollButton(true);
@@ -179,7 +175,7 @@ export default function ServicePage() {
   }, []);
 
   useEffect(() => {
-    if (state) {
+    if (state && state.rid) {
       setSPAssociation(state);
       logJSONData("", state.rid);
       setSwitchScreen(false);
@@ -223,6 +219,14 @@ export default function ServicePage() {
       setExcuseReason("Loading...");
     }
     toggle();
+
+    if (!rememberStaffData) {
+      rememberStaffData = JSON.parse(localStorage.getItem("staffServiceData"));
+      rememberFirstStationSave = JSON.parse(
+        localStorage.getItem("rememberFirstStation")
+      );
+      infoTrain = JSON.parse(localStorage.getItem("infoTrain"));
+    }
 
     if (formJson == "") {
       formJson = formVal;
@@ -300,6 +304,12 @@ export default function ServicePage() {
   }
 
   async function logJSONData(serviceID, staffRIDVal) {
+    if (staffRIDVal) {
+      localStorage.setItem("savedRID", staffRIDVal);
+    } else {
+      staffRIDVal = localStorage.getItem("savedRID");
+    }
+
     setProcessingState(true);
     let response;
     let responseStaffRID;
@@ -309,7 +319,7 @@ export default function ServicePage() {
         "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal
       );
     } catch {
-      alert("Failed. Please check internet connection / service details.");
+      alert("Failed.!! Please check internet connection / service details.");
       failedAlert = true;
 
       setIsOpen(false);
@@ -741,7 +751,6 @@ export default function ServicePage() {
             )}
           </form>
         </div>
-
         {/* </Fade> */}
         {processingState ? (
           <>
@@ -1349,7 +1358,6 @@ export default function ServicePage() {
             )}
           </>
         )}
-
         <ModalRTT
           url={null}
           openRTT={modalRTTOpen}
@@ -1379,7 +1387,6 @@ export default function ServicePage() {
           }}
           data={allStaffServiceData}
         />
-
         {switchScreen &&
           allServiceData &&
           allServiceData.locations.length > 10 && (
@@ -1390,7 +1397,6 @@ export default function ServicePage() {
           allServiceData.locations.length <= 10 && (
             <p style={{ marginBottom: "50vh" }}></p>
           )}
-
         {!switchScreen && <p style={{ marginBottom: "18vh" }}></p>}
         {processingState && <p style={{ marginBottom: "100vh" }}></p>}
       </div>
@@ -1410,6 +1416,7 @@ export function test1(
 ) {
   formJson = number;
   staffRIDVal = staffRID;
+
   rememberStaffRID = staffRID;
 
   if (trainInfo) {
@@ -1428,4 +1435,10 @@ export function test1(
 
   rememberFirstStationSave = rememberFirstStation;
   rememberStaffData = staffData;
+  localStorage.setItem("staffServiceData", JSON.stringify(staffData));
+  localStorage.setItem(
+    "rememberFirstStation",
+    JSON.stringify(rememberFirstStation)
+  );
+  localStorage.setItem("infoTrain", JSON.stringify(infoTrain));
 }
