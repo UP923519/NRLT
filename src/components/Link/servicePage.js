@@ -248,6 +248,16 @@ export default function ServicePage() {
     }
   }
 
+  function handleASClick() {
+    if (state && state.rid) {
+      logJSONData("", state.rid);
+    } else {
+      logJSONData("", localStorage.getItem("savedRID"));
+    }
+    setUpdateServicePageButton(false);
+    setProcessingState(true);
+  }
+
   function runLast() {
     let infoTrainSet = infoTrain;
 
@@ -304,9 +314,7 @@ export default function ServicePage() {
   }
 
   async function logJSONData(serviceID, staffRIDVal) {
-    if (staffRIDVal) {
-      localStorage.setItem("savedRID", staffRIDVal);
-    } else {
+    if (!staffRIDVal) {
       staffRIDVal = localStorage.getItem("savedRID");
     }
 
@@ -715,11 +723,7 @@ export default function ServicePage() {
                           <button
                             id="useTrains"
                             type="button"
-                            onClick={() =>
-                              logJSONData("", state.rid) +
-                              setUpdateServicePageButton(false) +
-                              setProcessingState(true)
-                            }
+                            onClick={() => handleASClick()}
                             style={{
                               position:
                                 showStaffData &&
@@ -810,7 +814,6 @@ export default function ServicePage() {
               )}
             </div>
           </>
-
           {isOpen &&
           !showStaffData &&
           !stringCalling[0][0].includes("Loading") &&
@@ -1441,4 +1444,5 @@ export function test1(
     JSON.stringify(rememberFirstStation)
   );
   localStorage.setItem("infoTrain", JSON.stringify(infoTrain));
+  localStorage.setItem("savedRID", staffData.rid);
 }
