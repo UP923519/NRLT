@@ -1,0 +1,102 @@
+import React, { useState, useEffect } from "react";
+import "../App/App.css";
+import { Chip, Paper, styled } from "@mui/material";
+
+const ListItem = styled("li")(({ theme }) => ({
+  margin: theme.spacing(0.5),
+}));
+
+export default function SearchHistoryChip({
+  handleDepartureClick,
+  current,
+  isDisabled,
+  position,
+  rememberFirstStation,
+  setHistoryCRS,
+  historyCRS,
+}) {
+  const historyString = localStorage.getItem("stationHistoryFull");
+  let historyArray;
+  let historyObject;
+  let historyObjectArray;
+
+  if (historyString) {
+    historyArray = historyString.split(",");
+
+    historyObject = Object.assign({}, historyArray);
+
+    historyObjectArray = Object.values(historyObject);
+  }
+
+  const [chipData, setChipData] = useState(historyObjectArray || []);
+
+  function handleClick(data) {
+    console.log("DATA", data.split("_")[0]);
+    console.log("DATA", data.split("_")[1]);
+
+    if (data.includes("_")) {
+      rememberFirstStation = data.split("_")[0];
+      setHistoryCRS(
+        data.split("_")[0].slice(data.split("_")[0].length - 4, -1)
+      );
+      console.log("historyCRS", historyCRS);
+
+      handleDepartureClick(
+        current,
+        data.split("_")[1].slice(data.split("_")[1].length - 4, -1),
+        1,
+        data.split("_")[1],
+        data.split("_")[0].slice(data.split("_")[0].length - 4, -1),
+        data.split("_")[0]
+      );
+    } else {
+      handleDepartureClick(current, data.slice(data.length - 4, -1), 0, data);
+    }
+  }
+
+  if (historyObjectArray && historyObjectArray.length > 0) {
+    return (
+      <div style={{ marginTop: "10px" }}>
+        <Paper
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            listStyle: "none",
+            p: 0.5,
+            m: 0,
+            overflow: "scroll",
+            background:
+              localStorage.getItem("darkMode") !== "#ffffff"
+                ? "#475263"
+                : "white",
+            color: localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
+          }}
+          component="ul"
+        >
+          {chipData.map((data) => {
+            let icon;
+            if (position == 0) {
+              return (
+                <ListItem key={data.key}>
+                  <Chip
+                    style={{
+                      background:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#7788a3",
+                      color:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#ffffff",
+                    }}
+                    icon={icon}
+                    label={data}
+                    onClick={() => handleClick(data, position)}
+                  />
+                </ListItem>
+              );
+            }
+          })}
+        </Paper>
+      </div>
+    );
+  }
+}

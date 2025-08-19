@@ -18,6 +18,7 @@ import axios from "axios";
 import SelectDate from "./selectDate.js";
 import ScrollButton from "./scrollButton.js";
 import TimeHistoryChip from "./timeHistoryChip.js";
+import SearchHistoryChip from "./searchHistoryChip.js";
 
 let liveDeparture = "";
 let busDeparture = "";
@@ -62,6 +63,7 @@ let busDisplayMode = "train";
 let showBuses = false;
 let rememberDateTime = [];
 let rememberSearchedDateTime;
+let overrideWithHistoryChip = 0;
 
 const _ = require("lodash");
 const headersListDepart = {
@@ -98,6 +100,7 @@ export default function DepartArrive(departArrive) {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [searchedDateTime, setSearchedDateTime] = useState(false);
   const [sync, setSync] = useState(false);
+  const [historyCRS, setHistoryCRS] = useState();
 
   const [tTSMOpen, setTTSMOpen] = useState(false);
 
@@ -307,7 +310,14 @@ export default function DepartArrive(departArrive) {
     setSelectedDay(year + "-" + month + "-" + day);
   }
 
-  function handleDepartureClick(timeOffset, code, status, stationFullName) {
+  function handleDepartureClick(
+    timeOffset,
+    code,
+    status,
+    stationFullName,
+    previousStation,
+    previousStationFullName
+  ) {
     setShowScrollButton(false);
 
     //validation on submit of boxes
@@ -338,10 +348,21 @@ export default function DepartArrive(departArrive) {
     trainSearch = "loading...";
     rememberTimeOffset = timeOffset;
 
+    if (previousStation) {
+      currentCRSCode = previousStation;
+      setHistoryCRS(previousStation);
+      rememberFirstStation = previousStationFullName;
+      overrideWithHistoryChip = 1;
+    }
+
     //Save History
     if (stationFullName) {
       let currentHistory = localStorage.getItem("stationHistory");
+      let currentHistoryFull = localStorage.getItem("stationHistoryFull");
+
       let historyArray;
+      let historyArrayFull;
+
       if (currentHistory) {
         historyArray = currentHistory.split(",").slice(0, 9);
         if (!historyArray.includes(stationFullName)) {
@@ -358,6 +379,62 @@ export default function DepartArrive(departArrive) {
           ]);
       } else {
         localStorage.setItem("stationHistory", [stationFullName]);
+      }
+
+      if (currentHistoryFull) {
+        historyArrayFull = currentHistoryFull.split(",").slice(0, 9);
+        if (!historyArrayFull.includes(stationFullName)) {
+        } else {
+          let existingPositionFull = historyArrayFull.findIndex(
+            (element) => element == stationFullName
+          );
+          historyArrayFull.splice(existingPositionFull, 1);
+        }
+        if (historyArrayFull.length > 0)
+          localStorage.setItem("stationHistoryFull", [
+            stationFullName,
+            historyArrayFull,
+          ]);
+      } else {
+        localStorage.setItem("stationHistoryFull", [stationFullName]);
+      }
+
+      console.log("status", status);
+      console.log("STFN", stationFullName);
+      console.log("refst", rememberFirstStation);
+
+      if (status == 1) {
+        let currentHistory = localStorage.getItem("stationHistoryFull");
+        let historyArray;
+        if (currentHistory) {
+          historyArray = currentHistory.split(",").slice(0, 9);
+          if (
+            !historyArray.includes(rememberFirstStation + "_" + stationFullName)
+          ) {
+          } else {
+            let existingPosition = historyArray.findIndex(
+              (element) =>
+                element == rememberFirstStation + "_" + stationFullName
+            );
+            historyArray.splice(existingPosition, 1);
+          }
+
+          console.log(
+            "rememberFirstStation",
+            rememberFirstStation,
+            "stationFullName",
+            stationFullName
+          );
+          if (historyArray.length > 0)
+            localStorage.setItem("stationHistoryFull", [
+              rememberFirstStation + "_" + stationFullName,
+              historyArray,
+            ]);
+        } else {
+          localStorage.setItem("stationHistoryFull", [
+            rememberFirstStation + "_" + stationFullName,
+          ]);
+        }
       }
     }
     //EndSaveHistory
@@ -542,6 +619,14 @@ export default function DepartArrive(departArrive) {
     switchVal
   ) {
     let fromCode = currentCRSCode;
+
+    console.log(fromCode);
+    // console.log(displayStation);
+
+    if (!fromCode) {
+      fromCode = historyCRS;
+    }
+
     let displayStation = stationOneD;
     if (status == 0) {
       remStatus = 0;
@@ -567,7 +652,15 @@ export default function DepartArrive(departArrive) {
       stationName = currentCRSCode;
       stationFullName = stationOneD;
     }
+
+    if (overrideWithHistoryChip == 1) {
+      stationFullName = "";
+
+      displayStation = rememberFirstStation;
+    }
+
     testFetch = 0;
+
     let response;
     let staffResponse;
     let staffResponseBus;
@@ -828,6 +921,7 @@ export default function DepartArrive(departArrive) {
           offsetMinutes;
       }
       rememberFirstStation = displayStation;
+      console.log("YES", rememberFirstStation);
       rememberSecondStation = stationFullName;
       secondStation = stationName;
       stationTwoD = stationFullName;
@@ -987,6 +1081,7 @@ export default function DepartArrive(departArrive) {
       saveBD = staffDataBus.busServices;
       currentCRSCode = staffData.crs;
       stationOneD = staffData.locationName + " (" + staffData.crs + ")";
+
       if (staffData.trainServices == null) {
       } else {
       }
@@ -1434,6 +1529,36 @@ export default function DepartArrive(departArrive) {
                       rememberDateTime={rememberDateTime}
                       sync={sync}
                       setSync={setSync}
+                    />
+                    <p
+                      style={{
+                        textAlign: "left",
+                        fontWeight: "bold",
+                        color: "grey",
+                      }}
+                    >
+                      Previous Searches:
+                    </p>
+                    <SearchHistoryChip
+                      setSelectedTime={setSelectedTime}
+                      selectedTime={selectedTime}
+                      setSelectedDay={setSelectedDay}
+                      selectedDay={selectedDay}
+                      minutes={minutes}
+                      hours={hours}
+                      day={day}
+                      month={month}
+                      year={year}
+                      rememberDateTime={rememberDateTime}
+                      sync={sync}
+                      setSync={setSync}
+                      position={0}
+                      handleDepartureClick={handleDepartureClick}
+                      current={current}
+                      rememberFirstStation={rememberFirstStation}
+                      currentCRSCode={currentCRSCode}
+                      historyCRS={historyCRS}
+                      setHistoryCRS={setHistoryCRS}
                     />
                     {departArrive == "Departures" ? (
                       <p
