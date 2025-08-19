@@ -14,6 +14,7 @@ export default function SearchHistoryChip({
   rememberFirstStation,
   setHistoryCRS,
   historyCRS,
+  clearAll,
 }) {
   const historyString = localStorage.getItem("stationHistoryFull");
   let historyArray;
@@ -33,6 +34,7 @@ export default function SearchHistoryChip({
   function handleClick(data) {
     console.log("DATA", data.split("_")[0]);
     console.log("DATA", data.split("_")[1]);
+    clearAll();
 
     if (data.includes("_")) {
       rememberFirstStation = data.split("_")[0];

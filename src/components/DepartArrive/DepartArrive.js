@@ -653,11 +653,7 @@ export default function DepartArrive(departArrive) {
       stationFullName = stationOneD;
     }
 
-    if (overrideWithHistoryChip == 1) {
-      stationFullName = "";
-
-      displayStation = rememberFirstStation;
-    }
+    if (overrideWithHistoryChip == 1) displayStation = rememberFirstStation;
 
     testFetch = 0;
 
@@ -1559,6 +1555,7 @@ export default function DepartArrive(departArrive) {
                       currentCRSCode={currentCRSCode}
                       historyCRS={historyCRS}
                       setHistoryCRS={setHistoryCRS}
+                      clearAll={clearAll}
                     />
                     {departArrive == "Departures" ? (
                       <p
