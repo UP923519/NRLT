@@ -32,24 +32,24 @@ export default function SearchHistoryChip({
   const [chipData, setChipData] = useState(historyObjectArray || []);
 
   function handleClick(data) {
-    console.log("DATA", data.split("_")[0]);
-    console.log("DATA", data.split("_")[1]);
+    console.log("DATA", data.split(" -> ")[0]);
+    console.log("DATA", data.split(" -> ")[1]);
     clearAll();
 
-    if (data.includes("_")) {
-      rememberFirstStation = data.split("_")[0];
+    if (data.includes(" -> ")) {
+      rememberFirstStation = data.split(" -> ")[0];
       setHistoryCRS(
-        data.split("_")[0].slice(data.split("_")[0].length - 4, -1)
+        data.split(" -> ")[0].slice(data.split(" -> ")[0].length - 4, -1)
       );
       console.log("historyCRS", historyCRS);
 
       handleDepartureClick(
         current,
-        data.split("_")[1].slice(data.split("_")[1].length - 4, -1),
+        data.split(" -> ")[1].slice(data.split(" -> ")[1].length - 4, -1),
         1,
-        data.split("_")[1],
-        data.split("_")[0].slice(data.split("_")[0].length - 4, -1),
-        data.split("_")[0]
+        data.split(" -> ")[1],
+        data.split(" -> ")[0].slice(data.split(" -> ")[0].length - 4, -1),
+        data.split(" -> ")[0]
       );
     } else {
       handleDepartureClick(current, data.slice(data.length - 4, -1), 0, data);

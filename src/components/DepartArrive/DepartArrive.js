@@ -409,12 +409,14 @@ export default function DepartArrive(departArrive) {
         if (currentHistory) {
           historyArray = currentHistory.split(",").slice(0, 9);
           if (
-            !historyArray.includes(rememberFirstStation + "_" + stationFullName)
+            !historyArray.includes(
+              rememberFirstStation + " -> " + stationFullName
+            )
           ) {
           } else {
             let existingPosition = historyArray.findIndex(
               (element) =>
-                element == rememberFirstStation + "_" + stationFullName
+                element == rememberFirstStation + " -> " + stationFullName
             );
             historyArray.splice(existingPosition, 1);
           }
@@ -427,12 +429,12 @@ export default function DepartArrive(departArrive) {
           );
           if (historyArray.length > 0)
             localStorage.setItem("stationHistoryFull", [
-              rememberFirstStation + "_" + stationFullName,
+              rememberFirstStation + " -> " + stationFullName,
               historyArray,
             ]);
         } else {
           localStorage.setItem("stationHistoryFull", [
-            rememberFirstStation + "_" + stationFullName,
+            rememberFirstStation + " -> " + stationFullName,
           ]);
         }
       }
