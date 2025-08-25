@@ -356,6 +356,7 @@ export default function DepartArrive(departArrive) {
     }
 
     //Save History
+
     if (stationFullName) {
       let currentHistory = localStorage.getItem("stationHistory");
       let currentHistoryFull = localStorage.getItem("stationHistoryFull");
@@ -398,48 +399,9 @@ export default function DepartArrive(departArrive) {
       } else {
         localStorage.setItem("stationHistoryFull", [stationFullName]);
       }
-
-      console.log("status", status);
-      console.log("STFN", stationFullName);
-      console.log("refst", rememberFirstStation);
-
-      if (status == 1) {
-        let currentHistory = localStorage.getItem("stationHistoryFull");
-        let historyArray;
-        if (currentHistory) {
-          historyArray = currentHistory.split(",").slice(0, 9);
-          if (
-            !historyArray.includes(
-              rememberFirstStation + " -> " + stationFullName
-            )
-          ) {
-          } else {
-            let existingPosition = historyArray.findIndex(
-              (element) =>
-                element == rememberFirstStation + " -> " + stationFullName
-            );
-            historyArray.splice(existingPosition, 1);
-          }
-
-          console.log(
-            "rememberFirstStation",
-            rememberFirstStation,
-            "stationFullName",
-            stationFullName
-          );
-          if (historyArray.length > 0)
-            localStorage.setItem("stationHistoryFull", [
-              rememberFirstStation + " -> " + stationFullName,
-              historyArray,
-            ]);
-        } else {
-          localStorage.setItem("stationHistoryFull", [
-            rememberFirstStation + " -> " + stationFullName,
-          ]);
-        }
-      }
     }
-    //EndSaveHistory
+
+    //EndSaveHistory - part 2 below
 
     let switchFlag = false;
     if (code == "SWITCH-st") {
@@ -622,9 +584,6 @@ export default function DepartArrive(departArrive) {
   ) {
     let fromCode = currentCRSCode;
 
-    console.log(fromCode);
-    // console.log(displayStation);
-
     if (!fromCode) {
       fromCode = historyCRS;
     }
@@ -655,7 +614,13 @@ export default function DepartArrive(departArrive) {
       stationFullName = stationOneD;
     }
 
-    if (overrideWithHistoryChip == 1) displayStation = rememberFirstStation;
+    //Fixes the station names in 'trainsearch' when loading the
+    //previous searches from local storage.
+    if (overrideWithHistoryChip == 1) {
+      if (!displayStation) {
+        displayStation = rememberFirstStation;
+      }
+    }
 
     testFetch = 0;
 
@@ -918,8 +883,40 @@ export default function DepartArrive(departArrive) {
           ":" +
           offsetMinutes;
       }
+
+      //////////////
+      //     //Save History (Search History Array) Part 2 - for 2 stations
+      //////////////
+      if (displayStation && stationFullName && status == 1) {
+        //status not 0
+        let currentHistory = localStorage.getItem("stationHistoryFull");
+        let historyArray;
+        if (currentHistory) {
+          historyArray = currentHistory.split(",").slice(0, 9);
+          if (
+            !historyArray.includes(displayStation + " -> " + stationFullName)
+          ) {
+          } else {
+            let existingPosition = historyArray.findIndex(
+              (element) => element == displayStation + " -> " + stationFullName
+            );
+            historyArray.splice(existingPosition, 1);
+          }
+
+          if (historyArray.length > 0)
+            localStorage.setItem("stationHistoryFull", [
+              displayStation + " -> " + stationFullName,
+              historyArray,
+            ]);
+        } else {
+          localStorage.setItem("stationHistoryFull", [
+            displayStation + " -> " + stationFullName,
+          ]);
+        }
+      }
+      /////////////////////
+
       rememberFirstStation = displayStation;
-      console.log("YES", rememberFirstStation);
       rememberSecondStation = stationFullName;
       secondStation = stationName;
       stationTwoD = stationFullName;
@@ -1535,7 +1532,7 @@ export default function DepartArrive(departArrive) {
                         color: "grey",
                       }}
                     >
-                      Previous Searches:
+                      Previous Locations:
                     </p>
                     <SearchHistoryChip
                       setSelectedTime={setSelectedTime}

@@ -32,8 +32,6 @@ export default function SearchHistoryChip({
   const [chipData, setChipData] = useState(historyObjectArray || []);
 
   function handleClick(data) {
-    console.log("DATA", data.split(" -> ")[0]);
-    console.log("DATA", data.split(" -> ")[1]);
     clearAll();
 
     if (data.includes(" -> ")) {
@@ -41,8 +39,6 @@ export default function SearchHistoryChip({
       setHistoryCRS(
         data.split(" -> ")[0].slice(data.split(" -> ")[0].length - 4, -1)
       );
-      console.log("historyCRS", historyCRS);
-
       handleDepartureClick(
         current,
         data.split(" -> ")[1].slice(data.split(" -> ")[1].length - 4, -1),
@@ -69,8 +65,8 @@ export default function SearchHistoryChip({
             overflow: "scroll",
             background:
               localStorage.getItem("darkMode") !== "#ffffff"
-                ? "#475263"
-                : "white",
+                ? "#513d6dff"
+                : "#eaeaeaff",
             color: localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
           }}
           component="ul"
