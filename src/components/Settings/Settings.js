@@ -307,20 +307,24 @@ export default function Settings() {
                   padding: "10px",
                 }}
               >
-                Station & Time History:{" "}
+                Search History:{" "}
                 {localStorage.getItem("stationHistory")?.length
-                  ? "Not Cleared"
+                  ? "Saved"
                   : "Cleared"}
                 <br /> <br />
                 <button
                   id="useCurrentLocation"
                   onClick={() =>
                     alert(
-                      "Station History: " +
+                      "Previous Searches:\n\n" +
+                        localStorage
+                          .getItem("stationHistoryFull")
+                          .replaceAll(",", ", ") +
+                        "\n\nStations:\n\n" +
                         localStorage
                           .getItem("stationHistory")
                           .replaceAll(",", ", ") +
-                        "\n\nTime History: " +
+                        "\n\nDate & Time:\n\n" +
                         localStorage
                           .getItem("dateTimeHistory")
                           .replaceAll(",", ", ")
@@ -341,6 +345,7 @@ export default function Settings() {
                   onClick={() =>
                     localStorage.removeItem("stationHistory") +
                     localStorage.removeItem("dateTimeHistory") +
+                    localStorage.removeItem("stationHistoryFull") +
                     window.location.reload()
                   }
                 >

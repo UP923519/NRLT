@@ -327,9 +327,9 @@ export default function ServicePage() {
         "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal
       );
     } catch {
-      alert("Failed.!! Please check internet connection / service details.");
-      failedAlert = true;
+      // alert("Failed.!! Please check internet connection / service details.");
 
+      failedAlert = true;
       setIsOpen(false);
       setProcessingState(false);
     }
@@ -340,7 +340,7 @@ export default function ServicePage() {
           "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal
         );
       } catch {
-        alert("Failed. Please check internet connection / service details.");
+        // alert("Failed. Please check internet connection / service details.");
         failedAlert = true;
 
         setIsOpen(false);
@@ -348,173 +348,173 @@ export default function ServicePage() {
       }
     }
 
-    // try {
-    const data = await response.json();
-    const dataA = structuredClone(data); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
-    const dataStaffService = await responseStaffRID.json(); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
+    try {
+      const data = await response.json();
+      const dataA = structuredClone(data); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
+      const dataStaffService = await responseStaffRID.json(); //todo Data is being manipulated so that all stations appear in one array. Don't want this anymore. Deep clone to temporarily get around this.
 
-    staffUIDVal = dataStaffService.uid;
+      staffUIDVal = dataStaffService.uid;
 
-    if (data) {
-      setAllServiceData(dataA);
-      if (dataStaffService) {
-        setAllStaffServiceData(dataStaffService);
-      }
-    }
-    //Remove SP Association if the displayed service is the same and at the same station name
-
-    if (state)
-      if (
-        rememberStaffData.rid == state.rid &&
-        rememberFirstStationSave.slice(0, -6) ==
-          dataStaffService.locations[0].locationName
-      ) {
-        setSPAssociation(null);
-        navigate(locations.pathname, {}); //clears state
-      }
-
-    //Work out time difference
-    // Convert to Date objects
-    const dateStart = new Date(dataStaffService.locations[0].std);
-    const dateEnd = new Date(
-      dataStaffService.locations[dataStaffService.locations.length - 1].sta
-    );
-
-    // Difference in milliseconds
-    const diffMs = Math.abs(dateEnd - dateStart);
-
-    // Convert to minutes, hours, etc.
-    diffSeconds = Math.floor((diffMs % 60000) / 1000);
-    diffMinutes = Math.floor((diffMs % 3600000) / 60000);
-    diffHours = Math.floor(diffMs / 3600000);
-
-    //Work out Divide Location
-    dataStaffService?.locations?.forEach((element, index) => {
-      element?.associations?.forEach((association) => {
-        if (
-          association.category == 1 ||
-          association.category == 0 ||
-          association.category == "divides" ||
-          association.category == "merges"
-        ) {
-          associationList.push([
-            association.destination,
-            association.origin,
-            element.locationName,
-            association.category,
-            association.rid,
-          ]);
+      if (data) {
+        setAllServiceData(dataA);
+        if (dataStaffService) {
+          setAllStaffServiceData(dataStaffService);
         }
+      }
+      //Remove SP Association if the displayed service is the same and at the same station name
+
+      if (state)
+        if (
+          rememberStaffData.rid == state.rid &&
+          rememberFirstStationSave.slice(0, -6) ==
+            dataStaffService.locations[0].locationName
+        ) {
+          setSPAssociation(null);
+          navigate(locations.pathname, {}); //clears state
+        }
+
+      //Work out time difference
+      // Convert to Date objects
+      const dateStart = new Date(dataStaffService.locations[0].std);
+      const dateEnd = new Date(
+        dataStaffService.locations[dataStaffService.locations.length - 1].sta
+      );
+
+      // Difference in milliseconds
+      const diffMs = Math.abs(dateEnd - dateStart);
+
+      // Convert to minutes, hours, etc.
+      diffSeconds = Math.floor((diffMs % 60000) / 1000);
+      diffMinutes = Math.floor((diffMs % 3600000) / 60000);
+      diffHours = Math.floor(diffMs / 3600000);
+
+      //Work out Divide Location
+      dataStaffService?.locations?.forEach((element, index) => {
+        element?.associations?.forEach((association) => {
+          if (
+            association.category == 1 ||
+            association.category == 0 ||
+            association.category == "divides" ||
+            association.category == "merges"
+          ) {
+            associationList.push([
+              association.destination,
+              association.origin,
+              element.locationName,
+              association.category,
+              association.rid,
+            ]);
+          }
+        });
       });
-    });
 
-    setAssociations(associationList);
+      setAssociations(associationList);
 
-    try {
-      liveService = data.previousCallingPoints[0].callingPoint;
-    } catch {
-      liveService = "";
-    }
-
-    try {
-      liveService2 = data.subsequentCallingPoints[0].callingPoint;
-    } catch {
-      liveService2 = "";
-    }
-
-    try {
-      liveService3 = data.subsequentCallingPoints[1].callingPoint;
-      divideLocation = liveService3[0].locationName;
-
-      divides =
-        "This train divides at " +
-        divideLocation +
-        ". Please check that you are located in the correct part of the train. ";
-      divideMerge = "divides";
-      for (let i = 0; i < liveService3.length; i++) {
-        liveService2.push(liveService3[i]);
+      try {
+        liveService = data.previousCallingPoints[0].callingPoint;
+      } catch {
+        liveService = "";
       }
-    } catch {
-      liveService3 = "";
-    }
 
-    try {
-      liveServicePrevAdd = data.previousCallingPoints[1].callingPoint;
-      divideLocation =
-        liveServicePrevAdd[liveServicePrevAdd.length - 1].locationName;
-
-      divides = "This train merges at " + divideLocation + ".";
-      divideMerge = "merges";
-
-      for (let i = liveServicePrevAdd.length - 1; i > -1; i--) {
-        liveService.unshift(liveServicePrevAdd[i]);
+      try {
+        liveService2 = data.subsequentCallingPoints[0].callingPoint;
+      } catch {
+        liveService2 = "";
       }
-    } catch {
-      liveServicePrevAdd = "";
-    }
 
-    liveServiceTime = data;
-    location = data.locationName;
-    operator = data.operator + "";
-    if (data.length != 0) {
-      formation =
-        data.locations[0].length > 0
-          ? data.locations[0].length + " coaches"
-          : "Info may be available in train details";
-    } else {
-      formation = "";
-    }
+      try {
+        liveService3 = data.subsequentCallingPoints[1].callingPoint;
+        divideLocation = liveService3[0].locationName;
 
-    // liveServiceTime.cancelReason += ".";
-    // liveServiceTime.delayReason += ".";
-
-    let exr =
-      divides +
-      liveServiceTime.cancelReason +
-      " " +
-      liveServiceTime.delayReason +
-      " ";
-    exr = exr.replace("null.", "");
-    exr = exr.replace("null.", "");
-
-    if (exr != "  ") {
-      setExcuseReason(exr);
-    } else {
-      setExcuseReason("There are no messages for this service.");
-    }
-    if (formation != "") {
-      setFormation(formation);
-    } else {
-      setFormation("Info may be available in train details");
-      if (staffUIDVal == "") {
-        setFormation("Information not provided");
+        divides =
+          "This train divides at " +
+          divideLocation +
+          ". Please check that you are located in the correct part of the train. ";
+        divideMerge = "divides";
+        for (let i = 0; i < liveService3.length; i++) {
+          liveService2.push(liveService3[i]);
+        }
+      } catch {
+        liveService3 = "";
       }
+
+      try {
+        liveServicePrevAdd = data.previousCallingPoints[1].callingPoint;
+        divideLocation =
+          liveServicePrevAdd[liveServicePrevAdd.length - 1].locationName;
+
+        divides = "This train merges at " + divideLocation + ".";
+        divideMerge = "merges";
+
+        for (let i = liveServicePrevAdd.length - 1; i > -1; i--) {
+          liveService.unshift(liveServicePrevAdd[i]);
+        }
+      } catch {
+        liveServicePrevAdd = "";
+      }
+
+      liveServiceTime = data;
+      location = data.locationName;
+      operator = data.operator + "";
+      if (data.length != 0) {
+        formation =
+          data.locations[0].length > 0
+            ? data.locations[0].length + " coaches"
+            : "Info may be available in train details";
+      } else {
+        formation = "";
+      }
+
+      // liveServiceTime.cancelReason += ".";
+      // liveServiceTime.delayReason += ".";
+
+      let exr =
+        divides +
+        liveServiceTime.cancelReason +
+        " " +
+        liveServiceTime.delayReason +
+        " ";
+      exr = exr.replace("null.", "");
+      exr = exr.replace("null.", "");
+
+      if (exr != "  ") {
+        setExcuseReason(exr);
+      } else {
+        setExcuseReason("There are no messages for this service.");
+      }
+      if (formation != "") {
+        setFormation(formation);
+      } else {
+        setFormation("Info may be available in train details");
+        if (staffUIDVal == "") {
+          setFormation("Information not provided");
+        }
+      }
+
+      setOperator(operator);
+
+      let beforeStations = calculatePosition(liveService);
+      let middleStation = calculatePositionCentral(
+        liveService,
+        liveServiceTime,
+        liveService2,
+        location
+      );
+      let afterStations = calculatePosition(liveService2, liveServiceTime);
+      let t = beforeStations[0] + middleStation[0] + afterStations[0];
+      let u = [];
+      u = [...beforeStations[1], ...middleStation[1], ...afterStations[1]];
+      t = t.replaceAll("*undefined", "");
+      t = t.replaceAll("undefined", "");
+      setPlatformNumber(liveServiceTime.platform);
+      locationList = u;
+      runLast();
+    } catch {
+      if (!failedAlert)
+        alert("Unable to retrieve new results. Previous results may be shown.");
+      setIsOpen(false);
+      setProcessingState(false);
     }
-
-    setOperator(operator);
-
-    let beforeStations = calculatePosition(liveService);
-    let middleStation = calculatePositionCentral(
-      liveService,
-      liveServiceTime,
-      liveService2,
-      location
-    );
-    let afterStations = calculatePosition(liveService2, liveServiceTime);
-    let t = beforeStations[0] + middleStation[0] + afterStations[0];
-    let u = [];
-    u = [...beforeStations[1], ...middleStation[1], ...afterStations[1]];
-    t = t.replaceAll("*undefined", "");
-    t = t.replaceAll("undefined", "");
-    setPlatformNumber(liveServiceTime.platform);
-    locationList = u;
-    runLast();
-    // } catch {
-    //   if (!failedAlert)
-    //     alert("Unable to retrieve new results. Previous results may be shown.");
-    //   setIsOpen(false);
-    //   setProcessingState(false);
-    // }
   }
 
   function toggle() {
