@@ -308,6 +308,7 @@ export default function DepartArrive(departArrive) {
     rememberSecondStation = "";
     setSelectedTime(hours + ":" + minutes);
     setSelectedDay(year + "-" + month + "-" + day);
+    stationOneD = "";
   }
 
   function handleDepartureClick(
@@ -365,7 +366,7 @@ export default function DepartArrive(departArrive) {
       let historyArrayFull;
 
       if (currentHistory) {
-        historyArray = currentHistory.split(",").slice(0, 9);
+        historyArray = currentHistory.split(",").slice(0, 24);
         if (!historyArray.includes(stationFullName)) {
         } else {
           let existingPosition = historyArray.findIndex(
@@ -382,23 +383,23 @@ export default function DepartArrive(departArrive) {
         localStorage.setItem("stationHistory", [stationFullName]);
       }
 
-      if (currentHistoryFull) {
-        historyArrayFull = currentHistoryFull.split(",").slice(0, 9);
-        if (!historyArrayFull.includes(stationFullName)) {
-        } else {
-          let existingPositionFull = historyArrayFull.findIndex(
-            (element) => element == stationFullName
-          );
-          historyArrayFull.splice(existingPositionFull, 1);
-        }
-        if (historyArrayFull.length > 0)
-          localStorage.setItem("stationHistoryFull", [
-            stationFullName,
-            historyArrayFull,
-          ]);
-      } else {
-        localStorage.setItem("stationHistoryFull", [stationFullName]);
-      }
+      // if (currentHistoryFull) {
+      //   historyArrayFull = currentHistoryFull.split(",").slice(0, 9);
+      //   if (!historyArrayFull.includes(stationFullName)) {
+      //   } else {
+      //     let existingPositionFull = historyArrayFull.findIndex(
+      //       (element) => element == stationFullName
+      //     );
+      //     historyArrayFull.splice(existingPositionFull, 1);
+      //   }
+      //   if (historyArrayFull.length > 0)
+      //     localStorage.setItem("stationHistoryFull", [
+      //       stationFullName,
+      //       historyArrayFull,
+      //     ]);
+      // } else {
+      //   localStorage.setItem("stationHistoryFull", [stationFullName]);
+      // }
     }
 
     //EndSaveHistory - part 2 below
@@ -699,7 +700,7 @@ export default function DepartArrive(departArrive) {
       let currentHistory = localStorage.getItem("dateTimeHistory");
       let historyArray;
       if (currentHistory) {
-        historyArray = currentHistory.split(",").slice(0, 9);
+        historyArray = currentHistory.split(",").slice(0, 24);
         if (!historyArray.includes(rememberSearchedDateTime)) {
         } else {
           let existingPosition = historyArray.findIndex(
@@ -892,7 +893,7 @@ export default function DepartArrive(departArrive) {
         let currentHistory = localStorage.getItem("stationHistoryFull");
         let historyArray;
         if (currentHistory) {
-          historyArray = currentHistory.split(",").slice(0, 9);
+          historyArray = currentHistory.split(",").slice(0, 24);
           if (
             !historyArray.includes(displayStation + " -> " + stationFullName)
           ) {
@@ -1487,278 +1488,355 @@ export default function DepartArrive(departArrive) {
                 <br />
                 {isOpenForm && (
                   <text>
-                    <p
+                    <div
                       style={{
-                        textAlign: "left",
-                        fontWeight: "bold",
-                        color: "grey",
+                        outline: "2px solid #77777755",
+                        borderRadius: "10px",
+                        padding: "5px",
+                        marginLeft: "-5px",
+                        marginRight: "-5px",
+                        paddingTop: "-50px",
+                        marginTop: "7px",
+                        marginBottom: "5px",
                       }}
                     >
-                      Date & Time:
-                    </p>
-                    {/* //////Date picker */}
-                    <SelectDate
-                      setSelectedTime={setSelectedTime}
-                      selectedTime={selectedTime}
-                      setSelectedDay={setSelectedDay}
-                      selectedDay={selectedDay}
-                      minutes={minutes}
-                      hours={hours}
-                      day={day}
-                      month={month}
-                      year={year}
-                      rememberDateTime={rememberDateTime}
-                      sync={sync}
-                      setSync={setSync}
-                    />
-                    <TimeHistoryChip
-                      setSelectedTime={setSelectedTime}
-                      selectedTime={selectedTime}
-                      setSelectedDay={setSelectedDay}
-                      selectedDay={selectedDay}
-                      minutes={minutes}
-                      hours={hours}
-                      day={day}
-                      month={month}
-                      year={year}
-                      rememberDateTime={rememberDateTime}
-                      sync={sync}
-                      setSync={setSync}
-                    />
-                    <p
-                      style={{
-                        textAlign: "left",
-                        fontWeight: "bold",
-                        color: "grey",
-                      }}
-                    >
-                      Previous Locations:
-                    </p>
-                    <SearchHistoryChip
-                      setSelectedTime={setSelectedTime}
-                      selectedTime={selectedTime}
-                      setSelectedDay={setSelectedDay}
-                      selectedDay={selectedDay}
-                      minutes={minutes}
-                      hours={hours}
-                      day={day}
-                      month={month}
-                      year={year}
-                      rememberDateTime={rememberDateTime}
-                      sync={sync}
-                      setSync={setSync}
-                      position={0}
-                      handleDepartureClick={handleDepartureClick}
-                      current={current}
-                      rememberFirstStation={rememberFirstStation}
-                      currentCRSCode={currentCRSCode}
-                      historyCRS={historyCRS}
-                      setHistoryCRS={setHistoryCRS}
-                      clearAll={clearAll}
-                    />
-                    {departArrive == "Departures" ? (
                       <p
                         style={{
                           textAlign: "left",
                           fontWeight: "bold",
                           color: "grey",
+                          marginTop: "0px",
                         }}
                       >
-                        Departure:
+                        Date & Time:
                       </p>
-                    ) : (
-                      <p
-                        style={{
-                          textAlign: "left",
-                          fontWeight: "bold",
-                          color: "grey",
-                        }}
-                      >
-                        Arrival:
-                      </p>
-                    )}
-                    <text style={{ textAlign: "left" }}>
-                      <Select
-                        styles={{
-                          menu: (styles, { data }) => {
-                            return {
-                              ...styles,
-                              backgroundColor:
-                                localStorage.getItem("darkMode") !== "#ffffff"
-                                  ? "#00000088"
-                                  : "#ffffff88",
-                              backdropFilter: "blur(10px)",
-                              color:
-                                localStorage.getItem("darkMode") !==
-                                  "#ffffff" && "#a3a3a3",
-                            };
-                          },
-                          control: (provided, state) => ({
-                            ...provided,
-                            background:
-                              localStorage.getItem("darkMode") !== "#ffffff"
-                                ? "#475263"
-                                : "white",
-                          }),
-                          singleValue: (provided, state) => ({
-                            ...provided,
-                            color:
-                              localStorage.getItem("darkMode") !== "#ffffff" &&
-                              "white",
-                          }),
-                        }}
-                        defaultValue={[
-                          {
-                            value: rememberFirstStation,
-                            label: rememberFirstStation,
-                          },
-                        ]}
-                        value={
-                          rememberFirstStation
-                            ? [
-                                {
-                                  value: rememberFirstStation,
-                                  label: rememberFirstStation,
-                                },
-                              ]
-                            : [
-                                {
-                                  value: "Select...",
-                                  label: "Select...",
-                                },
-                              ]
-                        }
-                        options={listOfStations ? listOfStations : []}
-                        isLoading={listOfStations ? false : true}
-                        className="selectBox"
-                        onChange={(opt) =>
-                          handleDepartureClick(
-                            current,
-                            opt.value.slice(opt.value.length - 4, -1),
-                            0,
-                            opt.value
-                          )
-                        }
+                      {/* //////Date picker */}
+                      <SelectDate
+                        setSelectedTime={setSelectedTime}
+                        selectedTime={selectedTime}
+                        setSelectedDay={setSelectedDay}
+                        selectedDay={selectedDay}
+                        minutes={minutes}
+                        hours={hours}
+                        day={day}
+                        month={month}
+                        year={year}
+                        rememberDateTime={rememberDateTime}
+                        sync={sync}
+                        setSync={setSync}
                       />
-                    </text>
-                    <StationHistoryChip
-                      position={0}
-                      handleDepartureClick={handleDepartureClick}
-                      current={current}
-                    />
-                    {departArrive == "Departures" ? (
-                      <p
+                      <TimeHistoryChip
+                        setSelectedTime={setSelectedTime}
+                        selectedTime={selectedTime}
+                        setSelectedDay={setSelectedDay}
+                        selectedDay={selectedDay}
+                        minutes={minutes}
+                        hours={hours}
+                        day={day}
+                        month={month}
+                        year={year}
+                        rememberDateTime={rememberDateTime}
+                        sync={sync}
+                        setSync={setSync}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        outline: "2px solid #77777755",
+                        borderRadius: "10px",
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                        paddingTop: "3px",
+                        paddingBottom: "3px",
+                        marginTop: "10px",
+                        marginLeft: "-5px",
+                        marginRight: "-5px",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      {/* //Prevent search history showing if empty */}
+                      {localStorage.getItem("stationHistoryFull") != null && (
+                        <>
+                          <div
+                            style={{
+                              outline: "2px solid #c8c8c833",
+                              background: "#c8c8c833",
+                              borderRadius: "10px",
+                              padding: "5px",
+                              marginLeft: "-5px",
+                              marginRight: "-5px",
+                              marginBottom: "3px",
+                            }}
+                          >
+                            <p
+                              style={{
+                                textAlign: "left",
+                                fontWeight: "bold",
+                                color: "grey",
+                                marginTop: "0px",
+                              }}
+                            >
+                              Previous Station Pairs:
+                            </p>
+                            <SearchHistoryChip
+                              setSelectedTime={setSelectedTime}
+                              selectedTime={selectedTime}
+                              setSelectedDay={setSelectedDay}
+                              selectedDay={selectedDay}
+                              minutes={minutes}
+                              hours={hours}
+                              day={day}
+                              month={month}
+                              year={year}
+                              rememberDateTime={rememberDateTime}
+                              sync={sync}
+                              setSync={setSync}
+                              position={0}
+                              handleDepartureClick={handleDepartureClick}
+                              current={current}
+                              rememberFirstStation={rememberFirstStation}
+                              currentCRSCode={currentCRSCode}
+                              historyCRS={historyCRS}
+                              setHistoryCRS={setHistoryCRS}
+                              clearAll={clearAll}
+                            />
+                          </div>
+                        </>
+                      )}
+                      {/* //Prevent search history showing if empty */}
+                      {localStorage.getItem("stationHistoryFull") != null && (
+                        <>
+                          <p
+                            style={{
+                              padding: "0px",
+                              margin: "0px",
+                              paddingBottom: "4px",
+                              color: "grey",
+                            }}
+                          >
+                            OR
+                          </p>
+                        </>
+                      )}
+                      <div
                         style={{
-                          textAlign: "left",
-                          fontWeight: "bold",
-                          color: "grey",
+                          outline: "2px solid #c8c8c833",
+                          background: "#c8c8c833",
+                          borderRadius: "10px",
+                          padding: "5px",
+                          marginLeft: "-5px",
+                          marginRight: "-5px",
                         }}
                       >
-                        Destination (optional):
-                      </p>
-                    ) : (
-                      <p
-                        style={{
-                          textAlign: "left",
-                          fontWeight: "bold",
-                          color: "grey",
-                        }}
-                      >
-                        Origin (optional):
-                      </p>
-                    )}
-                    <text style={{ textAlign: "left" }}>
-                      <Select
-                        styles={{
-                          menu: (styles, { data }) => {
-                            return {
-                              ...styles,
-                              backgroundColor:
-                                localStorage.getItem("darkMode") !== "#ffffff"
-                                  ? "#00000088"
-                                  : "#ffffff88",
-                              backdropFilter: "blur(10px)",
-                              color:
-                                localStorage.getItem("darkMode") !==
-                                  "#ffffff" && "#a3a3a3",
-                            };
-                          },
-                          control: (provided, state) => ({
-                            ...provided,
-                            background:
-                              localStorage.getItem("darkMode") !== "#ffffff"
-                                ? rememberFirstStation == "" ||
+                        {departArrive == "Departures" ? (
+                          <p
+                            style={{
+                              textAlign: "left",
+                              fontWeight: "bold",
+                              color: "grey",
+                              marginTop: "0px",
+                            }}
+                          >
+                            Departure:
+                          </p>
+                        ) : (
+                          <p
+                            style={{
+                              textAlign: "left",
+                              fontWeight: "bold",
+                              color: "grey",
+                            }}
+                          >
+                            Arrival:
+                          </p>
+                        )}
+                        <text style={{ textAlign: "left" }}>
+                          <Select
+                            styles={{
+                              menu: (styles, { data }) => {
+                                return {
+                                  ...styles,
+                                  backgroundColor:
+                                    localStorage.getItem("darkMode") !==
+                                    "#ffffff"
+                                      ? "#00000088"
+                                      : "#ffffff88",
+                                  backdropFilter: "blur(10px)",
+                                  color:
+                                    localStorage.getItem("darkMode") !==
+                                      "#ffffff" && "#a3a3a3",
+                                };
+                              },
+                              control: (provided, state) => ({
+                                ...provided,
+                                background:
+                                  localStorage.getItem("darkMode") !== "#ffffff"
+                                    ? "#475263"
+                                    : "white",
+                              }),
+                              singleValue: (provided, state) => ({
+                                ...provided,
+                                color:
+                                  localStorage.getItem("darkMode") !==
+                                    "#ffffff" && "white",
+                              }),
+                            }}
+                            defaultValue={[
+                              {
+                                value: rememberFirstStation,
+                                label: rememberFirstStation,
+                              },
+                            ]}
+                            value={
+                              rememberFirstStation
+                                ? [
+                                    {
+                                      value: rememberFirstStation,
+                                      label: rememberFirstStation,
+                                    },
+                                  ]
+                                : [
+                                    {
+                                      value: "Select...",
+                                      label: "Select...",
+                                    },
+                                  ]
+                            }
+                            options={listOfStations ? listOfStations : []}
+                            isLoading={listOfStations ? false : true}
+                            className="selectBox"
+                            onChange={(opt) =>
+                              handleDepartureClick(
+                                current,
+                                opt.value.slice(opt.value.length - 4, -1),
+                                0,
+                                opt.value
+                              )
+                            }
+                          />
+                        </text>
+                        <StationHistoryChip
+                          position={0}
+                          handleDepartureClick={handleDepartureClick}
+                          current={current}
+                        />
+                        {departArrive == "Departures" ? (
+                          <p
+                            style={{
+                              textAlign: "left",
+                              fontWeight: "bold",
+                              color: "grey",
+                            }}
+                          >
+                            Destination (optional):
+                          </p>
+                        ) : (
+                          <p
+                            style={{
+                              textAlign: "left",
+                              fontWeight: "bold",
+                              color: "grey",
+                            }}
+                          >
+                            Origin (optional):
+                          </p>
+                        )}
+                        <text style={{ textAlign: "left" }}>
+                          <Select
+                            styles={{
+                              menu: (styles, { data }) => {
+                                return {
+                                  ...styles,
+                                  backgroundColor:
+                                    localStorage.getItem("darkMode") !==
+                                    "#ffffff"
+                                      ? "#00000088"
+                                      : "#ffffff88",
+                                  backdropFilter: "blur(10px)",
+                                  color:
+                                    localStorage.getItem("darkMode") !==
+                                      "#ffffff" && "#a3a3a3",
+                                };
+                              },
+                              control: (provided, state) => ({
+                                ...provided,
+                                background:
+                                  localStorage.getItem("darkMode") !== "#ffffff"
+                                    ? rememberFirstStation == "" ||
+                                      !rememberFirstStation
+                                      ? "grey"
+                                      : "#475263"
+                                    : "white",
+                              }),
+                              singleValue: (provided, state) => ({
+                                ...provided,
+                                color:
+                                  rememberFirstStation == "" ||
                                   !rememberFirstStation
-                                  ? "grey"
-                                  : "#475263"
-                                : "white",
-                          }),
-                          singleValue: (provided, state) => ({
-                            ...provided,
-                            color:
+                                    ? "#bfbfbf"
+                                    : localStorage.getItem("darkMode") !==
+                                        "#ffffff" && "white",
+                              }),
+                            }}
+                            isDisabled={
                               rememberFirstStation == "" ||
                               !rememberFirstStation
-                                ? "#bfbfbf"
-                                : localStorage.getItem("darkMode") !==
-                                    "#ffffff" && "white",
-                          }),
-                        }}
-                        isDisabled={
-                          rememberFirstStation == "" || !rememberFirstStation
-                            ? true
-                            : false
-                        }
-                        defaultValue={[
-                          {
-                            value: rememberSecondStation,
-                            label: rememberSecondStation,
-                          },
-                        ]}
-                        value={
-                          rememberSecondStation
-                            ? [
-                                {
-                                  value: rememberSecondStation,
-                                  label: rememberSecondStation,
-                                },
-                              ]
-                            : rememberFirstStation
-                            ? [
-                                {
-                                  value: "Select...",
-                                  label: "Select...",
-                                },
-                              ]
-                            : [
-                                {
-                                  value: "Select above first",
-                                  label: "Select above first",
-                                },
-                              ]
-                        }
-                        options={listOfStations ? listOfStations : []}
-                        isLoading={listOfStations ? false : true}
-                        className="selectBox"
-                        onChange={(opt) =>
-                          handleDepartureClick(
-                            current,
-                            opt.value.slice(opt.value.length - 4, -1),
-                            1,
-                            opt.value
-                          ) + { stationTwoD: opt.value }
-                        }
-                      />
-                    </text>
-                    <StationHistoryChip
-                      position={1}
-                      handleDepartureClick={handleDepartureClick}
-                      current={current}
-                      isDisabled={
-                        rememberFirstStation == "" || !rememberFirstStation
-                          ? true
-                          : false
-                      }
-                    />
+                                ? true
+                                : false
+                            }
+                            defaultValue={[
+                              {
+                                value: rememberSecondStation,
+                                label: rememberSecondStation,
+                              },
+                            ]}
+                            value={
+                              rememberSecondStation
+                                ? [
+                                    {
+                                      value: rememberSecondStation,
+                                      label: rememberSecondStation,
+                                    },
+                                  ]
+                                : rememberFirstStation
+                                ? [
+                                    {
+                                      value: "Select...",
+                                      label: "Select...",
+                                    },
+                                  ]
+                                : [
+                                    {
+                                      value: "Select above first",
+                                      label: "Select above first",
+                                    },
+                                  ]
+                            }
+                            options={listOfStations ? listOfStations : []}
+                            isLoading={listOfStations ? false : true}
+                            className="selectBox"
+                            onChange={(opt) =>
+                              handleDepartureClick(
+                                current,
+                                opt.value.slice(opt.value.length - 4, -1),
+                                1,
+                                opt.value
+                              ) + { stationTwoD: opt.value }
+                            }
+                          />
+                        </text>
+                        <StationHistoryChip
+                          position={1}
+                          handleDepartureClick={handleDepartureClick}
+                          current={current}
+                          isDisabled={
+                            rememberFirstStation == "" || !rememberFirstStation
+                              ? true
+                              : false
+                          }
+                        />
+                      </div>
+                    </div>
                     <br />
                     <div>
                       <Button

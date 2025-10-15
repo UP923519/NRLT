@@ -65,8 +65,8 @@ export default function SearchHistoryChip({
             overflow: "scroll",
             background:
               localStorage.getItem("darkMode") !== "#ffffff"
-                ? "#513d6dff"
-                : "#eaeaeaff",
+                ? "#475263"
+                : "white",
             color: localStorage.getItem("darkMode") !== "#ffffff" && "#ffffff",
           }}
           component="ul"

@@ -8,6 +8,18 @@ import Fade from "react-reveal/Fade";
 
 export const theUser = localStorage.getItem("username");
 
+//Reset local data due to version update
+if (localStorage.getItem("appVersion") !== "2.5") {
+  localStorage.clear();
+  localStorage.setItem("appVersion", "2.5");
+
+  setTimeout(function () {
+    alert(
+      "Welcome. You are now using the latest version of Train Times Live.\nPlease note: saved user data (including settings) have been reset to default values."
+    );
+  }, 1000);
+}
+
 if (localStorage.getItem("fontSize") == null) {
   localStorage.setItem("fontSize", 16);
 }

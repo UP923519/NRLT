@@ -213,7 +213,7 @@ export default function Settings() {
   }
 
   function getRandomColor() {
-    var letters = "7DCBA98789ABCDEF";
+    var letters = "9DCBA99999ABCDEF";
     var color = "#";
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
@@ -267,6 +267,7 @@ export default function Settings() {
                   </button>
                 </a>
               </h4>
+              <p>Web App Version: 2.5</p>
             </div>
           </div>
         </Fade>
@@ -311,7 +312,10 @@ export default function Settings() {
                 {localStorage.getItem("stationHistory")?.length
                   ? "Saved"
                   : "Cleared"}
-                <br /> <br />
+                <br />
+                <text style={{ fontSize: "small" }}>Max. 25 Item/Category</text>
+                <br />
+                <br />
                 <button
                   id="useCurrentLocation"
                   onClick={() =>
@@ -417,7 +421,7 @@ export default function Settings() {
                   padding: "10px",
                 }}
               >
-                Show Menu Background:{" "}
+                Menu Background & Border:{" "}
                 {localStorage.getItem("menuBorder") !== "TRUE" && "Off"}
                 {localStorage.getItem("menuBorder") == "TRUE" && "On"}
                 <br /> <br />

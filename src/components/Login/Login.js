@@ -80,7 +80,7 @@ export default function Login({ setToken }) {
     setToken({ token: "User" });
   };
 
-  document.body.style.overflow = "hidden";
+  // document.body.style.overflow = "hidden";
 
   return (
     <text>
@@ -96,7 +96,10 @@ export default function Login({ setToken }) {
           <div className="login-wrapper">
             <div
               className="divLoginInput1"
-              style={{ paddingTop: "25px", paddingBottom: "25px" }}
+              style={{
+                paddingTop: "25px",
+                paddingBottom: "25px",
+              }}
             >
               <h1 style={{ color: "#2d9ba1" }}>Train Times Live</h1>
               <h2>Welcome!</h2>
