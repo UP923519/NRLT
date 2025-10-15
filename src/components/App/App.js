@@ -21,7 +21,7 @@ if (localStorage.getItem("appVersion") !== "2.5") {
 }
 
 if (localStorage.getItem("fontSize") == null) {
-  localStorage.setItem("fontSize", 16);
+  localStorage.setItem("fontSize", 18);
 }
 
 let backGroundColour = "#edf8ff";

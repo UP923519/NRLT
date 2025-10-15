@@ -78,9 +78,10 @@ export default function Login({ setToken }) {
 
   const handleSubmit = async (e) => {
     setToken({ token: "User" });
+    // window.location.reload();
   };
 
-  // document.body.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
 
   return (
     <text>

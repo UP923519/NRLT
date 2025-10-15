@@ -74,6 +74,8 @@ export default function Navbar() {
     }
   }, []);
 
+  document.body.style.overflow = "visible";
+
   return (
     <HashRouter>
       <div style={{ marginTop: "2px" }}></div>

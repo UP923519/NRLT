@@ -14,9 +14,8 @@ export let enableWindow;
 export let verticalMenu;
 
 if (localStorage.getItem("fontSize") == null) {
-  currentFontSize = "Standard font size";
+  currentFontSize = "Large font size";
 }
-
 if (localStorage.getItem("fontSize") == 16) {
   currentFontSize = "Standard font size";
 }
@@ -267,7 +266,7 @@ export default function Settings() {
                   </button>
                 </a>
               </h4>
-              <p>Web App Version: 2.5</p>
+              <p>Web App Version: 2.5.1</p>
             </div>
           </div>
         </Fade>
