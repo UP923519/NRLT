@@ -104,9 +104,22 @@ export default function Login({ setToken }) {
             >
               <h1 style={{ color: "#2d9ba1" }}>Train Times Live</h1>
               <h2>Welcome!</h2>
+              <button
+                id="loginButton"
+                type="submit"
+                onClick={handleSubmit}
+                style={{
+                  backdropFilter: "blur(12px)",
+                  background: "#ffffff33",
+                }}
+              >
+                ￫ Start {username}
+              </button>
             </div>
 
-            <div className="divLoginInput2">
+            {/* //Move Start Button to Top as it's not always visible depending on
+            screen size. */}
+            {/* <div className="divLoginInput2">
               <div>
                 <button
                   id="loginButton"
@@ -120,7 +133,7 @@ export default function Login({ setToken }) {
                   ￫ Start {username}
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </Fade>
       </>

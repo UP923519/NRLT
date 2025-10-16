@@ -266,7 +266,7 @@ export default function Settings() {
                   </button>
                 </a>
               </h4>
-              <p>Web App Version: 2.5.1</p>
+              <p>Web App Version: 2.5.2</p>
             </div>
           </div>
         </Fade>
