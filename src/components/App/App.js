@@ -24,12 +24,12 @@ if (localStorage.getItem("fontSize") == null) {
   localStorage.setItem("fontSize", 18);
 }
 
-let backGroundColour = "#edf8ff";
+let backGroundColour = "#f6f6f6ff";
 let colour = "black";
 
 if (localStorage.getItem("darkMode") == "#000000") {
   // console.log("darkModeActive");
-  backGroundColour = "#c1ecf0";
+  backGroundColour = "#212121ff";
   colour = "#ffffff";
 }
 
@@ -85,12 +85,12 @@ function App() {
           }}
         >
           <CheckConnection />
-
           <p>
             <img
               src={Nimage}
               alt="powered by National Rail Enquiries"
               width="85"
+              style={{ opacity: 0.0 }}
             />
           </p>
 
@@ -104,7 +104,6 @@ function App() {
           >
             Train Times Live
           </h2>
-
           <br />
           <div>
             <Navbar />
