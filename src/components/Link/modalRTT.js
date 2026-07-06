@@ -71,7 +71,7 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
                     Additional train details
                   </Typography>
                 </Fade>
-                <iframe
+                {/* <iframe
                   className="transactions"
                   style={{
                     height: "270px",
@@ -80,7 +80,8 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
                     width: "99%",
                     overflow: "scroll",
                     maxHeight: "65vh",
-                    background: "#467083",
+                    // background: "#467083",
+                    background: "#ffffff00",
                   }}
                   id="iFrameExample"
                   src={
@@ -94,7 +95,49 @@ export default function ModalRTT({ url, openRTT, setOpenRTT, style, data }) {
                     data.rid.slice(6, 8) +
                     "/detailed"
                   }
-                ></iframe>
+                ></iframe> */}
+
+                <div
+                  style={{
+                    height: "50px",
+                    marginTop: "3px",
+                    width: "99%",
+                    overflow: "scroll",
+                    maxHeight: "65vh",
+                    background: "#ffffff22",
+                    paddingBottom: "20px",
+                  }}
+                  onClick={() =>
+                    window.open(
+                      "https://www.realtimetrains.co.uk/service/gb-nr:" +
+                        data.uid +
+                        "/" +
+                        data.rid.slice(0, 4) +
+                        "-" +
+                        data.rid.slice(4, 6) +
+                        "-" +
+                        data.rid.slice(6, 8) +
+                        "/detailed",
+                      "_blank"
+                    )
+                  }
+                >
+                  <button
+                    type="button"
+                    id="showHide"
+                    style={{
+                      fontSize: "medium",
+                      marginTop: "5px",
+                      padding: "9px",
+                      background: "#243a5eAA",
+                      color: "white",
+                      borderRadius: "15px",
+                    }}
+                    className="logOut"
+                  >
+                    🔗 Open
+                  </button>
+                </div>
               </Fade>
             </Box>
           </div>
