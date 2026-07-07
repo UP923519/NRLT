@@ -87,7 +87,7 @@ export default function DisplayStaffStops({
 
     try {
       const responseStaffRID = await fetch(
-        "https://" + serverName + ".azurewebsites.net/service/" + useRID
+        "https://" + serverName + ".azurewebsites.net/service/" + useRID,
       );
       const dataStaffService = await responseStaffRID.json();
       if (dataStaffService) {
@@ -97,7 +97,7 @@ export default function DisplayStaffStops({
 
         const dateStart = new Date(dataStaffService.locations[0].std);
         const dateEnd = new Date(
-          dataStaffService.locations[dataStaffService.locations.length - 1].sta
+          dataStaffService.locations[dataStaffService.locations.length - 1].sta,
         );
 
         // Difference in milliseconds
@@ -114,7 +114,7 @@ export default function DisplayStaffStops({
       executeScroll();
     } catch {
       alert(
-        "Failed to fetch associated service. Please check connection or try another service."
+        "Failed to fetch associated service. Please check connection or try another service.",
       );
       setLoadedState(true);
     }
@@ -178,7 +178,7 @@ export default function DisplayStaffStops({
                 top: "-23px",
               }}
             >
-              <hr></hr>
+              <hr style={{ maxWidth: "720px" }}></hr>
             </text>
           </Fade>
           <Fade top distance={"20px"} duration={1500}>
@@ -229,8 +229,8 @@ export default function DisplayStaffStops({
                 localStorage.getItem("darkMode") == "#000000"
                   ? "#a3a3a3"
                   : localStorage.getItem("darkMode") == "#8297b5"
-                  ? "#cbe0f2"
-                  : "#f0f0f0",
+                    ? "#cbe0f2"
+                    : "#f0f0f0",
               marginBottom: "20px",
               boxShadow:
                 "0 5px 20px 0 rgba(0, 0, 0, 0.19), 0 5px 10px 0 rgba(0, 0, 0, 0.19)",
@@ -282,7 +282,12 @@ export default function DisplayStaffStops({
                         {diffMinutes > 1 && diffMinutes + " Minutes "}
                       </>
                     )}
-                    <hr style={{ width: "25%", marginTop: "13px" }}></hr>
+                    <hr
+                      style={{
+                        width: "25%",
+                        marginTop: "13px",
+                      }}
+                    ></hr>
                   </text>
                 </th>
               </tr>
@@ -406,8 +411,8 @@ export default function DisplayStaffStops({
                               {waypoint.atdSpecified
                                 ? waypoint.atd.slice(11, -3)
                                 : waypoint.ataSpecified
-                                ? waypoint.ata.slice(11, -3)
-                                : "No info"}
+                                  ? waypoint.ata.slice(11, -3)
+                                  : "No info"}
                             </Tooltip>
                           </x>
                         )}
@@ -510,12 +515,12 @@ export default function DisplayStaffStops({
                             alert(
                               "Train has not completed the waypoint " +
                                 waypoint.locationName +
-                                " yet"
+                                " yet",
                             )) +
                           (coloursDeparted &&
                             alert(
                               "Train has completed waypoint " +
-                                waypoint.locationName
+                                waypoint.locationName,
                             ))
                         }
                         sx={{
@@ -738,9 +743,9 @@ export default function DisplayStaffStops({
                                 station.lateness > 60
                                   ? "#FFA50044"
                                   : station.lateness &&
-                                    station.lateness.includes("-")
-                                  ? "#00ff0044"
-                                  : "#f0f0f044",
+                                      station.lateness.includes("-")
+                                    ? "#00ff0044"
+                                    : "#f0f0f044",
                               color:
                                 localStorage.getItem("darkMode") == "#000000" &&
                                 "white",

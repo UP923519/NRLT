@@ -223,7 +223,7 @@ export default function ServicePage() {
     if (!rememberStaffData) {
       rememberStaffData = JSON.parse(localStorage.getItem("staffServiceData"));
       rememberFirstStationSave = JSON.parse(
-        localStorage.getItem("rememberFirstStation")
+        localStorage.getItem("rememberFirstStation"),
       );
       infoTrain = JSON.parse(localStorage.getItem("infoTrain"));
     }
@@ -264,7 +264,7 @@ export default function ServicePage() {
     if (infoTrainSet) {
       infoTrainSet = infoTrainSet.replace(
         " ",
-        " at " + rememberFirstStationSave.slice(0, -6) + ": "
+        " at " + rememberFirstStationSave.slice(0, -6) + ": ",
       );
       infoTrainSet = infoTrainSet.split("+");
       infoTrainSet.pop();
@@ -291,7 +291,7 @@ export default function ServicePage() {
         staffMonth +
         "-" +
         staffDay +
-        "/detailed"
+        "/detailed",
     );
 
     // window.scrollTo({
@@ -324,7 +324,7 @@ export default function ServicePage() {
 
     try {
       response = await fetch(
-        "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal
+        "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal,
       );
     } catch {
       // alert("Failed.!! Please check internet connection / service details.");
@@ -337,7 +337,7 @@ export default function ServicePage() {
     if (staffRIDVal) {
       try {
         responseStaffRID = await fetch(
-          "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal
+          "https://" + serverName + ".azurewebsites.net/service/" + staffRIDVal,
         );
       } catch {
         // alert("Failed. Please check internet connection / service details.");
@@ -377,7 +377,7 @@ export default function ServicePage() {
       // Convert to Date objects
       const dateStart = new Date(dataStaffService.locations[0].std);
       const dateEnd = new Date(
-        dataStaffService.locations[dataStaffService.locations.length - 1].sta
+        dataStaffService.locations[dataStaffService.locations.length - 1].sta,
       );
 
       // Difference in milliseconds
@@ -498,7 +498,7 @@ export default function ServicePage() {
         liveService,
         liveServiceTime,
         liveService2,
-        location
+        location,
       );
       let afterStations = calculatePosition(liveService2, liveServiceTime);
       let t = beforeStations[0] + middleStation[0] + afterStations[0];
@@ -550,13 +550,13 @@ export default function ServicePage() {
               ? localStorage.getItem("darkMode") == "#000000"
                 ? "#000000"
                 : localStorage.getItem("darkMode") == "#8297b5"
-                ? "#8297b5"
-                : "#ffffff"
+                  ? "#8297b5"
+                  : "#ffffff"
               : localStorage.getItem("darkMode") == "#000000"
-              ? "#000e2b"
-              : localStorage.getItem("darkMode") == "#8297b5"
-              ? "#4f2609"
-              : "#fafafa",
+                ? "#000e2b"
+                : localStorage.getItem("darkMode") == "#8297b5"
+                  ? "#4f2609"
+                  : "#fafafa",
           }}
         >
           <form
@@ -713,8 +713,8 @@ export default function ServicePage() {
                               ? "↺ Back To Your Service"
                               : "🔄 Refresh"
                             : sPAssociation
-                            ? "↺ Back To Your Service"
-                            : "🔄 Refresh"}
+                              ? "↺ Back To Your Service"
+                              : "🔄 Refresh"}
                         </button>
                       )}
 
@@ -763,7 +763,7 @@ export default function ServicePage() {
             <div style={{ height: "6.75px" }} />
           </>
         ) : (
-          <>{showStaffData ? <></> : <hr />}</>
+          <>{showStaffData ? <></> : <hr style={{ maxWidth: "720px" }} />}</>
         )}
         <ref ref={myRef}>
           <>
@@ -790,7 +790,7 @@ export default function ServicePage() {
                                       " " + dest.via}
                                   </>
                                 );
-                              }
+                              },
                             )}{" "}
                             from
                             {rememberStaffData.origin.map((orig, index) => {
@@ -924,19 +924,19 @@ export default function ServicePage() {
                               ? cancelReason[
                                   cancelReason.findIndex((element) =>
                                     element.includes(
-                                      liveServiceTime.cancelReason.value
-                                    )
+                                      liveServiceTime.cancelReason.value,
+                                    ),
                                   )
                                 ].slice(4) + "."
                               : liveServiceTime.delayReason
-                              ? delayReason[
-                                  delayReason.findIndex((element) =>
-                                    element.includes(
-                                      liveServiceTime.delayReason.value
+                                ? delayReason[
+                                    delayReason.findIndex((element) =>
+                                      element.includes(
+                                        liveServiceTime.delayReason.value,
+                                      ),
                                     )
-                                  )
-                                ].slice(4) + "."
-                              : "No messages for this service")}
+                                  ].slice(4) + "."
+                                : "No messages for this service")}
                         </p>
                       </Fade>
                       <br />
@@ -1317,37 +1317,41 @@ export default function ServicePage() {
             {" "}
             {!processingState ? (
               <>
-                <div
-                  className="NRLogo"
-                  style={{
-                    background:
-                      localStorage.getItem("darkMode") !== "#ffffff" &&
-                      "#00383c77",
-                  }}
-                >
-                  {!showStaffData && (
-                    <img
-                      src={
-                        localStorage.getItem("darkMode") == "#ffffff"
-                          ? image
-                          : imageDark
-                      }
-                      alt="powered by National Rail Enquiries"
-                      width="256"
-                      style={{ position: "absolute" }}
-                    />
-                  )}
-                  <Fade duration={5000} when={showStaffData}>
-                    <img
-                      src={
-                        localStorage.getItem("darkMode") == "#ffffff"
-                          ? image
-                          : imageDark
-                      }
-                      alt="powered by National Rail Enquiries"
-                      width="256"
-                    />
-                  </Fade>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div
+                    className="NRLogo"
+                    style={{
+                      background:
+                        localStorage.getItem("darkMode") !== "#ffffff" &&
+                        "#00383c77",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {!showStaffData && (
+                      <img
+                        src={
+                          localStorage.getItem("darkMode") == "#ffffff"
+                            ? image
+                            : imageDark
+                        }
+                        alt="powered by National Rail Enquiries"
+                        width="256"
+                        style={{ position: "absolute" }}
+                      />
+                    )}
+                    <Fade duration={5000} when={showStaffData}>
+                      <img
+                        src={
+                          localStorage.getItem("darkMode") == "#ffffff"
+                            ? image
+                            : imageDark
+                        }
+                        alt="powered by National Rail Enquiries"
+                        width="256"
+                      />
+                    </Fade>
+                  </div>
                 </div>
                 {stringCalling.length < 6 && (
                   <>
@@ -1415,7 +1419,7 @@ export function test1(
   staffSDD,
   staffRID,
   rememberFirstStation,
-  staffData
+  staffData,
 ) {
   formJson = number;
   staffRIDVal = staffRID;
@@ -1441,7 +1445,7 @@ export function test1(
   localStorage.setItem("staffServiceData", JSON.stringify(staffData));
   localStorage.setItem(
     "rememberFirstStation",
-    JSON.stringify(rememberFirstStation)
+    JSON.stringify(rememberFirstStation),
   );
   localStorage.setItem("infoTrain", JSON.stringify(infoTrain));
   localStorage.setItem("savedRID", staffData.rid);

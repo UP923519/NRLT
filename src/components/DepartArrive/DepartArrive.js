@@ -1487,6 +1487,7 @@ export default function DepartArrive(departArrive) {
             <div
               className="manualInput"
               style={{
+                maxWidth: "720px",
                 background:
                   localStorage.getItem("darkMode") == "#000000"
                     ? "#000e2b"
@@ -1985,7 +1986,7 @@ export default function DepartArrive(departArrive) {
             </>
           ) : (
             <>
-              <hr />
+              <hr style={{ maxWidth: "720px" }} />
             </>
           )}
 
@@ -2140,23 +2141,26 @@ export default function DepartArrive(departArrive) {
                       />
                     </>
                   )}
-                  <div
-                    className="NRLogo"
-                    style={{
-                      background:
-                        localStorage.getItem("darkMode") !== "#ffffff" &&
-                        "#00383c77",
-                    }}
-                  >
-                    <img
-                      src={
-                        localStorage.getItem("darkMode") == "#ffffff"
-                          ? image
-                          : imagedark
-                      }
-                      alt="powered by National Rail Enquiries"
-                      width="256"
-                    />
+
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <div
+                      className="NRLogo"
+                      style={{
+                        background:
+                          localStorage.getItem("darkMode") !== "#ffffff" &&
+                          "#00383c77",
+                      }}
+                    >
+                      <img
+                        src={
+                          localStorage.getItem("darkMode") == "#ffffff"
+                            ? image
+                            : imagedark
+                        }
+                        alt="powered by National Rail Enquiries"
+                        width="256"
+                      />
+                    </div>
                   </div>
                 </>
               </Fade>
