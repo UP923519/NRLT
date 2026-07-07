@@ -15,7 +15,7 @@ if (localStorage.getItem("appVersion") !== "2.5") {
 
   setTimeout(function () {
     alert(
-      "Welcome. You are now using the latest version of Train Times Live.\nPlease note: saved user data (including settings) have been reset to default values."
+      "Welcome. You are now using the latest version of Train Times Live.\nPlease note: saved user data (including settings) have been reset to default values.",
     );
   }, 1000);
 }
@@ -85,26 +85,27 @@ function App() {
           }}
         >
           <CheckConnection />
-          <p>
-            <img
+
+          {/* <img
               src={Nimage}
               alt="powered by National Rail Enquiries"
               width="85"
-              style={{ opacity: 0.0 }}
-            />
-          </p>
+            /> */}
+          <div style={{ marginTop: "43px", marginBottom: "63px" }}>
+            <h2
+              className="titleClass"
+              style={{
+                color: "#2d9ba1",
+                backgroundColor: backGroundColour,
+                borderRadius: "20px",
+                paddingTop: "20px",
+                paddingBottom: "20px",
+              }}
+            >
+              Train Times Live
+            </h2>
+          </div>
 
-          <h2
-            className="titleClass"
-            style={{
-              color: "#2d9ba1",
-              backgroundColor: backGroundColour,
-              borderRadius: "20px",
-            }}
-          >
-            Train Times Live
-          </h2>
-          <br />
           <div>
             <Navbar />
           </div>

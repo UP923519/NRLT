@@ -59,16 +59,16 @@ export default function TrainBus({
     ) {
       date = new Date(
         new Date(searchedDateTime).setMinutes(
-          new Date(searchedDateTime).getMinutes() + 15
-        )
+          new Date(searchedDateTime).getMinutes() + 15,
+        ),
       )
         .toLocaleString("sv", { timeZone: "Europe/London" })
         .replace(" ", "T");
 
       time = new Date(
         new Date(searchedDateTime).setMinutes(
-          new Date(searchedDateTime).getMinutes() + 15
-        )
+          new Date(searchedDateTime).getMinutes() + 15,
+        ),
       )
         .toLocaleString("sv", { timeZone: "Europe/London" })
         .replace(" ", "T");
@@ -77,16 +77,16 @@ export default function TrainBus({
     if (liveDeparture.length == 0) {
       date = new Date(
         new Date(searchedDateTime).setMinutes(
-          new Date(searchedDateTime).getMinutes() + 15
-        )
+          new Date(searchedDateTime).getMinutes() + 15,
+        ),
       )
         .toLocaleString("sv", { timeZone: "Europe/London" })
         .replace(" ", "T");
 
       time = new Date(
         new Date(searchedDateTime).setMinutes(
-          new Date(searchedDateTime).getMinutes() + 15
-        )
+          new Date(searchedDateTime).getMinutes() + 15,
+        ),
       )
         .toLocaleString("sv", { timeZone: "Europe/London" })
         .replace(" ", "T");
@@ -107,16 +107,16 @@ export default function TrainBus({
   function handleEarlierButton(date, time) {
     date = new Date(
       new Date(searchedDateTime).setMinutes(
-        new Date(searchedDateTime).getMinutes() - 15
-      )
+        new Date(searchedDateTime).getMinutes() - 15,
+      ),
     )
       .toLocaleString("sv", { timeZone: "Europe/London" })
       .replace(" ", "T");
 
     time = new Date(
       new Date(searchedDateTime).setMinutes(
-        new Date(searchedDateTime).getMinutes() - 15
-      )
+        new Date(searchedDateTime).getMinutes() - 15,
+      ),
     )
       .toLocaleString("sv", { timeZone: "Europe/London" })
       .replace(" ", "T");
@@ -147,8 +147,8 @@ export default function TrainBus({
               background: !nrccMessages
                 ? "#4a6e40"
                 : localStorage.getItem("darkMode") !== "#ffffff"
-                ? "#ff8454"
-                : "#ffaeae",
+                  ? "#ff8454"
+                  : "#ffaeae",
 
               color: !nrccMessages && "white",
               boxShadow:
@@ -167,10 +167,11 @@ export default function TrainBus({
                 {/* {textInfo} */}
                 <text style={{ fontSize: "medium" }}>
                   {nrccMessages &&
-                    nrccMessages.length +
-                      (nrccMessages.length > 1
-                        ? " alerts for "
-                        : " alert for ") +
+                    "Station Messages" +
+                      "\n⎯⎯⎯⎯\n" +
+                      nrccMessages.length +
+                      (nrccMessages.length > 1 ? " alerts " : " alert ") +
+                      "for " +
                       displayStation +
                       "\n"}
 
@@ -223,7 +224,10 @@ export default function TrainBus({
                 </text>
                 {!nrccMessages &&
                   displayStation &&
-                  "No alerts for " + displayStation}
+                  "Station Messages" +
+                    "\n⎯⎯⎯⎯\n" +
+                    "No messages for " +
+                    displayStation}
                 {showAlerts && (
                   <>
                     {nrccMessages?.map((message, index) => {
@@ -304,7 +308,7 @@ export default function TrainBus({
                   : liveDeparture[0]?.sta,
                 liveDeparture[0]?.stdSpecified
                   ? liveDeparture[0]?.std
-                  : liveDeparture[0]?.sta
+                  : liveDeparture[0]?.sta,
               )
             }
             style={{
@@ -344,8 +348,8 @@ export default function TrainBus({
                     localStorage.getItem("darkMode") == "#000000"
                       ? "#bfbfbf"
                       : localStorage.getItem("darkMode") == "#8297b5"
-                      ? "#cbd0f2"
-                      : "#f0f0f0",
+                        ? "#cbd0f2"
+                        : "#f0f0f0",
                   // borderStyle: "solid",
                   borderRadius: "20px",
                   // borderColor: "#f0f0f0",
@@ -391,7 +395,7 @@ export default function TrainBus({
                     : liveDeparture[liveDeparture.length - 1]?.sta,
                   liveDeparture[liveDeparture.length - 1]?.stdSpecified
                     ? liveDeparture[liveDeparture.length - 1]?.std
-                    : liveDeparture[liveDeparture.length - 1]?.sta
+                    : liveDeparture[liveDeparture.length - 1]?.sta,
                 )
               }
               style={{

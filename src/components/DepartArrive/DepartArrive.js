@@ -47,7 +47,7 @@ let nrccMessages;
 let trainSearch = "";
 let newsLinkEx = new RegExp(
   "(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))",
-  "g"
+  "g",
 );
 let newsLink = [];
 let myArray = [];
@@ -171,7 +171,7 @@ export default function DepartArrive(departArrive) {
         setActiveBus("#0080ff");
         setActiveBusT("white");
         setActiveTrain(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white"
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white",
         );
         setActiveTrainT("black");
         setBusDisabled(false);
@@ -183,7 +183,7 @@ export default function DepartArrive(departArrive) {
         setActiveTrain("#0080ff");
         setActiveTrainT("white");
         setActiveBus(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white"
+          localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white",
         );
         setActiveBusT("black");
       }
@@ -193,14 +193,14 @@ export default function DepartArrive(departArrive) {
       setTrainDisabled(true);
       setBusDisabled(false);
       setActiveTrain(
-        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5",
       );
       setActiveTrainT(
-        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1",
       );
       if (busDisplayMode == "train") {
         alert(
-          "No train services available at this time. Bus services are available."
+          "No train services available at this time. Bus services are available.",
         );
       }
       busDisplayMode = "bus";
@@ -212,10 +212,10 @@ export default function DepartArrive(departArrive) {
       setBusDisabled(true);
       setTrainDisabled(false);
       setActiveBus(
-        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5",
       );
       setActiveBusT(
-        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1",
       );
       setActiveTrain("#0080ff");
       setActiveTrainT("white");
@@ -224,17 +224,17 @@ export default function DepartArrive(departArrive) {
     if (saveLD == null && saveBD == null) {
       setBusDisabled(true);
       setActiveBus(
-        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5",
       );
       setActiveBusT(
-        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1",
       );
       setTrainDisabled(true);
       setActiveTrain(
-        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5",
       );
       setActiveTrainT(
-        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+        localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1",
       );
     }
 
@@ -317,7 +317,7 @@ export default function DepartArrive(departArrive) {
     status,
     stationFullName,
     previousStation,
-    previousStationFullName
+    previousStationFullName,
   ) {
     setShowScrollButton(false);
 
@@ -326,7 +326,7 @@ export default function DepartArrive(departArrive) {
       alert(
         "The " +
           departArrive.slice(0, -1) +
-          " station is blank. Please select from the drop down menu."
+          " station is blank. Please select from the drop down menu.",
       );
       return;
     }
@@ -335,7 +335,7 @@ export default function DepartArrive(departArrive) {
         alert(
           "The second station cannot be the same as the " +
             departArrive.slice(0, -1) +
-            " station."
+            " station.",
         );
         return;
       }
@@ -370,7 +370,7 @@ export default function DepartArrive(departArrive) {
         if (!historyArray.includes(stationFullName)) {
         } else {
           let existingPosition = historyArray.findIndex(
-            (element) => element == stationFullName
+            (element) => element == stationFullName,
           );
           historyArray.splice(existingPosition, 1);
         }
@@ -437,8 +437,8 @@ export default function DepartArrive(departArrive) {
             status,
             stationFullName,
             departArrive,
-            contextURL
-          )
+            contextURL,
+          ),
         );
         setFormVal(code);
         setRememberStation(stationFullName);
@@ -451,8 +451,8 @@ export default function DepartArrive(departArrive) {
             rememberStation,
             departArrive,
             contextURL,
-            switchFlag
-          )
+            switchFlag,
+          ),
         );
       }
     } catch {
@@ -463,8 +463,8 @@ export default function DepartArrive(departArrive) {
           remStatus,
           rememberStation,
           departArrive,
-          contextURL
-        )
+          contextURL,
+        ),
       );
     }
   }
@@ -498,7 +498,7 @@ export default function DepartArrive(departArrive) {
     textInfo = textInfo.replaceAll("News ", "News. ");
     textInfo = textInfo.replaceAll(
       "in  Latest Travel News.",
-      "in the link below.\n\n"
+      "in the link below.\n\n",
     );
     textInfo = textInfo.replaceAll(".", ". ");
     textInfo = textInfo.replaceAll(" .", " ");
@@ -581,7 +581,7 @@ export default function DepartArrive(departArrive) {
     stationFullName,
     departArrive,
     contextURL,
-    switchVal
+    switchVal,
   ) {
     let fromCode = currentCRSCode;
 
@@ -679,7 +679,7 @@ export default function DepartArrive(departArrive) {
         ":" +
         offsetMinutes +
         ":" +
-        "00"
+        "00",
     );
 
     rememberSearchedDateTime =
@@ -704,7 +704,7 @@ export default function DepartArrive(departArrive) {
         if (!historyArray.includes(rememberSearchedDateTime)) {
         } else {
           let existingPosition = historyArray.findIndex(
-            (element) => element == rememberSearchedDateTime
+            (element) => element == rememberSearchedDateTime,
           );
           historyArray.splice(existingPosition, 1);
         }
@@ -749,7 +749,7 @@ export default function DepartArrive(departArrive) {
             "/" +
             stationName +
             "/10" +
-            timeOffset
+            timeOffset,
         );
         // staffResponse = await fetch(
         //   "https://" +
@@ -860,29 +860,33 @@ export default function DepartArrive(departArrive) {
       } catch {
         alert(
           "Failed to fetch. Please check internet connection / search criteria. Server returned the following error: " +
-            saveError
+            saveError,
         );
         failedAlert = true;
       }
       trainSearch =
-        "Departures from " +
-        displayStation +
-        " for " +
-        stationFullName +
-        " at " +
+        // "Departures from " +
         offsetHours +
         ":" +
-        offsetMinutes;
+        offsetMinutes +
+        "\n" +
+        "⎯⎯⎯⎯\n" +
+        displayStation +
+        "\n to \n" +
+        stationFullName +
+        "\n";
       if (departArrive == "arrivals") {
         trainSearch =
-          "Arrivals at " +
-          displayStation +
-          " from " +
-          stationFullName +
-          " at " +
+          // "Arrivals at " +
           offsetHours +
           ":" +
-          offsetMinutes;
+          offsetMinutes +
+          "\n" +
+          "⎯⎯⎯⎯\n" +
+          displayStation +
+          "\n from \n" +
+          stationFullName +
+          "\n";
       }
 
       //////////////
@@ -899,7 +903,7 @@ export default function DepartArrive(departArrive) {
           ) {
           } else {
             let existingPosition = historyArray.findIndex(
-              (element) => element == displayStation + " -> " + stationFullName
+              (element) => element == displayStation + " -> " + stationFullName,
             );
             historyArray.splice(existingPosition, 1);
           }
@@ -936,7 +940,7 @@ export default function DepartArrive(departArrive) {
             "/" +
             stationName +
             "/10" +
-            timeOffset
+            timeOffset,
         );
         // staffResponse = await fetch(
         //   "https://" +
@@ -1037,26 +1041,31 @@ export default function DepartArrive(departArrive) {
       } catch {
         alert(
           "Failed to fetch. Please check internet connection / search criteria. Server returned the following error: " +
-            saveError
+            saveError,
         );
         failedAlert = true;
       }
       // trainSearch = "Services from " + stationName;
       trainSearch =
-        "Departures from " +
-        stationFullName +
-        " at " +
+        // "Departures from " +
         offsetHours +
         ":" +
-        offsetMinutes;
+        offsetMinutes +
+        "\n" +
+        "⎯⎯⎯⎯\n" +
+        stationFullName +
+        "\n";
       if (departArrive == "arrivals") {
         trainSearch = trainSearch =
-          "Arrivals at " +
-          stationFullName +
-          " at " +
+          // "Arrivals at " +
+
           offsetHours +
           ":" +
-          offsetMinutes;
+          offsetMinutes +
+          "\n" +
+          "⎯⎯⎯⎯\n" +
+          stationFullName +
+          "\n";
       }
       rememberFirstStation = stationFullName;
       rememberSecondStation = "";
@@ -1087,7 +1096,9 @@ export default function DepartArrive(departArrive) {
           setActiveBus("#0080ff");
           setActiveBusT("white");
           setActiveTrain(
-            localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white"
+            localStorage.getItem("darkMode") !== "#ffffff"
+              ? "#a8b8bd"
+              : "white",
           );
           setActiveTrainT("black");
           setBusDisabled(false);
@@ -1098,7 +1109,9 @@ export default function DepartArrive(departArrive) {
           setActiveTrain("#0080ff");
           setActiveTrainT("white");
           setActiveBus(
-            localStorage.getItem("darkMode") !== "#ffffff" ? "#a8b8bd" : "white"
+            localStorage.getItem("darkMode") !== "#ffffff"
+              ? "#a8b8bd"
+              : "white",
           );
           setActiveBusT("black");
         }
@@ -1107,15 +1120,19 @@ export default function DepartArrive(departArrive) {
         setTrainDisabled(true);
         setBusDisabled(false);
         setActiveTrain(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+          localStorage.getItem("darkMode") !== "#ffffff"
+            ? "#616161"
+            : "#f5f5f5",
         );
         setActiveTrainT(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+          localStorage.getItem("darkMode") !== "#ffffff"
+            ? "#888888"
+            : "#d1d1d1",
         );
         liveDeparture = staffDataBus.busServices;
         if (busDisplayMode == "train") {
           alert(
-            "No train services available at this time. Bus services are available."
+            "No train services available at this time. Bus services are available.",
           );
         }
         busDisplayMode = "bus";
@@ -1126,10 +1143,14 @@ export default function DepartArrive(departArrive) {
         setBusDisabled(true);
         setTrainDisabled(false);
         setActiveBus(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+          localStorage.getItem("darkMode") !== "#ffffff"
+            ? "#616161"
+            : "#f5f5f5",
         );
         setActiveBusT(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+          localStorage.getItem("darkMode") !== "#ffffff"
+            ? "#888888"
+            : "#d1d1d1",
         );
         setActiveTrain("#0080ff");
         setActiveTrainT("white");
@@ -1139,17 +1160,25 @@ export default function DepartArrive(departArrive) {
         liveDeparture = [];
         setBusDisabled(true);
         setActiveBus(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+          localStorage.getItem("darkMode") !== "#ffffff"
+            ? "#616161"
+            : "#f5f5f5",
         );
         setActiveBusT(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+          localStorage.getItem("darkMode") !== "#ffffff"
+            ? "#888888"
+            : "#d1d1d1",
         );
         setTrainDisabled(true);
         setActiveTrain(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#616161" : "#f5f5f5"
+          localStorage.getItem("darkMode") !== "#ffffff"
+            ? "#616161"
+            : "#f5f5f5",
         );
         setActiveTrainT(
-          localStorage.getItem("darkMode") !== "#ffffff" ? "#888888" : "#d1d1d1"
+          localStorage.getItem("darkMode") !== "#ffffff"
+            ? "#888888"
+            : "#d1d1d1",
         );
       }
       displayServiceMessage = "";
@@ -1166,7 +1195,7 @@ export default function DepartArrive(departArrive) {
           alert(serviceMessage[0].value);
         } else {
           alert(
-            "Unable to retrieve new results. Previous results may be shown."
+            "Unable to retrieve new results. Previous results may be shown.",
           );
         }
       }
@@ -1176,7 +1205,7 @@ export default function DepartArrive(departArrive) {
 
   async function getStation() {
     const response = await fetch(
-      "https://" + serverName + ".azurewebsites.net/crs"
+      "https://" + serverName + ".azurewebsites.net/crs",
     );
     const data = await response.json();
     listStation = data;
@@ -1187,7 +1216,7 @@ export default function DepartArrive(departArrive) {
     let listOfStations = [];
     for (let i = 0; i < listStation.length; i++) {
       listOfStations.push(
-        listStation[i].stationName + " (" + listStation[i].crsCode + ")"
+        listStation[i].stationName + " (" + listStation[i].crsCode + ")",
       );
     }
 
@@ -1232,7 +1261,7 @@ export default function DepartArrive(departArrive) {
       staffSDD,
       staffRID,
       rememberFirstStation,
-      liveDeparture[index]
+      liveDeparture[index],
     );
   };
 
@@ -1284,27 +1313,27 @@ export default function DepartArrive(departArrive) {
                 // "&nbsp;⏱" +
                 "</text>"
               : liveDeparture[i].ata
-              ? new Date(liveDeparture[i].ata) -
-                  new Date(liveDeparture[i].sta) <=
-                60000
-                ? "<text style=background:green;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                  liveDeparture[i].ata.slice(11, 16) +
-                  "</text>"
-                : "<text style=background:orange;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                  liveDeparture[i].ata.slice(11, 16) +
-                  "</text>"
-              : liveDeparture[i].isCancelled
-              ? "<text style=background:#000000;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                "Cancelled" +
-                "&nbsp;❌" +
-                "</text>"
-              : liveDeparture[i].departureType == "NoLog"
-              ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                "Not Recorded" +
-                "</text>"
-              : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                "Delayed" +
-                "</text>") +
+                ? new Date(liveDeparture[i].ata) -
+                    new Date(liveDeparture[i].sta) <=
+                  60000
+                  ? "<text style=background:green;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                    liveDeparture[i].ata.slice(11, 16) +
+                    "</text>"
+                  : "<text style=background:orange;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                    liveDeparture[i].ata.slice(11, 16) +
+                    "</text>"
+                : liveDeparture[i].isCancelled
+                  ? "<text style=background:#000000;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                    "Cancelled" +
+                    "&nbsp;❌" +
+                    "</text>"
+                  : liveDeparture[i].departureType == "NoLog"
+                    ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                      "Not Recorded" +
+                      "</text>"
+                    : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                      "Delayed" +
+                      "</text>") +
             "&nbsp;<text style=font-size:small;color:#696969>" +
             liveDeparture[i].operator +
             "</text>" +
@@ -1331,7 +1360,7 @@ export default function DepartArrive(departArrive) {
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
             "</text>" +
             "</text>" +
-            sCode
+            sCode,
         );
       }
     }
@@ -1376,27 +1405,27 @@ export default function DepartArrive(departArrive) {
                 // "&nbsp;⏱" +
                 "</text>"
               : liveDeparture[i].atd
-              ? new Date(liveDeparture[i].atd) -
-                  new Date(liveDeparture[i].std) <=
-                60000
-                ? "<text style=background:green;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                  liveDeparture[i].atd.slice(11, 16) +
-                  "</text>"
-                : "<text style=background:orange;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                  liveDeparture[i].atd.slice(11, 16) +
-                  "</text>"
-              : liveDeparture[i].isCancelled
-              ? "<text style=background:#000000;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                "Cancelled" +
-                "&nbsp;❌" +
-                "</text>"
-              : liveDeparture[i].departureType == "NoLog"
-              ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                "Not Recorded" +
-                "</text>"
-              : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
-                "Delayed" +
-                "</text>") +
+                ? new Date(liveDeparture[i].atd) -
+                    new Date(liveDeparture[i].std) <=
+                  60000
+                  ? "<text style=background:green;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                    liveDeparture[i].atd.slice(11, 16) +
+                    "</text>"
+                  : "<text style=background:orange;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                    liveDeparture[i].atd.slice(11, 16) +
+                    "</text>"
+                : liveDeparture[i].isCancelled
+                  ? "<text style=background:#000000;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                    "Cancelled" +
+                    "&nbsp;❌" +
+                    "</text>"
+                  : liveDeparture[i].departureType == "NoLog"
+                    ? "<text style=background:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                      "Not Recorded" +
+                      "</text>"
+                    : "<text style=background:red;color:white;padding-left:5px;padding-right:5px;border-radius:20px;>" +
+                      "Delayed" +
+                      "</text>") +
             "&nbsp;<text style=font-size:small;color:#696969>" +
             liveDeparture[i].operator +
             "</text>" +
@@ -1423,7 +1452,7 @@ export default function DepartArrive(departArrive) {
             (liveDeparture[i].platform ? liveDeparture[i].platform : "N/A") +
             "</text>" +
             "</text>" +
-            sCode
+            sCode,
         );
       }
     }
@@ -1645,6 +1674,7 @@ export default function DepartArrive(departArrive) {
                               textAlign: "left",
                               fontWeight: "bold",
                               color: "grey",
+                              marginTop: "0px",
                             }}
                           >
                             Arrival:
@@ -1710,7 +1740,7 @@ export default function DepartArrive(departArrive) {
                                 current,
                                 opt.value.slice(opt.value.length - 4, -1),
                                 0,
-                                opt.value
+                                opt.value,
                               )
                             }
                           />
@@ -1799,18 +1829,18 @@ export default function DepartArrive(departArrive) {
                                     },
                                   ]
                                 : rememberFirstStation
-                                ? [
-                                    {
-                                      value: "Select...",
-                                      label: "Select...",
-                                    },
-                                  ]
-                                : [
-                                    {
-                                      value: "Select above first",
-                                      label: "Select above first",
-                                    },
-                                  ]
+                                  ? [
+                                      {
+                                        value: "Select...",
+                                        label: "Select...",
+                                      },
+                                    ]
+                                  : [
+                                      {
+                                        value: "Select above first",
+                                        label: "Select above first",
+                                      },
+                                    ]
                             }
                             options={listOfStations ? listOfStations : []}
                             isLoading={listOfStations ? false : true}
@@ -1820,7 +1850,7 @@ export default function DepartArrive(departArrive) {
                                 current,
                                 opt.value.slice(opt.value.length - 4, -1),
                                 1,
-                                opt.value
+                                opt.value,
                               ) + { stationTwoD: opt.value }
                             }
                           />
@@ -1909,7 +1939,7 @@ export default function DepartArrive(departArrive) {
                               contextTime,
                               currentCRSCode,
                               0,
-                              rememberFirstStation
+                              rememberFirstStation,
                             )
                           }
                         >
@@ -1966,9 +1996,43 @@ export default function DepartArrive(departArrive) {
                 <>
                   {isOpen && (
                     <>
-                      <div style={{ marginBottom: "10px" }}>
-                        {trainSearch} &nbsp;
-                        <Tooltip
+                      <div
+                        className="highlights"
+                        style={{
+                          marginBottom: "20px",
+                          marginTop: "20px",
+                          background: "#00000005",
+                          boxShadow:
+                            localStorage.getItem("darkMode") == "#ffffff" ||
+                            localStorage.getItem("darkMode") == "BONUS"
+                              ? "0 3px 20px 0 rgba(0, 0, 0, 0.25), 0 3px 20px 0 rgba(0, 0, 0, 0.25)"
+                              : "0 3px 20px 0 rgba(255, 255, 255, 0.44), 0 3px 20px 0 rgba(255, 255, 255, 0.44)",
+
+                          paddingTop: "5px",
+                          paddingBottom: "10px",
+                          borderRadius: "20px",
+                          border: "2px solid rgba(0, 100, 43, 0.88)",
+                          color:
+                            localStorage.getItem("darkMode") == "#ffffff" ||
+                            localStorage.getItem("darkMode") == "BONUS"
+                              ? "black"
+                              : "white",
+                          textShadow:
+                            localStorage.getItem("darkMode") == "#ffffff" ||
+                            localStorage.getItem("darkMode") == "BONUS"
+                              ? "none"
+                              : "0px 0px 10px rgba(0, 0, 0, 1)",
+                        }}
+                      >
+                        <text
+                          style={{
+                            whiteSpace: "pre-line",
+                            fontSize: "medium",
+                          }}
+                        >
+                          {trainSearch}
+                        </text>
+                        {/* <Tooltip
                           arrow
                           componentsProps={{
                             tooltip: {
@@ -2017,7 +2081,7 @@ export default function DepartArrive(departArrive) {
                           >
                             ⓘ
                           </text>
-                        </Tooltip>
+                        </Tooltip> */}
                       </div>
 
                       <Box sx={{ marginBottom: 2 }}>
