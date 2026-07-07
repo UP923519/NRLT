@@ -266,7 +266,7 @@ export default function Settings() {
                   </button>
                 </a>
               </h4>
-              <p>Web App Version: 2.5.2</p>
+              <p>Web App Version: 2.6.0 </p>
             </div>
           </div>
         </Fade>
@@ -330,7 +330,7 @@ export default function Settings() {
                         "\n\nDate & Time:\n\n" +
                         localStorage
                           .getItem("dateTimeHistory")
-                          .replaceAll(",", ", ")
+                          .replaceAll(",", ", "),
                     )
                   }
                   disabled={!localStorage.getItem("stationHistory")?.length}

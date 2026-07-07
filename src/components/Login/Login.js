@@ -48,7 +48,7 @@ async function verifyUser(username, hashedPassword) {
       Password: hashedPassword,
     });
     alert(
-      "This account does not exist, a new account has been created.\nPlease remember your details. \nPlease log in now."
+      "This account does not exist, a new account has been created.\nPlease remember your details. \nPlease log in now.",
     );
   }
 }
@@ -73,7 +73,7 @@ export default function Login({ setToken }) {
         savedPassword2 = data.Password;
       });
     },
-    []
+    [],
   );
 
   const handleSubmit = async (e) => {
@@ -82,6 +82,10 @@ export default function Login({ setToken }) {
   };
 
   document.body.style.overflow = "hidden";
+
+  if (localStorage.getItem("darkMode") == null) {
+    localStorage.setItem("darkMode", "#ffffff");
+  }
 
   return (
     <text>

@@ -9,13 +9,13 @@ import Fade from "react-reveal/Fade";
 export const theUser = localStorage.getItem("username");
 
 //Reset local data due to version update
-if (localStorage.getItem("appVersion") !== "2.5") {
+if (localStorage.getItem("appVersion") !== "2.6") {
   localStorage.clear();
-  localStorage.setItem("appVersion", "2.5");
+  localStorage.setItem("appVersion", "2.6");
 
   setTimeout(function () {
     alert(
-      "Welcome. You are now using the latest version of Train Times Live.\nPlease note: saved user data (including settings) have been reset to default values.",
+      "Welcome. You are using the latest version of Train Times Live.\n\nPlease note: saved user data, including settings, have been reset to default values.",
     );
   }, 1000);
 }
@@ -31,6 +31,10 @@ if (localStorage.getItem("darkMode") == "#000000") {
   // console.log("darkModeActive");
   backGroundColour = "#212121ff";
   colour = "#ffffff";
+  <style name="MyTheme" parent="Theme.AppCompat.Dark.NoActionBar">
+    <item name="android:windowDarkStatusBar">true</item>
+    <item name="android:statusBarColor">@android:color/black</item>
+  </style>;
 }
 
 <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
